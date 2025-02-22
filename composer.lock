@@ -5799,17 +5799,6 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-<<<<<<< HEAD
-            "name": "laravel/pint",
-            "version": "v1.21.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/pint.git",
-                "reference": "531fa0871fbde719c51b12afa3a443b8f4e4b425"
-            },
-            "dist": {
-                "type": "zip",
-=======
             "name": "laravel/breeze",
             "version": "v1.29.1",
             "source": {
@@ -5881,7 +5870,6 @@
             },
             "dist": {
                 "type": "zip",
->>>>>>> f9bdee78158177ce15b326b346844b39582a8af6
                 "url": "https://api.github.com/repos/laravel/pint/zipball/531fa0871fbde719c51b12afa3a443b8f4e4b425",
                 "reference": "531fa0871fbde719c51b12afa3a443b8f4e4b425",
                 "shasum": ""
@@ -8201,12 +8189,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
