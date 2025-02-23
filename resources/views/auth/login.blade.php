@@ -69,49 +69,46 @@
                                                     me</label>
                                             </div>
                                             @if (Route::has('password.request'))
-                                                <a href="{{ route('password.request') }}">forget password ?</a>
+                                                <a class="forget_p" href="{{ route('password.request') }}">forget password ?</a>
                                             @endif
                                         </div>
                                         <button class="common_btn" type="submit">login</button>
-                                        <p class="social_text">Sign in with social account</p>
+                                        {{-- <p class="social_text">Sign in with social account</p>
                                         <ul class="wsus__login_link">
                                             <li><a href="#"><i class="fab fa-google"></i></a></li>
                                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                             <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </form>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-profiles" role="tabpanel"
                                 aria-labelledby="pills-profile-tab2">
                                 <div class="wsus__login">
-                                    <form>
+                                    <form method="POST" action="{{ route('register') }}">
+                                        @csrf
+                                         <!-- Name -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="text" placeholder="Name">
+                                            <input type="text" id="name" name="name" value="{{old('name')}}" placeholder="Name">
                                         </div>
+                                         <!-- Email Address -->
                                         <div class="wsus__login_input">
                                             <i class="far fa-envelope"></i>
-                                            <input type="text" placeholder="Email">
+                                            <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="Email">
                                         </div>
+                                        <!-- Password -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Password">
+                                            <input id="password" type="password" name="password" placeholder="Password">
                                         </div>
+                                         <!-- Confirm Password -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Confirm Password">
+                                            <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password">
                                         </div>
-                                        <div class="wsus__login_save">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox"
-                                                    id="flexSwitchCheckDefault03">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault03">I consent
-                                                    to the privacy policy</label>
-                                            </div>
-                                        </div>
-                                        <button class="common_btn" type="submit">signup</button>
+                                        <button class="common_btn mt-3" type="submit">signup</button>
                                     </form>
                                 </div>
                             </div>
