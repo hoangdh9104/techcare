@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('frontend.layouts.master')
 
 @section('content')
@@ -54,9 +53,8 @@
                                         @csrf
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input id="email" type="email" value="{{old('email')}}" name="email" placeholder="email">
+                                            <input id="email" name="email" value="{{old('email')}}" type="email" placeholder="Email">
                                         </div>
-
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
                                             <input id="password" name="password" type="password" placeholder="Password">
@@ -70,7 +68,6 @@
                                             </div>
                                             <a class="forget_p" href="{{route('password.request')}}">forget password ?</a>
                                         </div>
-
                                         <button class="common_btn" type="submit">login</button>
                                         {{-- <p class="social_text">Sign in with social account</p>
                                         <ul class="wsus__login_link">
@@ -85,26 +82,29 @@
                             <div class="tab-pane fade" id="pills-profiles" role="tabpanel"
                                 aria-labelledby="pills-profile-tab2">
                                 <div class="wsus__login">
-                                    <form method="post" action="{{route('register')}}">
+                                    <form method="POST" action="{{route('register')}}">
                                         @csrf
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
                                             <input id="name" name="name" value="{{old('name')}}" type="text" placeholder="Name">
                                         </div>
 
+
                                         <div class="wsus__login_input">
                                             <i class="far fa-envelope"></i>
-                                            <input id="email" name="email" value="{{old('email')}}" type="email" type="text" placeholder="Email">
+                                            <input id="email" name="email" value="{{old('email')}}" type="text" placeholder="Email">
                                         </div>
+
 
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
                                             <input id="password" name="password" type="password" placeholder="Password">
                                         </div>
 
+
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input id="password-confirmation" name="password-confirmation" type="password" placeholder="Confirm Password">
+                                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirm Password">
                                         </div>
                                         
                                         <button class="common_btn mt-4" type="submit">signup</button>
@@ -121,52 +121,3 @@
        LOGIN/REGISTER PAGE END
     ==============================-->
 @endsection
-=======
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
->>>>>>> f9bdee78158177ce15b326b346844b39582a8af6
