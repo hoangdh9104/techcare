@@ -3,7 +3,6 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
-use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +32,3 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 require __DIR__ . '/auth.php';
-
-Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function(){
-    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-});
