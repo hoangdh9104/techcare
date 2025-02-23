@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\ProfileController;
@@ -32,3 +33,9 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 require __DIR__ . '/auth.php';
+
+/* Route category */
+Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
+Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+
