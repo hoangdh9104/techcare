@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -32,8 +33,16 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 require __DIR__ . '/auth.php';
 
+
+/* Route category */
+Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
+Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+
+
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 });
+
