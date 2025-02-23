@@ -306,14 +306,13 @@
                     <ul class="wsus__menu_item wsus__menu_item_right">
                         <li><a href="contact.html">contact</a></li>
                         <li><a href="dsahboard.html">my account</a></li>
-                        <li><a href="{{route('login')}}">login</a></li>
+                        <li><a href="login.html">login</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-
 
 <section id="wsus__mobile_menu">
     <span class="wsus__mobile_menu_close"><i class="fal fa-times"></i></span>
