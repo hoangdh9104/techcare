@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-
+{{-- abcdf --}}
 @section('contend')
         <!--==========================
       PRODUCT MODAL VIEW START
