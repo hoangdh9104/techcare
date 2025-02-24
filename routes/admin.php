@@ -23,4 +23,3 @@ Route::resource('sub-category', SubCategoryController::class);
 
 
 Route::post('profile/update/password', [ProfileController::class, 'updatePassword'])->name('password.update');
-
