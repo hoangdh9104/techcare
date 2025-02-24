@@ -7,7 +7,11 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+
     <title>Sazao || e-Commerce HTML Template</title>
+
+    <title>Techcare Shop</title>
+
     <link rel="icon" type="image/png" href="{{asset('frontend/images/favicon.png')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.min.css')}}">
@@ -22,6 +26,11 @@
     <link rel="stylesheet" href="{{asset('frontend/css/ranger_style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/jquery.classycountdown.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/venobox.min.css')}}">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
+    {{-- toastr css--}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
@@ -47,6 +56,10 @@
     <!--============================
         MAIN MENU END
     ==============================-->
+
+
+
+
 
 
     <!--==========================
@@ -78,6 +91,7 @@
         POP UP END
     ===========================-->
 
+
     <!--============================
         Main Content Start
     ==============================-->
@@ -86,10 +100,19 @@
         Main Content End
     ==============================-->
 
+    {{-- main content start --}}
+    @yield('content')
+    {{-- main content end --}}
+
+
     <!--============================
         FOOTER PART START
     ==============================-->
+
     @include('frontend/layouts/footer')
+
+    @include('frontend.layouts.footer')
+
     <!--============================
         FOOTER PART END
     ==============================-->
@@ -139,6 +162,7 @@
     <!--venobox js-->
     <script src="{{asset('frontend/js/venobox.min.js')}}"></script>
 
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--classycountdown js-->
     <script src="{{asset('frontend/js/jquery.classycountdown.js')}}"></script>
@@ -150,8 +174,27 @@
             @foreach($error->all() as $error)
                 toastr.error("{{$error}}")
             @endforeach    
+
+    <!--classycountdown js-->
+    <script src="{{asset('frontend/js/jquery.classycountdown.js')}}"></script>
+    {{--toastr js --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!--main/custom js-->
+    <script src="{{asset('frontend/js/main.js')}}"></script>
+    {{-- show notification by using libary toastr --}}
+    <script>
+        @if($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error('{{$error}}')
+            @endforeach
+
         @endif
     </script>
 </body>
 
+
 </html>
+
+</html>
+
+

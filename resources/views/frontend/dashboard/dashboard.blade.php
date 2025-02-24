@@ -1,9 +1,16 @@
 @extends('frontend.dashboard.layouts.master')
 
+
 @section('namecontent')
 <section id="wsus__dashboard">
     <div class="container-fluid">
       @include('frontend.dashboard.layouts.sidebar')
+
+@section('content')
+<section id="wsus__dashboard">
+    <div class="container-fluid">
+    @include('frontend.dashboard.layouts.sidebar')
+
       <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content">
@@ -52,7 +59,11 @@
                     <h4>message</h4>
                     <div class="wsus__message_single">
                       <div class="wsus__message_img">
+
                         <img src="images/ts-1.jpg" alt="img">
+
+                        <img src="{{asset('frontend/images/ts-1.jpg')}}" alt="img">
+
                       </div>
                       <div class="wsus__message_text">
                         <h6>Mary Smith</h6>
@@ -69,7 +80,11 @@
                     </div>
                     <div class="wsus__message_single">
                       <div class="wsus__message_img">
+
                         <img src="images/ts-2.jpg" alt="img">
+
+                        <img src="{{asset('frontend/images/ts-2.jpg')}}" alt="img">
+
                       </div>
                       <div class="wsus__message_text">
                         <h6>susan singh</h6>
@@ -84,7 +99,11 @@
                     </div>
                     <div class="wsus__message_single">
                       <div class="wsus__message_img">
+
                         <img src="images/ts-3.jpg" alt="img">
+
+                        <img src="{{asset('frontend/images/ts-3.jpg')}}" alt="img">
+
                       </div>
                       <div class="wsus__message_text">
                         <h6>Mary Smith</h6>
@@ -148,5 +167,10 @@
         </div>
       </div>
     </div>
+
   </section>
 @endsection
+
+</section>
+@endsection
+

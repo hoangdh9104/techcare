@@ -1,8 +1,13 @@
 @extends('frontend.layouts.master')
 
+
 @section('content')
     
     <!--============================
+=======
+@section('content')
+        <!============================
+>>>>>>> 48191a8f0fb94cfc2dfb25db4de16c7f4e21767d
         BREADCRUMB START
     ==============================-->
     <section id="wsus__breadcrumb">
@@ -37,6 +42,7 @@
                         <h4>forget password ?</h4>
                         <p>enter the email address to register with <span>e-shop</span></p>
                         <div class="wsus__login">
+
                             <form method="POST" action="{{route('password.email')}}">
                                 @csrf
                                 <div class="wsus__login_input">
@@ -44,6 +50,14 @@
                                     <input id="email" name="email" value="{{old('email')}}" type="email" placeholder="Your Email">
                                 </div>
 
+
+
+                            <form method="POST" action="{{ route('password.email') }}">
+                                @csrf
+                                <div class="wsus__login_input">
+                                    <i class="fal fa-envelope"></i>
+                                    <input id="email" type="email" name="email" value="{{old('email')}}" type="password" placeholder="Your Email">
+                                </div>
 
                                 <button class="common_btn" type="submit">send</button>
                             </form>
@@ -57,4 +71,9 @@
     <!--============================
         FORGET PASSWORD END
     ==============================-->
+
 @endsection
+
+
+@endsection
+

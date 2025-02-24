@@ -28,13 +28,13 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        toastr('welcome to the dashboard page');
         // Check role tài khoản đăng nhập, nếu không sẽ trả về trang user
         if ($request->user()->role === 'admin') {
             return redirect()->intended('/admin/dashboard');
-        }elseif($request->user()->role === 'vendor'){
+        } elseif ($request->user()->role === 'vendor') {
             return redirect()->intended('/vendor/dashboard');
-        }elseif($request->user()->role === 'shipper'){
+        } elseif ($request->user()->role === 'shipper') {
             return redirect()->intended('/shipper/dashboard');
         }
         return redirect()->intended(RouteServiceProvider::HOME);
