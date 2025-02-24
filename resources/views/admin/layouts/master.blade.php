@@ -85,7 +85,6 @@
   <!-- Template JS File -->
   <script src="{{asset('backend/assets/js/scripts.js')}}"></script>
   <script src="{{asset('backend/assets/js/custom.js')}}"></script>
-  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
   {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
   <script>
     @if($errors->any())
