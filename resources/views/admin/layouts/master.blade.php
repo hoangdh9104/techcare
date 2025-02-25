@@ -116,7 +116,7 @@
   <script src="{{asset('backend/assets/js/custom.js')}}"></script>
 
 <!-- Lỗi thì có thể xóa
-
+  {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }}  --}}
   -->
 
   {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
