@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Backend\VendorProfileController;
 use Illuminate\Support\Facades\Route;
