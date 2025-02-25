@@ -18,10 +18,10 @@
   {{--sử dụng thư viện toastr --}}
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-  {{-- jquery database css Lỗi sai phiên bản
+  {{-- jquery database css Lỗi sai phiên bản 
   <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
-  --}}
+ --}}
 
   <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
@@ -116,7 +116,7 @@
   <script src="{{asset('backend/assets/js/custom.js')}}"></script>
 
 <!-- Lỗi thì có thể xóa
-  {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }}  --}}
+
   -->
 
   {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
