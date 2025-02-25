@@ -72,14 +72,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Kiểm tra xem category có tồn tại không
+        $category = Category::find($id);
+        if (!$category) {
+            return redirect()->route('admin.category.index')->withErrors('Category not found');
+        }
+
+        // Validation
         $request->validate([
             'icon' => ['required', 'not_in:empty'],
-            'name' => ['required', 'max:200', 'unique:categories,name,'.$id],
-            'status' => ['required']
+            'name' => ['required', 'max:200', 'unique:categories,name,'.$id.',id'], // Sửa lỗi unique
+            'status' => ['required', 'in:0,1'] // Đảm bảo giá trị status hợp lệ
         ]);
 
-        $category = Category::findOrFail($id);
-
+        // Cập nhật thông tin
         $category->icon = $request->icon;
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
@@ -90,6 +96,7 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.category.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
