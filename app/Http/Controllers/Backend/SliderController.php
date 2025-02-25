@@ -71,7 +71,8 @@ class SliderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+        return view('admin.slider.edit', compact('slider'));
     }
 
     /**
@@ -79,7 +80,32 @@ class SliderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $request->validate([
+            'banner' => ['nullable', 'image', 'max:2000'],
+            'type' => ['max:200', 'string'],
+            'title' => ['required', 'max:200'],
+            'starting_price' => ['max:200'],
+            'btn_url' => ['url'],
+            'serial' => ['required', 'integer'],
+            'status' => ['required'],
+        ]);
+        $slider = Slider::findOrFail($id);
+        // handle file upload
+        $imgPath = $this->updateImage($request, 'banner', 'uploads', $slider->banner);
+        // end handle file upload
+        $slider->banner = empty(!$imgPath) ? $imgPath : $slider->banner;
+
+        $slider->type = $request->type;
+        $slider->title = $request->title;
+        $slider->starting_price = $request->starting_price;
+        $slider->btn_url = $request->btn_url;
+        $slider->serial = $request->serial;
+        $slider->status = $request->status;
+        $slider->save();
+        toastr('Update Successfully!', 'success');
+        // toastr()->success('Update Successfully!', 'success');
+        return redirect()->route('admin.slider.index');
     }
 
     /**
@@ -87,6 +113,10 @@ class SliderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $slider = Slider::findOrFail($id);
+       $this->deleteImage($slider->banner);
+       $slider->delete();
+
+       return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }

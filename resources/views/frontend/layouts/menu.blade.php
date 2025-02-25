@@ -25,11 +25,11 @@
                             @if(count($category->subCategories) > 0)
                                 <ul class="wsus_menu_cat_droapdown">
                                     @foreach ($category->subCategories as $subCategory)
-                                        <li><a href="">{{$subCategory->name}} <i class="{{count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : ''}}"></i></a>
+                                        <li><a href="#">{{$subCategory->name}} <i class="{{count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : ''}}"></i></a>
                                             @if(count($subCategory->childCategories) > 0)
                                             <ul class="wsus__sub_category">
                                                 @foreach ($subCategory->childCategories as $childCategory)
-                                                    <li><a href="#">{{$childCategory->name}}</a> </li>
+                                                    <li><a href="{{route('products.index', ['childcategory' => $childCategory->slug])}}">{{$childCategory->name}}</a> </li>
                                                 @endforeach
                                             </ul>
                                             @endif
@@ -153,18 +153,18 @@
             <div class="wsus__mobile_menu_main_menu">
                 <div class="accordion accordion-flush" id="accordionFlushExample2">
                     <ul>
-                        <li><a href="">home</a></li>
+                        <li><a href="#">home</a></li>
 
-                        <li><a href="">vendor</a></li>
+                        <li><a href="#">vendor</a></li>
 
-                        <li><a href="">blog</a></li>
-                        <li><a href="">about us</a></li>
-                        <li><a href="">contact</a></li>
+                        <li><a href="#">blog</a></li>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">contact</a></li>
 
 
 
-                        <li><a href="">track order</a></li>
-                        <li><a href="">flash sale</a></li>
+                        <li><a href="#">track order</a></li>
+                        <li><a href="#">flash sale</a></li>
                     </ul>
                 </div>
             </div>
