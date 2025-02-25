@@ -33,8 +33,8 @@
                         <div class="form-group">
                             <label for="inputState">Status</label>
                             <select id="inputState" class="form-control" name="status">
-                              <option {{$category->status == 1 ? 'selected': '' }} value="1">Active</option>
-                              <option {{$category->status == 0 ? 'selected': '' }}value="0">Inactive</option>
+                              <option value="1" @selected($category->status == 1)>Active</option>
+                              <option value="0" @selected($category->status == 0)>Inactive</option>
                             </select>
                           </div>
                           <button type="submit" class="btn btn-primary">Update</button>

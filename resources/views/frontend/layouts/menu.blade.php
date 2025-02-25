@@ -61,9 +61,9 @@
                         @if (auth()->user()->role === 'user')
                         <li><a href="{{route('user.dashboard')}}">my account</a></li>
                         @elseif (auth()->user()->role === 'vendor')
-                        <li><a href="{{route('vendor.dashbaord')}}">Vendor Dashboard</a></li>
+                        <li><a href="{{route('vendor.dashboard')}}">Vendor Dashboard</a></li>
                         @elseif (auth()->user()->role === 'admin')
-                        <li><a href="{{route('admin.dashbaord')}}">Admin Dashboard</a></li>
+                        <li><a href="{{route('admin.dashboard')}}">Admin Dashboard</a></li>
 
                         @endif
                         @else
@@ -83,20 +83,20 @@
     <ul class="wsus__mobile_menu_header_icon d-inline-flex">
 
         <li><a href="#"><i class="fal fa-heart"></i><span id="wishlist_count">
-            @if (auth()->check())
+            {{-- @if (auth()->check())
             {{\App\Models\Wishlist::where('user_id', auth()->user()->id)->count()}}
             @else
             0
-            @endif
+            @endif --}}
         </span></a></li>
 
         @if (auth()->check())
         @if (auth()->user()->role === 'user')
         <li><a href="{{route('user.dashboard')}}"><i class="fal fa-user"></i></a></li>
         @elseif (auth()->user()->role === 'vendor')
-        <li><a href="{{route('vendor.dashbaord')}}"><i class="fal fa-user"></i></a></li>
+        <li><a href="{{route('vendor.dashboard')}}"><i class="fal fa-user"></i></a></li>
         @elseif (auth()->user()->role === 'admin')
-        <li><a href="{{route('admin.dashbaord')}}"><i class="fal fa-user"></i></a></li>
+        <li><a href="{{route('admin.dashboard')}}"><i class="fal fa-user"></i></a></li>
         @endif
         @else
         <li><a href="{{route('login')}}"><i class="fal fa-user"></i></a></li>
