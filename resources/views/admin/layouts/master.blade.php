@@ -42,7 +42,7 @@
         gtag('config', 'UA-94034622-3');
     </script>
     <!-- /END GA -->
-    
+
     {{-- @if($settings->layout === 'RTL')
   <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
   @endif --}}
