@@ -10,7 +10,9 @@
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>General Dashboard &mdash; Stisla</title>
 
-
+    {{-- <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>General Dashboard &mdash; Stisla</title> --}}
 
 
     <!-- General CSS Files -->
@@ -48,7 +50,21 @@
     </script>
     <!-- /END GA -->
     
+    {{-- @if($settings->layout === 'RTL')
+  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
+  @endif --}}
 
+  {{-- <script>
+    const USER = {
+        id: "{{ auth()->user()->id }}",
+        name: "{{ auth()->user()->nmae }}",
+        image: "{{ asset(auth()->user()->image) }}"
+    }
+    const PUSHER = {
+        key: "{{ $pusherSetting->pusher_key }}",
+        cluster: "{{ $pusherSetting->pusher_cluster }}"
+    }
+  </script> --}}
 
     @vite(['resources/js/app.js', 'resources/js/admin.js'])
 </head>
@@ -78,8 +94,40 @@
         </div>
     </div>
 
-  
- 
+  {{-- </div>
+
+  <!-- General JS Scripts -->
+  <script src="{{asset('backend/assets/modules/jquery.min.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/popper.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/tooltip.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/moment.min.js')}}"></script>
+  <script src="{{asset('backend/assets/js/stisla.js')}}"></script> --}}
+
+  <!-- JS Libraies -->
+  {{-- <script src="{{asset('backend/assets/modules/simple-weather/jquery.simpleWeather.min.js')}}"></script> --}}
+  {{-- <script src="{{asset('backend/assets/modules/chart.min.js')}}"></script> --}}
+  {{-- <script src="{{asset('backend/assets/modules/jqvmap/dist/jquery.vmap.min.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/summernote/summernote-bs4.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script> --}}
+  {{--sử dụng thư viện toastr --}}
+  {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+
+  {{--jquery database / Lỗi Sai phiên bản
+  <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
+  --}}
+  {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+  <script src="{{asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script> --}}
+7
 
 
     <!-- General JS Scripts -->
@@ -114,59 +162,58 @@
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
     {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
-    <script>
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                toastr.error('{{ $error }}')
-            @endforeach
-        @endif
-    </script>
-    
-    <script>
-        $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   <script>
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            toastr.error('{{ $error }}')
+        @endforeach
+    @endif
+</script>
+
+<script>
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('click', '.delete-item', function(event){
+            event.preventDefault();
+
+            let deleteUrl = $(this).attr('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: deleteUrl,
+                        success: function(data){
+                            if (data.status == 'success') {
+                                Swal.fire('Deleted!', data.message, 'success');
+                                window.location.reload();
+                            } else if (data.status == 'error') {
+                                Swal.fire('Cant Delete', data.message, 'error');
+                            }
+                        },
+                        error: function(xhr, status, error){
+                            console.log(error);
+                        }
+                    });
                 }
             });
-    
-            $('body').on('click', '.delete-item', function(event){
-                event.preventDefault();
-    
-                let deleteUrl = $(this).attr('href');
-    
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'DELETE',
-                            url: deleteUrl,
-                            success: function(data){
-                                if (data.status == 'success') {
-                                    Swal.fire('Deleted!', data.message, 'success');
-                                    window.location.reload();
-                                } else if (data.status == 'error') {
-                                    Swal.fire('Cant Delete', data.message, 'error');
-                                }
-                            },
-                            error: function(xhr, status, error){
-                                console.log(error);
-                            }
-                        });
-                    }
-                });
-            });
         });
-    </script>
-    
-    @stack('scripts')
-    </body>
-    </html>
-    
+    });
+</script>
+
+@stack('scripts')
+</body>
+</html>
