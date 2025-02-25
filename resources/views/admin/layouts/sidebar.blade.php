@@ -12,7 +12,13 @@
           <a href="{{route('admin.dashboard')}}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
         </li>
         <li class="menu-header">Starter</li>
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage website</span></a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link" href="{{route('admin.slider.index')}}">Slider</a></li>
 
+            </ul>
+          </li>
         <li class="dropdown">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Categories</span></a>
           <ul class="dropdown-menu">
@@ -22,13 +28,7 @@
           </ul>
         </li>
 
-        <li class="dropdown">
-          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage website</span></a>
-          <ul class="dropdown-menu">
-            <li><a class="nav-link" href="{{route('admin.slider.index')}}">Slider</a></li>
 
-          </ul>
-        </li>
         {{-- <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
             <ul class="dropdown-menu">
