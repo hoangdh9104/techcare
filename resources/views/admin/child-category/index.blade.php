@@ -33,29 +33,30 @@
 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
     <script>
-        $(document).ready(function(){
-            $('body').on('click', '.change-status', function(){
-                let isChecked = $(this).is(':checked');
+        $(document).ready(function() {
+            $('body').on('click', '.change-status', function() {
+                let isChecked = $(this).is(':checked') ? 1 : 0;
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{route('admin.child-category.change-status')}}",
-                    method: 'PUT',
+                    url: "{{ route('admin.child-category.change-status') }}",
+                    type: "PUT",
                     data: {
-                        status: isChecked,
-                        id: id
+                        _token: "{{ csrf_token() }}", // Thêm CSRF token vào đây
+                        id: id,
+                        status: isChecked
                     },
-                    success: function(data){
-                        toastr.success(data.message)
+                    success: function(data) {
+                        toastr.success(data.message);
                     },
-                    error: function(xhr, status, error){
-                        console.log(error);
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                        toastr.error('Something went wrong!');
                     }
-                })
+                });
 
-            })
-        })
+            });
+        });
     </script>
 @endpush

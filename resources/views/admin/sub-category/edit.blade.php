@@ -39,9 +39,9 @@
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select id="inputState" class="form-control" name="status">
-                              <option value="1" @selected($subCategory->status == 1)>Active</option>
-                              <option value="0" @selected($subCategory->status == 0)>Inactive</option>
-                            </select>
+                                        <option value="1" @selected($subCategory->status == 1)>Active</option>
+                                        <option value="0" @selected($subCategory->status == 0)>Inactive</option>
+                                    </select>
 
                                 </div>
                                 <button type="submit" class="btn btn-primary">Update</button>
