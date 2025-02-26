@@ -2,7 +2,7 @@
 // Admin routes
 
 use App\Http\Controllers\Backend\AdminController;
-
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProfileController;
@@ -22,9 +22,9 @@ Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name
 
 /* Category route */
 Route::resource('category', CategoryController::class);
-Route::put('change-status',[CategoryController::class,'changeStatus'])->name('changeStatus');
+Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('changeStatus');
 Route::delete('category/{id}', [CategoryController::class, 'destroy'])
-->name('category.destroy');
+    ->name('category.destroy');
 
 /* Sub-Category route */
 Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.changeStatus');
@@ -48,5 +48,6 @@ Route::post('profile/update/password', [ProfileController::class, 'updatePasswor
 
 // Slider routes
 Route::resource('slider', SliderController::class);
-
-
+/* Brand route */
+Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.changeStatus');
+Route::resource('brand', BrandController::class);
