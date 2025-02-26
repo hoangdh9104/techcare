@@ -105,11 +105,9 @@ class SubCategoryController extends Controller
         $subCategory = SubCategory::findOrFail($id);
         $subCategory->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Deleted Successfully'
-        ]);
+        return redirect()->route('admin.sub-category.index')->with('success', 'Deleted Successfully');
     }
+
 
     public function changeStatus(Request $request)
     {

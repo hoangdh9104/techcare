@@ -8,25 +8,21 @@
         </div>
 
         <div class="section-body">
-
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>All Sub-Categories</h4>
                             <div class="card-header-action">
-                                <a href="{{ route('admin.sub-category.create') }}" class="btn btn-primary"><i
-                                        class="fas fa-plus"></i> Create New</a>
+                                <a href="{{ route('admin.sub-category.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
                             </div>
                         </div>
                         <div class="card-body">
                             {{ $dataTable->table() }}
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 @endsection
@@ -43,7 +39,7 @@
                     url: "{{ route('admin.sub-category.changeStatus') }}",
                     type: "PUT",
                     data: {
-                        _token: "{{ csrf_token() }}", // Thêm CSRF token vào đây
+                        _token: "{{ csrf_token() }}",
                         id: id,
                         status: isChecked
                     },
@@ -55,7 +51,6 @@
                         toastr.error('Something went wrong!');
                     }
                 });
-
             });
         });
     </script>

@@ -21,17 +21,25 @@ Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name
 
 
 /* Category route */
-Route::put('change-status',[CategoryController::class,'changeStatus'])->name('changeStatus');
 Route::resource('category', CategoryController::class);
+Route::put('change-status',[CategoryController::class,'changeStatus'])->name('changeStatus');
+Route::delete('category/{id}', [CategoryController::class, 'destroy'])
+->name('category.destroy');
 
 /* Sub-Category route */
 Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.changeStatus');
 Route::resource('sub-category', SubCategoryController::class);
+Route::delete('admin/sub-category/{id}', [SubCategoryController::class, 'destroy'])
+    ->name('admin.sub-category.destroy');
+
 
 /** Child Category Route */
+Route::resource('child-category', ChildCategoryController::class);
 Route::put('child-category/change-status', [ChildCategoryController::class, 'changeStatus'])->name('child-category.change-status');
 Route::get('get-subcategories', [ChildCategoryController::class, 'getSubCategories'])->name('get-subcategories');
-Route::resource('child-category', ChildCategoryController::class);
+Route::delete('admin/child-category/{id}', [ChildCategoryController::class, 'destroy'])
+    ->name('admin.child-category.destroy');
+
 
 
 

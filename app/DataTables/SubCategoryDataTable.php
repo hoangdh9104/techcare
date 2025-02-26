@@ -24,31 +24,36 @@ class SubCategoryDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $editBtn = "<a href='" . route('admin.sub-category.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.sub-category.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
-                return $editBtn . $deleteBtn;
+                $deleteForm = "<form action='" . route('admin.sub-category.destroy', $query->id) . "' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Are you sure you want to delete this item?\");'>";
+                $deleteForm .= csrf_field();
+                $deleteForm .= method_field('DELETE');
+                $deleteForm .= "<button type='submit' class='btn btn-danger ml-2'><i class='far fa-trash-alt'></i></button>";
+                $deleteForm .= "</form>";
+
+                return $editBtn . $deleteForm;
             })
             ->addColumn('category', function ($query) {
-                return $query->category->name;
+                return $query->category ? $query->category->name : 'N/A';
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
                     $button = '<label class="custom-switch mt-2">
-                    <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
-                    <span class="custom-switch-indicator"></span>
-                </label>';
+                                <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
+                                <span class="custom-switch-indicator"></span>
+                               </label>';
                 } else {
                     $button = '<label class="custom-switch mt-2">
-                    <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
-                    <span class="custom-switch-indicator"></span>
-                </label>';
+                                <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
+                                <span class="custom-switch-indicator"></span>
+                               </label>';
                 }
                 return $button;
             })
-
-            ->rawColumns(['icon', 'action', 'status'])
+            ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }
+
 
     /**
      * Get the query source of dataTable.

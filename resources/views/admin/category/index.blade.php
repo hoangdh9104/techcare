@@ -31,6 +31,7 @@
 
 @endsection
 
+
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <script>
@@ -43,7 +44,7 @@
                     url: "{{ route('admin.changeStatus') }}",
                     type: "PUT",
                     data: {
-                        _token: "{{ csrf_token() }}", // Thêm CSRF token vào đây
+                        _token: "{{ csrf_token() }}",
                         id: id,
                         status: isChecked
                     },
@@ -55,9 +56,7 @@
                         toastr.error('Something went wrong!');
                     }
                 });
-
             });
         });
     </script>
 @endpush
-
