@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Str;
 
@@ -96,23 +97,29 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-       $category = Category::findOrFail($id);
-       $subCategory = SubCategory::where('category_id', $category->id)->count();
-       if($subCategory > 0){
-           return response(['status' => 'error', 'message' => 'This items contain, sub items for delete this you have to delete the sub items first!']);
-       }
-       $category->delete();
+        $category = Category::findOrFail($id);
+        $subCategoryCount = SubCategory::where('category_id', $category->id)->count();
 
-       return response(['status'=> 'success'], 'Deleted Duccessfully!');
+        if ($subCategoryCount > 0) {
+            return redirect()->route('admin.category.index')
+                             ->with('error', 'This category contains sub-items. You have to delete the sub items first!');
+        }
+
+        $category->delete();
+
+        return redirect()->route('admin.category.index')
+                         ->with('success', 'Deleted Successfully');
     }
+
 
     public function changeStatus(Request $request)
     {
         $category = Category::findOrFail($request->id);
-        $category->status = $request->status == 'true' ? 1 : 0;
+        $category->status = $request->status;
         $category->save();
 
         return response(['message' => 'Status has been updated!']);
     }
+  
 
 }

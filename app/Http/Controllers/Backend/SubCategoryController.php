@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\SubCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\ChildCategory;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Str;
@@ -68,7 +67,7 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $categories=Category::all();
-        $subCategory = SubCategory::findOrFail(($id));
+        $subCategory = SubCategory::findOrFail($id);
         return view('admin.sub-category.edit', compact('subCategory','categories'));
     }
 
@@ -81,6 +80,7 @@ class SubCategoryController extends Controller
         'category' => ['required'],
         'name' => ['required', 'max:200', 'unique:sub_categories,name,'.$id],
         'status' => ['required']
+
     ]);
 
     $subCategory = SubCategory::findOrFail($id);
@@ -88,7 +88,7 @@ class SubCategoryController extends Controller
     $subCategory->category_id = $request->category;
     $subCategory->name = $request->name;
     $subCategory->slug = Str::slug($request->name);
-    $subCategory->status = $request->status === 'Active' ? 1 : 0; // Chuyển đổi status thành số nguyên
+    $subCategory->status = (int) $request->status;
     $subCategory->save();
 
     toastr('Updated Successfully!', 'success');
@@ -103,25 +103,20 @@ class SubCategoryController extends Controller
     public function destroy(string $id)
     {
         $subCategory = SubCategory::findOrFail($id);
-        $childCategory = ChildCategory::where('sub_category_id', $subCategory->id)->count();
-        if($childCategory > 0){
-            return response(['status' => 'error', 'message' => 'This items contain, sub items for delete this you have to delete the sub items first!']);
-        }
         $subCategory->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Deleted Successfully'
-        ]);
+        return redirect()->route('admin.sub-category.index')->with('success', 'Deleted Successfully');
     }
-    public function changeStatus(Request $request){
-        $category = Category::findOrFail($request->id);
-        $category->status=$request->status =='true' ?1:0;
-        $category->save();
 
-        return response()->json([
-            'message' => 'Status has been updated !'
-        ]);
+
+    public function changeStatus(Request $request)
+    {
+        $subCategory = SubCategory::findOrFail($request->id);
+        $subCategory->status = $request->status; // Giá trị đã là 1 hoặc 0
+        $subCategory->save();
+
+        return response(['message' => 'Status updated successfully.']);
     }
+
 
 }
