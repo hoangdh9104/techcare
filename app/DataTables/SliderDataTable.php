@@ -22,20 +22,20 @@ class SliderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query){
-                $editBtn = "<a href='".route('admin.slider.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a> ";
-                $deleteBtn = "<a href='".route('admin.slider.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a> ";
-                return $editBtn.$deleteBtn;
+            ->addColumn('action', function ($query) {
+                $editBtn = "<a href='" . route('admin.slider.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a> ";
+                $deleteBtn = "<a href='" . route('admin.slider.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='fas fa-trash-alt'></i></a> ";
+                return $editBtn . $deleteBtn;
             })
-            ->addColumn('banner', function($query){
-                return $img = "<img width='100px' src='".asset($query->banner)."'></img>";
+            ->addColumn('banner', function ($query) {
+                return $img = "<img width='100px' src='" . asset($query->banner) . "'></img>";
             })
-            ->addColumn('status', function($query){
+            ->addColumn('status', function ($query) {
                 $active = '<i class="badge badeg-info">Active</i>';
                 $inActive = '<i class="badge badeg-info">Inactive</i>';
-                if($query->status ==1){
+                if ($query->status == 1) {
                     return $active;
-                }else{
+                } else {
                     return $inActive;
                 }
             })
@@ -57,20 +57,20 @@ class SliderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('slider-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('slider-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -79,17 +79,17 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            
+
             Column::make('id'),
             Column::make('banner'),
             Column::make('title'),
             Column::make('serial'),
             Column::make('status'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             // Column::make('created_at'),
             // Column::make('updated_at'),
         ];
