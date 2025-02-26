@@ -1,17 +1,20 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html">Stisla</a>
+        <a href="index.html">Techcare</a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
         <a href="index.html">St</a>
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
-        <li class="dropdown active">
+        <li class="dropdown {{setActive([
+            'admin.dashboard'
+        ])}}">
           <a href="{{route('admin.dashboard')}}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
         </li>
         <li class="menu-header">Starter</li>
+        {{-- start Manage website --}}
         <li class="dropdown {{setActive([
             'admin.slider.*'
         ])}}">
@@ -19,7 +22,9 @@
             <ul class="dropdown-menu">
               <li class="{{setActive(['admin.slider.*'])}}"><a class="nav-link" href="{{route('admin.slider.index')}}">Slider</a></li>
             </ul>
-          </li>
+        </li>
+        {{-- end Manage website --}}
+        {{-- start Manage Categories --}}
         <li class="dropdown {{setActive([
             'admin.category.*',
             'admin.sub-category.*',
@@ -32,8 +37,15 @@
             <li class="{{setActive(['admin.child-category.*'])}}"><a class="nav-link" href="{{route('admin.child-category.index')}}">Child Category</a></li>
           </ul>
         </li>
-
-
+        {{-- end Manage Categories --}}
+        {{-- start Manage Product --}}
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Product</span></a>
+            <ul class="dropdown-menu">
+              <li class=""><a class="nav-link" href="">Brand</a></li>
+            </ul>
+        </li>
+        {{-- end Manage Product --}}
         {{-- <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>
             <ul class="dropdown-menu">
