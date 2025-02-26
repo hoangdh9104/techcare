@@ -49,5 +49,5 @@ Route::post('profile/update/password', [ProfileController::class, 'updatePasswor
 // Slider routes
 Route::resource('slider', SliderController::class);
 /* Brand route */
-Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.changeStatus');
+Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
 Route::resource('brand', BrandController::class);
