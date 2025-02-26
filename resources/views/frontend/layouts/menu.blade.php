@@ -83,11 +83,10 @@
     <ul class="wsus__mobile_menu_header_icon d-inline-flex">
 
         <li><a href="#"><i class="fal fa-heart"></i><span id="wishlist_count">
-            @if (auth()->check())
-            {{-- {{\App\Models\Wishlist::where('user_id', auth()->user()->id)->count()}} --}}
+            {{-- @if (auth()->check())
+            {{\App\Models\Wishlist::where('user_id', auth()->user()->id)->count()}}
             @else
-            0
-            @endif
+            @endif --}}
         </span></a></li>
 
         @if (auth()->check())
