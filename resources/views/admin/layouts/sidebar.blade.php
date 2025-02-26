@@ -39,10 +39,12 @@
         </li>
         {{-- end Manage Categories --}}
         {{-- start Manage Product --}}
-        <li class="dropdown">
+        <li class="dropdown {{setActive([
+            'admin.brand.*'
+        ])}}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Product</span></a>
             <ul class="dropdown-menu">
-              <li class=""><a class="nav-link" href="">Brand</a></li>
+              <li class="{{setActive(['admin.brand.*'])}}"><a class="nav-link" href="{{route('admin.brand.index')}}">Brand</a></li>
             </ul>
         </li>
         {{-- end Manage Product --}}
