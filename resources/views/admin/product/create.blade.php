@@ -162,6 +162,8 @@
     <script>
         $(document).ready(function(){
             $('body').on('change', '.main-category', function(e){
+                // nếu thay đổi danh mục cha category, child category will be reset
+                $('.child-category').html('<option value="">Select</option>')
                 let id = $(this).val();
                 $.ajax({
                     method: 'GET',
