@@ -86,7 +86,6 @@
             {{-- @if (auth()->check())
             {{\App\Models\Wishlist::where('user_id', auth()->user()->id)->count()}}
             @else
-            0
             @endif --}}
         </span></a></li>
 
