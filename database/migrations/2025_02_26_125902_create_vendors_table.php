@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
             $table->text('banner');
+            $table->string('shop_name')->nullable(); // Thêm tên shop
             $table->string('phone');
             $table->string('email');
             $table->text('address');
