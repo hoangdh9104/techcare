@@ -12,7 +12,7 @@
             <div class="card-header">
               <h4>All Product</h4>
               <div class="card-header-action"   >
-                <a href="{{route('admin.slider.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create new</a>
+                <a href="{{route('admin.products.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create new</a>
               </div>
             </div>
             <div class="card-body">
