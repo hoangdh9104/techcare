@@ -19,7 +19,21 @@ trait ImageUploadTrait
             return $path . '/' . $imgName;
         }
     }
-
+    public function uploadMultiImage(Request $request, $inputName, $path)
+    {
+        // kiểm tra nếu request có ảnh
+        $imgPaths = [];
+        if ($request->hasFile($inputName)) {
+            $imgs = $request->{$inputName};
+            foreach ($imgs as $img) {
+                $ext = $img->getClientOriginalExtension();
+                $imgName = 'media_' . uniqid() . '.' . $ext;
+                $img->move(public_path($path), $imgName);
+                $imgPaths[] =  $path . '/' . $imgName;
+            }
+        }
+        return $imgPaths;
+    }
     public function updateImage(Request $request, $inputName, $path, $oldPath = null)
     {
         // kiểm tra nếu request có ảnh
