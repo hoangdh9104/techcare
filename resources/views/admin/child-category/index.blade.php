@@ -88,7 +88,7 @@
                     },
                     success: function(data) {
                         // Nếu response là plain text, hiển thị trực tiếp:
-                        toastr.success(data);
+                        toastr.success(data.message);
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.responseText);
