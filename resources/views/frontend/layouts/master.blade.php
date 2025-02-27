@@ -141,6 +141,9 @@
     <script src="{{asset('frontend/js/jquery.classycountdown.js')}}"></script>
     {{--toastr js --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    {{-- classycountdown js --}}
+    <script src="{{asset('frontend/js/jquery.classycountdown.js')}}"></script>
+
     <!--main/custom js-->
     <script src="{{asset('frontend/js/main.js')}}"></script>
     {{-- show notification by using libary toastr --}}
@@ -151,6 +154,7 @@
             @endforeach
         @endif
     </script>
+@stack('scripts')
 </body>
 
 </html>

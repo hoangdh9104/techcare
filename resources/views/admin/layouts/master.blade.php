@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
     <link rel="stylesheet" href="{{asset('backend/assets/css/bootstrap-iconpicker.min.css')}}">
+    {{-- datetimepicker --}}
     <link rel="stylesheet" href="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('backend/assets/modules/select2/dist/css/select2.min.css')}}">
     <!-- Template CSS -->
@@ -48,6 +49,23 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
+    <!-- /END GA -->
+
+    {{-- @if($settings->layout === 'RTL')
+  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
+  @endif --}}
+
+  {{-- <script>
+    const USER = {
+        id: "{{ auth()->user()->id }}",
+        name: "{{ auth()->user()->nmae }}",
+        image: "{{ asset(auth()->user()->image) }}"
+    }
+    const PUSHER = {
+        key: "{{ $pusherSetting->pusher_key }}",
+        cluster: "{{ $pusherSetting->pusher_cluster }}"
+    }
+  </script> --}}
 
     @vite(['resources/js/app.js'])
 </head>
@@ -136,6 +154,7 @@
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js')}}"></script>
+    {{-- datetimepicker js --}}
     <script src="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script>
     <!-- Page Specific JS File -->
@@ -144,22 +163,24 @@
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
-    {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
-   <script>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            toastr.error('{{ $error }}')
-        @endforeach
-    @endif
-</script>
 
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
+    <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}')
+            @endforeach
+        @endif
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
 
         $('body').on('click', '.delete-item', function(event){
             event.preventDefault();
