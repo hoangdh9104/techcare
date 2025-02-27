@@ -15,29 +15,29 @@
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>name <b>*</b></label>
-                      <input type="text" placeholder="Name" name="name">
+                      <input type="text" placeholder="Name" name="name" value="{{old('name')}}">
                     </div>
                   </div>
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>email</label>
-                      <input type="email" placeholder="Email" name="email">
+                      <input type="email" placeholder="Email" name="email" value="{{old('email')}}">
                     </div>
                   </div>
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>phone <b>*</b></label>
-                      <input type="text" placeholder="Phone" name="phone">
+                      <input type="text" placeholder="Phone" name="phone" value="{{old('phone')}}">
                     </div>
                   </div>
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>countery <b>*</b></label>
                       <div class="wsus__topbar_select">
-                        <select class="select_2" name="country">
+                        <select class="select_2" name="country" value="{{old('country')}}">
                           <option>Select</option>
                           @foreach (config('settings.country_list') as $country)
-                            <option value="{{$country}}">{{$country}}</option>
+                            <option value="{{$country}}" value="{{old('country')}}">{{$country}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -47,26 +47,26 @@
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>State<b>*</b></label>
-                      <input type="text" placeholder="State" name="state">
+                      <input type="text" placeholder="State" name="state" value="{{old('state')}}">
                     </div>
                   </div>
 
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>City<b>*</b></label>
-                      <input type="text" placeholder="City" name="city">
+                      <input type="text" placeholder="City" name="city" value="{{old('city')}}">
                     </div>
                   </div>
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>zip code <b>*</b></label>
-                      <input type="text" placeholder="Zip Code" name="zip">
+                      <input type="text" placeholder="Zip Code" name="zip" value="{{old('zip')}}">
                     </div>
                   </div>
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>Address <b>*</b></label>
-                      <input type="text" placeholder="Address" name="address">
+                      <input type="text" placeholder="Address" name="address" value="{{old('address')}}">
                     </div>
                   </div>
                   
