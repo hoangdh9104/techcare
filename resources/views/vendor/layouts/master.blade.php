@@ -22,9 +22,12 @@
   <link rel="stylesheet" href="{{asset('frontend/css/jquery.classycountdown.css')}}">
   <link rel="stylesheet" href="{{asset('frontend/css/venobox.min.css')}}">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+  <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
+  <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
   <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
   <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
+  <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+
   <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -104,12 +107,22 @@
   <!--main/custom js-->
   <script src="{{asset('frontend/js/main.js')}}"></script>
   <!--show dynamic validation error-->
+  <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
+  {{-- show datatable --}}
+  <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+
   <script>
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             toastr.error("{{$error}}")
         @endforeach
     @endif
+  </script>
+
+  <script>
+    $('.summernote').summernote({
+        height:150
+    })
   </script>
 </body>
 

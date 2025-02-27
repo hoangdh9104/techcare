@@ -1,4 +1,4 @@
-@extends('vendor.dashboard.layouts.master')
+@extends('vendor.layouts.master')
 
 @section('content')
   <!--=============================
@@ -6,7 +6,7 @@
   ==============================-->
   <section id="wsus__dashboard">
     <div class="container-fluid">
-        @include('vendor.dashboard.layouts.sidebar')
+        @include('vendor.layouts.sidebar')
       <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
           <div class="dashboard_content mt-2 mt-md-0">
@@ -14,8 +14,8 @@
             <div class="wsus__dashboard_profile">
               <div class="wsus__dash_pro_area">
                 <h4>basic information</h4>
-                
-                <form action="{{route('user.profile.update')}}" method="POST" enctype="multipart/form-data">  
+
+                <form action="{{route('user.profile.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="col-md-12">
@@ -40,15 +40,15 @@
                         <input type="email" placeholder="Email" name="email" value="{{Auth::user()->email}}">
                       </div>
                     </div>
-      
+
                     </div>
                     <div class="col-xl-12">
                         <button class="common_btn mb-4 mt-2" type="submit">upload</button>
                       </div>
                 </form>
-                  
-                   
-                  
+
+
+
                     <div class="wsus__dash_pass_change mt-2">
                     <form action="{{route('user.profile.update.password')}}" method="POST">
                         @csrf
@@ -78,8 +78,8 @@
                       </div>
                     </form>
                     </div>
-                 
-                
+
+
               </div>
             </div>
           </div>
