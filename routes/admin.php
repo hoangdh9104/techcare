@@ -2,9 +2,11 @@
 // Admin routes
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
 
 use App\Http\Controllers\Backend\SliderController;
@@ -49,5 +51,9 @@ Route::post('profile/update/password', [ProfileController::class, 'updatePasswor
 // Slider routes
 Route::resource('slider', SliderController::class);
 /* Brand route */
-Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.changeStatus');
+Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
 Route::resource('brand', BrandController::class);
+/* Vendor profile route */
+Route::resource('vendor-profile', AdminVendorProfileController::class);
+/* Product route */
+Route::resource('product', ProductController::class);
