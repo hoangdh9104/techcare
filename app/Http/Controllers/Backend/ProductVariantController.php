@@ -6,6 +6,7 @@ use App\DataTables\ProductVariantDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
 
 class ProductVariantController extends Controller
@@ -83,7 +84,7 @@ class ProductVariantController extends Controller
 
         toastr('Updated Successfully!', 'success', 'success');
 
-        return redirect()->route('admin.products-variant.edit', ['products_variant' => $variant->product_id]);
+        return redirect()->route('admin.products-variant.edit', ['products_variant' => $variant->id]);
     }
 
     /**
@@ -92,6 +93,11 @@ class ProductVariantController extends Controller
     public function destroy(string $id)
     {
         $variant = ProductVariant::findOrFail($id);
+        $variantItemcheck = ProductVariantItem::where('product_variant_id', $variant->id)->count();
+        if ($variantItemcheck > 0) {
+            return response(['status' => 'error', 'message' => 'This variant containt variant in it delete
+            the variant item first for delete this variant!']);
+        }
         $variant->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
