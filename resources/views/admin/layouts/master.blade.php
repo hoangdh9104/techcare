@@ -49,6 +49,23 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
+    <!-- /END GA -->
+
+    {{-- @if($settings->layout === 'RTL')
+  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
+  @endif --}}
+
+  {{-- <script>
+    const USER = {
+        id: "{{ auth()->user()->id }}",
+        name: "{{ auth()->user()->nmae }}",
+        image: "{{ asset(auth()->user()->image) }}"
+    }
+    const PUSHER = {
+        key: "{{ $pusherSetting->pusher_key }}",
+        cluster: "{{ $pusherSetting->pusher_cluster }}"
+    }
+  </script> --}}
 
     @vite(['resources/js/app.js'])
 </head>
@@ -146,22 +163,24 @@
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
-    {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
-   <script>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            toastr.error('{{ $error }}')
-        @endforeach
-    @endif
-</script>
 
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
+    <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}')
+            @endforeach
+        @endif
+    </script>
+    <script>
+        $(document).ready(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
 
         $('body').on('click', '.delete-item', function(event){
             event.preventDefault();
