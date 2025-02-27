@@ -84,7 +84,7 @@ class ProductVariantController extends Controller
 
         toastr('Updated Successfully!', 'success', 'success');
 
-        return redirect()->route('admin.products-variant.edit', ['products_variant' => $variant->product_id]);
+        return redirect()->route('admin.products-variant.edit', ['products_variant' => $variant->id]);
     }
 
     /**
