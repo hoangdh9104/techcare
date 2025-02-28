@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b40e9c77b1f55701186da48bbdc2e02b",
+    "content-hash": "67061f30d96d34b865aeb30e72fdb8db",
     "packages": [
         {
             "name": "brick/math",
@@ -6312,21 +6312,21 @@
         },
         {
             "name": "yoeunes/toastr",
-            "version": "v2.3.5",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yoeunes/toastr.git",
-                "reference": "5c39d42b4c7b110572b7643bba1cd51b8af89b74"
+                "reference": "fe9fc7c80d213dd443d899ce925d189714aed422"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yoeunes/toastr/zipball/5c39d42b4c7b110572b7643bba1cd51b8af89b74",
-                "reference": "5c39d42b4c7b110572b7643bba1cd51b8af89b74",
+                "url": "https://api.github.com/repos/yoeunes/toastr/zipball/fe9fc7c80d213dd443d899ce925d189714aed422",
+                "reference": "fe9fc7c80d213dd443d899ce925d189714aed422",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "php-flasher/flasher-laravel": "^1.15.14"
+                "php-flasher/flasher-laravel": "^1.12"
             },
             "type": "library",
             "extra": {
@@ -6414,7 +6414,7 @@
                 }
             ],
             "abandoned": "php-flasher/flasher-toastr-laravel",
-            "time": "2024-03-16T15:29:23+00:00"
+            "time": "2023-01-14T02:38:08+00:00"
         }
     ],
     "packages-dev": [
