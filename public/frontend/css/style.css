@@ -9488,3 +9488,7 @@ a:not([href]):not([class]):hover {
 .wsus__input label{
     margin-bottom: 5px;
 }
+
+.create_button{
+    text-align: right;
+}
