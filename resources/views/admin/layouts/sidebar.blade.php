@@ -66,6 +66,8 @@
               <li class="{{setActive(['admin.vendor-profile.*'])}}"><a class="nav-link" href="{{route('admin.vendor-profile.index')}}">Vender Profile</a></li>
             </ul>
         </li>
+        <li><a class="nav-link" href="{{route('admin.settings.index')}}"><i class="far fa-square"></i> <span>Settings</span></a></li>
+
         {{-- end Manage Ecommerce --}}
 
         {{-- <li class="dropdown">
