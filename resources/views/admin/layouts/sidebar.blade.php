@@ -41,12 +41,19 @@
         {{-- start Manage Product --}}
         <li class="dropdown {{setActive([
             'admin.brand.*',
-            'admin.products.*'
+            'admin.products.*',
+            'admin.products-image-gallery.*',
+            'admin.products-variant.*',
+            'admin.products-variant-item.*'
         ])}}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Product</span></a>
             <ul class="dropdown-menu">
               <li class="{{setActive(['admin.brand.*'])}}"><a class="nav-link" href="{{route('admin.brand.index')}}">Brand</a></li>
-              <li class="{{setActive(['admin.products.*'])}}"><a class="nav-link" href="{{route('admin.products.index')}}">Product</a></li>
+              <li class="{{setActive([
+              'admin.products.*',
+              'admin.products-image-gallery.*',
+              'admin.products-variant.*',
+              'admin.products-variant-item.*'])}}"><a class="nav-link" href="{{route('admin.products.index')}}">Product</a></li>
             </ul>
         </li>
         {{-- end Manage Product --}}
@@ -59,6 +66,8 @@
               <li class="{{setActive(['admin.vendor-profile.*'])}}"><a class="nav-link" href="{{route('admin.vendor-profile.index')}}">Vender Profile</a></li>
             </ul>
         </li>
+        <li><a class="nav-link" href="{{route('admin.settings.index')}}"><i class="far fa-square"></i> <span>Settings</span></a></li>
+
         {{-- end Manage Ecommerce --}}
 
         {{-- <li class="dropdown">
