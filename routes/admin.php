@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
 
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -84,6 +85,9 @@ Route::put('products-variant-item-update/{variantItemId}', [ProductVariantItemCo
 Route::delete('products-variant-item/{variantItemId}', [ProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
 
 Route::put('products-variant-item-status', [ProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.changes-status');
-  // ** Setting routes**//
-  Route::get('settings',[SettingController::class,'index'])->name('settings.index');
-  Route::put('generale-setting-update',[SettingController::class,'generalSettingUpdate'])->name('generale-setting-update');
+// ** Setting routes**//
+Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+Route::put('generale-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('generale-setting-update');
+// ** Shipping rule routes**//
+Route::put('shipping-rule/change-status', [ShippingRuleController::class, 'changeStatus'])->name('shipping-rule.change-status');
+Route::resource('shipping-rule', ShippingRuleController::class);
