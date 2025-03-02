@@ -9492,3 +9492,54 @@ a:not([href]):not([class]):hover {
 .create_button{
     text-align: right;
 }
+#flexSwitchCheckDefault{
+    height :20px !important;
+    width :50px !important;
+}
+
+/* nút status  */
+.custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.custom-switch-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.custom-switch-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 26px;
+    transition: 0.4s;
+}
+
+.custom-switch-label::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.custom-switch-input:checked + .custom-switch-label {
+    background-color: #6366f1; /* Màu xanh giống trong ảnh */
+}
+
+.custom-switch-input:checked + .custom-switch-label::before {
+    transform: translateX(24px);
+}
+

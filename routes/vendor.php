@@ -17,7 +17,7 @@ Route::post('profile',[VendorProfileController::class, 'updatePassword'])->name(
 Route::resource('shop-profile',VendorShopProfileController::class);
 
 // product routes
-Route::resource('products',VendorProductController::class);
+
 Route::get('product/get-subcategories', [VendorProductController::class, 'getSubCategories'])->name('product.get-subcategories');
 Route::get('product/get-childcategories', [VendorProductController::class, 'getChildCategories'])->name('product.get-child-categories');
 Route::resource('products', VendorProductController::class);
