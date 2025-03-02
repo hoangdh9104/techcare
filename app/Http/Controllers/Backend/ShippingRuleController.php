@@ -30,28 +30,38 @@ class ShippingRuleController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request->validate([
+        // Tạo rules ban đầu
+        $rules = [
             'name' => 'required|string|max:200',
-            'type' => 'required|string',
-            'min_cost' => ['nullable', 'integer', 'min:0', function ($attribute, $value, $fail) use ($request) {
-                if ($request->type === 'min_cost' && is_null($value)) {
-                    $fail('The min cost field is required when type is min_cost.');
-                }
-            }],
+            'type' => 'required|string|in:flat_cost,min_cost',
             'cost' => 'required|numeric|min:0',
             'status' => 'required|in:1,0',
-        ]);
+            'min_cost' => 'nullable|numeric|min:0',
+        ];
+
+        // Nếu type = min_cost thì min_cost bắt buộc
+        if ($request->input('type') === 'min_cost') {
+            $rules['min_cost'] = 'required|numeric|min:0';
+        }
+
+        // Validate
+        $validatedData = $request->validate($rules);
+
+        // Tạo mới dữ liệu
         $shipping = new ShippingRule();
-        $shipping->name = $request->name;
-        $shipping->type = $request->type;
-        $shipping->min_cost = $request->min_cost;
-        $shipping->cost = $request->cost;
-        $shipping->status = $request->status;
+        $shipping->name = $validatedData['name'];
+        $shipping->type = $validatedData['type'];
+        $shipping->min_cost = $validatedData['min_cost'] ?? null;  // dùng ?? null cho chắc
+        $shipping->cost = $validatedData['cost'];
+        $shipping->status = $validatedData['status'];
         $shipping->save();
+
+
+        // Thông báo & điều hướng
         toastr('Created Successfully!', 'success', 'Success');
         return redirect()->route('admin.shipping-rule.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -75,23 +85,27 @@ class ShippingRuleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:200',
-            'type' => 'required|string',
-            'min_cost' => ['nullable', 'integer', 'min:0', function ($attribute, $value, $fail) use ($request) {
-                if ($request->type === 'min_cost' && is_null($value)) {
-                    $fail('The min cost field is required when type is min_cost.');
-                }
-            }],
+            'type' => 'required|string|in:flat_cost,min_cost',
             'cost' => 'required|numeric|min:0',
             'status' => 'required|in:1,0',
-        ]);
+            'min_cost' => 'nullable|numeric|min:0',
+        ];
+
+        // Nếu type = min_cost thì min_cost bắt buộc
+        if ($request->input('type') === 'min_cost') {
+            $rules['min_cost'] = 'required|numeric|min:0';
+        }
+
+        // Validate
+        $validatedData = $request->validate($rules);
         $shipping = ShippingRule::findOrFail($id);
-        $shipping->name = $request->name;
-        $shipping->type = $request->type;
-        $shipping->min_cost = $request->min_cost;
-        $shipping->cost = $request->cost;
-        $shipping->status = $request->status;
+        $shipping->name = $validatedData['name'];
+        $shipping->type = $validatedData['type'];
+        $shipping->min_cost = $validatedData['min_cost'] ?? null;  // dùng ?? null cho chắc
+        $shipping->cost = $validatedData['cost'];
+        $shipping->status = $validatedData['status'];
         $shipping->save();
         toastr('Update Successfully!', 'success', 'Success');
         return redirect()->route('admin.shipping-rule.index');
@@ -105,8 +119,7 @@ class ShippingRuleController extends Controller
         $shipping = ShippingRule::findOrFail($id);
         $shipping->delete();
 
-        return redirect()->route('admin.shipping-rule.index')
-            ->with('success', 'Deleted Successfully');
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
     public function changeStatus(Request $request)
     {

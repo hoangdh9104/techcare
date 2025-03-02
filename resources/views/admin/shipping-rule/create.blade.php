@@ -24,13 +24,13 @@
                     <div class="form-group">
                         <label>Type</label>
                         <select class="form-control shipping-type" name="type">
-                          <option value="flat_cost">Flat cost</option>
-                          <option value="min_cost">Minium order Amount</option>
+                            <option value="flat_cost" {{ old('type') == 'flat_cost' ? 'selected' : '' }}>Flat cost</option>
+                            <option value="min_cost" {{ old('type') == 'min_cost' ? 'selected' : '' }}>Minimum order Amount</option>
                         </select>
                     </div>
                     <div class="form-group min-cost d-none">
                         <label>Minium Amount</label>
-                        <input type="text" id="min_cost" class="form-control" name="min_cost" value="0">
+                        <input type="text" id="min_cost" class="form-control" name="min_cost" value="{{old('min_cost')}}">
                     </div>
                     <div class="form-group">
                         <label>Cost</label>
@@ -54,17 +54,27 @@
 @endsection
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.body.addEventListener('click', function (event) {
-            if (event.target.classList.contains('shipping-type')) {
-                const value = event.target.value;
-                if (value !== 'min_cost' ) {
-                    document.querySelector('.min-cost').classList.add('d-none');
-                    document.querySelector('#min_cost').value =0;
-                }else{
-                    document.querySelector('.min-cost').classList.remove('d-none');
-                }
+   document.addEventListener('DOMContentLoaded', function () {
+        const shippingType = document.querySelector('.shipping-type');
+        const minCostWrapper = document.querySelector('.min-cost');
+        const minCostInput = document.querySelector('#min_cost');
+
+        // Hàm kiểm tra và ẩn/hiện theo giá trị hiện tại
+        function toggleMinCostField() {
+            if (shippingType.value === 'min_cost') {
+                minCostWrapper.classList.remove('d-none');
+            } else {
+                minCostWrapper.classList.add('d-none');
+                minCostInput.value = 0; // reset luôn để tránh lưu sai
             }
+        }
+
+        // Gọi ngay khi mới load trang (phục vụ giữ trạng thái old khi validate fail)
+        toggleMinCostField();
+
+        // Bắt sự kiện change (chuẩn với select)
+        shippingType.addEventListener('change', function () {
+            toggleMinCostField();
         });
     });
 </script>

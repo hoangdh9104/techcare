@@ -56,18 +56,26 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('.shipping-type').value === 'min_cost' ?  document.querySelector('.min-cost').classList.remove('d-none') : document.querySelector('.min-cost').classList.add('d-none');
-        document.body.addEventListener('click', function (event) {
-            if (event.target.classList.contains('shipping-type')) {
-                const value = event.target.value;
-                if (value !== 'min_cost' ) {
-                    document.querySelector('.min-cost').classList.add('d-none');
-                    document.querySelector('#min_cost').value =0;
-                }else{
-                    document.querySelector('.min-cost').classList.remove('d-none');
-                }
-            }
-        });
-    });
-</script>
+         const shippingType = document.querySelector('.shipping-type');
+         const minCostWrapper = document.querySelector('.min-cost');
+         const minCostInput = document.querySelector('#min_cost');
+
+         // Hàm kiểm tra và ẩn/hiện theo giá trị hiện tại
+         function toggleMinCostField() {
+             if (shippingType.value === 'min_cost') {
+                 minCostWrapper.classList.remove('d-none');
+             } else {
+                 minCostWrapper.classList.add('d-none');
+             }
+         }
+
+         // Gọi ngay khi mới load trang (phục vụ giữ trạng thái old khi validate fail)
+         toggleMinCostField();
+
+         // Bắt sự kiện change (chuẩn với select)
+         shippingType.addEventListener('change', function () {
+             toggleMinCostField();
+         });
+     });
+ </script>
 @endpush
