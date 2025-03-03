@@ -4,11 +4,11 @@
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  {{-- <meta name = "csrf-token" content="{{csrf_token()}}" /> --}}
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <title>General Dashboard &mdash; Stisla</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    {{-- <meta name = "csrf-token" content="{{csrf_token()}}" /> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <title>General Dashboard &mdash; Stisla</title>
 
     {{-- <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -29,11 +29,11 @@
     {{-- jquery database css --}}
     <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <link rel="stylesheet" href="{{asset('backend/assets/css/bootstrap-iconpicker.min.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
     {{-- datetimepicker --}}
-    <link rel="stylesheet" href="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css')}}">
-    <link rel="stylesheet" href="{{asset('backend/assets/modules/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css') }}">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
@@ -49,6 +49,23 @@
 
         gtag('config', 'UA-94034622-3');
     </script>
+    <!-- /END GA -->
+
+    {{-- @if ($settings->layout === 'RTL')
+  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
+  @endif --}}
+
+    {{-- <script>
+    const USER = {
+        id: "{{ auth()->user()->id }}",
+        name: "{{ auth()->user()->nmae }}",
+        image: "{{ asset(auth()->user()->image) }}"
+    }
+    const PUSHER = {
+        key: "{{ $pusherSetting->pusher_key }}",
+        cluster: "{{ $pusherSetting->pusher_cluster }}"
+    }
+  </script> --}}
 
     @vite(['resources/js/app.js'])
 </head>
@@ -78,7 +95,7 @@
         </div>
     </div>
 
-  {{-- </div>
+    {{-- </div>
 
   <!-- General JS Scripts -->
   <script src="{{asset('backend/assets/modules/jquery.min.js')}}"></script>
@@ -89,21 +106,21 @@
   <script src="{{asset('backend/assets/modules/moment.min.js')}}"></script>
   <script src="{{asset('backend/assets/js/stisla.js')}}"></script> --}}
 
-  <!-- JS Libraies -->
-  {{-- <script src="{{asset('backend/assets/modules/simple-weather/jquery.simpleWeather.min.js')}}"></script> --}}
-  {{-- <script src="{{asset('backend/assets/modules/chart.min.js')}}"></script> --}}
-  {{-- <script src="{{asset('backend/assets/modules/jqvmap/dist/jquery.vmap.min.js')}}"></script>
+    <!-- JS Libraies -->
+    {{-- <script src="{{asset('backend/assets/modules/simple-weather/jquery.simpleWeather.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('backend/assets/modules/chart.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('backend/assets/modules/jqvmap/dist/jquery.vmap.min.js')}}"></script>
   <script src="{{asset('backend/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
   <script src="{{asset('backend/assets/modules/summernote/summernote-bs4.js')}}"></script>
   <script src="{{asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script> --}}
-  {{--sử dụng thư viện toastr --}}
-  {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+    {{-- sử dụng thư viện toastr --}}
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
 
-  {{--jquery database / Lỗi Sai phiên bản
+    {{-- jquery database / Lỗi Sai phiên bản
   <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
   --}}
-  {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
@@ -111,7 +128,7 @@
   <script src="{{asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js')}}"></script>
   <script src="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
   <script src="{{asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script> --}}
-7
+    7
 
 
     <!-- General JS Scripts -->
@@ -136,69 +153,72 @@
     <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js')}}"></script>
+    <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
     {{-- datetimepicker js --}}
-    <script src="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-    <script src="{{asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
+
     {{-- hiện thị thông báo errors sử dụng thư viện toastr --}}
-   <script>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            toastr.error('{{ $error }}')
-        @endforeach
-    @endif
-</script>
+    <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}')
+            @endforeach
+        @endif
+    </script>
+    <script>
+        $(document).ready(function() {
 
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('body').on('click', '.delete-item', function(event){
-            event.preventDefault();
-
-            let deleteUrl = $(this).attr('href');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: deleteUrl,
-                        success: function(data){
-                            if (data.status == 'success') {
-                                Swal.fire('Deleted!', data.message, 'success');
-                                window.location.reload();
-                            } else if (data.status == 'error') {
-                                Swal.fire('Cant Delete', data.message, 'error');
-                            }
-                        },
-                        error: function(xhr, status, error){
-                            console.log(error);
-                        }
-                    });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        });
-    });
-</script>
 
-@stack('scripts')
+
+            $('body').on('click', '.delete-item', function(event) {
+                event.preventDefault();
+
+                let deleteUrl = $(this).attr('href');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: deleteUrl,
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire('Deleted!', data.message, 'success');
+                                    window.location.reload();
+                                } else if (data.status == 'error') {
+                                    Swal.fire('Cant Delete', data.message, 'error');
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    @stack('scripts')
 </body>
+
 </html>

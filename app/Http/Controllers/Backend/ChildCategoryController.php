@@ -37,8 +37,8 @@ class ChildCategoryController extends Controller
     public function getSubCategories(Request $request)
     {
         $subCategories = SubCategory::where('category_id', $request->id)
-                                    ->where('status', 1)
-                                    ->get();
+            ->where('status', 1)
+            ->get();
         return $subCategories;
     }
 
@@ -93,7 +93,7 @@ class ChildCategoryController extends Controller
         $request->validate([
             'category'     => 'required',
             'sub_category' => 'required',
-            'name'         => 'required|max:200|unique:child_categories,name,'.$id,
+            'name'         => 'required|max:200|unique:child_categories,name,' . $id,
             'status'       => 'required'
         ]);
 
@@ -113,13 +113,13 @@ class ChildCategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-{
-    $childCategory = ChildCategory::findOrFail($id);
-    $childCategory->delete();
+    {
+        $childCategory = ChildCategory::findOrFail($id);
+        $childCategory->delete();
 
-    return redirect()->route('admin.child-category.index')
-                     ->with('success', 'Deleted Successfully');
-}
+        return redirect()->route('admin.child-category.index')
+            ->with('success', 'Deleted Successfully');
+    }
 
 
     /**
@@ -133,6 +133,4 @@ class ChildCategoryController extends Controller
 
         return response(['message' => 'Status has been updated!']);
     }
-
-
 }

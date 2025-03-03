@@ -137,14 +137,21 @@ class VendorProductDataTable extends DataTable
                         <i class="fas fa-cog"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item has-icon" href="#"> Image Gallery</a></li>
-                        <li><a class="dropdown-item has-icon" href="#"> Variants</a></li>
+                        <li><a class="dropdown-item has-icon" href="'.route('vendor.products-image-gallery.index',['product'=>$query->id]).'"> Image Gallery</a></li>
+                        <li><a class="dropdown-item has-icon" href="'.route('vendor.products-variant.index',['product'=>$query->id]).'"> Variants</a></li>
                     </ul>
                 </div>';
 
                 return "<div class='d-flex align-items-center gap-2'>" . $editBtn . $deleteBtn . $moreBtn . "</div>";
             })
-            ->rawColumns(['image', 'type', 'status', 'action'])
+            ->addColumn('approved', function($query){
+                if($query->is_approved === 1){
+                    return '<i class="badge bg-success">Approved</i>';
+                }else {
+                    return '<i class="badge bg-warning">Pending</i>';
+                }
+            })
+            ->rawColumns(['image', 'type', 'status', 'action','approved'])
             ->setRowId('id');
     }
 
@@ -179,6 +186,7 @@ class VendorProductDataTable extends DataTable
             Column::make('image')->width('150px'),
             Column::make('name'),
             Column::make('price')  ->addClass('text-center'),
+            Column::make('approved')  ->addClass('text-center'),
             Column::make('type')->width(150) ->addClass('text-center'),
             Column::make('status')  ->addClass('text-center'),
             Column::computed('action')

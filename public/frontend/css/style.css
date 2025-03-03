@@ -9543,3 +9543,11 @@ a:not([href]):not([class]):hover {
     transform: translateX(24px);
 }
 
+.custom-btn-spacing {
+    margin-right: 10px; /* Điều chỉnh giá trị nếu cần */
+}
+
+.custom-btn-spacing:last-child {
+    margin-right: 0; /* Loại bỏ margin bên phải của nút cuối cùng */
+}
+

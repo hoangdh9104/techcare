@@ -10,6 +10,7 @@ use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use App\Models\SubCategory;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
@@ -190,28 +191,32 @@ class VendorProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
+
+        // Kiểm tra quyền của vendor
         if ($product->vendor_id != Auth::user()->vendor->id) {
             abort(404);
         }
 
-        /** Delte the main product image */
+        /** Xóa ảnh chính của sản phẩm */
         $this->deleteImage($product->thumb_image);
 
-        /** Delete product gallery images */
+        /** Xóa ảnh trong thư viện sản phẩm */
         $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
         foreach ($galleryImages as $image) {
             $this->deleteImage($image->image);
             $image->delete();
         }
 
-        /** Delete product variants if exist */
+        /** Xóa tất cả biến thể và biến thể con */
         $variants = ProductVariant::where('product_id', $product->id)->get();
 
         foreach ($variants as $variant) {
-            $variant->productVariantItems()->delete();
+            // Xóa tất cả các biến thể con trước khi xóa biến thể cha
+            ProductVariantItem::where('product_variant_id', $variant->id)->delete();
             $variant->delete();
         }
 
+        /** Cuối cùng xóa sản phẩm */
         $product->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
@@ -225,6 +230,8 @@ class VendorProductController extends Controller
 
         return response(['message' => 'Status has been updated!']);
     }
+
+
 
     /**
      * Get all product sub categores
