@@ -12,4 +12,5 @@ class ProductVariantItem extends Model
     {
         return $this->belongsTo(ProductVariant::class);
     }
+
 }
