@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // tạo mối quan hệ giữa bảng users và bảng vendors
+    public function vendor()
+    {
+        // 1 user(admin $ vendor) thì chỉ có 1 cửa hàng
+        return $this->hasOne(Vendor::class);
+    }
 }

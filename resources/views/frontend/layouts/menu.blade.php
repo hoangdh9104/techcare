@@ -29,7 +29,7 @@
                                             @if(count($subCategory->childCategories) > 0)
                                             <ul class="wsus__sub_category">
                                                 @foreach ($subCategory->childCategories as $childCategory)
-                                                    <li><a href="{{route('products.index', ['childcategory' => $childCategory->slug])}}">{{$childCategory->name}}</a> </li>
+                                                    <li><a href="{{route('admin.products.index', ['childcategory' => $childCategory->slug])}}">{{$childCategory->name}}</a> </li>
                                                 @endforeach
                                             </ul>
                                             @endif
@@ -86,7 +86,6 @@
             {{-- @if (auth()->check())
             {{\App\Models\Wishlist::where('user_id', auth()->user()->id)->count()}}
             @else
-            0
             @endif --}}
         </span></a></li>
 
