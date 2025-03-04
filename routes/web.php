@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -39,7 +40,8 @@ require __DIR__ . '/auth.php';
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
-
+/* Route product detail */
+Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'index'])->name('product-detail');
 
 
 // route for customer
