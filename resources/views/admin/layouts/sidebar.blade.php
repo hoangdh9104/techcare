@@ -56,6 +56,17 @@
               'admin.products-variant-item.*'])}}"><a class="nav-link" href="{{route('admin.products.index')}}">Product</a></li>
             </ul>
         </li>
+        
+        {{-- start Manage Coupons --}}
+        <li class="dropdown {{setActive([
+          'admin.vendor.profile.*',
+          'admin.coupons.*'
+      ])}}">
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Manage Coupons</span></a>
+          <ul class="dropdown-menu">
+            <li class="{{setActive(['admin.coupons.*'])}}"><a class="nav-link" href="{{route('admin.coupons.index')}}">Coupons</a></li>
+          </ul>
+      </li>
         {{-- end Manage Product --}}
         {{-- start Manage Ecommerce --}}
         <li class="dropdown {{setActive([
