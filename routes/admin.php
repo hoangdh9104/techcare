@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ProfileController;
 
 use App\Http\Controllers\Backend\SliderController;
@@ -40,9 +41,6 @@ Route::get('get-subcategories', [ChildCategoryController::class, 'getSubCategori
 Route::delete('admin/child-category/{id}', [ChildCategoryController::class, 'destroy'])
     ->name('admin.child-category.destroy');
 
-
-
-
 Route::post('profile/update/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
 
@@ -51,3 +49,7 @@ Route::resource('slider', SliderController::class);
 /* Brand route */
 Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.changeStatus');
 Route::resource('brand', BrandController::class);
+
+/** Coupon Routes */
+Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
+Route::resource('coupons', CouponController::class);
