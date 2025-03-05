@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css') }}">
     {{-- sử dụng thư viện toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     {{-- jquery database css --}}
@@ -96,42 +96,6 @@
         </div>
     </div>
 
-    {{-- </div>
-
-  <!-- General JS Scripts -->
-  <script src="{{asset('backend/assets/modules/jquery.min.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/popper.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/tooltip.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/bootstrap/js/bootstrap.min.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/moment.min.js')}}"></script>
-  <script src="{{asset('backend/assets/js/stisla.js')}}"></script> --}}
-
-    <!-- JS Libraies -->
-    {{-- <script src="{{asset('backend/assets/modules/simple-weather/jquery.simpleWeather.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('backend/assets/modules/chart.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('backend/assets/modules/jqvmap/dist/jquery.vmap.min.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/summernote/summernote-bs4.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script> --}}
-    {{-- sử dụng thư viện toastr --}}
-    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
-
-    {{-- jquery database / Lỗi Sai phiên bản
-  <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.js"></script>
-  --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="{{asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-  <script src="{{asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script> --}}
-    7
-
-
     <!-- General JS Scripts -->
     <script src="{{ asset('backend/assets/modules/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/popper.js') }}"></script>
@@ -148,7 +112,7 @@
     <script src="{{ asset('backend/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     {{-- sử dụng thư viện toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     {{-- jquery database --}}

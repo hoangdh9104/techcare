@@ -14,3 +14,48 @@ function setActive(array $route)
         }
     }
 }
+
+// Check sản phẩm có giảm giá hay không
+
+function checkDiscount($product)
+{
+    $currentDate = date('Y-m-d');
+
+    if ($product->offer_price > 0 && $currentDate >= $product->offer_start_date && $currentDate <= $product->offer_end_date) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Tính phần trăm giảm giá
+function calculateDiscountPercent($originalPrice, $discountPrice)
+{
+    $discountAmount = $originalPrice - $discountPrice;
+    $discountPercent = ($discountAmount / $originalPrice) * 100;
+    return $discountPercent;
+}
+
+
+// Kiểm tra loại sản phẩm
+
+function productType(string $type)
+{
+    switch ($type) {
+        case 'new_arrival':
+            return 'New';
+            break;
+        case 'featured_product':
+            return 'Featured';
+            break;
+        case 'top_product':
+            return 'Top';
+            break;
+        case 'best_product':
+            return 'Best';
+            break;
+        default:
+            return '';
+            break;
+    }
+}

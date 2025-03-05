@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserAddressController;
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 require __DIR__ . '/auth.php';
 
+// Route Flash Sale
+Route::get('flash-sale',[FlashSaleController::class,'index'])->name('flash-sale');
+
 
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
@@ -55,3 +59,4 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // user address route
     Route::resource('address', UserAddressController::class);
 });
+
