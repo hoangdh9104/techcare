@@ -9550,4 +9550,6 @@ a:not([href]):not([class]):hover {
 .custom-btn-spacing:last-child {
     margin-right: 0; /* Loại bỏ margin bên phải của nút cuối cùng */
 }
-
+#sticky_pro_zoom{
+    z-index: 9999 !important;
+}

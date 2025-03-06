@@ -38,14 +38,14 @@ Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login'
 require __DIR__ . '/auth.php';
 
 // Route Flash Sale
-Route::get('flash-sale',[FlashSaleController::class,'index'])->name('flash-sale');
+Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
 
 
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 /* Route product detail */
-Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'index'])->name('product-detail');
+Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
 
 
 // route for customer
@@ -59,4 +59,3 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // user address route
     Route::resource('address', UserAddressController::class);
 });
-
