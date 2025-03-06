@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CheckOutController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\FlashSaleController;
@@ -58,4 +59,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // user address route
     Route::resource('address', UserAddressController::class);
+    /**check out routes */
+    Route::get('checkout',[CheckOutController::class,'index'])->name('checkout');
 });
