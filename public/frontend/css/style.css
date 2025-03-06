@@ -9573,6 +9573,11 @@ li.page-item.disabled>.page-link {
   margin-right: 10px;
 }
 
+#sticky_pro_zoom{
+    z-index: 9999 !important;
+}
+
+
 li.page-item.active>.page-link {
   width: 35px;
   height: 35px;
@@ -9617,3 +9622,4 @@ span.wsus__new {
   -ms-transition: all linear 0.3s ease;
   -o-transition: all linear 0.3s ease;
 }
+
