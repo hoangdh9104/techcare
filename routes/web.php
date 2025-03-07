@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CheckOutController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
@@ -38,15 +40,16 @@ Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login'
 require __DIR__ . '/auth.php';
 
 // Route Flash Sale
-Route::get('flash-sale',[FlashSaleController::class,'index'])->name('flash-sale');
+Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
 
 
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 /* Route product detail */
-Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'index'])->name('product-detail');
-
+Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
+/* Route add to cart */
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
@@ -58,5 +61,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // user address route
     Route::resource('address', UserAddressController::class);
+    /**check out routes */
+    Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
 });
-
