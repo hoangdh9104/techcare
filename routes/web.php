@@ -2,9 +2,16 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CheckOutController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
-use App\Http\Controllers\Frontend\FrontendProductController;
+
+// use App\Http\Controllers\Frontend\FrontendProductController;
+
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\FlashSaleController;
+use App\Http\Controllers\Frontend\FrontendProductControlelr;
+
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -37,13 +44,23 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
 require __DIR__ . '/auth.php';
 
+// Route Flash Sale
+Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
+
 
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 
+
 // //product detail route
 // Route::get('product-detail/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
+
+/* Route product detail */
+Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
+/* Route add to cart */
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
@@ -55,7 +72,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // wishlist route
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+    Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destory'])->name('wishlist.destory');
     
     // user address route
     Route::resource('address', UserAddressController::class);
+    /**check out routes */
+    Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
 });
