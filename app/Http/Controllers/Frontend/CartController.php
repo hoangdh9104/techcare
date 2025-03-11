@@ -35,7 +35,7 @@ class CartController extends Controller
         $cartData = [];
         $cartData['id'] = $product->id;
         $cartData['name'] = $product->name;
-        $cartData['qty'] = $product->qty;
+        $cartData['qty'] = $request->quantity;
         $cartData['weight'] = 550;
         $cartData['price'] = $productPrice;
         $cartData['options']['variants'] = $variant;
@@ -67,5 +67,42 @@ class CartController extends Controller
         $product = Cart::get($rowId);
         $total = ($product->price + $product->options->variants_total) * $product->qty;
         return $total;
+    }
+    //get cart total amount
+    public function cartTotal()
+    {
+        $total = 0;
+        foreach (Cart::content() as $product) {
+            $total += $this->getProductTotal($product->rowId);
+        }
+        return $total;
+    }
+    /**clear all cart product */
+    public function clearCart()
+    {
+        Cart::destroy();
+        return response(['status' => 'success', 'message' => 'Cart cleared successfully ']);
+    }
+    /** remove Product form cart */
+    public function removeProduct($rowId)
+    {
+        Cart::remove($rowId);
+        return redirect()->back();
+    }
+    /** get cart count */
+    public function getCartCount()
+    {
+        return Cart::content()->count();
+    }
+    /** get all cart product */
+    public function getCartProduct()
+    {
+        return Cart::content();
+    }
+    /** removeSidebarProduct */
+    public function removeSidebarProduct(Request $request)
+    {
+        Cart::remove($request->rowId);
+        return response(['status' => 'success', 'message' => 'Product removed successfully']);
     }
 }
