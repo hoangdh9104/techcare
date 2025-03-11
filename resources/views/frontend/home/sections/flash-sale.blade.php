@@ -209,7 +209,6 @@
             $('.shopping-cart-form').on('submit', function(e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
-                console.log(formData);
                 $.ajax({
                     method: 'POST',
                     data: formData,
