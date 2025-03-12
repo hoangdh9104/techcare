@@ -6717,7 +6717,10 @@ WISHLIST PAGE START
 .dash_logo {
   width: 100%;
   text-align: center;
-  margin-top: 7px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  height: 0px;
+
 }
 
 .dash_logo img {
