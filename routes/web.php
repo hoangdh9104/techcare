@@ -9,10 +9,12 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,6 +72,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // user address route
     Route::resource('address', UserAddressController::class);
+
+    // Product review route
+    Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
 });
