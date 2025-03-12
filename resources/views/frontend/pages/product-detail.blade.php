@@ -90,22 +90,26 @@
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
                                     @foreach ($product->variants as $variant)
-                                        <div class="col-xl-6 col-sm-6">
-                                            <h5 class="mb-2">{{ $variant->name }}</h5>
-                                            <select class="select_2" name="variants_item[]">
-                                                @foreach ($variant->productVariantItem as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                        {{ $item->name }} (${{ $item->price }})
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        @if ($variant->status != 0)
+                                            <div class="col-xl-6 col-sm-6">
+                                                <h5 class="mb-2">{{ $variant->name }}</h5>
+                                                <select class="select_2" name="variants_item[]">
+                                                    @foreach ($variant->productVariantItem as $item)
+                                                        @if ($item->status != 0)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                                {{ $item->name }} (${{ $item->price }})
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quentity :</h5>
+                                <h5>quantity :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
@@ -408,6 +412,7 @@
 
         </div>
     </div>
+
 </section>
 <!--============================PRODUCT DETAILS END==============================-->
 <!--============================RELATED PRODUCT START==============================-->
@@ -575,30 +580,3 @@
 </section> --}}
 <!--============================ RELATED PRODUCT END                                                                                                                                                                                                                                                                                                                                            ==============================-->
 @endsection
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.shopping-cart-form').on('submit', function(e) {
-            e.preventDefault();
-            let formData = $(this).serialize();
-            console.log(formData);
-            $.ajax({
-                method: 'POST',
-                data: formData,
-                url: "{{ route('add-to-cart') }}",
-                success: function(data) {
-
-                },
-                error: function(xhr, status, error) {
-
-                }
-            });
-        })
-    })
-</script>
-@endpush
