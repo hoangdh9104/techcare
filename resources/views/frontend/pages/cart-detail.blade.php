@@ -9,9 +9,9 @@
                     <div class="col-12">
                         <h4>cart View</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
-                            <li><a href="#">cart view</a></li>
+                            <li><a href="{{route('home')}}">home</a></li>
+                           
+                            <li><a href="javascrip:;">cart view</a></li>
                         </ul>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                             <input type="text" placeholder="Coupon Code">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">checkout</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{route('user.checkout')}}">checkout</a>
                         <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
                                 class="fab fa-shopify"></i> go shop</a>
                     </div>

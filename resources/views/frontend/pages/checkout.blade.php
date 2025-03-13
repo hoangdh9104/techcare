@@ -38,172 +38,9 @@
                         <div class="wsus__check_form">
                             <h5>Billing Details <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">add
                                     new address</a></h5>
+                          
                             <div class="row">
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="First Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Last Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Company Name (Optional)">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <select class="select_2" name="state">
-                                            <option value="AL">Country / Region *</option>
-                                            <option value="">dhaka</option>
-                                            <option value="">barisal</option>
-                                            <option value="">khulna</option>
-                                            <option value="">rajshahi</option>
-                                            <option value="">bogura</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Street Address *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Apartment, suite, unit, etc. (optional)">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Town / City *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="State *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Zip *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Phone *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-12 col-xl-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="email" placeholder="Email *">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="accordion checkout_accordian" id="accordionExample">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingThree">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                    aria-expanded="false" aria-controls="collapseThree">
-                                                    <div class="wsus__check_single_form">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault">
-                                                            <label class="form-check-label" for="flexCheckDefault">
-                                                                Same as shipping address
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseThree" class="accordion-collapse collapse"
-                                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body p-0">
-                                                    <div class="wsus__check_form p-0" style="box-shadow: none;">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="First Name">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Last Name">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-lg-12 col-xl-12">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text"
-                                                                        placeholder="Company Name (Optional)">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <select class="select_2" name="state">
-                                                                        <option value="AL">Country / Region *</option>
-                                                                        <option value="">dhaka</option>
-                                                                        <option value="">barisal</option>
-                                                                        <option value="">khulna</option>
-                                                                        <option value="">rajshahi</option>
-                                                                        <option value="">bogura</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Street Address *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text"
-                                                                        placeholder="Apartment, suite, unit, etc. (optional)">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Town / City *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="State *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Zip *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="text" placeholder="Phone *">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-lg-12 col-xl-6">
-                                                                <div class="wsus__check_single_form">
-                                                                    <input type="email" placeholder="Email *">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-                                    <div class="wsus__check_single_form">
-                                        <h5>Additional Information</h5>
-                                        <textarea cols="3" rows="4"
-                                            placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                                @foreach ($addresses as $address)
                                 <div class="col-xl-6">
                                     <div class="wsus__checkout_single_address">
                                         <div class="form-check">
@@ -214,80 +51,18 @@
                                             </label>
                                         </div>
                                         <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
+                                            <li><span>Name :</span> {{$address->name}}</li>
+                                            <li><span>Phone :</span> {{$address->phone}}</li>
+                                            <li><span>Email :</span> {{$address->email}}</li>
+                                            <li><span>Country :</span> {{$address->country}}</li>
+                                            <li><span>City :</span> {{$address->city}}</li>
+                                            <li><span>Zip Code :</span> {{$address->zip}}</li>
+                                            <li><span>Address :</span> {{$address->address}}</li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault11">
-                                            <label class="form-check-label" for="flexRadioDefault11">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault12">
-                                            <label class="form-check-label" for="flexRadioDefault12">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault13">
-                                            <label class="form-check-label" for="flexRadioDefault13">
-                                                Select Address
-                                            </label>
-                                        </div>
-                                        <ul>
-                                            <li><span>Name :</span> Anik Roy</li>
-                                            <li><span>Phone :</span> +66954581322222</li>
-                                            <li><span>Email :</span> Example@Gmail.Com</li>
-                                            <li><span>Country :</span> Bangladesh</li>
-                                            <li><span>City :</span> Dhaka</li>
-                                            <li><span>Zip Code :</span> 8320</li>
-                                            <li><span>Company :</span> N/A</li>
-                                            <li><span>Address :</span> Bashindhara P/A, Dhaka</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                </div> 
+                                @endforeach
+                               
                             </div>
                         </div>
                     </div>
@@ -344,19 +119,19 @@
                     <div class="modal-body p-0">
                         <div class="wsus__check_form p-3">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="wsus__check_single_form">
                                         <input type="text" placeholder="First Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Last Name">
+                                        <input type="text" placeholder="Phone *">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Company Name (Optional)">
+                                        <input type="email" placeholder="Email *">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -373,12 +148,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Street Address *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Apartment, suite, unit, etc. (optional)">
+                                        <input type="text" placeholder="State *">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -386,26 +156,19 @@
                                         <input type="text" placeholder="Town / City *">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="State *">
-                                    </div>
-                                </div>
+                                
                                 <div class="col-md-6">
                                     <div class="wsus__check_single_form">
                                         <input type="text" placeholder="Zip *">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                
+                                <div class="col-md-1212">
                                     <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Phone *">
+                                        <input type="text" placeholder="Address *">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="email" placeholder="Email *">
-                                    </div>
-                                </div>
+                               
                                 <div class="col-xl-12">
                                     <div class="wsus__check_single_form">
                                         <button type="button" class="btn btn-primary">Save changes</button>
