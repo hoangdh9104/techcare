@@ -1,11 +1,11 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{$settings->site_name}} || Checkout
+    {{ $settings->site_name }} || Checkout
 @endsection
 @section('content')
-   <!--============================
-        BREADCRUMB START
-    ==============================-->
+    <!--============================
+                                                                                                                                                                                                                    BREADCRUMB START
+                                                                                                                                                                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -13,8 +13,8 @@
                     <div class="col-12">
                         <h4>check out</h4>
                         <ul>
-                            <li><a href="{{route('home')}}">home</a></li>
-                        
+                            <li><a href="{{ route('home') }}">home</a></li>
+
                             <li><a href="javascrip:;">check out</a></li>
                         </ul>
                     </div>
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+                                                                                                                                                                                                                    BREADCRUMB END
+                                                                                                                                                                                                                ==============================-->
 
 
     <!--============================
-        CHECK OUT PAGE START
-    ==============================-->
+                                                                                                                                                                                                                    CHECK OUT PAGE START
+                                                                                                                                                                                                                ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <form class="wsus__checkout_form">
@@ -38,31 +38,31 @@
                         <div class="wsus__check_form">
                             <h5>Billing Details <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">add
                                     new address</a></h5>
-                          
+
                             <div class="row">
                                 @foreach ($addresses as $address)
-                                <div class="col-xl-6">
-                                    <div class="wsus__checkout_single_address">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1" checked>
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                Select Address
-                                            </label>
+                                    <div class="col-xl-6">
+                                        <div class="wsus__checkout_single_address">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1" checked>
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Select Address
+                                                </label>
+                                            </div>
+                                            <ul>
+                                                <li><span>Name :</span> {{ $address->name }}</li>
+                                                <li><span>Phone :</span> {{ $address->phone }}</li>
+                                                <li><span>Email :</span> {{ $address->email }}</li>
+                                                <li><span>Country :</span> {{ $address->country }}</li>
+                                                <li><span>City :</span> {{ $address->city }}</li>
+                                                <li><span>Zip Code :</span> {{ $address->zip }}</li>
+                                                <li><span>Address :</span> {{ $address->address }}</li>
+                                            </ul>
                                         </div>
-                                        <ul>
-                                            <li><span>Name :</span> {{$address->name}}</li>
-                                            <li><span>Phone :</span> {{$address->phone}}</li>
-                                            <li><span>Email :</span> {{$address->email}}</li>
-                                            <li><span>Country :</span> {{$address->country}}</li>
-                                            <li><span>City :</span> {{$address->city}}</li>
-                                            <li><span>Zip Code :</span> {{$address->zip}}</li>
-                                            <li><span>Address :</span> {{$address->address}}</li>
-                                        </ul>
                                     </div>
-                                </div> 
                                 @endforeach
-                               
+
                             </div>
                         </div>
                     </div>
@@ -86,9 +86,9 @@
                                 </label>
                             </div>
                             <div class="wsus__order_details_summery">
-                                <p>subtotal: <span>$120.00</span></p>
-                                <p>shipping fee: <span>$20.00</span></p>
-                                <p>tax: <span>$00.00</span></p>
+                                <p>subtotal: <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
+                                <p>shipping fee: <span>{{ $settings->currency_icon }}0</span></p>
+                                <p>tax: <span>{{ $settings->currency_icon }}</span></p>
                                 <p><b>total:</b> <span><b>$140.00</b></span></p>
                             </div>
                             <div class="terms_area">
@@ -118,63 +118,74 @@
                     </div>
                     <div class="modal-body p-0">
                         <div class="wsus__check_form p-3">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="First Name">
+                            <form action="{{ route('user.checkout.address.create') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="Name *" name="name"
+                                                value="{{ old('name') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="Phone *" name="phone"
+                                                value="{{ old('phone') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <input type="email" placeholder="Email *" name="email"
+                                                value="{{ old('email') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <select class="select_2" name="country">
+                                                <option value="AL">Country / Region *</option>
+                                                @foreach (config('settings.country_list') as $key => $country)
+                                                    <option {{ $country == old('country') ? 'selected' : '' }}
+                                                        value="{{ $key }}">
+                                                        {{ $country }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="State *" name="state"
+                                                value="{{ old('state') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="Town / City *" name="city"
+                                                value="{{ old('city') }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="Zip *" name="zip"
+                                                value="{{ old('zip') }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1212">
+                                        <div class="wsus__check_single_form">
+                                            <input type="text" placeholder="Address *" name="address"
+                                                value="{{ old('address') }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="wsus__check_single_form">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Phone *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="email" placeholder="Email *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <select class="select_2" name="state">
-                                            <option value="AL">Country / Region *</option>
-                                            <option value="">dhaka</option>
-                                            <option value="">barisal</option>
-                                            <option value="">khulna</option>
-                                            <option value="">rajshahi</option>
-                                            <option value="">bogura</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="State *">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Town / City *">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Zip *">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-1212">
-                                    <div class="wsus__check_single_form">
-                                        <input type="text" placeholder="Address *">
-                                    </div>
-                                </div>
-                               
-                                <div class="col-xl-12">
-                                    <div class="wsus__check_single_form">
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -182,6 +193,6 @@
         </div>
     </div>
     <!--============================
-        CHECK OUT PAGE END
-    ==============================-->
+                                                                                                                                                                                                                    CHECK OUT PAGE END
+                                                                                                                                                                                                                ==============================-->
 @endsection
