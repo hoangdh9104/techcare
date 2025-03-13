@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\GeneralSetting;
+use Illuminate\Support\Facades\Session;
+
 /** Set Sidebar item active */
 
 function setActive(array $route)
