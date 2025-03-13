@@ -11,9 +11,26 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    // show cart page
+    public function cartDetails()
+    {
+        $cartItems = Cart::content();
+        if (count($cartItems) == 0) {
+            toastr('Please add some product in your cart for view page', 'warning', ' Cart is empty!');
+            return redirect()->route('home');
+        }
+        // dd($cartItems);
+        return view('frontend.pages.cart-detail', compact('cartItems'));
+    }
     public function addToCart(Request $request)
     {
         $product = Product::findOrFail($request->product_id);
+        // check product qty
+        if ($product->qty == 0) {
+            return response(['status' => "error", 'message' => 'Product stock out!']);
+        } elseif ($product->qty < $request->quantity) {
+            return response(['status' => "error", 'message' => 'Quantity is not available in our stock !']);
+        }
         $variant = [];
         $variantTotalAmount = 0;
         if ($request->has('variants_item')) {
@@ -46,17 +63,19 @@ class CartController extends Controller
         Cart::add($cartData);
         return response(['status' => "success", 'message' => 'Added to cart successfully!']);
     }
-    // show cart page
-    public function cartDetails()
-    {
-        $cartItems = Cart::content();
-        // dd($cartItems);
-        return view('frontend.pages.cart-detail', compact('cartItems'));
-    }
+
     // update product qty
     public function updateProductQty(Request $request)
     {
         // dd($request->all());
+        // check product qty
+        $product_id = Cart::get($request->rowId)->id;
+        $product = Product::findOrFail($product_id);
+        if ($product->qty == 0) {
+            return response(['status' => "error", 'message' => 'Product stock out!']);
+        } elseif ($product->qty < $request->quantity) {
+            return response(['status' => "error", 'message' => 'Quantity is not available in our stock !']);
+        }
         Cart::update($request->rowId, $request->quantity); // Will update the quantity
         $productTotal = $this->getProductTotal($request->rowId);
         return response(['status' => 'success', 'message' => 'Product Quantity Updated', 'productTotal' => $productTotal]);
@@ -87,6 +106,7 @@ class CartController extends Controller
     public function removeProduct($rowId)
     {
         Cart::remove($rowId);
+        toastr('Product removed successfully', 'success', 'Success');
         return redirect()->back();
     }
     /** get cart count */
