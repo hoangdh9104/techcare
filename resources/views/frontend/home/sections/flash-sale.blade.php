@@ -162,42 +162,23 @@
                                         <div class="simply-countdown simply-countdown-one"></div>
                                     </div>
                                     <form class="shopping-cart-form" action="">
-                                        <div class="wsus__selectbox">
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <div class="row">
-                                                @foreach ($product->variants as $variant)
-                                                    @if ($variant->status != 0)
-                                                        <div class="col-xl-6 col-sm-6">
-                                                            <h5 class="mb-2">{{ $variant->name }}</h5>
-                                                            <select class="select_2" name="variants_item[]">
-                                                                @foreach ($variant->productVariantItem as $item)
-                                                                    @if ($item->status != 0)
-                                                                        <option value="{{ $item->id }}"
-                                                                            {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                                            {{ $item->name }} (${{ $item->price }})
-                                                                        </option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <div class="row">
+                                            @foreach ($product->variants as $variant)
+                                                <select class="d-none" name="variants_item[]">
+                                                    @foreach ($variant->productVariantItem as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                            {{ $item->name }} (${{ $item->price }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            @endforeach
+                                            <input name="quantity" type="hidden" min="1" max="100"
+                                                value="1" />
                                         </div>
-                                        <div class="wsus__quentity">
-                                            <h5>quantity :</h5>
-                                            <div class="select_number">
-                                                <input class="number_area" name="quantity" type="text"
-                                                    min="1" max="100" value="1" />
-                                            </div>
-                                            {{-- <h3>$50.00</h3> --}}
-                                        </div>
-                                        <ul class="wsus__button_area">
-                                            <li><button class="add_cart" type="submit">add to cart</button></li>
-                                            <li><a class="buy_now" href="#">buy now</a></li>
-                                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                            <li><a href="#"><i class="far fa-random"></i></a></li>
-                                        </ul>
+                                        <button class="add_cart" type="submit">add to cart</button>
+
                                     </form>
                                     <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                                 </div>
