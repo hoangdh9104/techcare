@@ -16,6 +16,7 @@ class CartController extends Controller
     {
         $cartItems = Cart::content();
         if (count($cartItems) == 0) {
+            Session::forget('coupon');
             toastr('Please add some product in your cart for view page', 'warning', ' Cart is empty!');
             return redirect()->route('home');
         }
