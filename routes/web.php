@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\CheckOutController;
-use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\CartController;
@@ -14,6 +12,8 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
