@@ -9,9 +9,9 @@
                     <div class="col-12">
                         <h4>cart View</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
-                            <li><a href="#">cart view</a></li>
+                            <li><a href="{{ route('home') }}">home</a></li>
+
+                            <li><a href="javascrip:;">cart view</a></li>
                         </ul>
                     </div>
                 </div>
@@ -19,13 +19,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        CART VIEW PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        CART VIEW PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -108,17 +108,20 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>total cart</h6>
-                        <p>subtotal: <span id="sub_total">{{$settings->currency_icon}}{{getCartTotal()}}</span></p>
-                        <p>coupon(-): <span id="discount">{{$settings->currency_icon}}{{getCartDiscount()}}</span></p>
-                        <p class="total"><span>total:</span> <span id="cart_total">{{$settings->currency_icon}}{{getMainCartTotal()}}</span></p>
+                        <p>subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
+                        <p>coupon(-): <span id="discount">{{ $settings->currency_icon }}{{ getCartDiscount() }}</span>
+                        </p>
+                        <p class="total"><span>total:</span> <span
+                                id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span></p>
 
                         <form id="coupon_form">
-                            <input type="text" placeholder="Coupon Code" name="coupon_code" value="{{session()->has('coupon') ? session()->get('coupon')['coupon_code'] : ''}}">
+                            <input type="text" placeholder="Coupon Code" name="coupon_code"
+                                value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="{{route('user.checkout')}}">checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="{{route('home')}}"><i
-                                class="fab fa-shopify"></i> Keep Shopping</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">checkout</a>
+                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
+                                class="fab fa-shopify"></i> go shop</a>
                     </div>
                 </div>
             </div>
@@ -155,8 +158,8 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          CART VIEW PAGE END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          CART VIEW PAGE END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
 @endsection
 @push('scripts')
     <script>
@@ -275,44 +278,44 @@
             }
 
             // applay coupon on cart
-        $('#coupon_form').on('submit', function(e){
-            e.preventDefault();
-            let formData = $(this).serialize();
-            $.ajax({
-                method: 'GET',
-                url: "{{ route('apply-coupon') }}",
-                data: formData,
-                success: function(data) {
-                   if(data.status === 'error'){
-                    toastr.error(data.message)
-                   }else if (data.status === 'success'){
-                    calculateCouponDescount()
-                    toastr.success(data.message)
-                   }
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            })
-
-        })
-
-        // calculate discount amount
-        function calculateCouponDescount(){
-            $.ajax({
-                method: 'GET',
-                url: "{{ route('coupon-calculation') }}",
-                success: function(data) {
-                    if(data.status === 'success'){
-                        $('#discount').text('{{$settings->currency_icon}}'+data.discount);
-                        $('#cart_total').text('{{$settings->currency_icon}}'+data.cart_total);
+            $('#coupon_form').on('submit', function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('apply-coupon') }}",
+                    data: formData,
+                    success: function(data) {
+                        if (data.status === 'error') {
+                            toastr.error(data.message)
+                        } else if (data.status === 'success') {
+                            calculateCouponDescount()
+                            toastr.success(data.message)
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
-                },
-                error: function(data) {
-                    console.log(data);
-                }
+                })
+
             })
-        }
+
+            // calculate discount amount
+            function calculateCouponDescount() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('coupon-calculation') }}",
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
+                            $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                })
+            }
 
         })
     </script>
