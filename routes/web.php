@@ -59,6 +59,10 @@ Route::get('cart-products', [CartController::class, 'getCartProduct'])->name('ca
 Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
 Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
+Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
+
+
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
@@ -72,4 +76,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::resource('address', UserAddressController::class);
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
+    Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
 });
