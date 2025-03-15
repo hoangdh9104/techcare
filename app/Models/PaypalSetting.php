@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralSetting extends Model
+class PaypalSetting extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'site_name',
-        'layout',
-        'contact_email',
-        'contact_phone',
-        'contact_address',
-        'map',
+        'status',
+        'mode',
+        'country_name',
         'currency_name',
-        'time_zone',
-        'currency_icon'
+        'currency_rate',
+        'client_id',
+        'secret_key',
     ];
 }
