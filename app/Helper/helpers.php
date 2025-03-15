@@ -59,3 +59,18 @@ function productType(string $type)
             break;
     }
 }
+
+// lấy tổng giá sản phẩm ở giỏ hàng
+function getCartTotal()
+{
+    $total = 0;
+    foreach (Cart::content() as $product) {
+        $total += ($product->price + $product->options->variants_total) * $product->qty;
+    }
+    return $total;
+}
+// giới hạn chữ ở sản phẩm
+function limitText($text, $limit = 20)
+{
+    return \Str::limit($text, $limit);
+}

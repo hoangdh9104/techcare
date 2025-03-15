@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CheckOutController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
@@ -47,6 +48,16 @@ Route::put('/admin/category/{category}', [CategoryController::class, 'update'])-
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 /* Route product detail */
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
+/* Route add to cart */
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::post('cart/update-quantity', [CartController::class, 'updateProductQty'])->name('cart.update.quantity');
+Route::get('clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+Route::get('clear/remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('cart.remove-product');
+Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
+Route::get('cart-products', [CartController::class, 'getCartProduct'])->name('cart-products');
+Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
+Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
 
 // route for customer
@@ -60,7 +71,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // user address route
     Route::resource('address', UserAddressController::class);
     /**check out routes */
-    Route::get('checkout',[CheckOutController::class,'index'])->name('checkout');
+    Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {
