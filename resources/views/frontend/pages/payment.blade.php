@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                        BREADCRUMB START
-                                    ==============================-->
+                                            BREADCRUMB START
+                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                        BREADCRUMB END
-                                    ==============================-->
+                                            BREADCRUMB END
+                                        ==============================-->
 
 
     <!--============================
-                                        PAYMENT PAGE START
-                                    ==============================-->
+                                            PAYMENT PAGE START
+                                        ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -106,7 +106,8 @@
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
-                                            <button class="nav-link common_btn">Pay with Paypal</button>
+                                            <a class="nav-link common_btn text-center" href="{{ route('user.paypal.payment') }}">Pay
+                                                with Paypal</a>
                                         </div>
                                     </div>
                                 </div>
@@ -161,6 +162,6 @@
         </div>
     </section>
     <!--============================
-                                        PAYMENT PAGE END
-                                    ==============================-->
+                                            PAYMENT PAGE END
+                                        ==============================-->
 @endsection
