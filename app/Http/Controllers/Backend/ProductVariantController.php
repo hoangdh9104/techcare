@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductVariantController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductVariantController extends Controller
     {
         $request->validate([
             'product' => ['integer', 'required'],
-            'name' => ['required', 'max:200'],
+            'name' => ['required', 'max:200', Rule::unique('product_variants', 'name')],
             'status' => ['required']
         ]);
 
@@ -73,7 +74,7 @@ class ProductVariantController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => ['required', 'max:200'],
+            'name' => ['required', 'max:200', Rule::unique('product_variants', 'name')->ignore($id)], // Bỏ qua ID hiện tại khi update
             'status' => ['required']
         ]);
 
