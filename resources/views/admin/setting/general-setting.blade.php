@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label>Layout</label>
                <select name="layout" id="" class="form-control">
-                <option {{@$generalSettings->layout == 'LRT' ? 'selected' : ''}}  value="LRT">LRT</option>
+                <option {{@$generalSettings->layout == 'LTR' ? 'selected' : ''}}  value="LTR">LTR</option>
                 <option {{@$generalSettings->layout == 'RTL' ? 'selected' : ''}}  value="RTL">RTL</option>
                </select>
             </div>

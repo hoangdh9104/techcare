@@ -1,12 +1,12 @@
 @php
     // Chuyển đổi dữ liệu JSON thành mảng
-    $sliderSectionOne = json_decode(optional($categoryProductSliderSectionOne)->value, true) ?? [];
+    $sliderSectionTwo = json_decode(optional($sliderSectionTwo)->value, true) ?? [];
 @endphp
 
-<div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+<div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
     <div class="card border">
         <div class="card-body">
-            <form action="{{ route('admin.product-slider-section-one') }}" method="POST">
+            <form action="{{ route('admin.product-slider-section-two') }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -19,7 +19,7 @@
                                 <option value="">Select</option>
                                 @foreach ($categories as $category)
                                     <option
-                                        {{ isset($sliderSectionOne['category']) && $category->id == $sliderSectionOne['category'] ? 'selected' : '' }}
+                                        {{ isset($sliderSectionTwo['category']) && $category->id == $sliderSectionTwo['category'] ? 'selected' : '' }}
                                         value="{{ $category->id }}">
                                         {{ $category->name }}
                                     </option>
@@ -32,8 +32,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             @php
-                                $subCategories = isset($sliderSectionOne['category'])
-                                    ? \App\Models\SubCategory::where('category_id', $sliderSectionOne['category'])->get()
+                                $subCategories = isset($sliderSectionTwo['category'])
+                                    ? \App\Models\SubCategory::where('category_id', $sliderSectionTwo['category'])->get()
                                     : [];
                             @endphp
                             <label>Sub Category</label>
@@ -41,7 +41,7 @@
                                 <option value="">Select</option>
                                 @foreach ($subCategories as $subCategory)
                                     <option
-                                        {{ isset($sliderSectionOne['sub_category']) && $subCategory->id == $sliderSectionOne['sub_category'] ? 'selected' : '' }}
+                                        {{ isset($sliderSectionTwo['sub_category']) && $subCategory->id == $sliderSectionTwo['sub_category'] ? 'selected' : '' }}
                                         value="{{ $subCategory->id }}">
                                         {{ $subCategory->name }}
                                     </option>
@@ -54,8 +54,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             @php
-                                $childCategories = isset($sliderSectionOne['sub_category'])
-                                    ? \App\Models\ChildCategory::where('sub_category_id', $sliderSectionOne['sub_category'])->get()
+                                $childCategories = isset($sliderSectionTwo['sub_category'])
+                                    ? \App\Models\ChildCategory::where('sub_category_id', $sliderSectionTwo['sub_category'])->get()
                                     : [];
                             @endphp
                             <label>Child Category</label>
@@ -63,7 +63,7 @@
                                 <option value="">Select</option>
                                 @foreach ($childCategories as $childCategory)
                                     <option
-                                        {{ isset($sliderSectionOne['child_category']) && $childCategory->id == $sliderSectionOne['child_category'] ? 'selected' : '' }}
+                                        {{ isset($sliderSectionTwo['child_category']) && $childCategory->id == $sliderSectionTwo['child_category'] ? 'selected' : '' }}
                                         value="{{ $childCategory->id }}">
                                         {{ $childCategory->name }}
                                     </option>

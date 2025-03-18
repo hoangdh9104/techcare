@@ -2,18 +2,20 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\CheckOutController;
-use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductControlelr;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,8 +49,11 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
-/* Route product detail */
+/* Route product  */
+Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
+Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
+
 /* Route add to cart */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::get('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
@@ -75,11 +80,23 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // user address route
     Route::resource('address', UserAddressController::class);
+
+    // Product review route
+    Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
     Route::post('checkout/form-submit', [CheckOutController::class, 'checkOutFormSubmit'])->name('checkout.form-submit');
+
+    // Payment route
     Route::get('payment', [PaymentController::class, 'index'])->name('payment');
+
+    // Paypal route
+    Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+    Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {

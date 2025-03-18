@@ -10,6 +10,8 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\PaymentSettingController;
+use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
@@ -115,3 +117,7 @@ Route::delete('flash-sale/{id}', [FlashSaleController::class, 'destroy'])->name(
 Route::get('seller-products' ,[SellerProductController::class, 'index'])->name('seller-products.index');
 Route::get('seller-pending-products' ,[SellerProductController::class, 'pendingProducts'])->name('seller-pending-products.index');
 Route::put('change-approve-status' ,[SellerProductController::class, 'changeApproveStatus'])->name('change-approve-status');
+
+// Payment setting 
+Route::get('payment-settings', [PaymentSettingController::class,'index'])->name('payment-settings.index');
+Route::resource('paypal-setting', PaypalSettingController::class);
