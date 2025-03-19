@@ -56,7 +56,21 @@
                                         ->take(12)
                                         ->get();
                                 } else {
+                                    
+                                    // Kiểm tra $lastKey['child_category'] có tồn tại không
+                                    if (!isset($lastKey['child_category'])) {
+                                        dd("Không tìm thấy key 'child_category' trong mảng lastKey");
+                                    }
+
+                                    // Tìm danh mục con
                                     $category = \App\Models\ChildCategory::find($lastKey['child_category']);
+
+                                    // Kiểm tra nếu $category bị null
+                                    if (!$category) {
+                                        dd('Không tìm thấy danh mục con với ID: ' . $lastKey['child_category']);
+                                    }
+
+                                    // Truy vấn sản phẩm
                                     $products[] = \App\Models\Product::where('child_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
@@ -95,7 +109,8 @@
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $item->price }}</del></p>
+                                                <del>{{ $settings->currency_icon }}{{ $item->price }}</del>
+                                            </p>
                                         @else
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->price }}</p>
                                         @endif
