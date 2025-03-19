@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductVariantItemController extends Controller
 {
@@ -27,11 +28,23 @@ class ProductVariantItemController extends Controller
     {
         $request->validate([
             'variant_id' => ['integer', 'required'],
-            'name' => ['required', 'max:200'],
+            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')],
             'price' => ['integer', 'required'],
             'is_default' => ['required'],
             'status' => ['required']
         ]);
+        // Kiểm tra nếu có ProductVariantItem khác đang is_default == 1
+        if ($request->is_default == 1) {
+            $existsDefault = ProductVariantItem::where('product_variant_id', $request->variant_id)
+                ->where('is_default', 1)
+                ->exists();
+
+            if ($existsDefault) {
+                return redirect()->back()->withErrors(['is_default' => 'A default variant already exists.']);
+            }
+        }
+
+        // Tạo mới ProductVariantItem
         $variantItem = new ProductVariantItem();
         $variantItem->product_variant_id = $request->variant_id;
         $variantItem->name = $request->name;
@@ -53,14 +66,28 @@ class ProductVariantItemController extends Controller
     }
     public function update(Request $request, string $variantItemId)
     {
+        $variantItem = ProductVariantItem::findOrFail($variantItemId);
+
         $request->validate([
-            'name' => ['required', 'max:200'],
+            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')->ignore($variantItemId)],
             'price' => ['integer', 'required'],
             'is_default' => ['required'],
             'status' => ['required']
         ]);
 
-        $variantItem = ProductVariantItem::findOrFail($variantItemId);
+        // Kiểm tra nếu có ProductVariantItem khác đang is_default == 1
+        if ($request->is_default == 1) {
+            $existsDefault = ProductVariantItem::where('product_variant_id', $variantItem->product_variant_id)
+                ->where('is_default', 1)
+                ->where('id', '!=', $variantItemId) // Bỏ qua chính nó khi update
+                ->exists();
+
+            if ($existsDefault) {
+                return redirect()->back()->withErrors(['is_default' => 'A default variant already exists.']);
+            }
+        }
+
+        // Cập nhật dữ liệu
         $variantItem->name = $request->name;
         $variantItem->price = $request->price;
         $variantItem->is_default = $request->is_default;
@@ -70,8 +97,8 @@ class ProductVariantItemController extends Controller
         toastr('Update Successfully!', 'success', 'success');
 
         return redirect()->route(
-            'admin.products-variant-item.edit',
-            ['variantItemId' => $variantItem->id]
+            'admin.products-variant-item.index',
+            ['productId' => $variantItem->productVariant->product_id, 'variantId' => $variantItem->product_variant_id]
         );
     }
     public function destroy(string $variantItemId)
