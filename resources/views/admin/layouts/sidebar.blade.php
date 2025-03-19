@@ -22,6 +22,9 @@
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                </ul>
             </li>
 
             {{-- Manage Categories --}}

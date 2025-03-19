@@ -32,12 +32,18 @@ function checkDiscount($product)
 }
 
 // Tính phần trăm giảm giá
+// function calculateDiscountPercent($originalPrice, $discountPrice)
+// {
+//     $discountAmount = $originalPrice - $discountPrice;
+//     $discountPercent = ($discountAmount / $originalPrice) * 100;
+//     return round($discountPercent);
+// }
 function calculateDiscountPercent($originalPrice, $discountPrice)
 {
-    $discountAmount = $originalPrice - $discountPrice;
-    $discountPercent = ($discountAmount / $originalPrice) * 100;
-    return $discountPercent;
+    if ($originalPrice <= 0) return 0; // Tránh lỗi chia cho 0
+    return round((($originalPrice - $discountPrice) / $originalPrice) * 100);
 }
+
 
 
 // Kiểm tra loại sản phẩm
@@ -72,7 +78,11 @@ function getCartTotal()
     }
     return $total;
 }
-
+// giới hạn chữ ở sản phẩm
+function limitText($text, $limit = 20)
+{
+    return \Str::limit($text, $limit);
+}
 /** get payable total amount */
 function getMainCartTotal()
 {
