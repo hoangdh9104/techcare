@@ -16,6 +16,7 @@
             @foreach ($flashSaleItems as $item)
                 @php
                     $product = \App\Models\Product::find($item->product_id);
+                    // dd($product);
                 @endphp
 
                 <div class="col-xl-3 col-sm-6 col-lg-4">
