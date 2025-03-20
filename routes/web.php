@@ -61,6 +61,8 @@ Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProd
 /* Route add to cart */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 
+//vendor page routes
+Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
