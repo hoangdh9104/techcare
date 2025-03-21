@@ -45,17 +45,14 @@
                                             product item
                                         </th>
 
-                                        <th class="wsus__pro_name" style="width: 370px">
+                                        <th class="wsus__pro_name" style="width: 368px">
                                             product details
                                         </th>
 
                                         <th class="wsus__pro_status">
                                             quantity
                                         </th>
-
-                                        
-
-                                        <th class="wsus__pro_tk" style="width: 370px">
+                                        <th class="wsus__pro_tk" style="width: 368px">
                                             price
                                         </th>
 
@@ -68,10 +65,10 @@
                                     <tr class="d-flex">
                                         <td class="wsus__pro_img"><img src="{{asset($item->product->thumb_image)}}" alt="product"
                                                 class="img-fluid w-100">
-                                            <a href="{{route('user.wishlist.destory', $item->id)}}"><i class="far fa-times"></i></a>
+                                            <a href="{{route('user.wishlist.destroy', $item->id)}}"><i class="far fa-times"></i></a>
                                         </td>
 
-                                        <td class="wsus__pro_name" style="width: 370px">
+                                        <td class="wsus__pro_name" style="width: 368px">
                                             <p>{{$item->product->name}}</p>
                                         </td>
 
@@ -81,14 +78,13 @@
 
                                         
 
-                                        <td class="wsus__pro_tk" style="width: 238px">
+                                        <td class="wsus__pro_tk" style="width: 350px">
                                             <h6>
                                                 {{$settings->currency_icon}}{{$item->product->price}}
                                             </h6>
                                         </td>
 
                                         <td class="wsus__pro_icon">
-                                            {{-- <a class="common_btn" href="{{route('product-detail', $item->product->slug)}}">View Product</a> --}}
                                             <a class="common_btn" href="{{route('product-detail', $item->product->slug)}}">View Product</a>
                                         </td>
                                     </tr>

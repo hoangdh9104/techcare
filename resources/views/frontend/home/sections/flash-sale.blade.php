@@ -169,6 +169,7 @@
             @foreach ($flashSaleItems as $item)
                 @php
                     $product = \App\Models\Product::find($item->product_id);
+                    // dd($product);
                 @endphp
 {{-- >>>>>>> 6937e167b334935a43088ea917acca540d62afb2 --}}
 
@@ -218,8 +219,25 @@
                             @else
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
                             @endif
+                            <form class="shopping-cart-form" action="">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="row">
+                                    @foreach ($product->variants as $variant)
+                                        <select class="d-none" name="variants_item[]">
+                                            @foreach ($variant->productVariantItem as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                    {{ $item->name }} (${{ $item->price }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    @endforeach
+                                    <input name="quantity" type="hidden" min="1" max="100"
+                                        value="1" />
+                                </div>
+                                <button class="add_cart" type="submit">add to cart</button>
 
-                            <a class="add_cart" href="#">add to cart</a>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -301,24 +319,22 @@
                                         <div class="simply-countdown simply-countdown-one"></div>
                                     </div>
                                     <form class="shopping-cart-form" action="">
-                                        <div class="wsus__selectbox">
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <div class="row">
-                                                @foreach ($product->variants as $variant)
-                                                    <div class="col-xl-6 col-sm-6">
-                                                        <h5 class="mb-2">{{ $variant->name }}</h5>
-                                                        <select class="select_2" name="variants_item[]">
-                                                            @foreach ($variant->productVariantItem as $item)
-                                                                <option value="{{ $item->id }}"
-                                                                    {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                                    {{ $item->name }} (${{ $item->price }})
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                @endforeach
-                                            </div>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <div class="row">
+                                            @foreach ($product->variants as $variant)
+                                                <select class="d-none" name="variants_item[]">
+                                                    @foreach ($variant->productVariantItem as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                            {{ $item->name }} (${{ $item->price }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            @endforeach
+                                            <input name="quantity" type="hidden" min="1" max="100"
+                                                value="1" />
                                         </div>
+
                                         <div class="wsus__quentity">
                                             <h5>quentity :</h5>
                                             <div class="select_number">
@@ -330,9 +346,13 @@
                                         <ul class="wsus__button_area">
                                             <li><button class="add_cart" type="submit">add to cart</button></li>
                                             <li><a class="buy_now" href="#">buy now</a></li>
-                                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                            <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                             {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                         </ul>
+
+                                        <button class="add_cart" type="submit">add to cart</button>
+
+
                                     </form>
                                     <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                                 </div>
@@ -355,29 +375,7 @@
                 year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
                 month: {{ date('m', strtotime($flashSaleDate->end_date)) }},
                 day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
-
             });
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('.shopping-cart-form').on('submit', function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-                console.log(formData);
-                $.ajax({
-                    method: 'POST',
-                    data: formData,
-                    url: "{{ route('add-to-cart') }}",
-                    success: function(data) {
-
-                    },
-                    error: function(xhr, status, error) {
-
-                    }
-                });
-            })
         })
     </script>
 @endpush
