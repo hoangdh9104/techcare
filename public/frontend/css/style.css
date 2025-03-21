@@ -1823,7 +1823,9 @@ PRODUCT MODAL VIEW END
   opacity: 0;
   visibility: hidden;
 } */
+.wsus__product_item{
 
+}
 #wsus__flash_sell .wsus__product_item {
   margin: 25px 12px 0px 12px;
 }
@@ -6717,7 +6719,10 @@ WISHLIST PAGE START
 .dash_logo {
   width: 100%;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  height: 0px;
+
 }
 
 .dash_logo img {
@@ -9637,3 +9642,21 @@ span.wsus__new {
     height: 70px;
     object-fit: cover;
   }
+/* sửa nút add to card trong list product */
+  .add_cart_two {
+    position: static;
+    padding: 0px 19px;
+    font-size: 16px;
+    width: auto;
+    height: 40px;
+    color: #fff;
+    border: 1px solid#0088CC;
+    background: #0088CC;
+    margin-right: 10px;
+}
+
+.add_cart_two:hover {
+    color: #0088CC;
+    border: 1px solid #0088CC;
+    background: #fff;
+}

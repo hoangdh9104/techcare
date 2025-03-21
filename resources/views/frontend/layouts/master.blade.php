@@ -202,6 +202,13 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.auto_click').click();
+            console.log('Button clicked');
+
+        })
+    </script>
     @include('frontend.layouts.scripts')
     @stack('scripts')
 </body>

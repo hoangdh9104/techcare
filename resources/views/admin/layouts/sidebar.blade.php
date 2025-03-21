@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Techcare</a>
+            <a href="{{url('/')}}">Techcare</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
+            <a href="{{url('/')}}">St</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
@@ -21,6 +21,9 @@
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
                 </ul>
             </li>
             {{--Manage Blog--}}

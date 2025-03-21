@@ -11,21 +11,15 @@
                         <ul>
                             <li><a href="{{ route('home') }}">home</a></li>
 
-                            <li><a href="javascrip:;">cart view</a></li>
+                            {{-- <li><a href="javascrip:;">cart view</a></li> --}}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+    
 
-
-    <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CART VIEW PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -64,7 +58,7 @@
                                             <td class="wsus__pro_name">
                                                 <p>{!! $item->name !!}</p>
                                                 @foreach ($item->options->variants as $key => $variant)
-                                                    <span>{{ $key }}: {{ $variant['name'] }}
+                                                    <span>{{ $variant['variant_name'] }}: {{ $variant['name'] }}
                                                         {{ $settings->currency_icon . $variant['price'] }}</span>
                                                 @endforeach
                                             </td>
@@ -157,9 +151,8 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              CART VIEW PAGE END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+   
+
 @endsection
 @push('scripts')
     <script>

@@ -50,8 +50,11 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 /* Route category */
 Route::put('/admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
-/* Route product detail */
+/* Route product  */
+Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
+Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
+
 /* Route add to cart */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
 Route::get('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
@@ -93,6 +96,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Payment route
     Route::get('payment', [PaymentController::class, 'index'])->name('payment');
+    Route::get('payment-success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 
     // Paypal route
     Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
@@ -100,3 +104,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
 });
+
+// Route::middleware(['auth', 'role:shipper'])->group(function () {
+//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+// });
+
