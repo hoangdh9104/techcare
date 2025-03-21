@@ -2,9 +2,9 @@
 // Admin routes
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BlogController;
-// use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -102,6 +102,9 @@ Route::put('product-slider-section-three', [HomePageSettingController::class, 'u
 // ** Shipping rule routes**//
 Route::put('shipping-rule/change-status', [ShippingRuleController::class, 'changeStatus'])->name('shipping-rule.change-status');
 Route::resource('shipping-rule', ShippingRuleController::class);
+
+// Order
+Route::resource('order', OrderController::class);
 
 //**Blog routes */
 Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
