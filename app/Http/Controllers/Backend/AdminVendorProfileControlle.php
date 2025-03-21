@@ -8,7 +8,7 @@ use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminVendorProfileController extends Controller
+class AdminVendorProfileControlle extends Controller
 {
     use ImageUploadTrait;
     /**

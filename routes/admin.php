@@ -3,6 +3,8 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
+use App\Http\Controllers\Backend\BlogCategoryController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -103,6 +105,17 @@ Route::resource('shipping-rule', ShippingRuleController::class);
 
 // Order
 Route::resource('order', OrderController::class);
+
+//**Blog routes */
+Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
+Route::resource('blog-category', BlogCategoryController::class);
+
+Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
+Route::resource('blog', BlogController::class);
+
+
+
+
 
 // Flash Sale
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');

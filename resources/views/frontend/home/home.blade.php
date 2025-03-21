@@ -110,9 +110,9 @@
 
 
     <!--============================
-                                                HOME BLOGS START
-                                            ==============================-->
-    {{-- @include('frontend.home.sections.blog') --}}
+                                            HOME BLOGS START
+                                        ==============================-->
+    @include('frontend.home.sections.blog')
     <!--============================
                                                 HOME BLOGS END
                                             ==============================-->

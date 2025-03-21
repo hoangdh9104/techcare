@@ -33,5 +33,12 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) use ($generalSetting) {
             $view->with('settings', $generalSetting);
         });
+        // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
+        // if ($generalSetting) {
+        //     Config::set('app.timezone', $generalSetting->time_zone);
+        // } else {
+        //     // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
+        //     Config::set('app.timezone', 'UTC');
+        // }
     }
 }
