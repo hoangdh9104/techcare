@@ -32,6 +32,12 @@ class HomeController extends Controller
             'sliders',
             'flashSaleDate',
             'flashSaleItems',
+            'popularCategory',
+            'brands',
+            'typeBaseProducts',
+            'categoryProductSliderSectionOne',
+            'categoryProductSliderSectionTwo',
+            'categoryProductSliderSectionThree',
             'recentBlogs'
         ));
     }
