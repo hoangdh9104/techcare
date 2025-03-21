@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class ShipperController extends Controller
 {
     public function dashboard() {
+        
         return view(' shipper.dashboard');
     }
 }
