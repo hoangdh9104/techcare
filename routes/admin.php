@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -24,7 +25,8 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
-
+use App\Http\Controllers\Backend\VendorListController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -134,3 +136,17 @@ Route::put('change-approve-status' ,[SellerProductController::class, 'changeAppr
 // Payment setting 
 Route::get('payment-settings', [PaymentSettingController::class,'index'])->name('payment-settings.index');
 Route::resource('paypal-setting', PaypalSettingController::class);
+
+// vendor request
+Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
+
+//customer list
+Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
+Route::put('customer/status-change', [CustomerListController::class, 'statusChange'])->name('customer.status-change');
+
+
+
+Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
+Route::put('vendor-list/status-change', [VendorListController::class, 'statusChange'])->name('vendor-list.status-change');

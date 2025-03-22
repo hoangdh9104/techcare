@@ -34,6 +34,9 @@ class UserVendorReqeustController extends Controller
             'about' => ['required'],
         ]);
 
+        if(Auth::user()->role === 'vendor'){
+            return redirect()->back();
+        }
         $imagePath = $this->uploadImage($request, 'shop_image', 'uploads');
         $vendor = new Vendor();
         $vendor->banner = $imagePath;

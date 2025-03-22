@@ -24,7 +24,7 @@
           <br>
           <div class="wsus__dashboard_profile">
             <div class="wsus__dash_pro_area">
-              <form action="{{route('user.vendor-request.create')}}" method="POST">
+              <form action="{{route('user.vendor-request.create')}}" method="POST" enctype="multipart/form-data">
                 
                 @csrf
                 <div class="wsus__dash_pro_single">
@@ -33,25 +33,25 @@
                 </div>
                 <div class="wsus__dash_pro_single">
                   <i class="fas fa-user-tie" aria-hidden="true"></i>
-                  <input type="text" name="shop_name" placeholder="shop name">
+                  <input type="text" name="shop_name" placeholder="shop name" value="{{old('shop_name')}}">
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="wsus__dash_pro_single">
                       <i class="fas fa-user-tie" aria-hidden="true"></i>
-                      <input type="email" name="shop_email" placeholder="shop Email">
+                      <input type="email" name="shop_email" placeholder="shop Email" value="{{old('shop_email')}}">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="wsus__dash_pro_single">
                       <i class="fas fa-user-tie" aria-hidden="true"></i>
-                      <input type="text" name="shop_phone" placeholder="shop Phone">
+                      <input type="text" name="shop_phone" placeholder="shop Phone" value="{{old('shop_phone')}}">
                     </div>
                   </div>
                 </div>
                 <div class="wsus__dash_pro_single">
                   <i class="fas fa-user-tie" aria-hidden="true"></i>
-                  <input type="text" name="shop_address" placeholder="shop Address">
+                  <input type="text" name="shop_address" placeholder="shop Address" value="{{old('shop_address')}}">
                 </div>
 
                 <div class="wsus__dash_pro_single">
