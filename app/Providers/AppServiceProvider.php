@@ -42,11 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Config::set('app.timezone', config('app.timezone'));
         }
 
-        Config::set('app.timezone', $generalSetting->time_zone);
-        /** Share variable at all view */
-        View::composer('*', function ($view) use ($generalSetting) {
-            $view->with('settings', $generalSetting);
-        });
+       
         // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
         // if ($generalSetting) {
         //     Config::set('app.timezone', $generalSetting->time_zone);
