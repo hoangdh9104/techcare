@@ -20,7 +20,8 @@ use App\Http\Controllers\Frontend\WishlistController;
 
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
-
+use App\Http\Controllers\Frontend\UserVendorReqeustController;
+use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,7 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 
 //vendor page routes
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
+Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
@@ -102,6 +104,13 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
     
+    //vendor request 
+    Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
+    Route::get('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
+
+    // Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
+    // Route::get('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
+
     // user address route
     Route::resource('address', UserAddressController::class);
 

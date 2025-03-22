@@ -50,7 +50,7 @@
                                             {{$vendor->phone}}</a>
                                         <a href="javascript:;"><i class="fal fa-envelope"></i>
                                             {{$vendor->email}}</a>
-                                        <a href="vendor_details.html" class="common_btn">visit store</a>
+                                        <a href="{{route('vendor.products', $vendor->id)}}" class="common_btn">visit store</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-xl-12">
                     <section id="pagination">
-                        <nav aria-label="Page navigation example">
+                        {{-- <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
@@ -79,7 +79,12 @@
                                     </a>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> --}}
+                        <div class="mt-5">
+                            @if ($vendors->hasPages())
+                                {{$vendors->llinks()}}
+                            @endif
+                        </div>
                     </section>
                 </div>
             </div>
