@@ -5,7 +5,11 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
 use App\Http\Controllers\Backend\VendorController;
 
+
 // use App\Http\Controllers\Frontend\FrontendProductController;
+
+
+use App\Http\Controllers\Frontend\BlogController;
 
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
@@ -85,7 +89,11 @@ Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->
 Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
+/** blog routes */
+// Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
+// Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 
+Route::get('blog-details/{slug}',[BlogController::class, 'blogDetails'])->name('blog-details');
 
 //vendor page routes
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');

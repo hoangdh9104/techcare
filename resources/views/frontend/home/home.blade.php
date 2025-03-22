@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title')
-   {{-- {{$settings->site_name}} --}}
+   {{$settings->site_name}}
 @endsection
 @section('content')
     <!--============================
@@ -110,9 +110,9 @@
 
 
     <!--============================
-                                                HOME BLOGS START
-                                            ==============================-->
-    {{-- @include('frontend.home.sections.blog') --}}
+                                            HOME BLOGS START
+                                        ==============================-->
+    @include('frontend.home.sections.blog')
     <!--============================
                                                 HOME BLOGS END
                                             ==============================-->
