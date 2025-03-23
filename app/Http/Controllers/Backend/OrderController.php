@@ -107,10 +107,51 @@ class OrderController extends Controller
     }
     public function changeOrderStatus(Request $request)
     {
+        // Tìm đơn hàng
         $order = Order::findOrFail($request->id);
-        $order->order_status = $request->status;
+        $newStatus = $request->status;
+        $currentStatus = $order->order_status;
+
+        // Danh sách trạng thái không thể quay lại từ trạng thái đã giao hàng
+        $immutableStatuses = ['delivered', 'canceled'];
+
+        // Nếu đơn hàng đã ở trạng thái không thể thay đổi thì từ chối cập nhật
+        if (in_array($currentStatus, $immutableStatuses)) {
+            $messages = [
+                'delivered' => 'Order has already been delivered and cannot be changed.',
+                'canceled'  => 'Order has already been canceled and cannot be changed.'
+            ];
+
+            return response([
+                'status'  => 'error',
+                'message' => $messages[$currentStatus] ?? 'Order status cannot be changed.'
+            ], 400);
+        }
+
+        // Nếu đơn hàng đã được 'shipped', không thể chuyển về các trạng thái trước đó
+        if ($currentStatus === 'shipped' && in_array($newStatus, ['pending', 'processed_and_ready_to_ship', 'dropped_off', 'canceled'])) {
+            return response([
+                'status' => 'error',
+                'message' => 'Cannot change order status from shipped to ' . ucfirst(str_replace('_', ' ', $newStatus))
+            ], 400);
+        }
+
+        // Nếu đơn hàng đã 'out_for_delivery', không thể quay lại trạng thái trước đó
+        if ($currentStatus === 'out_for_delivery' && in_array($newStatus, ['pending', 'processed_and_ready_to_ship', 'dropped_off', 'shipped', 'canceled'])) {
+            return response([
+                'status' => 'error',
+                'message' => 'Cannot change order status from out for delivery to ' . ucfirst(str_replace('_', ' ', $newStatus))
+            ], 400);
+        }
+
+        // Cập nhật trạng thái đơn hàng
+        $order->order_status = $newStatus;
         $order->save();
-        return response(['status' => 'success', 'message' => 'updated order status']);
+
+        return response([
+            'status' => 'success',
+            'message' => 'Order status updated successfully'
+        ]);
     }
     public function changePaymentStatus(Request $request)
     {

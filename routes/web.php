@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
@@ -83,7 +84,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
-
+    // Order route
+    Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -97,10 +100,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
-
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {
 //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
 // });
-

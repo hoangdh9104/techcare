@@ -198,7 +198,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-
             $('#order_status').on('change', function() {
                 let status = $(this).val();
                 let id = $(this).data('id');
@@ -212,13 +211,23 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            toastr.success(data.message)
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message || "Something went wrong!");
                         }
                     },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                })
+                    error: function(xhr) {
+                        let errorMessage = "An error occurred. Please try again.";
+
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+
+                        toastr.error(errorMessage);
+
+                    },
+                });
+
             })
             $('#payment_status').on('change', function() {
                 let status = $(this).val();
