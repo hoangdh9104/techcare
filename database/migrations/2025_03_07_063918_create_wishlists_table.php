@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('general_settings', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->string('site_name');
-            $table->string('layout');
-            $table->string('contact_email');
-            $table->string('currency_name');
-            $table->string('currency_icon');
-            $table->string('time_zone');
+            $table->integer('product_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('general_settings');
+        Schema::dropIfExists('wishlists');
     }
 };

@@ -52,6 +52,7 @@ class BrandDataTable extends DataTable
                                 <span class="custom-switch-indicator"></span>
                             </label>';
                 }
+                return $button;
             })
             ->rawColumns(['logo', 'is_featured', 'status', 'action'])
             ->setRowId('id');
