@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
+use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
@@ -93,7 +94,7 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 // Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 // Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 
-Route::get('blog-details/{slug}',[BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 
 //vendor page routes
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
@@ -111,8 +112,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    
-    //vendor request 
+
+    //vendor request
     // Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
     // Route::get('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
@@ -124,7 +125,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
-
+    // Order route
+    Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -138,10 +141,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
-
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {
 //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
 // });
-
