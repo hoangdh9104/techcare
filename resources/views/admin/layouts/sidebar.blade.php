@@ -1,10 +1,11 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{url('/')}}">Techcare</a>
+            <a href="{{ url('/') }}"><img src="{{ asset('frontend/images/logo-black-2.png') }}" width="100px" alt="logo"
+                    class="img-fluid"></a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{url('/')}}">St</a>
+            <a href="{{ url('/') }}">St</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
@@ -23,11 +24,12 @@
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
                 </ul>
             </li>
-            {{--Manage Blog--}}
-            <li class="dropdown {{ setActive(['admin.blog-category.*','admin.blog.*']) }}">
+            {{-- Manage Blog --}}
+            <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Blog</span></a>
                 <ul class="dropdown-menu">
