@@ -1,7 +1,8 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ url('/') }}">Techcare</a>
+            <a href="{{ url('/') }}"><img src="{{ asset('frontend/images/logo-black-2.png') }}" width="100px"
+                    alt="logo" class="img-fluid"></a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ url('/') }}">St</a>
@@ -27,6 +28,8 @@
                             href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
                 </ul>
             </li>
+            {{-- Manage Blog --}}
+            {{-- <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}"> --}}
             {{-- Manage Order --}}
             <li
                 class="dropdown {{ setActive([
@@ -38,6 +41,8 @@
                     'admin.dropped_off-orders',
                     'admin.delivered-orders',
                     'admin.canceled-orders',
+                    'admin.blog-category.*',
+                    'admin.blog.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Orders</span></a>
@@ -108,7 +113,8 @@
             {{-- Manage Ecommerce --}}
             <li
                 class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.shipping-rule.*', 'admin.flash-sale.*', 'admin.payment-settings.*']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
