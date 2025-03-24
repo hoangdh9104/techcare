@@ -18,7 +18,7 @@
             </div>
         </div>
     </section>
-    
+
 
     <section id="wsus__cart_view">
         <div class="container">
@@ -151,8 +151,6 @@
             </div>
         </div>
     </section>
-   
-
 @endsection
 @push('scripts')
     <script>

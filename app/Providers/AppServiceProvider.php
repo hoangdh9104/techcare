@@ -25,14 +25,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-    
+
         /* set time zone */
         $generalSetting = GeneralSetting::first();
 
-        
+
         if ($generalSetting) {
             Config::set('app.timezone', $generalSetting->time_zone);
-    
+
             /** Share variable at all view */
             View::composer('*', function ($view) use ($generalSetting) {
                 $view->with('settings', $generalSetting);
@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Config::set('app.timezone', config('app.timezone'));
         }
 
-       
+
         // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
         // if ($generalSetting) {
         //     Config::set('app.timezone', $generalSetting->time_zone);
@@ -52,5 +52,4 @@ class AppServiceProvider extends ServiceProvider
         // }
 
     }
-    
 }
