@@ -23,6 +23,7 @@ class VendorShopProfileSeeder extends Seeder
         $vendor->address="Example :VietNam";
         $vendor->description ='Example :FPT POLYTECHNIC';
         $vendor->user_id =$user->id;
+        $vendor->status =1;
         $vendor->save();
     }
 }

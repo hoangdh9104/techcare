@@ -61,7 +61,21 @@
                                         ->take(12)
                                         ->get();
                                 } else {
+                                    
+                                    // Kiểm tra $lastKey['child_category'] có tồn tại không
+                                    if (!isset($lastKey['child_category'])) {
+                                        dd("Không tìm thấy key 'child_category' trong mảng lastKey");
+                                    }
+
+                                    // Tìm danh mục con
                                     $category = \App\Models\ChildCategory::find($lastKey['child_category']);
+
+                                    // Kiểm tra nếu $category bị null
+                                    if (!$category) {
+                                        dd('Không tìm thấy danh mục con với ID: ' . $lastKey['child_category']);
+                                    }
+
+                                    // Truy vấn sản phẩm
                                     $products[] = \App\Models\Product::where('child_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
