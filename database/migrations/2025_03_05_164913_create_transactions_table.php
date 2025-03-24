@@ -19,7 +19,6 @@ return new class extends Migration
             $table->double('amount');
             $table->double('amount_real_currency');
             $table->string('amount_real_currency_name');
-
             $table->timestamps();
         });
     }
