@@ -1,11 +1,11 @@
-<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+<div class="tab-pane fade show" id="list-momo" role="tabpanel" aria-labelledby="list-momo-list">
     <div class="card border">
         <div class="card-body">
             <form action="{{ route('admin.paypal-setting.update', 1) }} " method="POST">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label>Paypal Status</label>
+                    <label>Momo Status</label>
                     <select name="status" id="" class="form-control">
                         <option {{ $paypalSetting->status === 1 ? 'selected' : '' }} value="1">Enable</option>
                         <option {{ $paypalSetting->status === 0 ? 'selected' : '' }} value="0">Disable</option>

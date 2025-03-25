@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
+use App\Models\MomoSetting;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\PaypalSetting;
@@ -187,5 +188,28 @@ class PaymentController extends Controller
     {
         toastr('Something went wrong try again later !', 'error', 'Error');
         return redirect()->route('user.payment');
+    }
+
+
+    // Momo
+    public function momoConfig()
+    {
+        $momoSetting = MomoSetting::first();
+
+        $config = [
+            "accessKey" => "F8BBA842ECF85",
+            "partnerCode" => "MOMO",
+            "requestType" => "captureMoMoWallet",
+            "notifyUrl" => "https=>//momo.vn",
+            "returnUrl" => "https=>//momo.vn",
+            "orderId" => "MM1540456472575",
+            "amount" => "150000",
+            "orderInfo" => "SDK team.",
+            "requestId" => "MM1540456472575",
+            "extraData" => "email=abc@gmail.com",
+            "signature" => "996ed81d68a1b05c99516835e404b2d0146d9b12fbcecbf80c7e51df51cac85e"
+        ];
+
+        return $config;
     }
 }
