@@ -93,10 +93,9 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
 /** blog routes */
-// Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
-// Route::get('blog', [BlogController::class, 'blog'])->name('blog');
-Route::get('blog-details/{slug}',[BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+
 
 
 //** Blog Comment */
