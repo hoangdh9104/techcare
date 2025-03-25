@@ -28,31 +28,19 @@ class AppServiceProvider extends ServiceProvider
 
         /* set time zone */
         $generalSetting = GeneralSetting::first();
-        Config::set('app.timezone', $generalSetting->time_zone);
-        /** Share variable at all view */
-        View::composer('*', function ($view) use ($generalSetting) {
-            $view->with('settings', $generalSetting);
-        });
-        $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
+
+
         if ($generalSetting) {
             Config::set('app.timezone', $generalSetting->time_zone);
+
+            /** Share variable at all view */
+            View::composer('*', function ($view) use ($generalSetting) {
+                $view->with('settings', $generalSetting);
+            });
         } else {
-            // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
-            Config::set('app.timezone', 'UTC');
+            // Đặt timezone mặc định nếu không có bản ghi trong bảng general_settings
+            Config::set('app.timezone', config('app.timezone'));
         }
-
-
-        // if ($generalSetting) {
-        //     Config::set('app.timezone', $generalSetting->time_zone);
-
-        //     /** Share variable at all view */
-        //     View::composer('*', function ($view) use ($generalSetting) {
-        //         $view->with('settings', $generalSetting);
-        //     });
-        // } else {
-        //     // Đặt timezone mặc định nếu không có bản ghi trong bảng general_settings
-        //     Config::set('app.timezone', config('app.timezone'));
-        // }
 
 
         // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
@@ -62,6 +50,5 @@ class AppServiceProvider extends ServiceProvider
         //     // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
         //     Config::set('app.timezone', 'UTC');
         // }
-
     }
 }
