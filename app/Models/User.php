@@ -48,4 +48,9 @@ class User extends Authenticatable
         // 1 user(admin $ vendor) thì chỉ có 1 cửa hàng
         return $this->hasOne(Vendor::class);
     }
+
+    public function shipper()
+    {
+        return $this->hasOne(Shipper::class);
+    }
 }
