@@ -8,15 +8,20 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="wsus__monthly_top_banner">
                     <div class="wsus__monthly_top_banner_img">
-                        <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
-                        <span></span>
+                        @if ($homepage_section_banner_one->banner_one->status == 1)
+                            <a href="{{ $homepage_section_banner_one->banner_one->banner_url }}">
+                                <img class="img-fluid"
+                                    src="{{ asset($homepage_section_banner_one->banner_one->banner_image) }}"
+                                    alt="">
+                            </a>
+                        @endif
                     </div>
-                    <div class="wsus__monthly_top_banner_text">
+                    {{-- <div class="wsus__monthly_top_banner_text">
                         <h4>Black Friday Sale</h4>
                         <h3>Up To <span>70% Off</span></h3>
                         <H6>Everything</H6>
                         <a class="shop_btn" href="#">shop now</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
