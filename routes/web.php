@@ -32,7 +32,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+/** User Address Route */
 
+// Route::resource('address', UserAddressController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -72,8 +74,12 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 /** blog routes */
 // Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 // Route::get('blog', [BlogController::class, 'blog'])->name('blog');
-
 Route::get('blog-details/{slug}',[BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+
+
+//** Blog Comment */
+Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');

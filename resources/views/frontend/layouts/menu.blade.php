@@ -52,10 +52,9 @@
 
                     <ul class="wsus__menu_item">
                         <li><a class="#" href="{{ route('home') }}">home</a></li>
-
                         <li><a class="#" href="#">vendors</a></li>
                         <li><a class="#" href="#">flash Sale</a></li>
-                        <li><a class="#" href="#">blog</a></li>
+                        <li><a class="#" href="{{route('blog')}}">blog</a></li>
                         <li><a class="#" href="#">about</a></li>
                         <li><a class="#" href="#">contact</a></li>
 
