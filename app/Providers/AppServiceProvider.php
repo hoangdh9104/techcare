@@ -26,13 +26,23 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        /* set time zone*/
+        /* set time zone */
         $generalSetting = GeneralSetting::first();
-        Config::set('app.timezone', $generalSetting->time_zone);
-        /** Share variable at all view */
-        View::composer('*', function ($view) use ($generalSetting) {
-            $view->with('settings', $generalSetting);
-        });
+
+
+        if ($generalSetting) {
+            Config::set('app.timezone', $generalSetting->time_zone);
+
+            /** Share variable at all view */
+            View::composer('*', function ($view) use ($generalSetting) {
+                $view->with('settings', $generalSetting);
+            });
+        } else {
+            // Đặt timezone mặc định nếu không có bản ghi trong bảng general_settings
+            Config::set('app.timezone', config('app.timezone'));
+        }
+
+
         // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
         // if ($generalSetting) {
         //     Config::set('app.timezone', $generalSetting->time_zone);

@@ -36,7 +36,7 @@ class PaymentController extends Controller
         $order = new Order();
         $order->invocie_id = rand(1, 999999);
         $order->user_id = Auth::user()->id;
-        $order->sub_total = getMainCartTotal();
+        $order->sub_total = getCartTotal();
         $order->amount = getFinalPayableAmount();
         $order->currency_name = $setting->currency_name;
         $order->currency_icon = $setting->currency_icon;
@@ -46,7 +46,7 @@ class PaymentController extends Controller
         $order->order_address = json_encode(Session::get('address'));
         $order->shpping_method = json_encode(Session::get('shipping_method'));
         $order->coupon = json_encode(Session::get('coupon'));
-        $order->order_status = 0;
+        $order->order_status = 'pending';
         $order->save();
 
 
@@ -65,7 +65,7 @@ class PaymentController extends Controller
             $orderProduct->save();
         }
 
-        // store transaction deteils 
+        // store transaction deteils
         $transaction = new Transaction();
         $transaction->order_id = $order->id;
         $transaction->transaction_id = $transactionID;
@@ -76,7 +76,8 @@ class PaymentController extends Controller
         $transaction->save();
     }
 
-    public function clearSession() {
+    public function clearSession()
+    {
         \Cart::destroy();
         Session::forget('address');
         Session::forget('shipping_method');
@@ -145,7 +146,7 @@ class PaymentController extends Controller
                 ]
             ]
         ]);
-        // Nếu id tồn tại và khác null thì chuyển hướng đến link. Nếu link rel là approve thì chuyển hướng tới paypal 
+        // Nếu id tồn tại và khác null thì chuyển hướng đến link. Nếu link rel là approve thì chuyển hướng tới paypal
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $link) {
                 if ($link['rel'] === 'approve') {
@@ -172,10 +173,10 @@ class PaymentController extends Controller
             $total = getFinalPayableAmount();
             $paidAmount = round($total * $paypalSetting->currency_rate, 2);
             $this->storeOrder('paypal', 1, $response['id'], $paidAmount, $paypalSetting->currency_name);
-            
+
             // Clear session
             $this->clearSession();
-            
+
             return redirect()->route('user.payment.success');
         }
 
