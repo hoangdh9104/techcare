@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
-
+    
         /* set time zone */
         $generalSetting = GeneralSetting::first();
 
@@ -51,4 +51,5 @@ class AppServiceProvider extends ServiceProvider
         //     Config::set('app.timezone', 'UTC');
         // }
     }
+    
 }
