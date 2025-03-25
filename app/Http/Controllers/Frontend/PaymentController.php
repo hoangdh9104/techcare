@@ -191,25 +191,185 @@ class PaymentController extends Controller
     }
 
 
-    // Momo
+    // MOMO
+
+    public function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            )
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
+    }
+
     public function momoConfig()
     {
         $momoSetting = MomoSetting::first();
 
-        $config = [
-            "accessKey" => "F8BBA842ECF85",
-            "partnerCode" => "MOMO",
-            "requestType" => "captureMoMoWallet",
-            "notifyUrl" => "https=>//momo.vn",
-            "returnUrl" => "https=>//momo.vn",
-            "orderId" => "MM1540456472575",
-            "amount" => "150000",
-            "orderInfo" => "SDK team.",
-            "requestId" => "MM1540456472575",
-            "extraData" => "email=abc@gmail.com",
-            "signature" => "996ed81d68a1b05c99516835e404b2d0146d9b12fbcecbf80c7e51df51cac85e"
+        return [
+            'partner_code' => 'MOMOBKUN20180529', // $momoSetting->partner_code
+            'access_key' => 'klm05TvNBzhg7h7j', // $momoSetting->access_key
+            'secret_key' => 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa', // $momoSetting->secret_key
+            'return_url' => route('user.momo.success'),
+            'notify_url' => route('user.momo.cancel'),
+            'test_mode' => $momoSetting->mode === 1 ? 'live' : 'sandbox',
+            'currency_name' => $momoSetting->currency_name,
+            'currency_rate' => $momoSetting->currency_rate,
         ];
-
-        return $config;
     }
+
+    public function payWithMomo()
+    {
+        $momoSetting = MomoSetting::first();
+        if (!$momoSetting || $momoSetting->status == 0) {
+            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error');
+            return redirect()->route('user.momo.payment');
+        }
+
+        $config = $this->momoConfig();
+        $total = getFinalPayableAmount();
+        $payableAmount = round($total * $momoSetting->currency_rate);
+
+        $endpoint = $momoSetting->test_mode
+            ? 'https://test-payment.momo.vn/v2/gateway/api/create'
+            : 'https://payment.momo.vn/v2/gateway/api/create';
+
+        $orderId = time() . rand(1000, 9999);
+        $requestId = time() . rand(1000, 9999);
+        $orderInfo = 'Thanh toán đơn hàng #' . $orderId;
+
+        $rawHash = "accessKey=" . $config['access_key'] .
+            "&amount=" . $payableAmount .
+            "&extraData=" .
+            "&orderId=" . $orderId .
+            "&orderInfo=" . $orderInfo .
+            "&partnerCode=" . $config['partner_code'] .
+            "&redirectUrl=" . $config['return_url'] .
+            "&ipnUrl=" . $config['notify_url'] .
+            "&requestId=" . $requestId .
+            "&requestType=captureWallet";
+
+        $signature = hash_hmac("sha256", $rawHash, $config['secret_key']);
+
+        $data = [
+            'partnerCode' => $config['partner_code'],
+            'partnerName' => 'Techcare', // env('APP_NAME', 'Your Store')
+            'storeId' => 'MomoStore',
+            'requestId' => $requestId,
+            'amount' => $payableAmount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'redirectUrl' => $config['return_url'],
+            'ipnUrl' => $config['notify_url'],
+            'lang' => 'vi',
+            'extraData' => '',
+            'requestType' => 'captureWallet',
+            'signature' => $signature
+        ];
+        // dd($data);
+        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true);
+
+        if (isset($jsonResult['payUrl'])) {
+            // Lưu thông tin đơn hàng tạm thời vào session
+            Session::put('momo_order', [
+                'order_id' => $orderId,
+                'request_id' => $requestId,
+                'amount' => $total,
+                'momo_amount' => $payableAmount
+            ]);
+
+            return redirect()->away($jsonResult['payUrl']);
+        } else {
+            toastr('Không thể khởi tạo thanh toán Momo!', 'error');
+            return redirect()->route('user.momo.payment');
+        }
+    }
+
+    public function momoReturn(Request $request)
+    {
+        $momoSetting = MomoSetting::first();
+        $orderInfo = Session::get('momo_order');
+
+        if (!$orderInfo) {
+            toastr('Không tìm thấy thông tin đơn hàng!', 'error');
+            return redirect()->route('user.payment');
+        }
+
+        // Kiểm tra kết quả thanh toán từ Momo
+        if ($request->resultCode == 0) {
+            // Thanh toán thành công
+            $this->storeOrder(
+                'momo',
+                1,
+                $request->transId ?? $orderInfo['request_id'],
+                $orderInfo['momo_amount'],
+                $momoSetting->currency_name
+            );
+
+            $this->clearSession();
+            Session::forget('momo_order');
+
+            return redirect()->route('user.payment.success');
+        } else {
+            toastr('Thanh toán Momo thất bại!', 'error');
+            return redirect()->route('user.payment');
+        }
+    }
+
+
+    // public function momoNotify(Request $request)
+    // {
+    //     // Lấy tất cả dữ liệu từ request POST
+    //     $data = $request->all();
+    //     $momoSetting = MomoSetting::first();
+
+    //     // Tạo chuỗi raw hash để kiểm tra chữ ký
+    //     $rawHash = "accessKey=" . $momoSetting->access_key .
+    //         "&amount=" . $data['amount'] .
+    //         "&extraData=" . $data['extraData'] .
+    //         "&message=" . $data['message'] .
+    //         "&orderId=" . $data['orderId'] .
+    //         "&orderInfo=" . $data['orderInfo'] .
+    //         "&orderType=" . $data['orderType'] .
+    //         "&partnerCode=" . $data['partnerCode'] .
+    //         "&payType=" . $data['payType'] .
+    //         "&requestId=" . $data['requestId'] .
+    //         "&responseTime=" . $data['responseTime'] .
+    //         "&resultCode=" . $data['resultCode'] .
+    //         "&transId=" . $data['transId'];
+
+    //     // Tạo chữ ký từ raw hash sử dụng secret key
+    //     $signature = hash_hmac("sha256", $rawHash, $momoSetting->secret_key);
+
+    //     // So sánh chữ ký tính toán với chữ ký nhận được
+    //     if ($signature == $data['signature']) {
+    //         // Nếu thanh toán thành công (resultCode = 0)
+    //         if ($data['resultCode'] == 0) {
+    //             // Thực hiện các thao tác:
+    //             // 1. Cập nhật trạng thái đơn hàng trong database
+    //             // 2. Gửi email xác nhận
+    //             // 3. Các xử lý nghiệp vụ khác
+    //         }
+    //         // Trả về response thành công cho Momo
+    //         return response()->json(['status' => 'success']);
+    //     }
+
+    //     // Nếu chữ ký không hợp lệ, trả về lỗi
+    //     return response()->json(['status' => 'failed'], 400);
+    // }
 }

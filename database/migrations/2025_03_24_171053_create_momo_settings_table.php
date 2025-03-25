@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('momo_settings', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status');
+            $table->boolean('mode');
+            $table->string('country_name');
+            $table->string('currency_name');
+            $table->double('currency_rate');
+            $table->text('client_id');
+            $table->text('secret_key');
             $table->timestamps();
         });
     }

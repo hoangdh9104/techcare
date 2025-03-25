@@ -142,6 +142,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
+     // Momo route
+     Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
+     Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
+     Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
+
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {

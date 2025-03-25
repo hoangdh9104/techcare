@@ -14,7 +14,7 @@ class PaymentSettingController extends Controller
     {
         $paypalSetting = PaypalSetting::first();
         $stripeSetting = StripeSetting::first();
-        // $momoSetting = MomoSetting::first();
-        return view('admin.payment-settings.index', compact('paypalSetting', 'stripeSetting'));
+        $momoSetting = MomoSetting::first();
+        return view('admin.payment-settings.index', compact('paypalSetting', 'stripeSetting','momoSetting'));
     }
 }
