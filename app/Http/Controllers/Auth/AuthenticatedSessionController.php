@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             Auth::guard('web')->logout();
             $request->session()->regenerateToken();
     
-            toastr('account has been banned form website please connect with support!', 'error', 'Account Banned!')
+            toastr('account has been banned form website please connect with support!', 'error', 'Account Banned!');
             return redirect('/');
         }
         // Check role tài khoản đăng nhập, nếu không sẽ trả về trang user

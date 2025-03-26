@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vendor;
+use App\Models\VendorCondition;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class UserVendorReqeustController extends Controller
      */
     public function index()
     {
-        return view('frontend.dashboard.vendor-request.index');
+        $content = VendorCondition::first();
+        return view('frontend.dashboard.vendor-request.index', compact('content'));
     }
 
     /**

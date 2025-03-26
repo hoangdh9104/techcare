@@ -57,12 +57,12 @@
                         <li><a class="#" href="#">flash Sale</a></li>
                         <li><a class="#" href="#">blog</a></li>
                         <li><a class="#" href="#">about</a></li>
-                        <li><a class="#" href="#">contact</a></li>
+                        <li><a class="#" href="{{route('contact')}}">contact</a></li>
 
 
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
-                        <li><a href="#">track order</a></li>
+                        <li><a href="{{route('product-traking.index')}}">track order</a></li>
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
                                 <li><a href="{{ route('user.dashboard') }}">my account</a></li>
@@ -169,7 +169,7 @@
 
 
 
-                        <li><a href="#">track order</a></li>
+                        <li><a href="{{route('product-traking.index')}}">track order</a></li>
                         <li><a href="#">flash sale</a></li>
                     </ul>
                 </div>
