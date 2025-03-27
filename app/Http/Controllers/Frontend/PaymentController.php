@@ -83,6 +83,9 @@ class PaymentController extends Controller
         Session::forget('address');
         Session::forget('shipping_method');
         Session::forget('coupon');
+        if (isset(Session::get('momo_order')['order_id'])) {
+            Session::forget('momo_order');
+        }
     }
 
     public function paypalConfig()
@@ -206,8 +209,9 @@ class PaymentController extends Controller
             'return_url' => route('user.momo.success'), // Sử dụng route hiện có
             'notify_url' => route('user.momo.cancel'),  // Sử dụng route hiện có
             'test_mode' => true, // Luôn bật chế độ sandbox
-            'currency_name' => $momoSetting->currency_name ,
-            'currency_rate' => $momoSetting->currency_rate ,
+            'currency_name' => $momoSetting->currency_name,
+            'currency_rate' => $momoSetting->currency_rate,
+            'test_mode' => $momoSetting->mode == 1 ? false : true, // 1 = live, 0 = sandbox
         ];
     }
 
@@ -222,10 +226,11 @@ class PaymentController extends Controller
         $config = $this->momoConfig();
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $momoSetting->currency_rate, 2);
-        
 
-        // Luôn sử dụng endpoint sandbox
-        $endpoint = 'https://test-payment.momo.vn/v2/gateway/api/create';
+
+        $endpoint = $config['test_mode']
+            ? 'https://test-payment.momo.vn/v2/gateway/api/create' // Sandbox
+            : 'https://payment.momo.vn/v2/gateway/api/create';       // Production
 
         $orderId = time() . rand(1000, 9999);
         $requestId = time() . rand(1000, 9999);
@@ -287,15 +292,21 @@ class PaymentController extends Controller
                 return redirect()->route('user.momo.payment');
             }
         } catch (\Exception $e) {
-            toastr('Lỗi kết nối đến MoMo: ' . $e->getMessage(), 'error');
-            return redirect()->route('user.momo.payment');
+            if ($config['test_mode']) {
+                toastr('Lỗi sandbox MoMo: ' . $e->getMessage(), 'error');
+            } else {
+                toastr('Lỗi production MoMo: ' . $e->getMessage(), 'error');
+            }
         }
     }
 
     public function momoSuccess(Request $request)
     {
         $orderInfo = Session::get('momo_order');
+        $momoSetting = MomoSetting::first();
 
+        $total = getFinalPayableAmount();
+        $payableAmount = round($total * $momoSetting->currency_rate, 2);
         if (!$orderInfo) {
             toastr('Không tìm thấy thông tin đơn hàng!', 'error');
             return redirect()->route('user.momo.payment');
@@ -305,15 +316,16 @@ class PaymentController extends Controller
             // Thanh toán thành công
             $this->storeOrder(
                 'momo_atm',
-                1, // Trạng thái thành công
+                1, 
                 $request->transId ?? $orderInfo['request_id'],
-                $orderInfo['amount'],
-                'VND'
+                $payableAmount,
+                $momoSetting->currency_name
             );
 
-            Session::forget('momo_order');
+            // Clear session
+            $this->clearSession();
             toastr('Thanh toán qua MoMo thành công!', 'success');
-            return redirect()->route('user.payment.success'); // Hoặc route bạn muốn
+            return redirect()->route('user.payment.success'); 
         } else {
             toastr('Thanh toán MoMo thất bại! Mã lỗi: ' . $request->resultCode, 'error');
             return redirect()->route('user.momo.payment');
