@@ -50,6 +50,5 @@ class AppServiceProvider extends ServiceProvider
         //     // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
         //     Config::set('app.timezone', 'UTC');
         // }
-
     }
 }

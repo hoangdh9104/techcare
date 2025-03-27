@@ -4,6 +4,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminVendorProfileControlle;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
+use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\MomoSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\PaymentSettingController;
@@ -25,6 +27,7 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
@@ -136,8 +139,23 @@ Route::get('seller-pending-products', [SellerProductController::class, 'pendingP
 Route::put('change-approve-status', [SellerProductController::class, 'changeApproveStatus'])->name('change-approve-status');
 
 // Payment setting
+Route::get('payment-settings', [PaymentSettingController::class,'index'])->name('payment-settings.index');
+Route::resource('paypal-setting', PaypalSettingController::class);
+
+// Advertisement routes
+Route::get('advertisement',[AdvertisementController::class,'index'])->name('advertisement.index');
+Route::put('advertisement/homepage-banner-section-one',[AdvertisementController::class,'homepageBanerSectionOne'])->name('homepage-banner-section-one');
+Route::put('advertisement/homepage-banner-section-two',[AdvertisementController::class,'homepageBanerSectionTwo'])->name('homepage-banner-section-two');
+Route::put('advertisement/homepage-banner-section-three',[AdvertisementController::class,'homepageBanerSectionThree'])->name('homepage-banner-section-three');
+Route::put('advertisement/homepage-banner-section-four',[AdvertisementController::class,'homepageBanerSectionFour'])->name('homepage-banner-section-four');
+Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productPageBanner'])->name('productpage-banner');
+Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cartpage-banner');
 Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
 Route::resource('paypal-setting', PaypalSettingController::class);
+Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
+Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
+
+
 /**Order route */
 Route::get('order-status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
 Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
