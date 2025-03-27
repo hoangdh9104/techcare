@@ -10,6 +10,6 @@ class VendorProductReviewController extends Controller
 {
     public function index(VendorProductReviewsDataTable $dataTable)
     {
-        return $dataTable->render('backend.vendor.product-review.index');
+        return $dataTable->render('vendor.review.index');
     }
 }

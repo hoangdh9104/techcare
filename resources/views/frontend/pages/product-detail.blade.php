@@ -223,12 +223,21 @@
                                             <div class="wsus__pro_det_vendor_text">
                                                 <h4>{{ $product->vendor->user->name }}</h4>
                                                 <p class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <span>(41 review)</span>
+                                                    @php
+                                                        $avgRating = $product->reviews('reviews')->avg('rating');
+                                                        $fullRating = round($avgRating);
+                                                    @endphp
+        
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $fullRating)
+                                                        <i class="fas fa-star"></i>
+                                                        @else
+                                                        <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
+        
+                                                    <span>({{count($product->reviews)}} review)</span>
+        
                                                 </p>
                                                 <p><span>Store Name:</span>{{ $product->vendor->shop_name }} </p>
                                                 <p><span>Address:</span> {{ $product->vendor->address }}</p>
@@ -255,7 +264,6 @@
                                                 <div class="wsus__comment_area">
                                                     <h4>Reviews <span>{{count($reviews)}}</span></h4>
                                                     @foreach ($reviews as $review)
-                                            
                                                     <div class="wsus__main_comment">
                                                         <div class="wsus__comment_img">
                                                             <img src="{{asset($review->user->image)}}" alt="user"
@@ -291,11 +299,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
+                                                
                                                 @php
                                                     $isBrought = false;
-                                                    $orders = \App\Models\Order::where(['user_id ' => auth()->user()->id, 'order_status' => 'delevered' ])->get();
+                                                    $orders = \App\Models\Order::where(['user_id'=> auth()->user()->id, 'order_status' => 'delivered' ])->get();
                                                     foreach($orders as $key =>$order){
                                                        $existItem = $order->orderProducts()->where('product_id', $product->id)->first();
+
                                                        if($existItem){
                                                               $isBrought = true;
                                                        }
