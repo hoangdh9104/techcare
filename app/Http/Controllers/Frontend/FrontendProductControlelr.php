@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\SubCategory;
 // use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -92,13 +94,19 @@ class FrontendProductControlelr extends Controller
         $categories = Category::Where(['status' => 1])->get();
         $brands = Brand::where(['status' => 1])->get();
 
-        return view('frontend.pages.product', compact('products', 'categories', 'brands'));
+        // banner
+        $productpage_banner_section = Advertisement::where('key', 'productpage_banner_section')->first();
+        $productpage_banner_section = json_decode($productpage_banner_section?->value);
+
+
+        return view('frontend.pages.product', compact('products', 'categories', 'brands','productpage_banner_section'));
     }
     // show product detail page
     public function showProduct(string $slug)
     {
         $product = Product::with(['category', 'productImageGalleries', 'variants', 'brand', 'vendor'])->where('slug', $slug)->where('status', 1)->first();
-        return view('frontend.pages.product-detail', compact('product'));
+        $reviews = ProductReview::where('product_id', $product->id)->where('status', 1)->paginate(10);
+        return view('frontend.pages.product-detail', compact('product', 'reviews'));
     }
 
     public function changeListView(Request $request)

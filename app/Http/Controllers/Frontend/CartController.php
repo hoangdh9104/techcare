@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
@@ -15,6 +16,8 @@ class CartController extends Controller
     // show cart page
     public function cartDetails()
     {
+
+
         $cartItems = Cart::content();
         if ($cartItems->count() == 0) {
             Session::forget('coupon');
@@ -97,8 +100,11 @@ class CartController extends Controller
         }
         // Lấy lại dữ liệu giỏ hàng mới nhất sau khi cập nhật
         $cartItems = Cart::content();
+        // banner
+        $cartpage_banner_section = Advertisement::where('key', 'cartpage_banner_section')->first();
+        $cartpage_banner_section = json_decode($cartpage_banner_section?->value);
 
-        return view('frontend.pages.cart-detail', compact('cartItems'));
+        return view('frontend.pages.cart-detail', compact('cartItems','cartpage_banner_section'));
     }
     /**
 

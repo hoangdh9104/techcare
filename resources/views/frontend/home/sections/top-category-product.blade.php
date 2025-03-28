@@ -8,15 +8,20 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="wsus__monthly_top_banner">
                     <div class="wsus__monthly_top_banner_img">
-                        <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
-                        <span></span>
+                        @if ($homepage_section_banner_one->banner_one->status == 1)
+                            <a href="{{ $homepage_section_banner_one->banner_one->banner_url }}">
+                                <img class="img-fluid"
+                                    src="{{ asset($homepage_section_banner_one->banner_one->banner_image) }}"
+                                    alt="">
+                            </a>
+                        @endif
                     </div>
-                    <div class="wsus__monthly_top_banner_text">
+                    {{-- <div class="wsus__monthly_top_banner_text">
                         <h4>Black Friday Sale</h4>
                         <h3>Up To <span>70% Off</span></h3>
                         <H6>Everything</H6>
                         <a class="shop_btn" href="#">shop now</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -45,13 +50,13 @@
 
                                 if ($keyName === 'category') {
                                     $category = \App\Models\Category::find($lastKey['category']);
-                                    $products[] = \App\Models\Product::where('category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')->where('category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
                                 } elseif ($keyName === 'sub_category') {
                                     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                                    $products[] = \App\Models\Product::where('sub_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')->where('sub_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
@@ -71,7 +76,7 @@
                                     }
 
                                     // Truy vấn sản phẩm
-                                    $products[] = \App\Models\Product::where('child_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')->where('child_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
@@ -98,13 +103,20 @@
                                     <div class="wsus__hot_deals__single_text">
                                         <h5>{!! limitText($item->name) !!}</h5>
                                         <p class="wsus__rating">
+                                            @php
+                                                $avgRating = $item->reviews('reviews')->avg('rating');
+                                                $fullRating = round($avgRating);
+                                            @endphp
+
                                             @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $item->reviews_avg_rating)
-                                                    <i class="fas fa-star"></i>
+                                                @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
                                                 @else
-                                                    <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
                                                 @endif
                                             @endfor
+
+                                            <span>({{count($item->reviews)}} review)</span>
 
                                         </p>
                                         @if (checkDiscount($item))
