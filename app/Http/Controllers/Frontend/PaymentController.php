@@ -83,6 +83,9 @@ class PaymentController extends Controller
         Session::forget('address');
         Session::forget('shipping_method');
         Session::forget('coupon');
+        if (isset(Session::get('momo_order')['order_id'])) {
+            Session::forget('momo_order');
+        }
     }
 
     public function paypalConfig()
@@ -193,42 +196,22 @@ class PaymentController extends Controller
 
     // MOMO
 
-    public function execPostRequest($url, $data)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt(
-            $ch,
-            CURLOPT_HTTPHEADER,
-            array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data)
-            )
-        );
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //execute post
-        $result = curl_exec($ch);
-        //close connection
-        curl_close($ch);
-        return $result;
-    }
+
 
     public function momoConfig()
     {
         $momoSetting = MomoSetting::first();
 
         return [
-            'partner_code' => 'MOMOBKUN20180529', // $momoSetting->partner_code
-            'access_key' => 'klm05TvNBzhg7h7j', // $momoSetting->access_key
-            'secret_key' => 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa', // $momoSetting->secret_key
-            'return_url' => route('user.momo.success'),
-            'notify_url' => route('user.momo.cancel'),
-            'test_mode' => $momoSetting->mode === 1 ? 'live' : 'sandbox',
+            'partner_code' => 'MOMOBKUN20180529', // $momoSetting->partner_code ?? 
+            'access_key' =>  'klm05TvNBzhg7h7j', // $momoSetting->access_key ??
+            'secret_key' => 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa', // $momoSetting->secret_key ?? 
+            'return_url' => route('user.momo.success'), // Sử dụng route hiện có
+            'notify_url' => route('user.momo.cancel'),  // Sử dụng route hiện có
+            'test_mode' => true, // Luôn bật chế độ sandbox
             'currency_name' => $momoSetting->currency_name,
             'currency_rate' => $momoSetting->currency_rate,
+            'test_mode' => $momoSetting->mode == 1 ? false : true, // 1 = live, 0 = sandbox
         ];
     }
 
@@ -242,11 +225,12 @@ class PaymentController extends Controller
 
         $config = $this->momoConfig();
         $total = getFinalPayableAmount();
-        $payableAmount = round($total * $momoSetting->currency_rate);
+        $payableAmount = round($total * $momoSetting->currency_rate, 2);
 
-        $endpoint = $momoSetting->test_mode
-            ? 'https://test-payment.momo.vn/v2/gateway/api/create'
-            : 'https://payment.momo.vn/v2/gateway/api/create';
+
+        $endpoint = $config['test_mode']
+            ? 'https://test-payment.momo.vn/v2/gateway/api/create' // Sandbox
+            : 'https://payment.momo.vn/v2/gateway/api/create';       // Production
 
         $orderId = time() . rand(1000, 9999);
         $requestId = time() . rand(1000, 9999);
@@ -255,19 +239,19 @@ class PaymentController extends Controller
         $rawHash = "accessKey=" . $config['access_key'] .
             "&amount=" . $payableAmount .
             "&extraData=" .
+            "&ipnUrl=" . $config['notify_url'] .
             "&orderId=" . $orderId .
             "&orderInfo=" . $orderInfo .
             "&partnerCode=" . $config['partner_code'] .
             "&redirectUrl=" . $config['return_url'] .
-            "&ipnUrl=" . $config['notify_url'] .
             "&requestId=" . $requestId .
-            "&requestType=captureWallet";
+            "&requestType=payWithATM";
 
         $signature = hash_hmac("sha256", $rawHash, $config['secret_key']);
 
         $data = [
             'partnerCode' => $config['partner_code'],
-            'partnerName' => 'Techcare', // env('APP_NAME', 'Your Store')
+            'partnerName' => env('APP_NAME', 'Techcare'),
             'storeId' => 'MomoStore',
             'requestId' => $requestId,
             'amount' => $payableAmount,
@@ -277,99 +261,81 @@ class PaymentController extends Controller
             'ipnUrl' => $config['notify_url'],
             'lang' => 'vi',
             'extraData' => '',
-            'requestType' => 'captureWallet',
+            'requestType' => 'payWithATM',
             'signature' => $signature
         ];
         // dd($data);
-        $result = $this->execPostRequest($endpoint, json_encode($data));
-        $jsonResult = json_decode($result, true);
-
-        if (isset($jsonResult['payUrl'])) {
-            // Lưu thông tin đơn hàng tạm thời vào session
-            Session::put('momo_order', [
-                'order_id' => $orderId,
-                'request_id' => $requestId,
-                'amount' => $total,
-                'momo_amount' => $payableAmount
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post($endpoint, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
+                ],
+                'json' => $data,
+                'verify' => false
             ]);
 
-            return redirect()->away($jsonResult['payUrl']);
+            $jsonResult = json_decode($response->getBody(), true);
+            // dd($jsonResult);
+            if (isset($jsonResult['payUrl'])) {
+                Session::put('momo_order', [
+                    'order_id' => $orderId,
+                    'request_id' => $requestId,
+                    'amount' => $total,
+                    'momo_amount' => $payableAmount
+                ]);
+                return redirect()->away($jsonResult['payUrl']);
+            } else {
+                $errorMsg = $jsonResult['message'] ?? 'Không có thông báo lỗi từ MoMo';
+                toastr('Lỗi MoMo: ' . $errorMsg, 'error');
+                return redirect()->route('user.momo.payment');
+            }
+        } catch (\Exception $e) {
+            if ($config['test_mode']) {
+                toastr('Lỗi sandbox MoMo: ' . $e->getMessage(), 'error');
+            } else {
+                toastr('Lỗi production MoMo: ' . $e->getMessage(), 'error');
+            }
+        }
+    }
+
+    public function momoSuccess(Request $request)
+    {
+        $orderInfo = Session::get('momo_order');
+        $momoSetting = MomoSetting::first();
+
+        $total = getFinalPayableAmount();
+        $payableAmount = round($total * $momoSetting->currency_rate, 2);
+        if (!$orderInfo) {
+            toastr('Không tìm thấy thông tin đơn hàng!', 'error');
+            return redirect()->route('user.momo.payment');
+        }
+
+        if ($request->resultCode == 0) {
+            // Thanh toán thành công
+            $this->storeOrder(
+                'momo_atm',
+                1, 
+                $request->transId ?? $orderInfo['request_id'],
+                $payableAmount,
+                $momoSetting->currency_name
+            );
+
+            // Clear session
+            $this->clearSession();
+            toastr('Thanh toán qua MoMo thành công!', 'success');
+            return redirect()->route('user.payment.success'); 
         } else {
-            toastr('Không thể khởi tạo thanh toán Momo!', 'error');
+            toastr('Thanh toán MoMo thất bại! Mã lỗi: ' . $request->resultCode, 'error');
             return redirect()->route('user.momo.payment');
         }
     }
 
-    public function momoReturn(Request $request)
+    public function momoCancel(Request $request)
     {
-        $momoSetting = MomoSetting::first();
-        $orderInfo = Session::get('momo_order');
-
-        if (!$orderInfo) {
-            toastr('Không tìm thấy thông tin đơn hàng!', 'error');
-            return redirect()->route('user.payment');
-        }
-
-        // Kiểm tra kết quả thanh toán từ Momo
-        if ($request->resultCode == 0) {
-            // Thanh toán thành công
-            $this->storeOrder(
-                'momo',
-                1,
-                $request->transId ?? $orderInfo['request_id'],
-                $orderInfo['momo_amount'],
-                $momoSetting->currency_name
-            );
-
-            $this->clearSession();
-            Session::forget('momo_order');
-
-            return redirect()->route('user.payment.success');
-        } else {
-            toastr('Thanh toán Momo thất bại!', 'error');
-            return redirect()->route('user.payment');
-        }
+        // Xử lý khi người dùng hủy thanh toán
+        toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
+        return redirect()->route('user.momo.payment');
     }
-
-
-    // public function momoNotify(Request $request)
-    // {
-    //     // Lấy tất cả dữ liệu từ request POST
-    //     $data = $request->all();
-    //     $momoSetting = MomoSetting::first();
-
-    //     // Tạo chuỗi raw hash để kiểm tra chữ ký
-    //     $rawHash = "accessKey=" . $momoSetting->access_key .
-    //         "&amount=" . $data['amount'] .
-    //         "&extraData=" . $data['extraData'] .
-    //         "&message=" . $data['message'] .
-    //         "&orderId=" . $data['orderId'] .
-    //         "&orderInfo=" . $data['orderInfo'] .
-    //         "&orderType=" . $data['orderType'] .
-    //         "&partnerCode=" . $data['partnerCode'] .
-    //         "&payType=" . $data['payType'] .
-    //         "&requestId=" . $data['requestId'] .
-    //         "&responseTime=" . $data['responseTime'] .
-    //         "&resultCode=" . $data['resultCode'] .
-    //         "&transId=" . $data['transId'];
-
-    //     // Tạo chữ ký từ raw hash sử dụng secret key
-    //     $signature = hash_hmac("sha256", $rawHash, $momoSetting->secret_key);
-
-    //     // So sánh chữ ký tính toán với chữ ký nhận được
-    //     if ($signature == $data['signature']) {
-    //         // Nếu thanh toán thành công (resultCode = 0)
-    //         if ($data['resultCode'] == 0) {
-    //             // Thực hiện các thao tác:
-    //             // 1. Cập nhật trạng thái đơn hàng trong database
-    //             // 2. Gửi email xác nhận
-    //             // 3. Các xử lý nghiệp vụ khác
-    //         }
-    //         // Trả về response thành công cho Momo
-    //         return response()->json(['status' => 'success']);
-    //     }
-
-    //     // Nếu chữ ký không hợp lệ, trả về lỗi
-    //     return response()->json(['status' => 'failed'], 400);
-    // }
 }
