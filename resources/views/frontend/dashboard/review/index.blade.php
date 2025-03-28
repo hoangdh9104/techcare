@@ -1,7 +1,7 @@
 @extends('frontend.dashboard.layouts.master')
 
 @section('title')
-    {{ $settings->site_name }} || Review
+    {{ $settings->site_name }} || Reviews
 @endsection
 
 @section('content')

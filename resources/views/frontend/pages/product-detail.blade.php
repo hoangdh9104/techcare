@@ -272,7 +272,7 @@
                                                         <div class="wsus__comment_text reply">
                                                             <h6>{{$review->user->name}}<span>{{$review->rating}}<i
                                                                         class="fas fa-star"></i></span></h6>
-                                                            <span>{{date('d M Y', strtotime($review->create_at))}}</span>
+                                                            <span>{{date('d M Y', strtotime($review->created_at))}}</span>
                                                             <p>{{$review->review}}
                                                             </p>
                                                             <ul class="">
@@ -292,18 +292,18 @@
                                                     
                                                     <div class="mt-5">
                                                         @if ($reviews->hasPages())
-                                                            {{ $reviews->links() }}
+                                                            {{$reviews->links() }}
                                                         @endif
                                                     </div>
 
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
-                                                
+                                                @auth
                                                 @php
                                                     $isBrought = false;
                                                     $orders = \App\Models\Order::where(['user_id'=> auth()->user()->id, 'order_status' => 'delivered' ])->get();
-                                                    foreach($orders as $key =>$order){
+                                                    foreach($orders as $key => $order){
                                                        $existItem = $order->orderProducts()->where('product_id', $product->id)->first();
 
                                                        if($existItem){
@@ -346,7 +346,7 @@
                                                         </div>
                                                         <div class="img_upload">
                                                             <div class="">
-                                                                <input type="file" name="image[]" id="">
+                                                                <input type="file" name="images[]" multiple>
                                                             </div>
                                                         </div>
                                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -356,6 +356,7 @@
                                                     </form>
                                                 </div>
                                                 @endif
+                                                @endauth
                                             </div>
                                         </div>
                                     </div>
