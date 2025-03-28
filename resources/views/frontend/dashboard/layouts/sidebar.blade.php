@@ -7,7 +7,7 @@
             alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
         <li><a class="active" href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
-        <li><a class="active" href="{{ url('/') }}"><i class="fas fa-tachometer"></i>Go To Home Page</a></li>
+        <li><a class="active" href="{{ url('/') }}"><i class="fas fa-home"></i> Go To Home Page</a></li>
         <li><a href="{{ route('user.orders.index') }}"><i class="fas fa-list-ul"></i> Orders</a></li>
         <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
         <li><a href="dsahboard_review.html"><i class="far fa-star"></i> Reviews</a></li>
