@@ -85,12 +85,14 @@ class HomeController extends Controller
         return $typeBaseProducts;
     }
 
-    public function vendorPage(){
-        $vendors = Vendor::where('status')->paginate(20);
+    public function vendorPage()
+    {
+        $vendors = Vendor::where('status', 1)->paginate(20);
         return view('frontend.pages.vendor', compact('vendors'));
     }
 
-    public function vendorProductsPage(Request $request, string $id){
+    public function vendorProductsPage(Request $request, string $id)
+    {
 
         $products = Product::where(['status' => 1, 'is_approved' => 1, 'vendor_id' => $id])->orderBy('id', 'DESC')->paginate(12);
 

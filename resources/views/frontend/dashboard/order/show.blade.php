@@ -85,7 +85,7 @@
                                                             </th>
 
                                                             <th class="quentity">
-                                                                quentity
+                                                                quantity
                                                             </th>
                                                             <th class="total">
                                                                 total
@@ -129,7 +129,7 @@
                                         </div>
                                         <div class="wsus__invoice_footer">
 
-                                            <p><span>Sub Total:</span> {{ @$settings->currency_icon }}
+                                            <p><span>Sub Total:</span>{{ @$settings->currency_icon }}
                                                 {{ @$order->sub_total }}</p>
                                             <p><span>Shipping Fee(+):</span>{{ @$settings->currency_icon }}
                                                 {{ @$shipping->cost }} </p>
@@ -148,7 +148,7 @@
                                 ==============================-->
                             <div class="col">
                                 <div class="mt-2 float-end">
-                                    <button class="btn btn-warning print_invoice">print</button>
+                                    <button class="btn btn-warning print_invoice">Print</button>
                                 </div>
                             </div>
                         </div>

@@ -157,6 +157,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
      Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
      Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
 
+     // Cod route
+     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
+
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {
