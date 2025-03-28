@@ -32,7 +32,7 @@ class ReviewController extends Controller
             return redirect()->back();
         }
 
-        $imagePaths = $this->uploadMultipleImage($request, 'images', 'uploads');
+        $imagePaths = $this->uploadMultiImage($request, 'images', 'uploads');
 
         $productReview = new ProductReview();
         $productReview->product_id = $request->product_id;
