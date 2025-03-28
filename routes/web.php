@@ -132,6 +132,8 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
+    Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
