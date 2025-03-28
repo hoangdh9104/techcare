@@ -60,217 +60,76 @@
                     <div class="wsus__related_post">
                         <div class="row">
                             <div class="col-xl-12">
-                                <h5>related post</h5>
+                                <h5>More Post</h5>
                             </div>
                         </div>
                         <div class="row blog_det_slider">
+                            @foreach ($moreBlogs as $blogItem)                            
                             <div class="col-xl-3">
                                 <div class="wsus__single_blog wsus__single_blog_2">
-                                    <a class="wsus__blog_img" href="#">
-                                        <img src="images/blog_1.jpg" alt="blog" class="img-fluid w-100">
+                                    <a class="wsus__blog_img" href="#{{route('blog-details',$blogItem->slug)}}">
+                                        <img src="{{asset($blogItem->image)}}" alt="blog" class="img-fluid w-100">
                                     </a>
                                     <div class="wsus__blog_text">
-                                        <a class="blog_top red" href="#">women's</a>
+                                        <a class="blog_top blue" href="#">{{$blogItem->category->name}}</a>
                                         <div class="wsus__blog_text_center">
-                                            <a href="blog_details.html">New found the women’s shirt for summer
-                                                season</a>
-                                            <p class="date">nov 04 2021</p>
+                                            <a href="{{route('blog-details', $blogItem->slug)}}">{!!$blogItem->title!!}</a>
+                                            <p class="date">{{date('M D Y', strtotime($blogItem->created_at))}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-3">
-                                <div class="wsus__single_blog wsus__single_blog_2">
-                                    <a class="wsus__blog_img" href="#">
-                                        <img src="images/blog_2.jpg" alt="blog" class="img-fluid w-100">
-                                    </a>
-                                    <div class="wsus__blog_text">
-                                        <a class="blog_top blue" href="#">lifestyle</a>
-                                        <div class="wsus__blog_text_center">
-                                            <a href="blog_details.html">Fusce lacinia arcuet nulla menasious</a>
-                                            <p class="date">nov 04 2021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <div class="wsus__single_blog wsus__single_blog_2">
-                                    <a class="wsus__blog_img" href="#">
-                                        <img src="images/blog_3.jpg" alt="blog" class="img-fluid w-100">
-                                    </a>
-                                    <div class="wsus__blog_text">
-                                        <a class="blog_top orange" href="#">lifestyle</a>
-                                        <div class="wsus__blog_text_center">
-                                            <a href="blog_details.html">found the men’s shirt for summer season</a>
-                                            <p class="date">nov 04 2021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <div class="wsus__single_blog wsus__single_blog_2">
-                                    <a class="wsus__blog_img" href="#">
-                                        <img src="images/blog_4.jpg" alt="blog" class="img-fluid w-100">
-                                    </a>
-                                    <div class="wsus__blog_text">
-                                        <a class="blog_top orange" href="#">fashion</a>
-                                        <div class="wsus__blog_text_center">
-                                            <a href="blog_details.html">winter collection for women’s</a>
-                                            <p class="date">nov 04 2021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <div class="wsus__single_blog wsus__single_blog_2">
-                                    <a class="wsus__blog_img" href="#">
-                                        <img src="images/blog_5.jpg" alt="blog" class="img-fluid w-100">
-                                    </a>
-                                    <div class="wsus__blog_text">
-                                        <a class="blog_top red" href="#">lifestyle</a>
-                                        <div class="wsus__blog_text_center">
-                                            <a href="blog_details.html">Comes a cool blog post with Images</a>
-                                            <p class="date">nov 04 2021</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="wsus__comment_area">
-                        <h4>comment <span>03</span></h4>
+                        <h4>comment <span>{{count($comments)}}</span></h4>
+                        @foreach ($comments as $comment)
                         <div class="wsus__main_comment">
                             <div class="wsus__comment_img">
-                                <img src="images/client_img_1.jpg" alt="user" class="img-fluid w-100">
+                                <img style="width: 80px; height: 80px; object-fit: contain;"
+                                 src="{{asset($comment->user->image)}}" alt="user" class="img-fluid w-100">
                             </div>
                             <div class="wsus__comment_text replay">
-                                <h6>Shopnil mahadi <span>09 Jul 2021</span></h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                    molestiae eos? Officia, fuga eaque.</p>
-                                <a href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapsetwo3">replay</a>
-                                <div class="accordion accordion-flush" id="accordionFlushExample3">
-                                    <div class="accordion-item">
-                                        <div id="flush-collapsetwo3" class="accordion-collapse collapse"
-                                            aria-labelledby="flush-collapsetwo"
-                                            data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <form>
-                                                    <div class="wsus__riv_edit_single text_area">
-                                                        <i class="far fa-edit"></i>
-                                                        <textarea cols="3" rows="1"
-                                                            placeholder="Your Text"></textarea>
-                                                    </div>
-                                                    <button type="submit" class="common_btn">submit</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h6>{{$comment->user->name}} <span>{{date('d M Y ', strtotime($comment->created_at))}}</span></h6>
+                                <p>{{$comments->comment}}</p>
                             </div>
-                        </div>
-                        <div class="wsus__main_comment wsus__com_replay">
-                            <div class="wsus__comment_img">
-                                <img src="images/client_img_3.jpg" alt="user" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__comment_text replay">
-                                <h6>Smith jhon <span>09 Jul 2021</span></h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                    molestiae eos? Officia, fuga eaque.</p>
-                                <a href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapsetwo2">replay</a>
-                                <div class="accordion accordion-flush" id="accordionFlushExample2">
-                                    <div class="accordion-item">
-                                        <div id="flush-collapsetwo2" class="accordion-collapse collapse"
-                                            aria-labelledby="flush-collapsetwo"
-                                            data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <form>
-                                                    <div class="wsus__riv_edit_single text_area">
-                                                        <i class="far fa-edit"></i>
-                                                        <textarea cols="3" rows="1"
-                                                            placeholder="Your Text"></textarea>
-                                                    </div>
-                                                    <button type="submit" class="common_btn">submit</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wsus__main_comment">
-                            <div class="wsus__comment_img">
-                                <img src="images/client_img_1.jpg" alt="user" class="img-fluid w-100">
-                            </div>
-                            <div class="wsus__comment_text replay">
-                                <h6>Smith jhon <span>09 Jul 2021</span></h6>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate sint
-                                    molestiae eos? Officia, fuga eaque.</p>
-                                <a href="#" data-bs-toggle="collapse" data-bs-target="#flush-collapsetwo">replay</a>
-                                <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    <div class="accordion-item">
-                                        <div id="flush-collapsetwo" class="accordion-collapse collapse"
-                                            aria-labelledby="flush-collapsetwo"
-                                            data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <form>
-                                                    <div class="wsus__riv_edit_single text_area">
-                                                        <i class="far fa-edit"></i>
-                                                        <textarea cols="3" rows="1"
-                                                            placeholder="Your Text"></textarea>
-                                                    </div>
-                                                    <button type="submit" class="common_btn">submit</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>    
+                        @endforeach
+                        @if (count($comments) == 0 )
+                        <i>Be a first one to comment</i>
+                        @endif
+                        
                         <div id="pagination">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link page_active" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            <div class="mt-5">
+                                @if($comments->hasPages())
+                                {{$comments->withQueryString()->links}}
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="wsus__post_comment">
                         <h4>post a comment</h4>
-                        <form action="#">
+                        {{-- @if (auth()->check()) --}}
+
+                        <form action="{{route('blog-comment')}}" method="POST">
+                            @csrf
                             <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="wsus__single_com">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="wsus__single_com">
-                                        <input type="email" placeholder="Email">
-                                    </div>
-                                </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__single_com">
-                                        <textarea rows="5" placeholder="Your Comment"></textarea>
+                                        <textarea rows="5" placeholder="Your Comment" name="commnent"></textarea>
+                                        <input type="hidden" name="blog_id" value="{{$blog->id}}">
                                     </div>
                                 </div>
                             </div>
-                            <button class="common_btn" type="submit">post comment</button>
+                            
+                            <button class="common_btn" type="submit">Post Comment</button>
                         </form>
+                        {{-- @else
+                        <p>Please login in to comment on post !</p>
+                        <a class="common_btn" href="{{route('login')}}">Login</a>
+                        @endif --}}
+
                     </div>
                 </div>
             </div>

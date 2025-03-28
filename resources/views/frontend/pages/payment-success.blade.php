@@ -3,9 +3,7 @@
     {{ $settings->site_name }} || Payment
 @endsection
 @section('content')
-    <!--============================
-                                            BREADCRUMB START
-                                        ==============================-->
+    <!--============================ BREADCRUMB START ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -21,14 +19,10 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                            BREADCRUMB END
-                                        ==============================-->
+    <!--============================ BREADCRUMB END ==============================-->
 
 
-    <!--============================
-                                            PAYMENT PAGE START
-                                        ==============================-->
+    <!--============================ PAYMENT PAGE START==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -38,7 +32,5 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                            PAYMENT PAGE END
-                                        ==============================-->
+    <!--============================ PAYMENT PAGE END ==============================-->
 @endsection

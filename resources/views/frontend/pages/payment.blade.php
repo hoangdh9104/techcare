@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                            BREADCRUMB START
-                                        ==============================-->
+                                                        BREADCRUMB START
+                                                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                            BREADCRUMB END
-                                        ==============================-->
+                                                        BREADCRUMB END
+                                                    ==============================-->
 
 
     <!--============================
-                                            PAYMENT PAGE START
-                                        ==============================-->
+                                                        PAYMENT PAGE START
+                                                    ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -49,6 +49,9 @@
                                     data-bs-target="#v-pills-stripe" type="button" role="tab"
                                     aria-controls="v-pills-stripe" aria-selected="false">Stripe</button>
 
+                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-momo" type="button" role="tab"
+                                    aria-controls="v-pills-momo" aria-selected="false">Momo</button>
                             </div>
                         </div>
                     </div>
@@ -106,18 +109,30 @@
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
-                                            <a class="nav-link common_btn text-center" href="{{ route('user.paypal.payment') }}">Pay
+                                            <a class="nav-link common_btn text-center"
+                                                href="{{ route('user.paypal.payment') }}">Pay
                                                 with Paypal</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="v-pills-stripe" role="tabpanel"
-                                aria-labelledby="v-pills-home-tab">
+                                aria-labelledby="v-pills-profile-tab">
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
                                             <button class="nav-link common_btn">Pay with Stripe</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="v-pills-momo" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+                                            <a class="nav-link common_btn text-center"
+                                                href="{{ route('user.momo.payment') }}">Pay with Momo</a>
                                         </div>
                                     </div>
                                 </div>
@@ -162,6 +177,6 @@
         </div>
     </section>
     <!--============================
-                                            PAYMENT PAGE END
-                                        ==============================-->
+                                                        PAYMENT PAGE END
+                                                    ==============================-->
 @endsection
