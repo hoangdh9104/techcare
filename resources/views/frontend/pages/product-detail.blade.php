@@ -264,6 +264,27 @@
                                                 <div class="wsus__comment_area">
                                                     <h4>Reviews <span>{{ count($reviews) }}</span></h4>
                                                     @foreach ($reviews as $review)
+                                                    <div class="wsus__main_comment">
+                                                        <div class="wsus__comment_img">
+                                                            <img src="{{asset($review->user->image)}}" alt="user"
+                                                                class="img-fluid w-100">
+                                                        </div>
+                                                        <div class="wsus__comment_text reply">
+                                                            <h6>{{$review->user->name}}<span>{{$review->rating}}<i
+                                                                        class="fas fa-star"></i></span></h6>
+                                                            <span>{{date('d M Y', strtotime($review->created_at))}}</span>
+                                                            <p>{{$review->review}}
+                                                            </p>
+                                                            <ul class="">
+                                                                @if (count($review->productReviewGalleries) > 0)
+                                                                
+                                                                    @foreach ($review->productReviewGalleries as $image )
+                                                            
+                                                                        <li><img src="{{asset($image->image)}}" alt="product"
+                                                                        class="img-fluid w-100"></li>
+                                                                    @endforeach
+                                                                @endif
+                                                            </ul>
                                                         <div class="wsus__main_comment">
                                                             <div class="wsus__comment_img">
                                                                 <img src="{{ asset($review->user->image) }}"
@@ -291,7 +312,7 @@
 
                                                     <div class="mt-5">
                                                         @if ($reviews->hasPages())
-                                                            {{ $reviews->links() }}
+                                                            {{$reviews->links() }}
                                                         @endif
                                                     </div>
 
@@ -299,6 +320,12 @@
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
                                                 @auth
+                                                @php
+                                                    $isBrought = false;
+                                                    $orders = \App\Models\Order::where(['user_id'=> auth()->user()->id, 'order_status' => 'delivered' ])->get();
+                                                    foreach($orders as $key => $order){
+                                                       $existItem = $order->orderProducts()->where('product_id', $product->id)->first();
+
 
 
                                                     @php
@@ -357,6 +384,21 @@
                                                                             id="">
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="img_upload">
+                                                            <div class="">
+                                                                <input type="file" name="images[]" multiple>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="vendor_id" value="{{ $product->vendor_id }}">
+                                                        <button class="common_btn" type="submit">submit
+                                                            review</button>
+                                                    </form>
+                                                </div>
+                                                @endif
+
                                                                 <input type="hidden" name="product_id"
                                                                     value="{{ $product->id }}">
                                                                 <input type="hidden" name="vendor_id"
@@ -366,6 +408,7 @@
                                                             </form>
                                                         </div>
                                                     @endif
+
                                                 @endauth
                                             </div>
                                         </div>
