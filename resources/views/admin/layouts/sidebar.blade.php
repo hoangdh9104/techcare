@@ -137,6 +137,13 @@
                             href="{{ route('admin.payment-settings.index') }}">Payment Settings</a></li>
                 </ul>
             </li>
+            <li>
+                <a class="nav-link {{ setActive(['admin.advertisement.*']) }}"
+                    href="{{ route('admin.advertisement.index') }}">
+                    <i class="far fa-square"></i>
+                    <span>Advertisement</span>
+                </a>
+            </li>
 
             <li
                 class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index']) }}">
