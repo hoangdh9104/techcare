@@ -1,3 +1,4 @@
+
 @php
     $popularCategories = json_decode($popularCategory->value, true);
     // dd($popularCategories)

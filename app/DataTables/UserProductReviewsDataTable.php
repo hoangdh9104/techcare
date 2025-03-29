@@ -33,7 +33,7 @@ class UserProductReviewsDataTable extends DataTable
                 if($query->status == 1){
                     return "<span class='badge bg-success'>Approved</span>";
                 }else{
-                    return "<span class='badge bg-waring'>Pending</span>";
+                    return "<span class='badge bg-warning'>Pending</span>";
                 }
               
             })
