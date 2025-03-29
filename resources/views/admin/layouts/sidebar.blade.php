@@ -101,11 +101,14 @@
                             href="{{ route('admin.seller-products.index') }}">Seller Product</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Product</a></li>
+<<<<<<< HEAD
+=======
 
                     <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
                             href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
 
 
+>>>>>>> new-branch-Nam2
                 </ul>
             </li>
 
@@ -143,6 +146,8 @@
                     <i class="far fa-square"></i>
                     <span>Advertisement</span>
                 </a>
+<<<<<<< HEAD
+=======
             </li>
 
             <li
@@ -161,6 +166,7 @@
                             href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a></li>
 
                 </ul>
+>>>>>>> new-branch-Nam2
             </li>
 
             <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
