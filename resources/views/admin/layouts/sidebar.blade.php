@@ -59,6 +59,11 @@
                             href="{{ route('admin.seller-products.index') }}">Seller Product</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Product</a></li>
+
+                    <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
+
+
                 </ul>
             </li>
 
@@ -94,6 +99,24 @@
                     <i class="far fa-square"></i>
                     <span>Advertisement</span>
                 </a>
+            </li>
+
+            <li
+                class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
+                    <span>User</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.customer.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.customer.index') }}">Customers list</a></li>
+
+                    <li class="{{ setActive(['admin.vendor-list.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-list.index') }}">Vendor list</a></li>
+
+                    <li class="{{ setActive(['admin.vendor-requests.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a></li>
+
+                </ul>
             </li>
             <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
                     <span>Settings</span></a></li>
