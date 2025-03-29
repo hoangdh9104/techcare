@@ -44,7 +44,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+/** User Address Route */
 
+// Route::resource('address', UserAddressController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -91,8 +93,13 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
 /** blog routes */
-// Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
-// Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+
+
+
+//** Blog Comment */
+Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
 
 Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 
@@ -125,6 +132,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+    
+    Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
@@ -141,6 +151,15 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+
+     // Momo route
+     Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
+     Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
+     Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
+
+     // Cod route
+     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
+
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {

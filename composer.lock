@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88517cb3f2e46f8b5b01550f0e647298",
+    "content-hash": "8b04a62055a3bb7779bc447ef1875e26",
     "packages": [
         {
             "name": "anayarojo/shoppingcart",
@@ -9287,6 +9287,9 @@
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+
+
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
+
