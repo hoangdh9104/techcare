@@ -39,7 +39,7 @@ class ProductDataTable extends DataTable
                         break;
 
                     case 'best_product':
-                        return '<i class="badge badge-danger">Best Product</i>';
+                        return '<i class="badge badge-danger">Top Product</i>';
                         break;
 
                     default:
@@ -74,9 +74,6 @@ class ProductDataTable extends DataTable
                 </div>
                 </div>';
                 return $editBtn . $deleteBtn . $moreBtn;
-            })
-            ->filterColumn('type', function ($query, $keyword) {
-                $query->whereRaw('LOWER(product_type) LIKE ?', ['%' . strtolower(trim($keyword)) . '%']);
             })
             ->rawColumns(['image', 'type', 'status', 'action'])
             ->setRowId('id');

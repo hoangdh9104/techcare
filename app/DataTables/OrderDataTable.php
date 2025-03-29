@@ -22,29 +22,29 @@ class OrderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
-                $showBtn = "<a href='" . route('admin.order.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 mr-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+            ->addColumn('action', function($query){
+                $showBtn = "<a href='".route('admin.order.show', $query->id)."' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $deleteBtn = "<a href='".route('admin.order.destroy', $query->id)."' class='btn btn-danger ml-2 mr-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
-                return $showBtn . $deleteBtn;
+                return $showBtn.$deleteBtn;
             })
-            ->addColumn('customer', function ($query) {
+            ->addColumn('customer', function($query){
                 return $query->user->name;
             })
-            ->addColumn('amount', function ($query) {
-                return $query->currency_icon . $query->amount;
+            ->addColumn('amount', function($query){
+                return $query->currency_icon.$query->amount;
             })
-            ->addColumn('date', function ($query) {
+            ->addColumn('date', function($query){
                 return date('d-M-Y', strtotime($query->created_at));
             })
-            ->addColumn('payment_status', function ($query) {
-                if ($query->payment_status === 1) {
+            ->addColumn('payment_status', function($query){
+                if($query->payment_status === 1){
                     return "<span class='badge bg-success'>complete</span>";
-                } else {
+                }else {
                     return "<span class='badge bg-warning'>pending</span>";
                 }
             })
-            ->addColumn('order_status', function ($query) {
+            ->addColumn('order_status', function($query){
                 switch ($query->order_status) {
                     case 'pending':
                         return "<span class='badge bg-warning'>pending</span>";
@@ -71,6 +71,7 @@ class OrderDataTable extends DataTable
                         # code...
                         break;
                 }
+
             })
             ->rawColumns(['order_status', 'action', 'payment_status'])
             ->setRowId('id');
@@ -125,7 +126,7 @@ class OrderDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(150)
+                ->width(200)
                 ->addClass('text-center'),
         ];
     }
