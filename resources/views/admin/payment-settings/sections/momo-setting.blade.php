@@ -43,8 +43,12 @@
                         value="{{ $momoSetting->currency_rate }}">
                 </div>
                 <div class="form-group">
-                    <label>Momo Client ID</label>
-                    <input type="text" class="form-control" name="client_id" value="{{ $momoSetting->client_id }}">
+                    <label>Momo Parter Code</label>
+                    <input type="text" class="form-control" name="partner_code" value="{{ $momoSetting->partner_code }}">
+                </div>
+                <div class="form-group">
+                    <label>Momo Access Key</label>
+                    <input type="text" class="form-control" name="access_key" value="{{ $momoSetting->access_key }}">
                 </div>
                 <div class="form-group">
                     <label>Momo Secret Key</label>

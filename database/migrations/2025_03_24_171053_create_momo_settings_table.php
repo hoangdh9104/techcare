@@ -27,7 +27,8 @@ return new class extends Migration
 
             $table->string('currency_name');
             $table->double('currency_rate');
-            $table->text('client_id');
+            $table->text('partner_code');
+            $table->text('access_key');
             $table->text('secret_key');
             $table->timestamps();
         });
