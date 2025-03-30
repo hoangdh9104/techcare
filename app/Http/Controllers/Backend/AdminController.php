@@ -22,7 +22,7 @@ class AdminController extends Controller
         $todaysPendingOrder = Order::whereDate('created_at' ,Carbon::today())
         ->where('order_status','pending')
         ->count();
-
+        
         $totaltOrder = Order::count();
 
         $totalPendingOrders = Order::where('order_status','pending')->count();
@@ -30,7 +30,7 @@ class AdminController extends Controller
         $totalCanceledOrders = Order::where('order_status','canceled')->count();
 
         $totalCompleteOrders = Order::where('order_status','delivered')->count();
-
+        
         $todaysEarnings = Order::where('order_status','!=','canceled')
         ->whereDate('created_at', Carbon::today())
         ->sum('sub_total');
@@ -40,6 +40,7 @@ class AdminController extends Controller
         ->sum('sub_total');
 
         $yearEarnings = Order::where('order_status','!=','canceled')
+
         ->whereYear('created_at', Carbon::now()->year)
         ->sum('sub_total');
 
