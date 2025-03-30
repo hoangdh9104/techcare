@@ -42,13 +42,14 @@
                             <p class="text-center">tracking your order status</p>
                             <div class="wsus__track_input">
                                 <label class="d-block mb-2">invoice id*</label>
-                                <input type="text" placeholder="#H25-21578455" name="tracker" value="{{@$order->invoice_id}}">
+                                <input type="text" placeholder="H25-21578455" name="tracker" value="{{@$order->invoice_id}}">
                             </div>
                             <button type="submit" class="common_btn">track</button>
                         </form>
                     </div>
                 </div>
-                <div class="row">
+                @if (isset($order))
+                    <div class="row">
                     <div class="col-xl-12">
                         <div class="wsus__track_header">
                             <div class="wsus__track_header_text">
@@ -88,15 +89,42 @@
                                  <li class="progtrckr_done icon_one check_mark">{{$status['status']}}</li>
                             @endforeach --}}
                             <li class="progtrckr_done icon_one check_mark">Order pending</li>
-                            <li class="progtrckr_done icon_two ">order Processing</li>
-                            <li class="icon_three">on the way</li>
-                            <li class="icon_four red_mark">ready for delivery</li>
+                            @if (@$order->order_status == 'canceled')
+                                <li class="icon_four red_mark">Order Canceled </li>
+                            @else
+                                <li class="progtrckr_done icon_two 
+                            @if (
+                                @$order->order_status == 'processed_and_ready_to_ship' ||
+                                @$order->order_status == 'dropped_off' ||
+                                @$order->order_status == 'shipped' ||
+                                @$order->order_status == 'out_for_delivery' ||
+                                @$order->order_status == 'delivered' 
+                                )
+                                    check_mark
+                                @endif">order Processing</li>
+                                <li class="icon_three 
+                                @if (
+                                    @$order->order_status == 'out_for_delivery' ||
+                                    @$order->order_status == 'delivered' 
+                                )
+                                    check_mark
+                                @endif">on the way</li>
+                                <li class="icon_four 
+                                @if (
+                                    @$order->order_status == 'delivered' 
+                                )
+                                    check_mark
+                                @endif">delivered</li>
+                            @endif
+                            
                         </ul>
                     </div>
                     <div class="col-xl-12">
-                        <a href="#" class="common_btn"><i class="fas fa-chevron-left"></i> back to order</a>
+                        <a href="{{url('/')}}" class="common_btn"><i class="fas fa-chevron-left"></i> back to home</a>
                     </div>
-                </div>
+                    </div>
+                @endif
+                
             </div>
         </div>
     </section>

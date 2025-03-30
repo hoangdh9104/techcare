@@ -34,7 +34,7 @@ class PageController extends Controller
 
     public function handleContactForm(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'name' => ['required', 'max:200'],
             'email' => ['required', 'email'],

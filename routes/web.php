@@ -28,6 +28,7 @@ use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
+use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +46,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+/** User Address Route */
 
+// Route::resource('address', UserAddressController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -92,20 +95,25 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
 /** blog routes */
-// Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
-// Route::get('blog', [BlogController::class, 'blog'])->name('blog');
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 
-Route::get('blog-details/{slug}',[BlogController::class, 'blogDetails'])->name('blog-details');
+
+
+//** Blog Comment */
+Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comment');
+
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 
 //vendor page routes
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
 Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
-//about route
+//about page route
 Route::get('about', [PageController::class, 'about'])->name('about');
 
 //terms and conditions page route
-Route::get('terms-and-conditions', [PageController::class, 'termsAndCondition'])->name('about');
+Route::get('terms-and-conditions', [PageController::class, 'termsAndCondition'])->name('terms-and-conditions');
 
 //contact route
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
@@ -113,7 +121,7 @@ Route::post('contact', [PageController::class, 'handleContactForm'])->name('hand
 
 //product track route
 Route::get('product-traking', [ProductTrackController::class, 'index'])->name('product-traking.index');
-// Route::get('product-trak', [ProductTrackController::class, 'track'])->name('product-track');
+// Route::get('product-traking', [ProductTrackController::class, 'track'])->name('product-traking.track');
 
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
@@ -127,8 +135,10 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    
-    //vendor request 
+
+
+    //vendor request
+
     Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
 
@@ -137,6 +147,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
+    // Order route
+    Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -151,9 +166,13 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
+     // Momo route
+     Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
+     Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
+     Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
+
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {
 //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
 // });
-

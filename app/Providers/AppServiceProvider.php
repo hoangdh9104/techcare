@@ -29,10 +29,10 @@ class AppServiceProvider extends ServiceProvider
         /* set time zone */
         $generalSetting = GeneralSetting::first();
 
-        
+
         if ($generalSetting) {
             Config::set('app.timezone', $generalSetting->time_zone);
-    
+
             /** Share variable at all view */
             View::composer('*', function ($view) use ($generalSetting) {
                 $view->with('settings', $generalSetting);
@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Config::set('app.timezone', config('app.timezone'));
         }
 
-       
+
         // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
         // if ($generalSetting) {
         //     Config::set('app.timezone', $generalSetting->time_zone);
@@ -50,7 +50,6 @@ class AppServiceProvider extends ServiceProvider
         //     // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
         //     Config::set('app.timezone', 'UTC');
         // }
-
     }
     
 }

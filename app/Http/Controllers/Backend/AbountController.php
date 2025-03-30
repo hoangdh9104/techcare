@@ -20,8 +20,6 @@ class AbountController extends Controller
     
     public function update(Request $request)
     {
-        public function update(Request $request)
-    {
         $request->validate([
             'content' => ['required']
         ]);
@@ -37,7 +35,6 @@ class AbountController extends Controller
 
         return redirect()->back();
 
-    }
     }
 
     

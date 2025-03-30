@@ -24,7 +24,7 @@ class AdminListController extends Controller
         return response(['message' => 'Status has been updated!']);
     }
 
-    public function destory(string $id)
+    public function destroy(string $id)
     {
         $admin = User::findOrFail($id);
 

@@ -74,9 +74,7 @@
                     <div class="col-xl-8">
                         <div class="wsus__contact_question">
                             <h5>Send Us a Message</h5>
-                            <form id="contact-form" action="{{route('handle-contact-form')}}" method="POST">
-                                @method('POST')
-                                @csrf
+                            <form id="contact-form">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
