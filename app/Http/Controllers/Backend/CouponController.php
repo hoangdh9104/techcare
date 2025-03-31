@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CouponDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -22,7 +23,8 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('admin.coupon.create');
+        $products = Product::all();
+        return view('admin.coupon.create', compact('products'));
     }
 
     /**
@@ -42,6 +44,19 @@ class CouponController extends Controller
             'status' => ['required', 'integer']
 
         ]);
+        // Kiểm tra nếu ngày kết thúc đã quá hạn
+        if (strtotime($request->end_date) < strtotime(date('Y-m-d'))) {
+            return redirect()->back()->withErrors(['end_date' => 'The end date cannot be in the past.']);
+        }
+
+        // Kiểm tra giá trị giảm giá
+        if ($request->discount_type === 'percent' && $request->discount > 100) {
+            return redirect()->back()->withErrors(['discount' => 'The discount percentage cannot exceed 100%.']);
+        }
+
+        if ($request->discount_type === 'amount' && $request->discount > 1000) {
+            return redirect()->back()->withErrors(['discount' => 'The discount amount cannot exceed 1000.']);
+        }
 
         $coupon = new Coupon();
         $coupon->name = $request->name;
@@ -54,6 +69,7 @@ class CouponController extends Controller
         $coupon->discount = $request->discount;
         $coupon->total_used = 0;
         $coupon->status = $request->status;
+        $coupon->product_id = $request->product_id;
         $coupon->save();
 
         toastr('Created Successfully', 'success', 'Success');
@@ -75,7 +91,8 @@ class CouponController extends Controller
     public function edit(string $id)
     {
         $coupon = Coupon::findOrFail($id);
-        return view('admin.coupon.edit', compact('coupon'));
+        $products = Product::all();
+        return view('admin.coupon.edit', compact('coupon','products'));
     }
 
     /**
@@ -95,6 +112,18 @@ class CouponController extends Controller
             'status' => ['required', 'integer']
 
         ]);
+         // Kiểm tra nếu ngày kết thúc đã quá hạn
+        if (strtotime($request->end_date) < strtotime(date('Y-m-d'))) {
+            return redirect()->back()->withErrors(['end_date' => 'The end date cannot be in the past.']);
+        }
+        // Kiểm tra giá trị giảm giá
+        if ($request->discount_type === 'percent' && $request->discount > 100) {
+            return redirect()->back()->withErrors(['discount' => 'The discount percentage cannot exceed 100%.']);
+        }
+
+        if ($request->discount_type === 'amount' && $request->discount > 1000) {
+            return redirect()->back()->withErrors(['discount' => 'The discount amount cannot exceed 1000.']);
+        }
 
         $coupon = Coupon::findOrFail($id);
         $coupon->name = $request->name;
@@ -106,6 +135,7 @@ class CouponController extends Controller
         $coupon->discount_type = $request->discount_type;
         $coupon->discount = $request->discount;
         $coupon->status = $request->status;
+        $coupon->product_id = $request->product_id;
         $coupon->save();
 
         toastr('Updated Successfully', 'success', 'Success');
