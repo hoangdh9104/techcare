@@ -76,6 +76,9 @@ class UserOrderDataTable extends DataTable
                     case 'canceled':
                         return "<span class='badge bg-danger'>canceled</span>";
                         break;
+                    case 'received':
+                        return "<span class='badge bg-success'>received</span>";
+                        break;
                     default:
                         # code...
                         break;
