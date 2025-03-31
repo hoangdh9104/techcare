@@ -18,6 +18,8 @@ class ProfileController extends Controller
         $request->validate([
             'name' => ['required', 'max:100'],
             'email' => ['required', 'email', 'unique:users,email,' . Auth::user()->id],
+            'phone' => 'required|regex:/[0-9]{9,15}/', // Định dạng từ 9 đến 15 chữ số
+        
             'image' => ['image', 'max:2048'],
         ]);
         $user = Auth::user();
@@ -35,6 +37,7 @@ class ProfileController extends Controller
         }
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
         $user->save();
         // sử dụng thư viện toastr để xuất hiện thông báo
         // phải cài  composer require yoeunes/toastr trước khi sử dụng

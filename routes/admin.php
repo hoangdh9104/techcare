@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CodSettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\HomePageSettingController;
@@ -146,6 +147,11 @@ Route::put('change-approve-status', [SellerProductController::class, 'changeAppr
 // Payment setting
 Route::get('payment-settings', [PaymentSettingController::class,'index'])->name('payment-settings.index');
 Route::resource('paypal-setting', PaypalSettingController::class);
+Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
+Route::resource('paypal-setting', PaypalSettingController::class);
+Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
+Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
+Route::put('cod-setting/{id}', [CodSettingController::class,'update'])->name('cod-setting.update');
 
 // Advertisement routes
 Route::get('advertisement',[AdvertisementController::class,'index'])->name('advertisement.index');
@@ -155,10 +161,6 @@ Route::put('advertisement/homepage-banner-section-three',[AdvertisementControlle
 Route::put('advertisement/homepage-banner-section-four',[AdvertisementController::class,'homepageBanerSectionFour'])->name('homepage-banner-section-four');
 Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productPageBanner'])->name('productpage-banner');
 Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cartpage-banner');
-Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
-Route::resource('paypal-setting', PaypalSettingController::class);
-Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
-Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
 
 
 /**Order route */

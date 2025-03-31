@@ -2806,6 +2806,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 
 /*# sourceMappingURL=style.css.map */
 
-span.select2.select2-container.select2-container--default.select2-container--below {
-  width: 100%;
+.select2{
+  width: 100% !important;
 }

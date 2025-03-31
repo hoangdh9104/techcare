@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CodSetting;
 use App\Models\GeneralSetting;
 use App\Models\MomoSetting;
 use App\Models\Order;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
 
 class PaymentController extends Controller
 {
@@ -203,12 +205,11 @@ class PaymentController extends Controller
         $momoSetting = MomoSetting::first();
 
         return [
-            'partner_code' => 'MOMOBKUN20180529', // $momoSetting->partner_code ?? 
-            'access_key' =>  'klm05TvNBzhg7h7j', // $momoSetting->access_key ??
-            'secret_key' => 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa', // $momoSetting->secret_key ?? 
-            'return_url' => route('user.momo.success'), // Sử dụng route hiện có
-            'notify_url' => route('user.momo.cancel'),  // Sử dụng route hiện có
-            'test_mode' => true, // Luôn bật chế độ sandbox
+            'partner_code' => $momoSetting->partner_code, // $momoSetting->partner_code ?? 
+            'access_key' =>  $momoSetting->access_key, // $momoSetting->access_key ??
+            'secret_key' => $momoSetting->secret_key, // $momoSetting->secret_key ?? 
+            'return_url' => route('user.momo.success'),
+            'notify_url' => route('user.momo.cancel'),
             'currency_name' => $momoSetting->currency_name,
             'currency_rate' => $momoSetting->currency_rate,
             'test_mode' => $momoSetting->mode == 1 ? false : true, // 1 = live, 0 = sandbox
@@ -316,16 +317,15 @@ class PaymentController extends Controller
             // Thanh toán thành công
             $this->storeOrder(
                 'momo_atm',
-                1, 
+                1,
                 $request->transId ?? $orderInfo['request_id'],
                 $payableAmount,
                 $momoSetting->currency_name
             );
 
-            // Clear session
             $this->clearSession();
             toastr('Thanh toán qua MoMo thành công!', 'success');
-            return redirect()->route('user.payment.success'); 
+            return redirect()->route('user.payment.success');
         } else {
             toastr('Thanh toán MoMo thất bại! Mã lỗi: ' . $request->resultCode, 'error');
             return redirect()->route('user.momo.payment');
@@ -334,8 +334,27 @@ class PaymentController extends Controller
 
     public function momoCancel(Request $request)
     {
-        // Xử lý khi người dùng hủy thanh toán
+        // Khi hủy thanh toán trả vể trang payment
         toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
         return redirect()->route('user.momo.payment');
+    }
+
+    public function payWithCod(Request $request)
+    {
+        $CodSetting = CodSetting::first();
+        if ($CodSetting->status == 0) {
+            return redirect()->back();
+        }
+
+        // amount calculation
+        $total = getFinalPayableAmount();
+        $setting = GeneralSetting::first();
+        $payableAmount = round($total, 2);
+
+        $this->storeOrder('COD', 0, \Str::random(10), $payableAmount, $setting->currency_name);
+        // clear session
+        $this->clearSession();
+
+        return redirect()->route('user.payment.success');
     }
 }
