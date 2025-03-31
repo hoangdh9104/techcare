@@ -26,6 +26,12 @@ class UserOrderDataTable extends DataTable
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
 
+                // Kiểm tra nếu đơn hàng có thể hủy
+                if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
+                    $cancelBtn = "<button data-id='{$query->id}' class='btn btn-danger cancel-order'><i class='fas fa-times'></i></button>";
+                    return $showBtn . ' ' . $cancelBtn;
+                }
+
                 return $showBtn;
             })
             ->addColumn('invoice_id', function ($query) {

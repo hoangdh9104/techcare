@@ -63,7 +63,7 @@ class ProductDataTable extends DataTable
             })
             ->addColumn('action', function ($query) {
                 $editBtn = "<a href='" . route('admin.products.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                // $deleteBtn = "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
                 $moreBtn = '<div class="dropdown d-inline dropleft">
                 <button class="btn btn-primary dropdown-toggle ml-1" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-cog"></i>
@@ -73,7 +73,8 @@ class ProductDataTable extends DataTable
                 <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Variants</a>
                 </div>
                 </div>';
-                return $editBtn . $deleteBtn . $moreBtn;
+                // return $editBtn . $deleteBtn . $moreBtn;
+                return $editBtn . $moreBtn;
             })
             ->filterColumn('type', function ($query, $keyword) {
                 $query->whereRaw('LOWER(product_type) LIKE ?', ['%' . strtolower(trim($keyword)) . '%']);
