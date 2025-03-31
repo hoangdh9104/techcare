@@ -219,10 +219,7 @@ class PaymentController extends Controller
     public function payWithMomo()
     {
         $momoSetting = MomoSetting::first();
-        if (!$momoSetting || $momoSetting->status == 0) {
-            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error');
-            return redirect()->route('user.momo.payment');
-        }
+
 
         $config = $this->momoConfig();
         $total = getFinalPayableAmount();
@@ -265,6 +262,11 @@ class PaymentController extends Controller
             'requestType' => 'payWithATM',
             'signature' => $signature
         ];
+        
+        if (!$momoSetting || $momoSetting->status == 0) {
+            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error'); // Nếu không bật thanh toán
+            return redirect()->route('user.momo.payment');
+        }
         // dd($data);
         try {
             $client = new \GuzzleHttp\Client();
