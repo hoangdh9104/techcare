@@ -132,12 +132,14 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
-    
+
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
 
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+    Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
+
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -152,14 +154,13 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
-     // Momo route
-     Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
-     Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
-     Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
+    // Momo route
+    Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
+    Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
+    Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
 
-     // Cod route
-     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
-
+    // Cod route
+    Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
 });
 
 // Route::middleware(['auth', 'role:shipper'])->group(function () {

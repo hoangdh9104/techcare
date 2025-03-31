@@ -9,10 +9,12 @@ use App\DataTables\OrderDataTable;
 use App\DataTables\OutForDeliveryOffOrderDataTable;
 use App\DataTables\PendingOrderDataTable;
 use App\DataTables\ProcessedOrderDataTable;
+use App\DataTables\ReceivedOrderDataTable;
 use App\DataTables\ShippedOrderDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderStatusHistory;
 
 class OrderController extends Controller
 {
@@ -51,6 +53,10 @@ class OrderController extends Controller
     {
         return $dataTable->render('admin.order.delivered-order');
     }
+    public function receivedOrders(ReceivedOrderDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.received-order');
+    }
     public function canceledOrders(CanceledOrderDataTable $dataTable)
     {
         return $dataTable->render('admin.order.canceled-orders-order');
@@ -69,7 +75,10 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with(['orderProducts.product', 'statusHistories' => function ($query) {
+            $query->orderBy('changed_at', 'desc');
+        }])->findOrFail($id);
+
         return view('admin.order.show', compact('order'));
     }
 
@@ -111,53 +120,95 @@ class OrderController extends Controller
         $order = Order::findOrFail($request->id);
         $newStatus = $request->status;
         $currentStatus = $order->order_status;
+        $reason = $request->cancel_reason ?? null; // Lấy lý do hủy đơn (nếu có)
 
-        // Danh sách trạng thái không thể quay lại từ trạng thái đã giao hàng
-        $immutableStatuses = ['delivered', 'canceled'];
+        // Danh sách trạng thái không thể thay đổi
+        $immutableStatuses = ['canceled', 'received'];
 
-        // Nếu đơn hàng đã ở trạng thái không thể thay đổi thì từ chối cập nhật
         if (in_array($currentStatus, $immutableStatuses)) {
             $messages = [
-                'delivered' => 'Order has already been delivered and cannot be changed.',
-                'canceled'  => 'Order has already been canceled and cannot be changed.'
+                'canceled'  => 'Order has already been canceled and cannot be changed.',
+                'received'  => 'Order has already been canceled and cannot be changed.',
             ];
-
-            return response([
+            return response()->json([
                 'status'  => 'error',
                 'message' => $messages[$currentStatus] ?? 'Order status cannot be changed.'
             ], 400);
         }
 
-        // Nếu đơn hàng đã được 'shipped', không thể chuyển về các trạng thái trước đó
-        if ($currentStatus === 'shipped' && in_array($newStatus, ['pending', 'processed_and_ready_to_ship', 'dropped_off', 'canceled'])) {
-            return response([
+        // Danh sách các trạng thái hợp lệ (không cho phép nhảy cóc)
+        $validTransitions = [
+            'pending' => ['processed_and_ready_to_ship', 'canceled'],
+            'processed_and_ready_to_ship' => ['dropped_off'],
+            'dropped_off' => ['shipped'],
+            'shipped' => ['out_for_delivery'],
+            'out_for_delivery' => ['delivered'],
+            'delivered' => ['received'],
+        ];
+
+        // Kiểm tra nếu trạng thái mới không hợp lệ dựa trên trạng thái hiện tại
+        if (!isset($validTransitions[$currentStatus]) || !in_array($newStatus, $validTransitions[$currentStatus])) {
+            return response()->json([
                 'status' => 'error',
-                'message' => 'Cannot change order status from shipped to ' . ucfirst(str_replace('_', ' ', $newStatus))
+                'message' => "Invalid status transition from $currentStatus to $newStatus."
             ], 400);
         }
 
-        // Nếu đơn hàng đã 'out_for_delivery', không thể quay lại trạng thái trước đó
-        if ($currentStatus === 'out_for_delivery' && in_array($newStatus, ['pending', 'processed_and_ready_to_ship', 'dropped_off', 'shipped', 'canceled'])) {
-            return response([
+        // Kiểm tra nếu trạng thái mới không hợp lệ dựa trên trạng thái hiện tại
+        if (isset($validTransitions[$currentStatus]) && !in_array($newStatus, $validTransitions[$currentStatus])) {
+            return response()->json([
                 'status' => 'error',
-                'message' => 'Cannot change order status from out for delivery to ' . ucfirst(str_replace('_', ' ', $newStatus))
+                'message' => "Cannot change order status from $currentStatus to $newStatus."
+            ], 400);
+        }
+
+        // Nếu trạng thái mới là "canceled", bắt buộc nhập lý do
+        if ($newStatus === 'canceled' && empty($reason)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please provide a reason for order cancellation.'
             ], 400);
         }
 
         // Cập nhật trạng thái đơn hàng
-        $order->order_status = $newStatus;
+        $order->update([
+            'order_status' => $newStatus,
+        ]);
+
+        // Lưu lịch sử thay đổi trạng thái
+        OrderStatusHistory::create([
+            'order_id'   => $order->id,
+            'status'     => $newStatus,
+            'reason'     => $reason,
+            'updated_by' => auth()->id(),
+            'changed_at' => now(),
+        ]);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Order status updated successfully'
+        ]);
+    }
+
+    public function changePaymentStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+
+        // Nếu trạng thái thanh toán đã là "Completed" thì không cho phép cập nhật lại thành "Pending"
+        if ($order->payment_status == 1 && $request->status == 0) {
+            return response([
+                'status' => 'error',
+                'message' => 'Cannot revert payment status from Completed to Pending'
+            ]);
+        }
+
+        // Cập nhật trạng thái nếu hợp lệ
+        $order->payment_status = $request->status;
         $order->save();
 
         return response([
             'status' => 'success',
-            'message' => 'Order status updated successfully'
+            'message' => 'Updated payment status'
         ]);
-    }
-    public function changePaymentStatus(Request $request)
-    {
-        $order = Order::findOrFail($request->id);
-        $order->payment_status = $request->status;
-        $order->save();
-        return response(['status' => 'success', 'message' => 'updated payment status']);
     }
 }

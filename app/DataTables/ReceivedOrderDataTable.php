@@ -3,8 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Order;
+use App\Models\PendingOrder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserOrderDataTable extends DataTable
+class ReceivedOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,18 +24,11 @@ class UserOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $showBtn = "<a href='" . route('admin.order.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 mr-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
-                // Kiểm tra nếu đơn hàng có thể hủy
-                if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
-                    $cancelBtn = "<button data-id='{$query->id}' class='btn btn-danger cancel-order'><i class='fas fa-times'></i></button>";
-                    return $showBtn . ' ' . $cancelBtn;
-                }
 
-                return $showBtn;
-            })
-            ->addColumn('invoice_id', function ($query) {
-                return $query->invocie_id;
+                return $showBtn . $deleteBtn;
             })
             ->addColumn('customer', function ($query) {
                 return $query->user->name;
@@ -73,11 +66,11 @@ class UserOrderDataTable extends DataTable
                     case 'delivered':
                         return "<span class='badge bg-success'>delivered</span>";
                         break;
-                    case 'canceled':
-                        return "<span class='badge bg-danger'>canceled</span>";
-                        break;
                     case 'received':
                         return "<span class='badge bg-success'>received</span>";
+                        break;
+                    case 'canceled':
+                        return "<span class='badge bg-danger'>canceled</span>";
                         break;
                     default:
                         # code...
@@ -90,9 +83,10 @@ class UserOrderDataTable extends DataTable
 
     /**
      * Get the query source of dataTable.
-     */ public function query(Order $model): QueryBuilder
+     */
+    public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery()->where('user_id', Auth::id());
+        return $model->where('order_status', 'received')->newQuery();
     }
 
     /**
@@ -101,7 +95,7 @@ class UserOrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('userorder-table')
+            ->setTableId('pendingorder-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -124,7 +118,7 @@ class UserOrderDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('invoice_id'),
+            Column::make('invocie_id'),
             Column::make('customer'),
             Column::make('date'),
             Column::make('product_qty'),
@@ -148,6 +142,6 @@ class UserOrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'UserOrder_' . date('YmdHis');
+        return 'PendingOrder_' . date('YmdHis');
     }
 }
