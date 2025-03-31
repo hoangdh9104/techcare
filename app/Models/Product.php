@@ -36,4 +36,7 @@ class Product extends Model
             now()->toDateString() >= $this->offer_start_date &&
             now()->toDateString() <= $this->offer_end_date;
     }
+    public function reviews(){
+        return $this->hasMany(ProductReview::class);
+    }
 }
