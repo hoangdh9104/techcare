@@ -9,11 +9,28 @@
 @section('title')
     {{ $settings->site_name }} || Product
 @endsection
+<style>
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-left: 5px solid #007bff;
+        padding-left: 10px;
+    }
 
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+</style>
 @section('content')
     <!--=============================
-                DASHBOARD START
-              ==============================-->
+                                                                                                    DASHBOARD START
+                                                                                                  ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -25,8 +42,8 @@
                         <div class="wsus__dashboard_profile">
 
                             <!--============================
-                                    INVOICE PAGE START
-                                ==============================-->
+                                                                                                                        INVOICE PAGE START
+                                                                                                                    ==============================-->
                             <section id="" class="invoice-print">
                                 <div class="">
                                     <div class="wsus__invoice_area">
@@ -142,10 +159,50 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-12">
+                                        <div class="section-title mb-3">
+                                            <h5 class="text-primary">Order Status History</h5>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead class="table-dark text-center">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Status</th>
+                                                        <th>Reason</th>
+                                                        <th>Updated By</th>
+                                                        <th>Changed At</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($order->statusHistories as $key => $history)
+                                                        <tr class="text-center">
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>
+                                                                <span>
+                                                                    {{ $history->status }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                {{ $history->reason ?? 'N/A' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $history->user->name ?? 'System' }}
+                                                            </td>
+                                                            <td>{{ \Carbon\Carbon::parse($history->changed_at)->format('d/m/Y H:i') }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
                             <!--============================
-                                    INVOICE PAGE END
-                                ==============================-->
+                                                                                                                        INVOICE PAGE END
+                                                                                                                    ==============================-->
                             <div class="col">
                                 <div class="mt-2 float-end">
                                     <button class="btn btn-warning print_invoice">Print</button>
@@ -159,8 +216,8 @@
         </div>
     </section>
     <!--=============================
-                DASHBOARD START
-              ==============================-->
+                                                                                                    DASHBOARD START
+                                                                                                  ==============================-->
 @endsection
 
 @push('scripts')
