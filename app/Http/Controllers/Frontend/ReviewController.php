@@ -15,11 +15,13 @@ class ReviewController extends Controller
     use ImageUploadTrait;
 
 
-    public function index(UserProductReviewsDataTable $dataTable){
-       return $dataTable->render('frontend.dashboard.review.index');
+    public function index(UserProductReviewsDataTable $dataTable)
+    {
+        return $dataTable->render('frontend.dashboard.review.index');
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $request->validate([
             'rating' => ['required'],
             'review' => ['required', 'max:200'],
@@ -27,7 +29,7 @@ class ReviewController extends Controller
         ]);
 
         $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->first();
-        if($checkReviewExist){
+        if ($checkReviewExist) {
             toastr('You already added a review for this product!', 'error', 'error');
             return redirect()->back();
         }
@@ -41,22 +43,21 @@ class ReviewController extends Controller
         $productReview->rating = $request->rating;
         $productReview->review = $request->review;
         $productReview->status = 0;
-        $productReview->save(); 
+        $productReview->save();
 
 
-        if(!empty($imagePaths)){ 
-       
-        foreach($imagePaths as $path){
-            $reviewGallery = new ProductReviewGallery();
-            $reviewGallery->product_review_id = $productReview->id;
-            $reviewGallery->image = $path;
-            $reviewGallery->save();
+        if (!empty($imagePaths)) {
+
+            foreach ($imagePaths as $path) {
+                $reviewGallery = new ProductReviewGallery();
+                $reviewGallery->product_review_id = $productReview->id;
+                $reviewGallery->image = $path;
+                $reviewGallery->save();
+            }
         }
-    }
 
-    toastr('Review submitted successfully', 'success', 'success');
+        toastr('Review submitted successfully', 'success', 'success');
 
-    return redirect()->back();
-
+        return redirect()->back();
     }
 }
