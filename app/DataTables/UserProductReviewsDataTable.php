@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\ProductReview;
 use App\Models\UserProductReview;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,19 +24,18 @@ class UserProductReviewsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('product', function($query){
-                return "<a href='".route('product-detail', $query->product->slug)."' > ".$query->product->name."</a>";
+            ->addColumn('product', function ($query) {
+                return "<a href='" . route('product-detail', $query->product->slug) . "' > " . $query->product->name . "</a>";
             })
-            ->addColumn('user', function($query){
+            ->addColumn('user', function ($query) {
                 return $query->user->name;
             })
-            ->addColumn('status', function($query){
-                if($query->status == 1){
+            ->addColumn('status', function ($query) {
+                if ($query->status == 1) {
                     return "<span class='badge bg-success'>Approved</span>";
-                }else{
+                } else {
                     return "<span class='badge bg-warning'>Pending</span>";
                 }
-              
             })
             ->rawColumns(['product', 'status'])
             ->setRowId('id');
@@ -55,20 +55,20 @@ class UserProductReviewsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('userproductreviews-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('userproductreviews-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -77,14 +77,14 @@ class UserProductReviewsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-           
+
             Column::make('id'),
             Column::make('product'),
             Column::make('user'),
             Column::make('rating'),
             Column::make('review'),
             Column::make('status'),
-           
+
         ];
     }
 
