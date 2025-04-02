@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralSetting;
+use App\Models\LogoSetting;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    use ImageUploadTrait;
    public function index(){
     $generalSettings = GeneralSetting::first();
-    return view('admin.setting.index', compact('generalSettings'));
+    $logoSetting = LogoSetting::first();
+    return view('admin.setting.index', compact('generalSettings','logoSetting'));
    }
    public function generalSettingUpdate(Request $request){
     $request->validate([
@@ -36,5 +40,30 @@ class SettingController extends Controller
     ]);
         toastr('Update successfully!','success','Success');
         return redirect()->back();
+   }
+   public function logoSettingUpdate(Request $request)
+   {
+        $request->validate([
+
+            'logo' => ['image','max:3000'],
+            'favicon' => ['image','max:3000'],
+        ]);
+
+        $logoPath = $this->updateImage($request,'logo','uploads',$request->old_logo);
+        $favicon = $this->updateImage($request,'favicon','uploads',$request->old_favicon);
+
+        LogoSetting::updateOrCreate(
+            ['id' => 1],
+            [
+                'logo' => !empty($logoPath) ? $logoPath : $request->old_logo,
+                'favicon' => !empty($favicon) ? $favicon : $request->old_favicon,
+
+            ]
+
+            );
+            toastr('Update successfully!', 'success', 'success');
+
+            return redirect()->back();
+
    }
 }
