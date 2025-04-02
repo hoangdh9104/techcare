@@ -284,8 +284,16 @@
                     error: function(xhr) {
                         let errorMessage = "An error occurred. Please try again.";
 
+                        // Extract custom error message from the server response
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
+                        } else if (xhr.status === 400) {
+                            // Handle 400 status errors (bad request)
+                            errorMessage = xhr.responseJSON?.message ||
+                                "Invalid request. Please check your inputs.";
+                        } else if (xhr.status === 500) {
+                            // Handle server errors
+                            errorMessage = "Server error. Please try again later.";
                         }
 
                         toastr.error(errorMessage);
@@ -308,11 +316,16 @@
                         if (data.status === 'success') {
                             toastr.success(data.message)
                         } else {
-                            toastr.error(data.message)
+                            toastr.error(data.message || "Something went wrong.");
                         }
                     },
-                    error: function(data) {
-                        console.log(data);
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            toastr.error(xhr.responseJSON.message || "Invalid request.");
+                        } else {
+                            toastr.error("Something went wrong. Please try again.");
+                        }
+                        console.log(xhr);
                     }
                 })
             })
