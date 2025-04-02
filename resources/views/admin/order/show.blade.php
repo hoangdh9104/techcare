@@ -135,6 +135,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <!-- Ô nhập lý do hủy đơn -->
+                                        <div class="form-group" id="cancel_reason_box" style="display: none;">
+                                            <label for="cancel_reason">Reason for cancellation</label>
+                                            <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3"
+                                                placeholder="Enter reason for cancellation..."></textarea>
+                                        </div>
+
+                                        <button type="button" id="update_status_btn" class="btn btn-primary">Save Order
+                                            Status</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-right">
@@ -183,6 +192,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="section-title">Order Status History</div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Status</th>
+                                                    <th>Reason</th>
+                                                    <th>Updated By</th>
+                                                    <th>Changed At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($order->statusHistories as $history)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ ucfirst(str_replace('_', ' ', $history->status)) }}</td>
+                                                        <td>{{ $history->reason ?? 'N/A' }}</td>
+                                                        <td>{{ $history->user->name ?? 'System' }}</td>
+                                                        <td>{{ date('d/m/Y H:i', strtotime($history->changed_at)) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -198,37 +236,71 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            // Show or hide the cancel reason input based on order status
             $('#order_status').on('change', function() {
                 let status = $(this).val();
-                let id = $(this).data('id');
 
+                if (status === 'canceled') {
+                    $('#cancel_reason_box').show(); // Show the reason input field
+                } else {
+                    $('#cancel_reason_box').hide(); // Hide it for other statuses
+                    $('#cancel_reason').val(""); // Clear the input if status changes
+                }
+            });
+
+            // Handle status update when the button is clicked
+            $('#update_status_btn').on('click', function() {
+                let status = $('#order_status').val();
+                let id = $('#order_status').data('id');
+                let reason = $('#cancel_reason').val().trim(); // Get reason and remove extra spaces
+
+                // Validate reason if the status is "canceled"
+                if (status === 'canceled' && reason === '') {
+                    toastr.error("Please enter a reason for canceling the order.");
+                    return;
+                }
+
+                // Send AJAX request to update order status
                 $.ajax({
-                    method: 'GET',
+                    method: 'POST', // Use POST for data updates
                     url: "{{ route('admin.order.status') }}",
                     data: {
+                        _token: "{{ csrf_token() }}", // CSRF security token
                         status: status,
-                        id: id
+                        id: id,
+                        cancel_reason: reason
                     },
-                    success: function(data) {
-                        if (data.status === 'success') {
-                            toastr.success(data.message);
+                    beforeSend: function() {
+                        $('#update_status_btn').prop('disabled', true).text('Updating...');
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            toastr.success(response.message);
                         } else {
-                            toastr.error(data.message || "Something went wrong!");
+                            toastr.error(response.message || "Something went wrong.");
                         }
+                        $('#update_status_btn').prop('disabled', false).text('Update');
                     },
                     error: function(xhr) {
                         let errorMessage = "An error occurred. Please try again.";
 
+                        // Extract custom error message from the server response
                         if (xhr.responseJSON && xhr.responseJSON.message) {
                             errorMessage = xhr.responseJSON.message;
+                        } else if (xhr.status === 400) {
+                            // Handle 400 status errors (bad request)
+                            errorMessage = xhr.responseJSON?.message ||
+                                "Invalid request. Please check your inputs.";
+                        } else if (xhr.status === 500) {
+                            // Handle server errors
+                            errorMessage = "Server error. Please try again later.";
                         }
 
                         toastr.error(errorMessage);
-
-                    },
+                        $('#update_status_btn').prop('disabled', false).text('Update');
+                    }
                 });
-
-            })
+            });
             $('#payment_status').on('change', function() {
                 let status = $(this).val();
                 let id = $(this).data('id');
@@ -243,10 +315,17 @@
                     success: function(data) {
                         if (data.status === 'success') {
                             toastr.success(data.message)
+                        } else {
+                            toastr.error(data.message || "Something went wrong.");
                         }
                     },
-                    error: function(data) {
-                        console.log(data);
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            toastr.error(xhr.responseJSON.message || "Invalid request.");
+                        } else {
+                            toastr.error("Something went wrong. Please try again.");
+                        }
+                        console.log(xhr);
                     }
                 })
             })

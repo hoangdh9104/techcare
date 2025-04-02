@@ -7,6 +7,7 @@ use App\Models\Advertisement;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cart;
 use Illuminate\Support\Facades\Session;
@@ -216,39 +217,74 @@ class CartController extends Controller
     /** Apply coupon */
     public function applyCoupon(Request $request)
     {
-        if ($request->coupon_code === null) {
-            return response(['status' => 'error', 'message' => 'Coupon filed is required']);
+        // if ($request->coupon_code === null) {
+        //     return response(['status' => 'error', 'message' => 'Coupon filed is required']);
+        // }
+
+        // $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
+
+        // if ($coupon === null) {
+        //     return response(['status' => 'error', 'message' => 'Coupon not exist!']);
+        // } elseif ($coupon->start_date > date('Y-m-d')) {
+        //     return response(['status' => 'error', 'message' => 'Coupon not exist!']);
+        // } elseif ($coupon->end_date < date('Y-m-d')) {
+        //     return response(['status' => 'error', 'message' => 'Coupon is expired']);
+        // } elseif ($coupon->total_used >= $coupon->quantity) {
+        //     return response(['status' => 'error', 'message' => 'you can not apply this coupon']);
+        // }
+
+        // if ($coupon->discount_type === 'amount') {
+        //     Session::put('coupon', [
+        //         'coupon_name' => $coupon->name,
+        //         'coupon_code' => $coupon->code,
+        //         'discount_type' => 'amount',
+        //         'discount' => $coupon->discount
+        //     ]);
+        // } elseif ($coupon->discount_type === 'percent') {
+        //     Session::put('coupon', [
+        //         'coupon_name' => $coupon->name,
+        //         'coupon_code' => $coupon->code,
+        //         'discount_type' => 'percent',
+        //         'discount' => $coupon->discount
+        //     ]);
+        // }
+
+        // return response(['status' => 'success', 'message' => 'Coupon applied successfully!']);
+
+        $couponCode = trim(strip_tags($request->coupon_code));
+
+        if (!$couponCode) {
+            return response()->json(['status' => 'error', 'message' => 'Coupon field is required']);
         }
-
-        $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
-
-        if ($coupon === null) {
-            return response(['status' => 'error', 'message' => 'Coupon not exist!']);
-        } elseif ($coupon->start_date > date('Y-m-d')) {
-            return response(['status' => 'error', 'message' => 'Coupon not exist!']);
-        } elseif ($coupon->end_date < date('Y-m-d')) {
-            return response(['status' => 'error', 'message' => 'Coupon is expired']);
-        } elseif ($coupon->total_used >= $coupon->quantity) {
-            return response(['status' => 'error', 'message' => 'you can not apply this coupon']);
+    
+        $coupon = Coupon::where('code', $couponCode)->where('status', 1)->first();
+    
+        if (!$coupon || $coupon->start_date > Carbon::today() || $coupon->end_date < Carbon::today()) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid or expired coupon!']);
         }
-
-        if ($coupon->discount_type === 'amount') {
-            Session::put('coupon', [
-                'coupon_name' => $coupon->name,
-                'coupon_code' => $coupon->code,
-                'discount_type' => 'amount',
-                'discount' => $coupon->discount
-            ]);
-        } elseif ($coupon->discount_type === 'percent') {
-            Session::put('coupon', [
-                'coupon_name' => $coupon->name,
-                'coupon_code' => $coupon->code,
-                'discount_type' => 'percent',
-                'discount' => $coupon->discount
-            ]);
+    
+        if ($coupon->total_used >= $coupon->quantity) {
+            return response()->json(['status' => 'error', 'message' => 'This coupon has been fully used!']);
         }
-
-        return response(['status' => 'success', 'message' => 'Coupon applied successfully!']);
+    
+        if (Session::has('applied_coupon')) {
+            return response()->json(['status' => 'error', 'message' => 'You can only use one coupon at a time!']);
+        }
+    
+        // Áp dụng mã giảm giá vào session
+        Session::put('applied_coupon', [
+            'coupon_name' => $coupon->name,
+            'coupon_code' => $coupon->code,
+            'discount_type' => $coupon->discount_type,
+            'discount' => $coupon->discount
+        ]);
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Coupon applied successfully!',
+            'discount' => $coupon->discount,
+            'discount_type' => $coupon->discount_type
+        ]);
     }
 
     /** Calculate coupon discount */

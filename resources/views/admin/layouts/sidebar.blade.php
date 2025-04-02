@@ -16,7 +16,7 @@
             <li class="menu-header">Starter</li>
 
             {{-- Manage Website --}}
-            <li class="dropdown {{ setActive(['admin.slider.*']) }}">
+            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage website</span></a>
                 <ul class="dropdown-menu">
@@ -24,7 +24,7 @@
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
+                    <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
                             href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
                 </ul>
             </li>
@@ -42,6 +42,7 @@
                     'admin.delivered-orders',
                     'admin.canceled-orders',
                     'admin.blog-category.*',
+                    'admin.received-orders',
                     'admin.blog.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
@@ -61,6 +62,8 @@
                             href="{{ route('admin.out_for_delivery-orders') }}">All Out For Delivery Orders</a></li>
                     <li class="{{ setActive(['admin.delivered-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.delivered-orders') }}">All Delivered Orders</a></li>
+                    <li class="{{ setActive(['admin.received-orders']) }}"><a class="nav-link"
+                            href="{{ route('admin.received-orders') }}">All Received Orders</a></li>
                     <li class="{{ setActive(['admin.canceled-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.canceled-orders') }}">All Canceled Orders</a></li>
                 </ul>
@@ -83,7 +86,7 @@
 
             {{-- Manage Product --}}
             <li
-                class="dropdown {{ setActive(['admin.brand.*', 'admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*', 'admin.seller-products.*', 'admin.seller-pending-products.*','admin.reviews.*']) }}">
+                class="dropdown {{ setActive(['admin.brand.*', 'admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*', 'admin.seller-products.*', 'admin.seller-pending-products.*', 'admin.reviews.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Product</span></a>
                 <ul class="dropdown-menu">
@@ -101,13 +104,14 @@
                     <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
                             href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
 
-                    
+
                 </ul>
             </li>
 
             {{-- Manage Coupons --}}
             <li class="dropdown {{ setActive(['admin.vendor.profile.*', 'admin.coupons.*']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
                     <span>Manage Coupons</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.coupons.*']) }}"><a class="nav-link"

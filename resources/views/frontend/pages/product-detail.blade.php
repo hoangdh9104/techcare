@@ -227,17 +227,17 @@
                                                         $avgRating = $product->reviews('reviews')->avg('rating');
                                                         $fullRating = round($avgRating);
                                                     @endphp
-        
+
                                                     @for ($i = 1; $i <= 5; $i++)
                                                         @if ($i <= $fullRating)
-                                                        <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
                                                         @else
-                                                        <i class="far fa-star"></i>
+                                                            <i class="far fa-star"></i>
                                                         @endif
                                                     @endfor
-        
-                                                    <span>({{count($product->reviews)}} review)</span>
-        
+
+                                                    <span>({{ count($product->reviews) }} review)</span>
+
                                                 </p>
                                                 <p><span>Store Name:</span>{{ $product->vendor->shop_name }} </p>
                                                 <p><span>Address:</span> {{ $product->vendor->address }}</p>
@@ -262,101 +262,107 @@
                                         <div class="row">
                                             <div class="col-xl-8 col-lg-7">
                                                 <div class="wsus__comment_area">
-                                                    <h4>Reviews <span>{{count($reviews)}}</span></h4>
+                                                    <h4>Reviews <span>{{ count($reviews) }}</span></h4>
                                                     @foreach ($reviews as $review)
-                                                    <div class="wsus__main_comment">
-                                                        <div class="wsus__comment_img">
-                                                            <img src="{{asset($review->user->image)}}" alt="user"
-                                                                class="img-fluid w-100">
+                                                        <div class="wsus__main_comment">
+                                                            <div class="wsus__comment_img">
+                                                                <img src="{{ asset($review->user->image) }}"
+                                                                    alt="user" class="img-fluid w-100">
+                                                            </div>
+                                                            <div class="wsus__comment_text reply">
+                                                                <h6>{{ $review->user->name }}<span>{{ $review->rating }}<i
+                                                                            class="fas fa-star"></i></span></h6>
+                                                                <span>{{ date('d M Y', strtotime($review->create_at)) }}</span>
+                                                                <p>{{ $review->review }}
+                                                                </p>
+                                                                <ul class="">
+                                                                    @if (count($review->productReviewGalleries) > 0)
+                                                                        @foreach ($review->productReviewGalleries as $image)
+                                                                            <li><img src="{{ asset($image->image) }}"
+                                                                                    alt="product"
+                                                                                    class="img-fluid w-100"></li>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </ul>
+
+                                                            </div>
                                                         </div>
-                                                        <div class="wsus__comment_text reply">
-                                                            <h6>{{$review->user->name}}<span>{{$review->rating}}<i
-                                                                        class="fas fa-star"></i></span></h6>
-                                                            <span>{{date('d M Y', strtotime($review->created_at))}}</span>
-                                                            <p>{{$review->review}}
-                                                            </p>
-                                                            <ul class="">
-                                                                @if (count($review->productReviewGalleries) > 0)
-                                                                
-                                                                    @foreach ($review->productReviewGalleries as $image )
-                                                            
-                                                                        <li><img src="{{asset($image->image)}}" alt="product"
-                                                                        class="img-fluid w-100"></li>
-                                                                    @endforeach
-                                                                @endif
-                                                            </ul>
-                                                            
-                                                        </div>
-                                                    </div>
                                                     @endforeach
-                                                    
+
                                                     <div class="mt-5">
                                                         @if ($reviews->hasPages())
-                                                            {{$reviews->links() }}
+                                                            {{ $reviews->links() }}
                                                         @endif
                                                     </div>
 
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
-                                                @auth
+
                                                 @php
                                                     $isBrought = false;
-                                                    $orders = \App\Models\Order::where(['user_id'=> auth()->user()->id, 'order_status' => 'delivered' ])->get();
-                                                    foreach($orders as $key => $order){
-                                                       $existItem = $order->orderProducts()->where('product_id', $product->id)->first();
+                                                    $orders = \App\Models\Order::where([
+                                                        'user_id' => auth()->user()->id,
+                                                        'order_status' => 'delivered',
+                                                    ])->get();
+                                                    foreach ($orders as $key => $order) {
+                                                        $existItem = $order
+                                                            ->orderProducts()
+                                                            ->where('product_id', $product->id)
+                                                            ->first();
 
-                                                       if($existItem){
-                                                              $isBrought = true;
-                                                       }
+                                                        if ($existItem) {
+                                                            $isBrought = true;
+                                                        }
                                                     }
                                                 @endphp
 
                                                 @if ($isBrought == true)
-                                        
-                                                <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                    <h4>write a Review</h4>
-                                                    <form action="{{ route('user.review.create') }}"
-                                                        enctype="multipart/form-data" method="POST">
-                                                        @csrf
-                                                        <p class="rating">
-                                                            <span>select your rating : </span>
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-xl-12">
-                                                                <div class="wsus__single_com mb-4">
-                                                                    <select name="rating" id=""
-                                                                        class="form-control">
-                                                                        <option value="">Select</option>
-                                                                        <option value="1">1</option>
-                                                                        <option value="2">2</option>
-                                                                        <option value="3">3</option>
-                                                                        <option value="4">4</option>
-                                                                        <option value="5">5</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-12">
+                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
+                                                        <h4>write a Review</h4>
+                                                        <form action="{{ route('user.review.create') }}"
+                                                            enctype="multipart/form-data" method="POST">
+                                                            @csrf
+                                                            <p class="rating">
+                                                                <span>select your rating : </span>
+                                                            </p>
+                                                            <div class="row">
                                                                 <div class="col-xl-12">
-                                                                    <div class="wsus__single_com">
-                                                                        <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                    <div class="wsus__single_com mb-4">
+                                                                        <select name="rating" id=""
+                                                                            class="form-control">
+                                                                            <option value="">Select</option>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-12">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="wsus__single_com">
+                                                                            <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="img_upload">
-                                                            <div class="">
-                                                                <input type="file" name="images[]" multiple>
+                                                            <div class="img_upload">
+                                                                <div class="">
+                                                                    <input type="file" name="image[]"
+                                                                        id="">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                        <input type="hidden" name="vendor_id" value="{{ $product->vendor_id }}">
-                                                        <button class="common_btn" type="submit">submit
-                                                            review</button>
-                                                    </form>
-                                                </div>
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $product->id }}">
+                                                            <input type="hidden" name="vendor_id"
+                                                                value="{{ $product->vendor_id }}">
+                                                            <button class="common_btn" type="submit">submit
+                                                                review</button>
+                                                        </form>
+                                                    </div>
                                                 @endif
-                                                @endauth
                                             </div>
                                         </div>
                                     </div>
@@ -371,169 +377,4 @@
     </div>
 
 </section>
-<!--============================PRODUCT DETAILS END==============================-->
-<!--============================RELATED PRODUCT START==============================-->
-{{-- <section id="wsus__flash_sell">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="wsus__section_header">
-                    <h3>Related Products</h3>
-                    <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="row flash_sell_slider">
-            <div class="col-xl-3 col-sm-6 col-lg-4">
-                <div class="wsus__product_item">
-                    <span class="wsus__new">New</span>
-                    <span class="wsus__minus">-20%</span>
-                    <a class="wsus__pro_link" href="product_details.html">
-                        <img src="images/pro3.jpg" alt="product" class="img-fluid w-100 img_1" />
-                        <img src="images/pro3_3.jpg" alt="product" class="img-fluid w-100 img_2" />
-                    </a>
-                    <ul class="wsus__single_pro_icon">
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                    class="far fa-eye"></i></a></li>
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="#"><i class="far fa-random"></i></a>
-                    </ul>
-                    <div class="wsus__product_details">
-                        <a class="wsus__category" href="#">Electronics </a>
-                        <p class="wsus__pro_rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(133 review)</span>
-                        </p>
-                        <a class="wsus__pro_name" href="#">hp 24" FHD monitore</a>
-                        <p class="wsus__price">$159 <del>$200</del></p>
-                        <a class="add_cart" href="#">add to cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-lg-4">
-                <div class="wsus__product_item">
-                    <span class="wsus__new">New</span>
-                    <a class="wsus__pro_link" href="product_details.html">
-                        <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                        <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                    </a>
-                    <ul class="wsus__single_pro_icon">
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                    class="far fa-eye"></i></a></li>
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="#"><i class="far fa-random"></i></a>
-                    </ul>
-                    <div class="wsus__product_details">
-                        <a class="wsus__category" href="#">fashion </a>
-                        <p class="wsus__pro_rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(17 review)</span>
-                        </p>
-                        <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                        <p class="wsus__price">$159 <del>$200</del></p>
-                        <a class="add_cart" href="#">add to cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-lg-4">
-                <div class="wsus__product_item">
-                    <span class="wsus__minus">-20%</span>
-                    <a class="wsus__pro_link" href="product_details.html">
-                        <img src="images/pro9.jpg" alt="product" class="img-fluid w-100 img_1" />
-                        <img src="images/pro9_9.jpg" alt="product" class="img-fluid w-100 img_2" />
-                    </a>
-                    <ul class="wsus__single_pro_icon">
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                    class="far fa-eye"></i></a></li>
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="#"><i class="far fa-random"></i></a>
-                    </ul>
-                    <div class="wsus__product_details">
-                        <a class="wsus__category" href="#">fashion </a>
-                        <p class="wsus__pro_rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(120 review)</span>
-                        </p>
-                        <a class="wsus__pro_name" href="#">men's fashion sholder bag</a>
-                        <p class="wsus__price">$159 <del>$200</del></p>
-                        <a class="add_cart" href="#">add to cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-lg-4">
-                <div class="wsus__product_item">
-                    <span class="wsus__new">New</span>
-                    <span class="wsus__minus">-20%</span>
-                    <a class="wsus__pro_link" href="product_details.html">
-                        <img src="images/pro2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                        <img src="images/pro2_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                    </a>
-                    <ul class="wsus__single_pro_icon">
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                    class="far fa-eye"></i></a></li>
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="#"><i class="far fa-random"></i></a>
-                    </ul>
-                    <div class="wsus__product_details">
-                        <a class="wsus__category" href="#">fashion </a>
-                        <p class="wsus__pro_rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(72 review)</span>
-                        </p>
-                        <a class="wsus__pro_name" href="#">men's casual shoes</a>
-                        <p class="wsus__price">$159 <del>$200</del></p>
-                        <a class="add_cart" href="#">add to cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-lg-4">
-                <div class="wsus__product_item">
-                    <span class="wsus__minus">-20%</span>
-                    <a class="wsus__pro_link" href="product_details.html">
-                        <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                        <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                    </a>
-                    <ul class="wsus__single_pro_icon">
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                    class="far fa-eye"></i></a></li>
-                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                        <li><a href="#"><i class="far fa-random"></i></a>
-                    </ul>
-                    <div class="wsus__product_details">
-                        <a class="wsus__category" href="#">fashion </a>
-                        <p class="wsus__pro_rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>(17 review)</span>
-                        </p>
-                        <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                        <p class="wsus__price">$159 <del>$200</del></p>
-                        <a class="add_cart" href="#">add to cart</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section> --}}
-<!--============================ RELATED PRODUCT END                                                                                                                                                                                                                                                                                                                                            ==============================-->
 @endsection
