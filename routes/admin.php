@@ -3,13 +3,19 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminReviewController;
+use App\Http\Controllers\Backend\AdminVendorProfileControlle;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
+use App\Http\Controllers\Backend\BlogCategoryController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CodSettingController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\MomoSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\PaymentSettingController;
@@ -23,8 +29,11 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
-
+use App\Http\Controllers\Backend\VendorListController;
+use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -106,6 +115,17 @@ Route::resource('shipping-rule', ShippingRuleController::class);
 // Order
 Route::resource('order', OrderController::class);
 
+//**Blog routes */
+Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
+Route::resource('blog-category', BlogCategoryController::class);
+
+Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
+Route::resource('blog', BlogController::class);
+
+
+
+
+
 // Flash Sale
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
 Route::put('flash-sale', [FlashSaleController::class, 'update'])->name('flash-sale.update');
@@ -114,26 +134,61 @@ Route::put('flash-sale/show-at-home/status-change', [FlashSaleController::class,
 Route::put('flash-sale-status', [FlashSaleController::class, 'changeStatus'])->name('flash-sale-status');
 Route::delete('flash-sale/{id}', [FlashSaleController::class, 'destroy'])->name('flash-sale.destroy');
 
+// reviews route
+Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+Route::put('reviews/change-status', [AdminReviewController::class, 'changeStatus'])->name('reviews.change-status');
+
 //Seller Products
 
-Route::get('seller-products' ,[SellerProductController::class, 'index'])->name('seller-products.index');
-Route::get('seller-pending-products' ,[SellerProductController::class, 'pendingProducts'])->name('seller-pending-products.index');
-Route::put('change-approve-status' ,[SellerProductController::class, 'changeApproveStatus'])->name('change-approve-status');
+Route::get('seller-products', [SellerProductController::class, 'index'])->name('seller-products.index');
+Route::get('seller-pending-products', [SellerProductController::class, 'pendingProducts'])->name('seller-pending-products.index');
+Route::put('change-approve-status', [SellerProductController::class, 'changeApproveStatus'])->name('change-approve-status');
 
 // Payment setting
-Route::get('payment-settings', [PaymentSettingController::class,'index'])->name('payment-settings.index');
+Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
 Route::resource('paypal-setting', PaypalSettingController::class);
+Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
+Route::resource('paypal-setting', PaypalSettingController::class);
+Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
+Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
+Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
 
 // Advertisement routes
-Route::get('advertisement',[AdvertisementController::class,'index'])->name('advertisement.index');
-Route::put('advertisement/homepage-banner-section-one',[AdvertisementController::class,'homepageBanerSectionOne'])->name('homepage-banner-section-one');
-Route::put('advertisement/homepage-banner-section-two',[AdvertisementController::class,'homepageBanerSectionTwo'])->name('homepage-banner-section-two');
-Route::put('advertisement/homepage-banner-section-three',[AdvertisementController::class,'homepageBanerSectionThree'])->name('homepage-banner-section-three');
-Route::put('advertisement/homepage-banner-section-four',[AdvertisementController::class,'homepageBanerSectionFour'])->name('homepage-banner-section-four');
+Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+Route::put('advertisement/homepage-banner-section-one', [AdvertisementController::class, 'homepageBanerSectionOne'])->name('homepage-banner-section-one');
+Route::put('advertisement/homepage-banner-section-two', [AdvertisementController::class, 'homepageBanerSectionTwo'])->name('homepage-banner-section-two');
+Route::put('advertisement/homepage-banner-section-three', [AdvertisementController::class, 'homepageBanerSectionThree'])->name('homepage-banner-section-three');
+Route::put('advertisement/homepage-banner-section-four', [AdvertisementController::class, 'homepageBanerSectionFour'])->name('homepage-banner-section-four');
 Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productPageBanner'])->name('productpage-banner');
 Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cartpage-banner');
 
 
-/** reviews routes */
-Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
-Route::put('reviews/change-status', [AdminReviewController::class, 'changeStatus'])->name('reviews.change-status');
+/**Order route */
+Route::post('order-status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
+Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
+Route::get('pending-orders', [OrderController::class, 'pendingOrders'])->name('pending-orders');
+Route::get('processed-orders', [OrderController::class, 'processedOrders'])->name('processed-orders');
+Route::get('dropped_off-orders', [OrderController::class, 'droppedOffOrders'])->name('dropped_off-orders');
+Route::get('shipped-orders', [OrderController::class, 'shippedOrders'])->name('shipped-orders');
+Route::get('out_for_delivery-orders', [OrderController::class, 'outForDeliveryOrders'])->name('out_for_delivery-orders');
+Route::get('delivered-orders', [OrderController::class, 'deliveredOrders'])->name('delivered-orders');
+Route::get('received-orders', [OrderController::class, 'receivedOrders'])->name('received-orders');
+Route::get('canceled-orders', [OrderController::class, 'canceledOrders'])->name('canceled-orders');
+
+Route::resource('order', OrderController::class);
+/** Order Transaction route */
+Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
+
+// vendor request
+Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
+
+//customer list
+Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
+Route::put('customer/status-change', [CustomerListController::class, 'statusChange'])->name('customer.status-change');
+
+
+
+Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
+Route::put('vendor-list/status-change', [VendorListController::class, 'statusChange'])->name('vendor-list.status-change');

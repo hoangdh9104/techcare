@@ -27,6 +27,10 @@ return [
             'status' => 'Delivered',
             'details' => 'Delivered'
         ],
+        'received' => [
+            'status' => 'Received',
+            'details' => 'The customer has received the package successfully'
+        ],
         'canceled' => [
             'status' => 'Canceled',
             'details' => 'Canceled'

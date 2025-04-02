@@ -105,7 +105,13 @@
                         <p>coupon(-): <span id="discount">{{ $settings->currency_icon }}{{ getCartDiscount() }}</span>
                         </p>
                         <p class="total"><span>total:</span> <span
-                                id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span></p>
+                                id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span>
+                               
+                            </p>
+                             @if (session()->has('coupon_code'))
+                                    <p>Applied Coupon: {{ session('coupon_code') }}</p>
+                                @endif
+                                
 
                         <form id="coupon_form">
                             <input type="text" placeholder="Coupon Code" name="coupon_code"

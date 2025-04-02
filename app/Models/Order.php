@@ -8,7 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    public function user(){
+    protected $fillable = [
+        'invoice_id',
+        'user_id',
+        'sub_total',
+        'amount',
+        'currency_name',
+        'currency_icon',
+        'product_qty',
+        'payment_method',
+        'payment_status',
+        'order_address',
+        'shipping_method',
+        'coupon',
+        'order_status', // Thêm dòng này
+        'created_at',
+        'updated_at'
+    ];
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -21,5 +39,9 @@ class Order extends Model
     }
     public function orderProducts(){
         return $this->hasMany(OrderProduct::class);
+    }
+    public function statusHistories()
+    {
+        return $this->hasMany(OrderStatusHistory::class, 'order_id')->orderBy('changed_at', 'desc');
     }
 }

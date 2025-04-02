@@ -64,6 +64,9 @@ class OrderDataTable extends DataTable
                     case 'delivered':
                         return "<span class='badge bg-success'>delivered</span>";
                         break;
+                    case 'received':
+                        return "<span class='badge bg-success'>received</span>";
+                        break;
                     case 'canceled':
                         return "<span class='badge bg-danger'>canceled</span>";
                         break;
