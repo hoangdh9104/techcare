@@ -99,6 +99,7 @@ Route::put('products-variant-item-status', [ProductVariantItemController::class,
 // ** Setting routes**//
 Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
 Route::put('generale-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('generale-setting-update');
+Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update');
 
 // setting home page
 Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');
