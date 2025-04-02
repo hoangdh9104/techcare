@@ -148,20 +148,16 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> d72ce6d1c0452203ebcaa2354b783efd2fdc04fe
+
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
 
 
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
-<<<<<<< HEAD
-=======
+
     Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
->>>>>>> d72ce6d1c0452203ebcaa2354b783efd2fdc04fe
+
 
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
