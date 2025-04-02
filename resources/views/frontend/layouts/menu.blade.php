@@ -51,13 +51,12 @@
                     </ul>
 
                     <ul class="wsus__menu_item">
-                        <li><a class="#" href="{{ route('home') }}">home</a></li>
-
-                        <li><a class="#" href="#">vendors</a></li>
-                        <li><a class="#" href="#">flash Sale</a></li>
-                        <li><a class="#" href="#">blog</a></li>
-                        <li><a class="#" href="#">about</a></li>
-                        <li><a class="#" href="#">contact</a></li>
+                        <li><a class={{setActive(['home'])}} href="{{url('/')}}">home</a></li>
+                        <li><a class="{{setActive(['vendor.index'])}}" href="{{route('vendor.index')}}">vendors</a></li>
+                        <li><a class="{{setActive(['flash-sale'])}}" href="{{route('flash-sale')}}">flash Sale</a></li>
+                        <li><a class="{{setActive(['blog'])}}" href="{{route('blog')}}">blog</a></li>
+                        <li><a class="{{setActive(['#'])}}" href="#">about</a></li>
+                        <li><a class="{{setActive(['#'])}}" href="#">contact</a></li>
 
 
                     </ul>
