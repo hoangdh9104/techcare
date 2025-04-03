@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
-<section class="section">
+<section class="section" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
     <div class="section-header">
       <h1>Profile</h1>
       <div class="section-header-breadcrumb">
