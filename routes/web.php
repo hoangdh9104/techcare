@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // route for admin
-Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
+
 require __DIR__ . '/auth.php';
 
 // Route Flash Sale
