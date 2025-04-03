@@ -127,51 +127,15 @@
                             </div>
                             <ul class="wsus__button_area">
                                 <li><button class="add_cart" type="submit">add to cart</button></li>
-                                <li><a class="buy_now" href="#">buy now</a></li>
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
+                               
+                                <li><a  style="border:1px solid gray; padding: 7px 11px; border-radius:100%" href="javascrip:;" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                
                             </ul>
                         </form>
                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
-                    <div class="wsus_pro_det_sidebar" id="sticky_sidebar">
-                        <ul>
-                            <li>
-                                <span><i class="fal fa-truck"></i></span>
-                                <div class="text">
-                                    <h4>Return Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="far fa-shield-check"></i></span>
-                                <div class="text">
-                                    <h4>Secure Payment</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="fal fa-envelope-open-dollar"></i></span>
-                                <div class="text">
-                                    <h4>Warranty Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="wsus__det_sidebar_banner">
-                            <img src="images/blog_1.jpg" alt="banner" class="img-fluid w-100">
-                            <div class="wsus__det_sidebar_banner_text_overlay">
-                                <div class="wsus__det_sidebar_banner_text">
-                                    <p>Black Friday Sale</p>
-                                    <h4>Up To 70% Off</h4>
-                                    <a href="#" class="common_btn">shope now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
             </div>
         </div>
 
@@ -222,7 +186,7 @@
                                         <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                             <div class="wsus__pro_det_vendor_text">
                                                 <h4>{{ $product->vendor->user->name }}</h4>
-                                                <p class="rating">
+                                                <p class="wsus_pro_rating">
                                                     @php
                                                         $avgRating = $product->reviews('reviews')->avg('rating');
                                                         $fullRating = round($avgRating);

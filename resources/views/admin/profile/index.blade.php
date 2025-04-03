@@ -34,12 +34,12 @@
                             <input type="text" class="form-control" name="name" value="{{Auth :: user() -> name}}">
                         </div>
                         <div class="form-group col-md-6 col-12">
-                            <label>email</label>
+                            <label>Email</label>
                             <input type="email" class="form-control" name="email" value="{{Auth :: user() -> email}}">
                         </div>
                         <div class="form-group col-md-6 col-12">
-                            <label>email</label>
-                            <input type="phone" class="form-control" name="phone" value="{{Auth :: user() -> phone}}">
+                            <label>Phone</label>
+                            <input type="tel" class="form-control" name="phone" value="{{Auth :: user() -> phone}}">
                         </div>
                     </div>
               </div>

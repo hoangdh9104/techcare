@@ -9664,3 +9664,8 @@ span.wsus__new {
  margin-right: 10px;
  float: left;
 }
+.wsus__hot_deals__single_img img{
+  width: 200px !important;
+  height: 150px !important;
+  object-fit: cover;
+}
