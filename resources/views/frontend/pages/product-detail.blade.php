@@ -3,6 +3,8 @@
 @section('title')
     {{ $settings->site_name }} Product Detail
 @endsection
+
+
 <!--============================
                                                                                                                                                                                                                                                                                                                                                                 BREADCRUMB START
                                                                                                                                                                                                                                                                                                                                                             ==============================-->
@@ -130,6 +132,17 @@
                                 <li><a class="buy_now" href="#">buy now</a></li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
+                                <li>
+                                    <button type="button"
+                                        style="border: 1px solid gray;
+                                    padding: 7px 11px;
+                                    margin-left: 7px;
+                                    border-radius: 100%; background-color: #0088cc"
+                                        class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="far fa-comment-alt text-light"></i>
+                                    </button>
+
+                                </li>
                             </ul>
                         </form>
                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
@@ -375,6 +388,27 @@
 
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send Message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="">Message</label>
+                            <textarea name="message" class="form-control mt-2"></textarea>
+                            <button type="submit" class="btn btn-primary mt-4">Send</button>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </div>
 </section>
 @endsection

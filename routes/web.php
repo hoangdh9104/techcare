@@ -75,7 +75,6 @@ Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->n
 
 /* Route product  */
 Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
-
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
 Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
 
