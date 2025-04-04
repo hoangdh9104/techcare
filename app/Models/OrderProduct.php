@@ -16,4 +16,10 @@ class OrderProduct extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    protected $table = 'order_products'; // Đảm bảo tên bảng đúng
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
 }
