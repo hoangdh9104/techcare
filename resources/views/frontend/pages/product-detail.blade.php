@@ -298,7 +298,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
-
+                                                @auth
                                                 @php
                                                     $isBrought = false;
                                                     $orders = \App\Models\Order::where([
@@ -363,6 +363,7 @@
                                                         </form>
                                                     </div>
                                                 @endif
+                                                @endauth
                                             </div>
                                         </div>
                                     </div>
