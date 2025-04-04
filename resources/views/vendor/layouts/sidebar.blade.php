@@ -14,7 +14,7 @@
                     class="far fa-cart-plus"></i>Products</a></li>
         <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.reviews.index') }}"><i
                     class="far fa-star"></i>Review</a></li>
-        <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.reviews.index') }}"><i
+        <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.withdraw.index') }}"><i
                     class="far fa-star"></i>My Withdraw</a></li>
         <li><a class="{{ setActive(['vendor.shop-profile.index']) }}"
                 href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i>Shop Profile</a></li>
