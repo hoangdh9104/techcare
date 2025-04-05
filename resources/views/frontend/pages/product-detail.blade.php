@@ -312,70 +312,70 @@
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
                                                 @auth
-                                                @php
-                                                    $isBrought = false;
-                                                    $orders = \App\Models\Order::where([
-                                                        'user_id' => auth()->user()->id,
-                                                        'order_status' => 'delivered',
-                                                    ])->get();
-                                                    foreach ($orders as $key => $order) {
-                                                        $existItem = $order
-                                                            ->orderProducts()
-                                                            ->where('product_id', $product->id)
-                                                            ->first();
+                                                    @php
+                                                        $isBrought = false;
+                                                        $orders = \App\Models\Order::where([
+                                                            'user_id' => auth()->user()->id,
+                                                            'order_status' => 'delivered',
+                                                        ])->get();
+                                                        foreach ($orders as $key => $order) {
+                                                            $existItem = $order
+                                                                ->orderProducts()
+                                                                ->where('product_id', $product->id)
+                                                                ->first();
 
-                                                        if ($existItem) {
-                                                            $isBrought = true;
+                                                            if ($existItem) {
+                                                                $isBrought = true;
+                                                            }
                                                         }
-                                                    }
-                                                @endphp
+                                                    @endphp
 
-                                                @if ($isBrought == true)
-                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                        <h4>write a Review</h4>
-                                                        <form action="{{ route('user.review.create') }}"
-                                                            enctype="multipart/form-data" method="POST">
-                                                            @csrf
-                                                            <p class="rating">
-                                                                <span>select your rating : </span>
-                                                            </p>
-                                                            <div class="row">
-                                                                <div class="col-xl-12">
-                                                                    <div class="wsus__single_com mb-4">
-                                                                        <select name="rating" id=""
-                                                                            class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
+                                                    @if ($isBrought == true)
+                                                        <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
+                                                            <h4>write a Review</h4>
+                                                            <form action="{{ route('user.review.create') }}"
+                                                                enctype="multipart/form-data" method="POST">
+                                                                @csrf
+                                                                <p class="rating">
+                                                                    <span>select your rating : </span>
+                                                                </p>
+                                                                <div class="row">
                                                                     <div class="col-xl-12">
-                                                                        <div class="wsus__single_com">
-                                                                            <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                        <div class="wsus__single_com mb-4">
+                                                                            <select name="rating" id=""
+                                                                                class="form-control">
+                                                                                <option value="">Select</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                                <option value="4">4</option>
+                                                                                <option value="5">5</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="wsus__single_com">
+                                                                                <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="img_upload">
-                                                                <div class="">
-                                                                    <input type="file" name="image[]"
-                                                                        id="">
+                                                                <div class="img_upload">
+                                                                    <div class="">
+                                                                        <input type="file" name="image[]"
+                                                                            id="">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $product->id }}">
-                                                            <input type="hidden" name="vendor_id"
-                                                                value="{{ $product->vendor_id }}">
-                                                            <button class="common_btn" type="submit">submit
-                                                                review</button>
-                                                        </form>
-                                                    </div>
-                                                @endif
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                                <input type="hidden" name="vendor_id"
+                                                                    value="{{ $product->vendor_id }}">
+                                                                <button class="common_btn" type="submit">submit
+                                                                    review</button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
                                                 @endauth
                                             </div>
                                         </div>
@@ -399,17 +399,56 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="" class="message_modal">
+                        @csrf
                         <div class="form-group">
                             <label for="">Message</label>
-                            <textarea name="message" class="form-control mt-2"></textarea>
-                            <button type="submit" class="btn btn-primary mt-4">Send</button>
+                            <textarea name="message" class="form-control mt-2 message-box"></textarea>
+                            <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
+                        <button type="submit" class="btn btn-primary mt-4 send-button">Send</button>
                     </form>
                 </div>
-               
+
             </div>
         </div>
     </div>
 </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.message_modal').on('submit', function(e){
+                e.preventDefault();
+                 let formData = $(this).serialize();
+
+                 $.ajax({
+                    method: 'POST',
+                    url: '{{ route("user.send-message")}}',
+                    data: formData,
+                    beforeSend: function(){
+                        let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
+                                     Sending...`
+                        $('.send-button').html(html);
+                        $('.send-button').prop('disabled',true);
+                    },
+                    success: function(response){
+                        $('.message-box').val('');
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error){
+                        toastr.error(xhr.responseJSON.message);
+                        $('.send-button').html('Send');
+                        $('.send-button').prop('disabled',false);
+                    },
+                    complete: function(){
+                        $('.send-button').html('Send');
+                        $('.send-button').prop('disabled',false);
+
+                    }
+                 })
+            })
+        })
+    </script>
+@endpush

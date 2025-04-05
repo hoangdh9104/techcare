@@ -121,11 +121,12 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     //vendor request
-    // Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
-    // Route::get('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
     Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
+
+    // Send message route
+    Route::post('send-message',[UserMessageController::class,'sendMessage'])->name('send-message');
 
     // Message route
     Route::get('messages',[UserMessageController::class,'index'])->name('messages.index');
