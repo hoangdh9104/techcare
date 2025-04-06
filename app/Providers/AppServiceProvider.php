@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
 
             /** Share variable at all view */
             View::composer('*', function ($view) use ($generalSetting, $logoSetting) {
-                $view->with(['settings' => $generalSetting, 'logoSetting' => $logoSetting ]);
+                $view->with(['settings' => $generalSetting, 'logoSetting' => $logoSetting]);
             });
         } else {
             // Đặt timezone mặc định nếu không có bản ghi trong bảng general_settings
