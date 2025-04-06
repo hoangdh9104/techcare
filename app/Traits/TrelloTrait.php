@@ -20,12 +20,12 @@ trait TrelloTrait
 
         // Tạo công việc trên Trello
         $response = Http::post("https://api.trello.com/1/cards", [
-            'key'    => '240d7547081422a3478f673a7fbffdbe',
-            'token'  => 'ATTAd339724f00c8052df016af20a9e931402ecff7dad360357d1cb12832376b38c961E7EB9C',
-            'idList' => '67f12e7a1732288377a67623',
-            // 'key'    => env('TRELLO_API_KEY'),
-            // 'token'  => env('TRELLO_TOKEN'),
-            // 'idList' => env('TRELLO_REFUND_LIST_ID'),
+            // 'key'    => '240d7547081422a3478f673a7fbffdbe',
+            // 'token'  => 'ATTAd339724f00c8052df016af20a9e931402ecff7dad360357d1cb12832376b38c961E7EB9C',
+            // 'idList' => '67f12e7a1732288377a67623',
+            'key'    => env('TRELLO_API_KEY'),
+            'token'  => env('TRELLO_TOKEN'),
+            'idList' => env('TRELLO_REFUND_LIST_ID'),
             'name'   => $cardTitle,
             'desc'   => $cardDesc
         ]);
