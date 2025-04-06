@@ -70,23 +70,45 @@
             color: #777;
             margin-top: 40px;
         }
+
+        .greeting {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .thank-you {
+            font-size: 16px;
+            color: #555;
+        }
     </style>
 </head>
 
 <body>
     <div class="email-container">
         <h1>New Refund Task Created</h1>
-        <p>A new refund task has been created for order #{{ $order->invoice_id }}.</p>
-        <p><strong>Order Details:</strong></p>
+
+        <p class="greeting">Dear Team,</p>
+
+        <p>We hope this email finds you well. A new refund task has been created for order
+            <strong>#{{ $order->invocie_id }}</strong>.
+        </p>
+
+        <p class="thank-you">Please find the details of the order and refund task below:</p>
         <ul>
             <li><strong>User:</strong> {{ $order->user->name }} ({{ $order->user->email }})</li>
-            <li><strong>Phone:</strong> {{ $order->user->phone ?? 'No phone number' }}</li>
+            <li><strong>Phone:</strong> {{ $order->user->phone ?? 'No phone number available' }}</li>
             <li><strong>Amount:</strong> {{ $order->amount }} {{ $order->currency_icon }}</li>
-            <li><strong>Reason for Refund:</strong> {{ $reason }}</li>
+            <li><strong>Payment Method:</strong> {{ $order->payment_method }}</li>
         </ul>
-        <p>Click the button below to view the task on Trello:</p>
-        <a href="{{ $cardUrl }}" class="button">View on Trello</a>
-        <p class="footer">If you have any questions, feel free to reach out to us.</p>
+
+        <p>To view and manage this task, please click the button below to access Trello:</p>
+        <a href="{{ $cardUrl }}" class="button">View Task on Trello</a>
+
+        <p class="thank-you">Thank you for your attention to this matter. If you have any questions or need further
+            assistance, please do not hesitate to reach out.</p>
+
+        <p class="footer">Best regards, <br> The Support Team</p>
     </div>
 </body>
 

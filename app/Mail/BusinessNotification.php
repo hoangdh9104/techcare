@@ -21,7 +21,7 @@ class BusinessNotification extends Mailable
 
     public function build()
     {
-        return $this->subject('New Refund Task Created on Trello')
+        return $this->subject('Refund Notification - Order #' . $this->order->invocie_id)
             ->view('emails.business_notification');
     }
 }
