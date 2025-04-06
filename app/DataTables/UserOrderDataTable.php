@@ -47,7 +47,9 @@ class UserOrderDataTable extends DataTable
                 return date('d-M-Y', strtotime($query->created_at));
             })
             ->addColumn('payment_status', function ($query) {
-                if ($query->payment_status === 1) {
+                if ($query->order_status === 'canceled' && $query->payment_status === 0) {
+                    return "<span class='badge bg-info'>refund</span>";
+                } elseif ($query->payment_status === 1) {
                     return "<span class='badge bg-success'>complete</span>";
                 } else {
                     return "<span class='badge bg-warning'>pending</span>";
