@@ -15,9 +15,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderStatusHistory;
+use App\Traits\TrelloTrait;
 
 class OrderController extends Controller
 {
+    use TrelloTrait;
     /**
      * Display a listing of the resource.
      */
@@ -169,6 +171,8 @@ class OrderController extends Controller
             // Nếu đơn hàng thanh toán qua thẻ/ví (không phải COD), cập nhật trạng thái thanh toán
             if ($order->payment_method != 'COD' && $order->payment_status == 1) {
                 $order->payment_status = 0;
+                // Gửi task hoàn tiền lên Trello
+                $this->createTrelloRefundTask($order, $request->cancel_reason);
             }
         }
 
