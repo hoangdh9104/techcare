@@ -131,27 +131,27 @@
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
                     <div class="wsus__single_banner_content">
-                        @if ($cartpage_banner_section->banner_one->status == 1)
-                            <a href="{{ $cartpage_banner_section->banner_one->banner_url }}">
-                                <img class="img-gluid"
-                                    src="{{ asset($cartpage_banner_section->banner_one->banner_image) }}" alt="">
+                            @if ($cartpage_banner_section->banner_one->status == 1)
+                            <a href="{{$cartpage_banner_section->banner_one->banner_url}}">
+                                <img class="img-gluid" src="{{asset($cartpage_banner_section->banner_one->banner_image)}}" alt="">
                             </a>
-                        @endif
+                            @endif
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6">
                     <div class="wsus__single_banner_content single_banner_2">
-                        @if ($cartpage_banner_section->banner_two->status == 1)
-                            <a href="{{ $cartpage_banner_section->banner_two->banner_url }}">
-                                <img class="img-gluid"
-                                    src="{{ asset($cartpage_banner_section->banner_two->banner_image) }}" alt="">
+                            @if ($cartpage_banner_section->banner_two->status == 1)
+                            <a href="{{$cartpage_banner_section->banner_two->banner_url}}">
+                                <img class="img-gluid" src="{{asset($cartpage_banner_section->banner_two->banner_image)}}" alt="">
                             </a>
-                        @endif
+                            @endif
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
 @endsection
 @push('scripts')
     <script>
