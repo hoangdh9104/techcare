@@ -295,6 +295,33 @@
                                                         @endif
                                                     </div>
 
+                                                    <div id="pagination">
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul class="pagination">
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="#"
+                                                                        aria-label="Previous">
+                                                                        <i class="fas fa-chevron-left"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="page-item"><a class="page-link page_active"
+                                                                        href="#">1</a>
+                                                                </li>
+                                                                <li class="page-item"><a class="page-link"
+                                                                        href="#">2</a></li>
+                                                                <li class="page-item"><a class="page-link"
+                                                                        href="#">3</a></li>
+                                                                <li class="page-item"><a class="page-link"
+                                                                        href="#">4</a></li>
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="#"
+                                                                        aria-label="Next">
+                                                                        <i class="fas fa-chevron-right"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">

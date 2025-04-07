@@ -8,7 +8,6 @@ use App\Models\ProductReview;
 use App\Models\ProductReviewGallery;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -24,8 +23,8 @@ class ReviewController extends Controller
     {
         $request->validate([
             'rating' => ['required'],
-            'review' => ['required', 'max:200'],
-            'images.*' => ['image']
+            'review' => ['required','200'],
+            'image.*' => ['required','image']
         ]);
 
         $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->first();
