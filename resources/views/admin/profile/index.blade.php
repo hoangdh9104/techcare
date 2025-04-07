@@ -38,7 +38,7 @@
                             <input type="email" class="form-control" name="email" value="{{Auth :: user() -> email}}">
                         </div>
                         <div class="form-group col-md-6 col-12">
-                            <label>email</label>
+                            <label>Phone</label>
                             <input type="phone" class="form-control" name="phone" value="{{Auth :: user() -> phone}}">
                         </div>
                     </div>
