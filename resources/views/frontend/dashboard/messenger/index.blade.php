@@ -16,7 +16,8 @@
                                             <h2>Seller List</h2>
                                             <div class="wsus__chatlist_body">
                                                 @foreach ($chatUsers as $chatUser)
-                                                    <button class="nav-link seller" data-bs-toggle="pill"
+                                                    <button class="nav-link chat-user-profile" data-bs-toggle="pill"
+                                                        data-id="{{ $chatUser->receiverProfile->id }}"
                                                         data-bs-target="#v-pills-home" type="button" role="tab"
                                                         aria-controls="v-pills-home" aria-selected="true">
                                                         <div class="wsus_chat_list_img">
@@ -40,28 +41,12 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 95vh;">
                                                         <div class="wsus__chat_area_header">
                                                             <h2>Chat with Daniel Paul</h2>
                                                         </div>
                                                         <div class="wsus__chat_area_body">
-                                                            <div class="wsus__chat_single">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Welcome to Shop name 2!
 
-                                                                        Lorem Ipsum is simply dummy text of the printing
-                                                                        and typesetting industry. Lorem Ipsum has been
-                                                                        the industry's standard dummy text ever since
-                                                                        the 1500s, when an unknown printer took a galley
-                                                                        of type and scrambled it to make a type specimen
-                                                                        book.</p>
-                                                                    <span>15 August, 2022, 12:56 PM</span>
-                                                                </div>
-                                                            </div>
                                                             <div class="wsus__chat_single single_chat_2">
                                                                 <div class="wsus__chat_single_img">
                                                                     <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
@@ -72,16 +57,7 @@
                                                                     <span>15 August, 2022, 12:57 PM</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="wsus__chat_single single_chat_2">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>I have some queries</p>
-                                                                    <span>15 August, 2022, 12:57 PM</span>
-                                                                </div>
-                                                            </div>
+
                                                             <div class="wsus__chat_single">
                                                                 <div class="wsus__chat_single_img">
                                                                     <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
@@ -92,18 +68,13 @@
                                                                     <span>15 August, 2022, 12:58 PM</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="wsus__chat_single">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Please tell me you query</p>
-                                                                    <span>15 August, 2022, 12:58 PM</span>
-                                                                </div>
-                                                            </div>
+
                                                         </div>
-                                                        <div class="wsus__chat_area_footer" style="margin-top: 50px;">
+                                                        <div class="wsus__chat_area_footer"
+                                                            style="margin-top: 50px;
+                                                         position: absolute;
+                                                        width: 100%;
+                                                        bottom: 0;">
                                                             <form id="customerToSellerMsgForm">
                                                                 <input type="text" placeholder="Type Message"
                                                                     id="seller_message" autocomplete="off">
@@ -128,3 +99,33 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.chat-user-profile').on('click', function() {
+                let receiverId = $(this).data('id');
+
+                $.ajax({
+                    method: "GET",
+                    url: "{{ route('user.get-messages') }}",
+                    data: {
+                        receiver_id: receiverId,
+                    },
+                    beforeSend: function() {
+
+                    },
+                    success: function() {
+
+                    },
+                    error: function(xhr, status, error) {
+
+                    },
+                    complete: function() {
+
+                    }
+                });
+            })
+        })
+    </script>
+@endpush

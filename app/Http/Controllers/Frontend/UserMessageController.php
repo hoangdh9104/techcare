@@ -40,4 +40,8 @@ class UserMessageController extends Controller
 
         return response(['status' => 'success', 'message' => 'Message sent successfully']);
     }
+
+    function getMessages(Request $request)  {
+        dd($request->all());
+    }
 }
