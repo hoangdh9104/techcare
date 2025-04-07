@@ -8,9 +8,11 @@ use App\Models\Order;
 use App\Models\OrderStatusHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\TrelloTrait;
 
 class UserOrderController extends Controller
 {
+    use TrelloTrait;
     public function index(UserOrderDataTable $dataTable)
     {
         return $dataTable->render('frontend.dashboard.order.index');
@@ -38,11 +40,12 @@ class UserOrderController extends Controller
         if ($order->payment_status === 1) {
             $order->payment_status = 0; // Đánh dấu thanh toán chưa thực hiện (vì đang hủy đơn)
             $order->save();
+            // Gửi task hoàn tiền lên Trello
+            $this->createTrelloRefundTask($order, $request->reason);
         }
         // Cập nhật trạng thái đơn hàng
         $order->update([
             'order_status' => 'canceled',
-            'cancel_reason' => $request->reason
         ]);
 
         // Lưu vào lịch sử trạng thái đơn hàng
