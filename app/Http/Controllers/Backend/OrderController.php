@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\CanceledOrderDataTable;
+use App\DataTables\DeliveredOrderDataTable;
+use App\DataTables\DroppedOffOrderDataTable;
 use App\DataTables\OrderDataTable;
 use App\DataTables\OutForDeliveryOffOrderDataTable;
 use App\DataTables\PendingOrderDataTable;
@@ -28,7 +31,7 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function pendingOrders(PendingOrderDataTable $dataTable)
     {
         return $dataTable->render('admin.order.pending-order');
     }

@@ -8,6 +8,7 @@ use App\Models\ProductReview;
 use App\Models\ProductReviewGallery;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
