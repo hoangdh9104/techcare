@@ -1,4 +1,3 @@
-
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -38,6 +37,8 @@
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.withdraw-method.index') }}">Withdraw Method</a></li>
+                    <li class="{{ setActive(['admin.withdraw.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.withdraw.index') }}">Withdraw List</a></li>
                 </ul>
 
             </li>

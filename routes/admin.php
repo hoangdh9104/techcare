@@ -35,6 +35,7 @@ use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\WidthdrawMethodController;
+use App\Http\Controllers\Backend\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -196,5 +197,7 @@ Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-
 Route::put('vendor-list/status-change', [VendorListController::class, 'statusChange'])->name('vendor-list.status-change');
 
 // Withdraw- method
-
 Route::resource('withdraw-method',WidthdrawMethodController::class);
+Route::get('withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
+Route::get('withdraw/{id}', [WithdrawController::class, 'show'])->name('withdraw.show');
+Route::put('withdraw/{id}', [WithdrawController::class, 'update'])->name('withdraw.update');
