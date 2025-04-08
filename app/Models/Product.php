@@ -31,9 +31,12 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
     public function getIsDiscountedAttribute()
-{
-    return $this->offer_price > 0 &&
-           now()->toDateString() >= $this->offer_start_date &&
-           now()->toDateString() <= $this->offer_end_date;
-}
+    {
+        return $this->offer_price > 0 &&
+            now()->toDateString() >= $this->offer_start_date &&
+            now()->toDateString() <= $this->offer_end_date;
+    }
+    public function reviews(){
+        return $this->hasMany(ProductReview::class);
+    }
 }
