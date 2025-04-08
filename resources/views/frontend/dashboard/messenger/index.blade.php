@@ -41,13 +41,13 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative; height: 95vh;">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 98vh;">
                                                         <div class="wsus__chat_area_header">
                                                             <h2>Chat with Daniel Paul</h2>
                                                         </div>
                                                         <div class="wsus__chat_area_body">
 
-                                                            <div class="wsus__chat_single single_chat_2">
+                                                            {{-- <div class="wsus__chat_single single_chat_2">
                                                                 <div class="wsus__chat_single_img">
                                                                     <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
                                                                         alt="user" class="img-fluid">
@@ -56,9 +56,9 @@
                                                                     <p>Hello Paul</p>
                                                                     <span>15 August, 2022, 12:57 PM</span>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
 
-                                                            <div class="wsus__chat_single">
+                                                            {{-- <div class="wsus__chat_single">
                                                                 <div class="wsus__chat_single_img">
                                                                     <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
                                                                         alt="user" class="img-fluid">
@@ -67,7 +67,7 @@
                                                                     <p>Hi Joe, Thanks for your contact</p>
                                                                     <span>15 August, 2022, 12:58 PM</span>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
 
                                                         </div>
                                                         <div class="wsus__chat_area_footer"
@@ -102,6 +102,26 @@
 
 @push('scripts')
     <script>
+        const mainChatInbox = $('.wsus__chat_area_body');
+
+
+        // Định dạng ngày tháng
+        function formatDateTime(dateTimeString) {
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+            }
+            const formatedDateTime = new Intl.DateTimeFormat('en-US', options).format(new Date(dateTimeString));
+            return formatedDateTime;
+        }
+
+        function scrollToBottom(){
+            mainChatInbox.scrollTop(mainChatInbox.prop('scrollHeight'));
+        }
+
         $(document).ready(function() {
             $('.chat-user-profile').on('click', function() {
                 let receiverId = $(this).data('id');
@@ -115,8 +135,25 @@
                     beforeSend: function() {
 
                     },
-                    success: function() {
+                    success: function(response) {
+                        $.each(response, function(index, value) {
+                            let message = `
+                            <div class="wsus__chat_single single_chat_2">
+                                <div class="wsus__chat_single_img">
+                                    <img src="${USER.image}"
+                                                                        alt="user" class="img-fluid">
+                                </div>
+                                <div class="wsus__chat_single_text">
+                                    <p>${value.message}</p>
+                                    <span>${formatDateTime(value.created_at)}</span>
+                                </div>
+                            </div>
+                            `
+                            mainChatInbox.append(message);
+                        })
 
+                        // Tự động cuộn tin nhắn xuống mới nhất
+                        scrollToBottom();
                     },
                     error: function(xhr, status, error) {
 

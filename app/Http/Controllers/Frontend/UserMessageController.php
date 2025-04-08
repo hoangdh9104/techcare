@@ -19,8 +19,8 @@ class UserMessageController extends Controller
             ->where('receiver_id', '!=', $userId)
             ->groupBy('receiver_id')
             ->get();
-        
-        
+
+
         return view('frontend.dashboard.messenger.index', compact('chatUsers'));
     }
 
@@ -41,7 +41,16 @@ class UserMessageController extends Controller
         return response(['status' => 'success', 'message' => 'Message sent successfully']);
     }
 
-    function getMessages(Request $request)  {
-        dd($request->all());
+    public function getMessages(Request $request)
+    {
+        $senderId = auth()->user()->id;
+        $receiverId = $request->receiver_id;
+
+        $messages = Chat::whereIn('sender_id', [$senderId, $receiverId])
+            ->whereIn('receiver_id', [$senderId, $receiverId])
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response($messages);
     }
 }

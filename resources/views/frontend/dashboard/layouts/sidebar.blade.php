@@ -14,8 +14,7 @@
 
 
         @endif --}}
-        <li><a class="{{ setActive(['user.messages.index']) }}" href="{{ route('user.messages.index') }}"><i
-                    class="fas fa-tachometer"></i>Messages</a></li>
+        <li><a class="{{ setActive(['user.messages.index']) }}" href="{{ route('user.messages.index') }}"><i class="far fa-comment-alt" style="color: #ffffff;"></i>Messages</a></li>
         <li><a class="{{ setActive(['user.orders.*']) }}" href="{{ route('user.orders.index') }}"><i
                     class="fas fa-list-ul"></i> Orders</a></li>
         {{-- <li><a class="{{ setActive(['dsahboard_download.html']) }}" href="dsahboard_download.html"><i
