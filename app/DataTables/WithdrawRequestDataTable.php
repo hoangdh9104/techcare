@@ -99,13 +99,13 @@ class WithdrawRequestDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('vendor'),
-            Column::make('method'),
-            Column::make('total_amount'),
-            Column::make('withdraw_amount'),
-            Column::make('withdraw_charge'),
-            Column::make('status'),
+            Column::make('id')->addClass('text-center'),
+            Column::make('vendor')->addClass('text-center'),
+            Column::make('method')->addClass('text-center'),
+            Column::make('total_amount')->addClass('text-center'),
+            Column::make('withdraw_amount')->addClass('text-center'),
+            Column::make('withdraw_charge')->addClass('text-center'),
+            Column::make('status')->addClass('text-center'),
             Column::make('date'),
             Column::computed('action')
             ->exportable(false)

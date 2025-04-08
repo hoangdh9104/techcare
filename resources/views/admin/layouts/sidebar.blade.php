@@ -31,17 +31,7 @@
             {{-- Manage Blog --}}
             {{-- <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}"> --}}
             {{-- Manage Order --}}
-            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>Withdraw Payments</span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.withdraw-method.index') }}">Withdraw Method</a></li>
-                    <li class="{{ setActive(['admin.withdraw.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.withdraw.index') }}">Withdraw List</a></li>
-                </ul>
 
-            </li>
             <li
                 class="dropdown {{ setActive([
                     'admin.order.*',
@@ -142,10 +132,23 @@
                             href="{{ route('admin.payment-settings.index') }}">Payment Settings</a></li>
                 </ul>
             </li>
+            <li class="dropdown {{ setActive(['admin.withdraw-method.*', 'admin.withdraw.index']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-wallet"></i>
+                    <span>Withdraw Payments</span></a>
+                <ul class="dropdown-menu">
+
+                    <li class="{{ setActive(['admin.withdraw-method.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.withdraw-method.index') }}">Withdraw Mehtod</a></li>
+
+                    <li class="{{ setActive(['admin.withdraw.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.withdraw.index') }}">Withdraw List</a></li>
+
+                </ul>
+            </li>
             <li>
                 <a class="nav-link {{ setActive(['admin.advertisement.*']) }}"
                     href="{{ route('admin.advertisement.index') }}">
-                    <i class="far fa-square"></i>
+                    <i class="fas fa-ad"></i>
                     <span>Advertisement</span>
                 </a>
             </li>
@@ -168,7 +171,7 @@
                 </ul>
             </li>
 
-            <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
+            <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="fas fa-wrench"></i>
                     <span>Settings</span></a></li>
         </ul>
     </aside>

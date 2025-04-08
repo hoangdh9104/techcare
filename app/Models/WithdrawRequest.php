@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WithdrawRequest extends Model
 {
     use HasFactory;
+    function vendor() {
+        return $this->belongsTo(Vendor::class);
+    }
 }
