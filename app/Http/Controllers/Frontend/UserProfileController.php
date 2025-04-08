@@ -32,6 +32,7 @@ class UserProfileController extends Controller
         };
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
         $user->save();
         toastr()->success('Profile Updated Successfully!');
         return redirect()->back();

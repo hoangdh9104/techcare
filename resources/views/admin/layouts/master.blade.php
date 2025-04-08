@@ -131,7 +131,7 @@
     <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     <!-- Page Specific JS File -->
-    <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script> --}}
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
