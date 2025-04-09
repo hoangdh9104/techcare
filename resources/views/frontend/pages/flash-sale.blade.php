@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                    BREADCRUMB START
-                                                ==============================-->
+                                                                BREADCRUMB START
+                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                    BREADCRUMB END
-                                                ==============================-->
+                                                                BREADCRUMB END
+                                                            ==============================-->
 
 
     <!--============================
-                                                    DAILY DEALS DETAILS START
-                                                ==============================-->
+                                                                DAILY DEALS DETAILS START
+                                                            ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -81,8 +81,9 @@
                             <div class="wsus__product_item">
                                 <span class="wsus__new">{{ productType($product->product_type) }}</span>
                                 @if (checkDiscount($product))
-                                    <span
-                                        class="wsus__minus">{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
+                                    <span class="wsus__minus">
+                                        {{ calculateDiscountPercent($product->price, $product->offer_price) }}%
+                                    </span>
                                 @endif
 
                                 <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
@@ -100,7 +101,8 @@
                                             data-bs-target="#exampleModal-{{ $product->id }}"><i
                                                 class="far fa-eye"></i></a>
                                     </li>
-                                    <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                    <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                                class="far fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a>
                                 </ul>
                                 <div class="wsus__product_details">
@@ -113,13 +115,13 @@
 
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <= $fullRating)
-                                            <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
                                             @else
-                                            <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
                                             @endif
                                         @endfor
 
-                                        <span>({{count($product->reviews)}} review)</span>
+                                        <span>({{ count($product->reviews) }} review)</span>
 
                                     </p>
                                     <a class="wsus__pro_name"
@@ -166,12 +168,12 @@
     </section>
 
     <!--============================
-                                                    DAILY DEALS DETAILS END
-                                                ==============================-->
+                                                                DAILY DEALS DETAILS END
+                                                            ==============================-->
 
     <!--==========================
-                                                                      PRODUCT MODAL VIEW START
-                                                                    ===========================-->
+                                                                                  PRODUCT MODAL VIEW START
+                                                                                ===========================-->
     @foreach ($flashSaleItems as $item)
         @php
             $product = \App\Models\Product::find($item->product_id);
@@ -237,13 +239,13 @@
 
                                             @for ($i = 1; $i <= 5; $i++)
                                                 @if ($i <= $fullRating)
-                                                <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
                                                 @else
-                                                <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
                                                 @endif
                                             @endfor
 
-                                            <span>({{count($product->reviews)}} review)</span>
+                                            <span>({{ count($product->reviews) }} review)</span>
 
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
@@ -285,7 +287,9 @@
                                             <ul class="wsus__button_area">
                                                 <li><button class="add_cart" type="submit">add to cart</button></li>
                                                 <li><a class="buy_now" href="#">buy now</a></li>
-                                                <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                                <li><a href="#" class="add_to_wishlist"
+                                                        data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                                </li>
                                                 {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                             </ul>
                                         </form>
@@ -301,8 +305,8 @@
     @endforeach
 
     <!--==========================
-                                                                                                  PRODUCT MODAL VIEW END
-                                                                                                ===========================-->
+                                                                                                              PRODUCT MODAL VIEW END
+                                                                                                            ===========================-->
 @endsection
 @push('scripts')
     <script>

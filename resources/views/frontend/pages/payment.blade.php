@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                BREADCRUMB START
-                                                            ==============================-->
+                                                                                    BREADCRUMB START
+                                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                BREADCRUMB END
-                                                            ==============================-->
+                                                                                    BREADCRUMB END
+                                                                                ==============================-->
 
 
     <!--============================
-                                                                PAYMENT PAGE START
-                                                            ==============================-->
+                                                                                    PAYMENT PAGE START
+                                                                                ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -37,25 +37,28 @@
                         <div class="wsus__payment_menu" id="sticky_sidebar">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                {{-- <button class="nav-link common_btn active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true">card payment</button> --}}
 
-                                <button class="nav-link common_btn active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-paypal" type="button" role="tab"
-                                    aria-controls="v-pills-paypal" aria-selected="true">Paypal</button>
+                                @if ($paypalSetting->status == 1)
+                                    <button class="nav-link common_btn active" id="v-pills-home-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-paypal" type="button" role="tab"
+                                        aria-controls="v-pills-paypal" aria-selected="true">Paypal</button>
+                                @endif
+                                @if ($stripeSetting->status == 1)
+                                    <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-stripe" type="button" role="tab"
+                                        aria-controls="v-pills-stripe" aria-selected="false">Stripe</button>
+                                @endif
 
-                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-stripe" type="button" role="tab"
-                                    aria-controls="v-pills-stripe" aria-selected="false">Stripe</button>
-
-                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-momo" type="button" role="tab"
-                                    aria-controls="v-pills-momo" aria-selected="false">Momo</button>
-
-                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-cod" type="button" role="tab"
-                                    aria-controls="v-pills-cod" aria-selected="false">COD</button>
+                                @if ($momoSetting->status == 1)
+                                    <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-momo" type="button" role="tab"
+                                        aria-controls="v-pills-momo" aria-selected="false">Momo</button>
+                                @endif
+                                @if ($codSetting->status == 1)
+                                    <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-cod" type="button" role="tab"
+                                        aria-controls="v-pills-cod" aria-selected="false">COD</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -111,6 +114,6 @@
         </div>
     </section>
     <!--============================
-                                                                PAYMENT PAGE END
-                                                            ==============================-->
+                                                                                    PAYMENT PAGE END
+                                                                                ==============================-->
 @endsection

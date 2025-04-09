@@ -115,10 +115,11 @@ Route::put('products-variant-item-status', [ProductVariantItemController::class,
 Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
 Route::put('generale-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('generale-setting-update');
 Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update');
+Route::put('pusher-setting-update', [SettingController::class, 'pusherSettingUpdate'])->name('pusher-setting-update');
+
 
 // setting home page
 Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');
-
 Route::put('popular-category-section', [HomePageSettingController::class, 'updatePopularCategorySection'])->name('popular-category-section');
 Route::put('product-slider-section-one', [HomePageSettingController::class, 'updateProductSliderSectionOn'])->name('product-slider-section-one');
 Route::put('product-slider-section-two', [HomePageSettingController::class, 'updateProductSliderSectionTwo'])->name('product-slider-section-two');
@@ -134,12 +135,8 @@ Route::resource('order', OrderController::class);
 //**Blog routes */
 Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
 Route::resource('blog-category', BlogCategoryController::class);
-
 Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
 Route::resource('blog', BlogController::class);
-
-
-
 
 
 // Flash Sale
@@ -190,8 +187,8 @@ Route::get('out_for_delivery-orders', [OrderController::class, 'outForDeliveryOr
 Route::get('delivered-orders', [OrderController::class, 'deliveredOrders'])->name('delivered-orders');
 Route::get('received-orders', [OrderController::class, 'receivedOrders'])->name('received-orders');
 Route::get('canceled-orders', [OrderController::class, 'canceledOrders'])->name('canceled-orders');
-
 Route::resource('order', OrderController::class);
+
 /** Order Transaction route */
 Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
 

@@ -31,7 +31,10 @@
      @if($settings->layout == 'RTL')
      <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
      @endif
- 
+    
+     {{-- Pusher --}}
+
+     @vite(['resources/js/app.js'])
 </head>
 
 <body>

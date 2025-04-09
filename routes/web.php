@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
+use App\Http\Controllers\Frontend\UserMessageController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\WishlistController;
 
@@ -76,7 +77,6 @@ Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->n
 
 /* Route product  */
 Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
-
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
 Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
 // add product in whislist
@@ -144,6 +144,13 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
 
+    // Send message route
+    Route::post('send-message',[UserMessageController::class,'sendMessage'])->name('send-message');
+    Route::get('get-messages',[UserMessageController::class,'getMessages'])->name('get-messages');
+
+    // Message route
+    Route::get('messages',[UserMessageController::class,'index'])->name('messages.index');
+
     // user address route
     Route::resource('address', UserAddressController::class);
 
@@ -184,6 +191,3 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
 });
 
-// Route::middleware(['auth', 'role:shipper'])->group(function () {
-//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
-// });

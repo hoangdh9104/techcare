@@ -12,25 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('momo_settings', function (Blueprint $table) {
-            // $table->id();
-
-            // $table->string('site_name');
-            // $table->string('layout');
-            // $table->string('contact_email');
-            // $table->string('contact_phone')->nullable();
-            // $table->string('contact_address')->nullable();
-            // $table->text('map')->nullable();
-
-            // $table->boolean('status');
-            // $table->boolean('mode');
-            // $table->string('country_name');
-
-            // $table->string('currency_name');
-            // $table->double('currency_rate');
-            // $table->text('partner_code');
-            // $table->text('access_key');
-            // $table->text('secret_key');
-            // $table->timestamps();
             $table->id();
             $table->boolean('status');
             $table->boolean('mode');
