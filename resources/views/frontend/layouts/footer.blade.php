@@ -6,11 +6,11 @@
                     <a class="wsus__footer_2_logo" href="{{url('/')}}">
                         <img src="images/logo_2.png" alt="logo">
                     </a>
-                    <a class="action" href="callto:+8896254857456"><i class="fas fa-phone-alt"></i>
-                        +8896254857456</a>
-                    <a class="action" href="mailto:example@gmail.com"><i class="far fa-envelope"></i>
-                        example@gmail.com</a>
-                    <p><i class="fal fa-map-marker-alt"></i> San Francisco City Hall, San Francisco, CA</p>
+                    <a class="action" href="callto:+0943435296"><i class="fas fa-phone-alt"></i>
+                        {{$settings->contact_phone}}</a>
+                    <a class="action" href="mailto:duonghoang04vn@gmail.com"><i class="far fa-envelope"></i>
+                        {{$settings->contact_email}}</a>
+                    <p><i class="fal fa-map-marker-alt"></i> {{$settings->contact_address}}</p>
                     <ul class="wsus__footer_social">
                         <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
                         <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
@@ -34,7 +34,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-2 col-sm-5 col-md-4 col-lg-2">
+            {{-- <div class="col-xl-2 col-sm-5 col-md-4 col-lg-2">
                 <div class="wsus__footer_content">
                     <h5>Company</h5>
                     <ul class="wsus__footer_menu">
@@ -47,7 +47,7 @@
                         <li><a href="#"><i class="fas fa-caret-right"></i> Team Member</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-xl-4 col-sm-7 col-md-8 col-lg-5">
                 <div class="wsus__footer_content wsus__footer_content_2">
                     <h3>Subscribe To Our Newsletter</h3>

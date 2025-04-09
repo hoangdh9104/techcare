@@ -6,8 +6,8 @@
 
 @section('content')
     <!--=============================
-                                                                                                                                                                            DASHBOARD START
-                                                                                                                                                                          ==============================-->
+                                                                                                                                                                                            DASHBOARD START
+                                                                                                                                                                                          ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -88,11 +88,19 @@
             // Gửi AJAX khi xác nhận hủy đơn
             $('#confirm-cancel').on('click', function() {
                 let reason = $('#cancel-reason').val().trim();
+                const $btn = $(this);
+                const originalHtml = $btn.html();
 
                 if (reason === '') {
                     toastr.error('Please enter reason for canceling order!');
                     return;
                 }
+
+                // Spinner + disable nút
+                $btn.html(
+                    `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...`
+                );
+                $btn.prop('disabled', true);
 
                 $.ajax({
                     url: "{{ route('user.orders.cancel', ':id') }}".replace(':id', selectedOrderId),
@@ -109,9 +117,17 @@
                         } else {
                             toastr.error(response.message);
                         }
+                    },
+                    error: function() {
+                        toastr.error('Something went wrong!');
+                    },
+                    complete: function() {
+                        $btn.html(originalHtml);
+                        $btn.prop('disabled', false);
                     }
                 });
             });
+
             // Xử lý xác nhận đã nhận hàng
             let selectedReceivedOrderId = null;
 
@@ -123,6 +139,15 @@
 
             // Gửi AJAX khi người dùng xác nhận
             $('#confirm-received-btn').on('click', function() {
+                const $btn = $(this);
+                const originalHtml = $btn.html();
+
+                // Hiển thị spinner và disable nút
+                $btn.html(
+                    `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...`
+                );
+                $btn.prop('disabled', true);
+
                 $.ajax({
                     url: "{{ route('user.orders.received', ':id') }}".replace(':id',
                         selectedReceivedOrderId),
@@ -138,9 +163,18 @@
                         } else {
                             toastr.error(response.message);
                         }
+                    },
+                    error: function() {
+                        toastr.error('Something went wrong!');
+                    },
+                    complete: function() {
+                        // Khôi phục nút về trạng thái ban đầu
+                        $btn.html(originalHtml);
+                        $btn.prop('disabled', false);
                     }
                 });
             });
+
         });
     </script>
 @endpush
