@@ -224,3 +224,5 @@ Route::put('about/update', [AbountController::class, 'update'])->name('about.upd
 //terms and conditions route
 Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
+// Message route
+Route::get('messages', [MessageController::class, 'index'])->name('messages.index');

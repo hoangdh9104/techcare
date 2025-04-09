@@ -46,7 +46,7 @@
                     <li class="{{ setActive(['admin.terms-and-conditions.index']) }}"><a class="nav-link"
                             href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
 
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link" <li
+                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
                                 href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
 
