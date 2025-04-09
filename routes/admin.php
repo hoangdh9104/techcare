@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\CodSettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\MessageController;
 use App\Http\Controllers\Backend\MomoSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -224,3 +225,5 @@ Route::put('about/update', [AbountController::class, 'update'])->name('about.upd
 Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
 
+// Message route
+Route::get('messages',[MessageController::class,'index'])->name('messages.index');

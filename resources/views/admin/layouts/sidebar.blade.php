@@ -45,6 +45,10 @@
             {{-- Manage Blog --}}
             {{-- <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}"> --}}
             {{-- Manage Order --}}
+            <li><a class="nav-link {{ setActive(['admin.messages.index']) }}"
+                href="{{ route('admin.messages.index') }}"><i class="fas fa-comment"></i>
+                <span>Messages</span></a></li>
+
             <li
                 class="dropdown {{ setActive([
                     'admin.order.*',
