@@ -4,7 +4,7 @@
       <i class="far fa-times dash_close"></i>
     </span>
 
-    <a href="{{route('shipper.dashboard')}}" class="dash_logo"><img src="{{asset('frontend/images/logo-white-2.png')}}" alt="logo" class="img-fluid"></a>
+    <a href="{{route('shipper.dashboard')}}" class="dash_logo"><img src="{{ asset($logoSetting->logo) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
       <li><a class="active" href="dsahboard.html"><i class="fas fa-tachometer"></i>Dashboard</a></li>
       <li><a class="active" href="{{ route('shipper.order.index') }}"><i class="fa-solid fa-bag-shopping"></i>Order</a></li>

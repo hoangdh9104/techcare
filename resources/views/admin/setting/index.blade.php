@@ -29,9 +29,7 @@
                       <div class="tab-content" id="nav-tabContent">
                         @include('admin.setting.general-setting')
                         @include('admin.setting.logo-setting')
-                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                          Deserunt cupidatat anim ullamco ut dolor anim sint nulla amet incididunt tempor ad ut pariatur officia culpa laboris occaecat. Dolor in nisi aliquip in non magna amet nisi sed commodo proident anim deserunt nulla veniam occaecat reprehenderit esse ut eu culpa fugiat nostrud pariatur adipisicing incididunt consequat nisi non amet.
-                        </div>
+                        @include('admin.setting.profile')
                         
                         
                       </div>

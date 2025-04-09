@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label>Contact Phone</label>
-                <input type="text" class="form-control" name="contact_phone" value="{{@$generalSettings->contact_phone}}">
+                <input type="tel" class="form-control" name="contact_phone" value="{{@$generalSettings->contact_phone}}">
             </div>
             <div class="form-group">
 
