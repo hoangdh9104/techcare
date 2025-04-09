@@ -14,10 +14,11 @@
 
 
         @endif --}}
+        <li><a class="{{ setActive(['user.messages.index']) }}" href="{{ route('user.messages.index') }}"><i class="far fa-comment-alt" style="color: #ffffff;"></i>Messages</a></li>
         <li><a class="{{ setActive(['user.orders.*']) }}" href="{{ route('user.orders.index') }}"><i
                     class="fas fa-list-ul"></i> Orders</a></li>
-        <li><a class="{{ setActive(['dsahboard_download.html']) }}" href="dsahboard_download.html"><i
-                    class="far fa-cloud-download-alt"></i> Downloads</a></li>
+        {{-- <li><a class="{{ setActive(['dsahboard_download.html']) }}" href="dsahboard_download.html"><i
+                    class="far fa-cloud-download-alt"></i> Downloads</a></li> --}}
         <li><a class="{{ setActive(['user.review.*']) }}" href="{{ route('user.review.index') }}"><i
                     class="far fa-star"></i> Reviews</a></li>
         <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>
