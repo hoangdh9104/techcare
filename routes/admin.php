@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\Route;
 
 // admin routes
 Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
+Route::get('ecommerce-dashboard', [AdminController::class, 'ecommerceDashboard'])->name('ecommerceDashboard');
 // Profile routes
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
@@ -223,4 +223,3 @@ Route::put('about/update', [AbountController::class, 'update'])->name('about.upd
 //terms and conditions route
 Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
-

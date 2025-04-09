@@ -8,7 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     {{-- <meta name = "csrf-token" content="{{csrf_token()}}" /> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>General Dashboard &mdash; Techcare</title>
 
     {{-- <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css') }}">
+    @stack('links')
     {{-- sử dụng thư viện toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     {{-- jquery database css --}}
@@ -40,8 +41,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
 
     {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
-    @if($settings->layout == 'RTL')
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    @if ($settings->layout == 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
     @endif
 
 
@@ -120,6 +121,8 @@
     <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+
+
     {{-- sử dụng thư viện toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     {{-- jquery database --}}
@@ -131,7 +134,7 @@
     <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     <!-- Page Specific JS File -->
-    {{-- <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script> --}}
+    @stack('scripts')
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
@@ -192,7 +195,6 @@
         });
     </script>
 
-    @stack('scripts')
 </body>
 
 </html>

@@ -9,9 +9,15 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="dropdown {{ setActive(['admin.dashboard']) }}">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link"><i
-                        class="fas fa-fire"></i><span>Dashboard</span></a>
+            <li class="dropdown {{ setActive(['admin.dashboard', 'admin.ecommerceDashboard']) }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.dashboard']) }}"><a class="nav-link"
+                            href="{{ route('admin.dashboard') }}">General Dashboard</a></li>
+                    <li class="{{ setActive(['admin.ecommerceDashboard']) }}"><a class="nav-link"
+                            href="{{ route('admin.ecommerceDashboard') }}">Ecommerce
+                            Dashboard</a></li>
+                </ul>
             </li>
             <li class="menu-header">Starter</li>
 
