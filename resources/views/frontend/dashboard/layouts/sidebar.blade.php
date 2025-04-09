@@ -3,7 +3,7 @@
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
     </span>
-    <a href="{{ route('user.dashboard') }}" class="dash_logo"><img src="{{ asset('frontend/images/logo-white-2.png') }}"
+    <a href="{{ route('user.dashboard') }}" class="dash_logo"><img src="{{ asset($logoSetting->logo) }}"
             alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
         <li><a class="{{ setActive(['user.dashboard']) }}" href="{{ route('user.dashboard') }}"><i

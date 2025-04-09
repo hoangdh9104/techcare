@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
-<section class="section">
+<section class="section" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
     <div class="section-header">
       <h1>Profile</h1>
       <div class="section-header-breadcrumb">
@@ -34,7 +34,7 @@
                             <input type="text" class="form-control" name="name" value="{{Auth :: user() -> name}}">
                         </div>
                         <div class="form-group col-md-6 col-12">
-                            <label>email</label>
+                            <label>Email</label>
                             <input type="email" class="form-control" name="email" value="{{Auth :: user() -> email}}">
                         </div>
                         <div class="form-group col-md-6 col-12">

@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // route for admin
-Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
+
 require __DIR__ . '/auth.php';
 
 // Route Flash Sale
@@ -77,6 +77,9 @@ Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->n
 Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
 Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
+// add product in whislist
+Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+
 
 /* Route add to cart */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
@@ -117,7 +120,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // wishlist route
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     //vendor request
