@@ -1,9 +1,17 @@
 <?php
 // Admin routes
 
+use App\Http\Controllers\Backend\AbountController;
 use App\Http\Controllers\Backend\AdminController;
+
+
+use App\Http\Controllers\Backend\AdminListController;
+
+
 use App\Http\Controllers\Backend\AdminReviewController;
+
 use App\Http\Controllers\Backend\AdminVendorProfileControlle;
+
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BlogCategoryController;
@@ -18,6 +26,7 @@ use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\MomoSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
@@ -31,9 +40,15 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\TermsAndConditionController;
+use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+
+use App\Models\VendorCondition;
+
 use App\Http\Controllers\Backend\TransactionController;
+
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -186,7 +201,26 @@ Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class
 Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
 Route::put('customer/status-change', [CustomerListController::class, 'statusChange'])->name('customer.status-change');
 
-
+//admin list
+Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');
+Route::put('admin-list/status-change', [AdminListController::class, 'statusChange'])->name('admin-list.status-change');
+Route::delete('admin-list/{id}', [AdminListController::class, 'destroy'])->name('admin-list.destroy');
+// manage user route
+Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
+Route::post('manage-user', [ManageUserController::class, 'create'])->name('manage-user.create');
 
 Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
 Route::put('vendor-list/status-change', [VendorListController::class, 'statusChange'])->name('vendor-list.status-change');
+
+
+Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
+Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
+
+//about route
+Route::get('about', [AbountController::class, 'index'])->name('about.index');
+Route::put('about/update', [AbountController::class, 'update'])->name('about.update');
+
+//terms and conditions route
+Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
+Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
+

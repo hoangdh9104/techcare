@@ -24,7 +24,9 @@ use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\WishlistController;
 
 use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\UserOrderController;
@@ -110,6 +112,20 @@ Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name(
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
 Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
+//about page route
+Route::get('about', [PageController::class, 'about'])->name('about');
+
+//terms and conditions page route
+Route::get('terms-and-conditions', [PageController::class, 'termsAndCondition'])->name('terms-and-conditions');
+
+//contact route
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
+//product track route
+Route::get('product-traking', [ProductTrackController::class, 'index'])->name('product-traking.index');
+// Route::get('product-traking', [ProductTrackController::class, 'track'])->name('product-traking.track');
+
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -121,6 +137,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // wishlist route
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+
 
     //vendor request
 
@@ -140,12 +157,16 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
 
+
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
 
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
     Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
+
 
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');

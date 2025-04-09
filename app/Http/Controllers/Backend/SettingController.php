@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     use ImageUploadTrait;
+
+
+
     public function index()
     {
         $generalSettings = GeneralSetting::first();
@@ -42,6 +45,7 @@ class SettingController extends Controller
             ]
         );
         toastr('Update successfully!', 'success', 'Success');
+
         return redirect()->back();
     }
     public function logoSettingUpdate(Request $request)
