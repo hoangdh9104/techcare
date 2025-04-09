@@ -141,7 +141,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
     Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
-
+    Route::post('orders/{id}/received', [UserOrderController::class, 'markAsReceived'])->name('orders.received');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');

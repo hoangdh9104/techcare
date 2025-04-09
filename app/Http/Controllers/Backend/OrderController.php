@@ -147,7 +147,7 @@ class OrderController extends Controller
         if (!isset($validTransitions[$currentStatus]) || !in_array($newStatus, $validTransitions[$currentStatus])) {
             return response()->json([
                 'status' => 'error',
-                'message' => "Invalid status transition from $currentStatus to $newStatus."
+                'message' => "Order status changes must be sequential. Invalid status transition from $currentStatus to $newStatus."
             ], 400);
         }
 
