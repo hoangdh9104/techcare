@@ -37,22 +37,17 @@
                     <div class="col-md-12">
                       <div class="wsus__dash_pro_single">
                         <i class="fal fa-envelope-open"></i>
-                        <input type="email" placeholder="Email" disabled name="email" value="{{Auth::user()->email}}">
+                        <input type="email" placeholder="Email"  name="email" value="{{Auth::user()->email}}">
                       </div>
                     </div>
       
                     <div class="col-md-12">
                       <div class="wsus__dash_pro_single">
                         <i class="fal fa-phone"></i>
-                        <input type="phone" placeholder="Phone" name="phone" value="{{Auth::user()->phone}}">
+                        <input type="tel" placeholder="Phone" name="phone" value="{{Auth::user()->phone}}">
                       </div>
                     </div>
-                    <div class="col-md-12">
-                      <div class="wsus__dash_pro_single">
-                        <i class="fal fa-envelope-open"></i>
-                        <input type="phone" placeholder="Phone" name="phone" value="{{Auth::user()->phone}}">
-                      </div>
-                    </div>
+                  
       
                     </div>
                     <div class="col-xl-12">
