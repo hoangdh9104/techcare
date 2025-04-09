@@ -43,7 +43,7 @@
                                                 <div id="chat_box">
                                                     <div class="wsus__chat_area" style="position: relative; height: 98vh;">
                                                         <div class="wsus__chat_area_header">
-                                                            <h2>Chat with Daniel Paul</h2>
+                                                            <h2 id="chat-inbox-title">Chat with Daniel Paul</h2>
                                                         </div>
                                                         <div class="wsus__chat_area_body">
 
@@ -75,12 +75,13 @@
                                                          position: absolute;
                                                         width: 100%;
                                                         bottom: 0;">
-                                                            <form id="customerToSellerMsgForm">
+                                                            <form id="message-form">
+                                                                @csrf
                                                                 <input type="text" placeholder="Type Message"
-                                                                    id="seller_message" autocomplete="off">
-                                                                <input type="hidden" name="seller_id" id="seller_id"
-                                                                    value="5">
-                                                                <button type="submit"><i class="fas fa-paper-plane"
+                                                                    class="message-box" autocomplete="off" name="message">
+                                                                <input type="hidden" name="receiver_id" id="receiver_id"
+                                                                    value="">
+                                                                <button type="submit"><i class="fas fa-paper-plane send-button"
                                                                         aria-hidden="true"></i></button>
                                                             </form>
                                                         </div>
@@ -118,14 +119,17 @@
             return formatedDateTime;
         }
 
-        function scrollToBottom(){
+        function scrollToBottom() {
             mainChatInbox.scrollTop(mainChatInbox.prop('scrollHeight'));
         }
 
         $(document).ready(function() {
             $('.chat-user-profile').on('click', function() {
-                let receiverId = $(this).data('id');
 
+                let receiverId = $(this).data('id');
+                let chatUserName = $(this).find('h4').text(); // Lấy username của người chat cùng
+
+                $('#receiver_id').val(receiverId);
                 $.ajax({
                     method: "GET",
                     url: "{{ route('user.get-messages') }}",
@@ -133,7 +137,8 @@
                         receiver_id: receiverId,
                     },
                     beforeSend: function() {
-
+                        mainChatInbox.html('');
+                        $('#chat-inbox-title').text(`Chat with ${chatUserName}`);
                     },
                     success: function(response) {
                         $.each(response, function(index, value) {
@@ -162,6 +167,57 @@
 
                     }
                 });
+            })
+
+
+            $('#message-form').on('submit', function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                let messageData = $('.message-box').val();
+
+                var formSubmitting = false;
+                if(formSubmitting || messageData === "") {
+                    return;
+                }
+
+                // set message in inbox
+
+                let message = `<div class="wsus__chat_single single_chat_2">
+                                <div class="wsus__chat_single_img">
+                                    <img src="${USER.image}"
+                                                                        alt="user" class="img-fluid">
+                                </div>
+                                <div class="wsus__chat_single_text">
+                                    <p>${messageData}</p>
+                                    <span></span>
+                                </div>
+                            </div>`;
+
+                mainChatInbox.append(message);
+                scrollToBottom();
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('user.send-message') }}',
+                    data: formData,
+                    beforeSend: function() {
+                        $('.send-button').prop('disabled', true);
+                        formSubmitting = true;
+                    },
+                    success: function(response) {
+                        $('.message-box').val('');
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error(xhr.responseJSON.message);
+                        $('.send-button').prop('disabled', false);
+                        formSubmitting = false;
+                    },
+                    complete: function() {                     
+                        $('.send-button').prop('disabled', false);
+                        formSubmitting = false;
+                    }
+                })
             })
         })
     </script>
