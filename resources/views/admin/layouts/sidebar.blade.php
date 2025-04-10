@@ -29,7 +29,17 @@
                 </ul>
             </li>
             {{-- Manage Blog --}}
-            {{-- <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}"> --}}
+            <li
+                class="dropdown {{ setActive(['admin.blog-category.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i>
+                    <span>Manage Blog</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.blog-category.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.blog-category.index') }}">Category Blog</a></li>
+                     <li class="{{ setActive(['admin.blog.*']) }}"><a class="nav-link"
+                             href="{{ route('admin.blog.index') }}">All Blog</a></li>
+                </ul>
+            </li>
             {{-- Manage Order --}}
             <li
                 class="dropdown {{ setActive([
