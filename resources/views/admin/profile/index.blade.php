@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group col-md-6 col-12">
                             <label>Phone</label>
-                            <input type="tel" class="form-control" name="phone" value="{{Auth :: user() -> phone}}">
+                            <input type="phone" class="form-control" name="phone" value="{{Auth :: user() -> phone}}">
                         </div>
                     </div>
               </div>

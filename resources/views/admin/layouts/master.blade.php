@@ -8,8 +8,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     {{-- <meta name = "csrf-token" content="{{csrf_token()}}" /> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>General Dashboard &mdash; Stisla</title>
-
+    <title>@yield('title', 'Techcare Shop')</title>
+    <link rel="icon" type="image/png" href="{{ asset($logoSetting->favicon) }}">
     {{-- <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>General Dashboard &mdash; Stisla</title> --}}

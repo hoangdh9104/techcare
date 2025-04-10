@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
 use App\Http\Controllers\Backend\VendorProductReviewController;
@@ -54,3 +55,6 @@ Route::get('orders/status/{id}', [VendorOrderController::class, 'orderStatus'])-
 
 /** reviews route */
 Route::get('reviews', [VendorProductReviewController::class, 'index'])->name('reviews.index');
+
+// Message route
+Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');
