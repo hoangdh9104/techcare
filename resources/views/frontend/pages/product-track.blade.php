@@ -91,8 +91,6 @@
                             <li class="progtrckr_done icon_one check_mark">Order pending</li>
                             @if (@$order->order_status == 'canceled')
                                 <li class="icon_four red_mark">Order Canceled </li>
-                                @elseif (@$order->order_status == 'received')
-                                <li class="icon_four check_mark">Received</li>
                             @else
                                 <li class="progtrckr_done icon_two 
                             @if (
