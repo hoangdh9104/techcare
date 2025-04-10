@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class VendorController extends Controller
 {
     public function dashboard()
-    {
+    {   
         $todaysOrder = Order::whereDate('created_at',Carbon::today())->whereHas('orderProducts',function($query){
             $query->where('vendor_id',Auth::user()->vendor->id);
         })->count();
@@ -46,7 +46,7 @@ class VendorController extends Controller
         ->whereHas('orderProducts',function($query){
             $query->where('vendor_id',Auth::user()->vendor->id);
         })->sum('sub_total');
-
+    
         $monthEarnings = Order::where('order_status','delivered')
         ->where('payment_status',1)
         ->whereMonth('created_at', Carbon::now()->month)
@@ -69,7 +69,7 @@ class VendorController extends Controller
         $totalReviews= ProductReview::whereHas('product',function($query){
             $query->where('vendor_id',Auth::user()->vendor->id);
         })->count();
-
+        
         return view('vendor.dashboard.dashboard',compact(
             'todaysOrder',
             'todaysPendingOrder',

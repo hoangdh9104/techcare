@@ -73,7 +73,7 @@ class PaymentController extends Controller
             $orderProduct->save();
 
             // update product quantity
-
+            
             $updatedQty = ( $product->qty - $item->qty);
             $product->qty = $updatedQty;
             $product->save();
@@ -215,9 +215,9 @@ class PaymentController extends Controller
         $momoSetting = MomoSetting::first();
 
         return [
-            'partner_code' => $momoSetting->partner_code,
-            'access_key' =>  $momoSetting->access_key,
-            'secret_key' => $momoSetting->secret_key,
+            'partner_code' => $momoSetting->partner_code, 
+            'access_key' =>  $momoSetting->access_key, 
+            'secret_key' => $momoSetting->secret_key, 
             'return_url' => route('user.momo.success'),
             'notify_url' => route('user.momo.cancel'),
             'currency_name' => $momoSetting->currency_name,
