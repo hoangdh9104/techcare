@@ -113,8 +113,21 @@ class ChildCategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
+    {   
+
         $childCategory = ChildCategory::findOrFail($id);
+        if(Product::where('child_category_id',$childCategory->id)->count()>0){
+            return response(['status' => 'error', 'message' => 'Danh mục này có có chứa quan hệ bạn không thể xóa nó !']);
+        } 
+        $homeSetting = HomePageSetting::all();
+        foreach($homeSetting as $item){
+            $array = json_decode($item->value,true);
+            $collection = collect($array);
+            if($collection->contains('child_category',$childCategory->id)){
+            return response(['status' => 'error', 'message' => 'Danh mục này có có chứa quan hệ bạn không thể xóa nó !']);
+
+            }
+        }       
         $childCategory->delete();
 
         return redirect()->route('admin.child-category.index')

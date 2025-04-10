@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
@@ -164,7 +165,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
+        if(OrderProduct::where('product_id',$product->id)->count()>0){
+            return response(['status' => 'error', 'message' => 'Danh mục này có sản phẩm đặt hàng bạn không thể xóa nó !']);
+        }
         $this->deleteImage($product->thumb_image);
+
         // delete product gallery images
         $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
         foreach ($galleryImages as $galleryImage) {

@@ -165,13 +165,13 @@
                 </div>
             </div> --}}
             
-{{-- ======= --}}
+
             @foreach ($flashSaleItems as $item)
                 @php
                     $product = \App\Models\Product::with('reviews')->find($item->product_id);
                     // dd($product);
                 @endphp
-{{-- >>>>>>> 6937e167b334935a43088ea917acca540d62afb2 --}}
+
 
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">

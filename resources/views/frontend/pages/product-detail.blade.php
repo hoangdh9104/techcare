@@ -3,6 +3,8 @@
 @section('title')
     {{ $settings->site_name }} Product Detail
 @endsection
+
+
 <!--============================
                                                                                                                                                                                                                                                                                                                                                                 BREADCRUMB START
                                                                                                                                                                                                                                                                                                                                                             ==============================-->
@@ -81,13 +83,22 @@
                         @else
                             <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
                         @endif
-                        <p class="review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>20 review</span>
+                        <p class="wsus_pro_rating">
+                            @php
+                                $avgRating = $product->reviews('reviews')->avg('rating');
+                                $fullRating = round($avgRating);
+                            @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullRating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+
+                            <span>({{ count($product->reviews) }} review)</span>
+
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
@@ -130,48 +141,26 @@
                                 <li><a class="buy_now" href="#">buy now</a></li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
+                                <li>
+                                    <button type="button"
+                                        style="border: 1px solid gray;
+                                    padding: 7px 11px;
+                                    margin-left: 7px;
+                                    border-radius: 100%; background-color: #0088cc"
+                                        class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="far fa-comment-alt text-light"></i>
+                                    </button>
+
+                                </li>
+                               
+                                <li><a  style="border:1px solid gray; padding: 7px 11px; border-radius:100%" href="javascrip:;" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                
                             </ul>
                         </form>
                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
-                    <div class="wsus_pro_det_sidebar" id="sticky_sidebar">
-                        <ul>
-                            <li>
-                                <span><i class="fal fa-truck"></i></span>
-                                <div class="text">
-                                    <h4>Return Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="far fa-shield-check"></i></span>
-                                <div class="text">
-                                    <h4>Secure Payment</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                            <li>
-                                <span><i class="fal fa-envelope-open-dollar"></i></span>
-                                <div class="text">
-                                    <h4>Warranty Available</h4>
-                                    <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="wsus__det_sidebar_banner">
-                            <img src="images/blog_1.jpg" alt="banner" class="img-fluid w-100">
-                            <div class="wsus__det_sidebar_banner_text_overlay">
-                                <div class="wsus__det_sidebar_banner_text">
-                                    <p>Black Friday Sale</p>
-                                    <h4>Up To 70% Off</h4>
-                                    <a href="#" class="common_btn">shope now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
             </div>
         </div>
 
@@ -222,7 +211,7 @@
                                         <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                             <div class="wsus__pro_det_vendor_text">
                                                 <h4>{{ $product->vendor->user->name }}</h4>
-                                                <p class="rating">
+                                                <p class="wsus_pro_rating">
                                                     @php
                                                         $avgRating = $product->reviews('reviews')->avg('rating');
                                                         $fullRating = round($avgRating);
@@ -299,70 +288,70 @@
                                             </div>
                                             <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
                                                 @auth
-                                                @php
-                                                    $isBrought = false;
-                                                    $orders = \App\Models\Order::where([
-                                                        'user_id' => auth()->user()->id,
-                                                        'order_status' => 'delivered',
-                                                    ])->get();
-                                                    foreach ($orders as $key => $order) {
-                                                        $existItem = $order
-                                                            ->orderProducts()
-                                                            ->where('product_id', $product->id)
-                                                            ->first();
+                                                    @php
+                                                        $isBrought = false;
+                                                        $orders = \App\Models\Order::where([
+                                                            'user_id' => auth()->user()->id,
+                                                            'order_status' => 'delivered',
+                                                        ])->get();
+                                                        foreach ($orders as $key => $order) {
+                                                            $existItem = $order
+                                                                ->orderProducts()
+                                                                ->where('product_id', $product->id)
+                                                                ->first();
 
-                                                        if ($existItem) {
-                                                            $isBrought = true;
+                                                            if ($existItem) {
+                                                                $isBrought = true;
+                                                            }
                                                         }
-                                                    }
-                                                @endphp
+                                                    @endphp
 
-                                                @if ($isBrought == true)
-                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                        <h4>write a Review</h4>
-                                                        <form action="{{ route('user.review.create') }}"
-                                                            enctype="multipart/form-data" method="POST">
-                                                            @csrf
-                                                            <p class="rating">
-                                                                <span>select your rating : </span>
-                                                            </p>
-                                                            <div class="row">
-                                                                <div class="col-xl-12">
-                                                                    <div class="wsus__single_com mb-4">
-                                                                        <select name="rating" id=""
-                                                                            class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
+                                                    @if ($isBrought == true)
+                                                        <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
+                                                            <h4>write a Review</h4>
+                                                            <form action="{{ route('user.review.create') }}"
+                                                                enctype="multipart/form-data" method="POST">
+                                                                @csrf
+                                                                <p class="rating">
+                                                                    <span>select your rating : </span>
+                                                                </p>
+                                                                <div class="row">
                                                                     <div class="col-xl-12">
-                                                                        <div class="wsus__single_com">
-                                                                            <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                        <div class="wsus__single_com mb-4">
+                                                                            <select name="rating" id=""
+                                                                                class="form-control">
+                                                                                <option value="">Select</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                                <option value="4">4</option>
+                                                                                <option value="5">5</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="wsus__single_com">
+                                                                                <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="img_upload">
-                                                                <div class="">
-                                                                    <input type="file" name="image[]"
-                                                                        id="">
+                                                                <div class="img_upload">
+                                                                    <div class="">
+                                                                        <input type="file" name="image[]"
+                                                                            id="">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $product->id }}">
-                                                            <input type="hidden" name="vendor_id"
-                                                                value="{{ $product->vendor_id }}">
-                                                            <button class="common_btn" type="submit">submit
-                                                                review</button>
-                                                        </form>
-                                                    </div>
-                                                @endif
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                                <input type="hidden" name="vendor_id"
+                                                                    value="{{ $product->vendor_id }}">
+                                                                <button class="common_btn" type="submit">submit
+                                                                    review</button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
                                                 @endauth
                                             </div>
                                         </div>
@@ -376,6 +365,66 @@
 
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send Message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="message_modal">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Message</label>
+                            <textarea name="message" class="form-control mt-2 message-box"></textarea>
+                            <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4 send-button">Send</button>
+                    </form>
+                </div>
 
+            </div>
+        </div>
+    </div>
 </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.message_modal').on('submit', function(e){
+                e.preventDefault();
+                 let formData = $(this).serialize();
+
+                 $.ajax({
+                    method: 'POST',
+                    url: '{{ route("user.send-message")}}',
+                    data: formData,
+                    beforeSend: function(){
+                        let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
+                                     Sending...`
+                        $('.send-button').html(html);
+                        $('.send-button').prop('disabled',true);
+                    },
+                    success: function(response){
+                        $('.message-box').val('');
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error){
+                        toastr.error(xhr.responseJSON.message);
+                        $('.send-button').html('Send');
+                        $('.send-button').prop('disabled',false);
+                    },
+                    complete: function(){
+                        $('.send-button').html('Send');
+                        $('.send-button').prop('disabled',false);
+
+                    }
+                 })
+            })
+        })
+    </script>
+@endpush

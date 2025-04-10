@@ -48,7 +48,7 @@ function calculateDiscountPercent($originalPrice, $discountPrice)
 
 // Kiểm tra loại sản phẩm
 
-function productType(string $type)
+function productType( $type)
 {
     switch ($type) {
         case 'new_arrival':

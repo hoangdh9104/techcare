@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\PaypalSetting;
 use App\Models\Product;
+use App\Models\StripeSetting;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +22,14 @@ class PaymentController extends Controller
 {
     public function index()
     {
+        $paypalSetting = PaypalSetting::first();
+        $stripeSetting = StripeSetting::first();
+        $momoSetting = MomoSetting::first();
+        $codSetting = CodSetting::first();
         if (!Session::has('address')) {
             return redirect()->route('user.checkout');
         }
-        return view('frontend.pages.payment');
+        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting','momoSetting','codSetting'));
     }
 
     public function paymentSuccess()
@@ -66,6 +71,12 @@ class PaymentController extends Controller
             $orderProduct->unit_price = $item->price;
             $orderProduct->qty = $item->qty;
             $orderProduct->save();
+
+            // update product quantity
+            
+            $updatedQty = ( $product->qty - $item->qty);
+            $product->qty = $updatedQty;
+            $product->save();
         }
 
         // store transaction deteils
@@ -183,7 +194,7 @@ class PaymentController extends Controller
             // Clear session
             $this->clearSession();
 
-            return redirect()->route('user.payment.success');
+            return redirect()->route('home');
         }
 
         return redirect()->route('user.paypal.cancel');
@@ -198,16 +209,15 @@ class PaymentController extends Controller
 
     // MOMO
 
-
-
+    // GIAO DỊCH TỐI THIỂU 1000Đ, TỐI ĐA 50.000.000đ
     public function momoConfig()
     {
         $momoSetting = MomoSetting::first();
 
         return [
-            'partner_code' => $momoSetting->partner_code, // $momoSetting->partner_code ?? 
-            'access_key' =>  $momoSetting->access_key, // $momoSetting->access_key ??
-            'secret_key' => $momoSetting->secret_key, // $momoSetting->secret_key ?? 
+            'partner_code' => $momoSetting->partner_code, 
+            'access_key' =>  $momoSetting->access_key, 
+            'secret_key' => $momoSetting->secret_key, 
             'return_url' => route('user.momo.success'),
             'notify_url' => route('user.momo.cancel'),
             'currency_name' => $momoSetting->currency_name,
@@ -219,11 +229,11 @@ class PaymentController extends Controller
     public function payWithMomo()
     {
         $momoSetting = MomoSetting::first();
+
         if (!$momoSetting || $momoSetting->status == 0) {
-            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error');
+            toastr('Momo payment method is unavailable!', 'error'); // Phương thức thanh toán Momo hiện không khả dụng
             return redirect()->route('user.momo.payment');
         }
-
         $config = $this->momoConfig();
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $momoSetting->currency_rate, 2);
@@ -265,8 +275,11 @@ class PaymentController extends Controller
             'requestType' => 'payWithATM',
             'signature' => $signature
         ];
+
+
         // dd($data);
         try {
+
             $client = new \GuzzleHttp\Client();
             $response = $client->post($endpoint, [
                 'headers' => [
@@ -288,15 +301,15 @@ class PaymentController extends Controller
                 ]);
                 return redirect()->away($jsonResult['payUrl']);
             } else {
-                $errorMsg = $jsonResult['message'] ?? 'Không có thông báo lỗi từ MoMo';
-                toastr('Lỗi MoMo: ' . $errorMsg, 'error');
+                $errorMsg = $jsonResult['message'] ?? 'No error notification from MoMo'; // Không có thông báo lỗi từ MoMo
+                toastr('MoMo error: ' . $errorMsg, 'error');
                 return redirect()->route('user.momo.payment');
             }
         } catch (\Exception $e) {
             if ($config['test_mode']) {
-                toastr('Lỗi sandbox MoMo: ' . $e->getMessage(), 'error');
+                toastr('Sandbox MoMo error: ' . $e->getMessage(), 'error');
             } else {
-                toastr('Lỗi production MoMo: ' . $e->getMessage(), 'error');
+                toastr('Production MoMo error: ' . $e->getMessage(), 'error');
             }
         }
     }
@@ -309,7 +322,7 @@ class PaymentController extends Controller
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $momoSetting->currency_rate, 2);
         if (!$orderInfo) {
-            toastr('Không tìm thấy thông tin đơn hàng!', 'error');
+            toastr('No order information found!', 'error'); // Không tìm thấy thông tin đơn hàng!
             return redirect()->route('user.momo.payment');
         }
 
@@ -324,10 +337,10 @@ class PaymentController extends Controller
             );
 
             $this->clearSession();
-            toastr('Thanh toán qua MoMo thành công!', 'success');
-            return redirect()->route('user.payment.success');
+            toastr('Payment Momo successfully!', 'success');
+            return redirect()->route('home');
         } else {
-            toastr('Thanh toán MoMo thất bại! Mã lỗi: ' . $request->resultCode, 'error');
+            toastr('MoMo payment failed! Error Code: ' . $request->resultCode, 'error');
             return redirect()->route('user.momo.payment');
         }
     }
@@ -335,7 +348,7 @@ class PaymentController extends Controller
     public function momoCancel(Request $request)
     {
         // Khi hủy thanh toán trả vể trang payment
-        toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
+        toastr('You canceled your payment via MoMo', 'warning'); // Bạn đã hủy thanh toán qua MoMo
         return redirect()->route('user.momo.payment');
     }
 
@@ -354,7 +367,7 @@ class PaymentController extends Controller
         $this->storeOrder('COD', 0, \Str::random(10), $payableAmount, $setting->currency_name);
         // clear session
         $this->clearSession();
-
-        return redirect()->route('user.payment.success');
+        toastr('Payment COD successfully!', 'success');
+        return redirect()->route('home');
     }
 }
