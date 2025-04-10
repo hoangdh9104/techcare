@@ -41,7 +41,7 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative; height: 98vh;">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 95paymentvh;">
                                                         <div class="wsus__chat_area_header">
                                                             <h2 id="chat-inbox-title">Chat with Daniel Paul</h2>
                                                         </div>

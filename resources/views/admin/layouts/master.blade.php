@@ -40,8 +40,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
 
     {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
-    @if($settings->layout == 'RTL')
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    @if ($settings->layout == 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
     @endif
 
 
@@ -59,21 +59,21 @@
     </script>
     <!-- /END GA -->
 
-    {{-- @if ($settings->layout === 'RTL')
-  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
-  @endif --}}
+    @if ($settings->layout === 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    @endif
 
-    {{-- <script>
-    const USER = {
-        id: "{{ auth()->user()->id }}",
-        name: "{{ auth()->user()->nmae }}",
-        image: "{{ asset(auth()->user()->image) }}"
-    }
-    const PUSHER = {
-        key: "{{ $pusherSetting->pusher_key }}",
-        cluster: "{{ $pusherSetting->pusher_cluster }}"
-    }
-  </script> --}}
+    <script>
+        const USER = {
+            id: "{{ auth()->user()->id }}",
+            name: "{{ auth()->user()->nmae }}",
+            image: "{{ asset(auth()->user()->image) }}"
+        }
+        const PUSHER = {
+            key: "{{ $pusherSetting->pusher_key }}",
+            cluster: "{{ $pusherSetting->pusher_cluster }}"
+        }
+    </script>
 
     @vite(['resources/js/app.js'])
 </head>
