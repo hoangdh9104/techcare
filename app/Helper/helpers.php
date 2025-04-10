@@ -73,7 +73,7 @@ function productType( $type)
 function getCartTotal()
 {
     $total = 0;
-    foreach (Cart::content() as $product) {
+    foreach (\Cart::content() as $product) {
         $total += ($product->price + $product->options->variants_total) * $product->qty;
     }
     return $total;
@@ -131,13 +131,7 @@ function getShippingFee()
 }
 
 // Get payable amount
-function getFinalPayableAmount(){
-    return getMainCartTotal() + getShippingFee();
-}
-
-function getCurrencyIcon()
+function getFinalPayableAmount()
 {
-    $icon = GeneralSetting::first();
-
-    return $icon->currency_icon;
+    return getMainCartTotal() + getShippingFee();
 }

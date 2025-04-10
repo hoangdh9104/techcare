@@ -128,6 +128,11 @@
                             href="{{ route('admin.seller-products.index') }}">Seller Product</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Product</a></li>
+
+                    <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.reviews.index') }}">Product Reviews</a></li>
+
+
                 </ul>
             </li>
 
@@ -159,27 +164,6 @@
                             href="{{ route('admin.payment-settings.index') }}">Payment Settings</a></li>
                 </ul>
             </li>
-            <li class="dropdown {{ setActive(['admin.withdraw-method.*', 'admin.withdraw.index']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-wallet"></i>
-                    <span>Withdraw Payments</span></a>
-                <ul class="dropdown-menu">
-
-                    <li class="{{ setActive(['admin.withdraw-method.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.withdraw-method.index') }}">Withdraw Mehtod</a></li>
-
-                    <li class="{{ setActive(['admin.withdraw.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.withdraw.index') }}">Withdraw List</a></li>
-
-                </ul>
-            </li>
-            <li>
-                <a class="nav-link {{ setActive(['admin.advertisement.*']) }}"
-                    href="{{ route('admin.advertisement.index') }}">
-                    <i class="fas fa-ad"></i>
-                    <span>Advertisement</span>
-                </a>
-            </li>
-
             <li class="menu-header">More</li>
             <li
 
@@ -203,7 +187,7 @@
                     <li class="{{ setActive(['admin.vendor-requests.index']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a></li>
 
-
+                    
 
                     <li class="{{ setActive(['admin.admin-list.index']) }}"><a class="nav-link"
                         href="{{ route('admin.admin-list.index') }}">Admin List</a>
@@ -212,7 +196,7 @@
                     <li class="{{ setActive(['admin.manage-user.index']) }}"><a class="nav-link"
                         href="{{ route('admin.manage-user.index') }}">Manage user</a>
                     </li>
-
+                        
 
                 </ul>
             </li>

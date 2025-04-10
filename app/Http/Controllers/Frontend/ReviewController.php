@@ -24,8 +24,8 @@ class ReviewController extends Controller
     {
         $request->validate([
             'rating' => ['required'],
-            'review' => ['required','200'],
-            'image.*' => ['required','image']
+            'review' => ['required', 'max:200'],
+            'images.*' => ['image']
         ]);
 
         $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->first();
