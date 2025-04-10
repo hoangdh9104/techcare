@@ -349,7 +349,7 @@ class PaymentController extends Controller
     {
         // Khi hủy thanh toán trả vể trang payment
         toastr('You canceled your payment via MoMo', 'warning'); // Bạn đã hủy thanh toán qua MoMo
-        return redirect()->route('user.momo.payment');
+        return redirect()->route('user.payment');
     }
 
     public function payWithCod(Request $request)
