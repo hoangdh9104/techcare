@@ -20,19 +20,19 @@
 
                     if ($keyName === 'category') {
                         $category = \App\Models\Category::find($lastKey['category']);
-                        $products = \App\Models\Product::with('reviews')->where('category_id', $category->id)
+                        $products = \App\Models\Product::where('category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
                     } elseif ($keyName === 'sub_category') {
                         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                        $products = \App\Models\Product::with('reviews')->where('sub_category_id', $category->id)
+                        $products = \App\Models\Product::where('sub_category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
                     } else {
                         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                        $products = \App\Models\Product::with('reviews')->where('child_category_id', $category->id)
+                        $products = \App\Models\Product::where('child_category_id', $category->id)
                             ->orderBy('id', 'DESC')
                             ->take(6)
                             ->get();
@@ -52,21 +52,13 @@
                                 <div class="wsus__hot_deals__single_text">
                                     <h5>{!! limitText($item->name) !!}</h5>
                                     <p class="wsus__rating">
-                                        @php
-                                            $avgRating = $item->reviews('reviews')->avg('rating');
-                                            $fullRating = round($avgRating);
-                                        @endphp
-
                                         @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $fullRating)
-                                            <i class="fas fa-star"></i>
+                                            @if ($i <= $item->reviews_avg_rating)
+                                                <i class="fas fa-star"></i>
                                             @else
-                                            <i class="far fa-star"></i>
+                                                <i class="far fa-star"></i>
                                             @endif
                                         @endfor
-
-                                        <span>({{count($item->reviews)}} review)</span>
-
 
                                     </p>
                                     @if (checkDiscount($item))
