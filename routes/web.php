@@ -191,3 +191,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
 });
 
+// Route::middleware(['auth', 'role:shipper'])->group(function () {
+//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+// });
