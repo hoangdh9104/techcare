@@ -302,14 +302,14 @@ class PaymentController extends Controller
                 return redirect()->away($jsonResult['payUrl']);
             } else {
                 $errorMsg = $jsonResult['message'] ?? 'Không có thông báo lỗi từ MoMo'; 
-                toastr('MoMo error: ' . $errorMsg, 'error');
+                toastr('Lỗi Momo: ' . $errorMsg, 'error');
                 return redirect()->route('user.momo.payment');
             }
         } catch (\Exception $e) {
             if ($config['test_mode']) {
-                toastr('Sandbox MoMo error: ' . $e->getMessage(), 'error');
+                toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error');
             } else {
-                toastr('Production MoMo error: ' . $e->getMessage(), 'error');
+                toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error');
             }
         }
     }
@@ -337,10 +337,10 @@ class PaymentController extends Controller
             );
 
             $this->clearSession();
-            toastr('Payment Momo successfully!', 'success');
+            toastr('Thanh toán Momo thành công!', 'success');
             return redirect()->route('home');
         } else {
-            toastr('MoMo payment failed! Error Code: ' . $request->resultCode, 'error');
+            toastr('Lỗi thanh toán Momo! Mã: ' . $request->resultCode, 'error');
             return redirect()->route('user.momo.payment');
         }
     }
