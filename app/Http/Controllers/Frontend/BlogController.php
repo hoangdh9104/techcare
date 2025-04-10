@@ -23,9 +23,11 @@ class BlogController extends Controller
     }
     public function comment(Request $request)
     {
+        // dd($request->all());
         $request->validate([
 
-            'comment' => ['required', 'max:1000']
+            'comment' => ['required', 'max:1000'],
+            // 'blog_id' => ['required', 'exists:blogs,id']
 
         ]);
 
