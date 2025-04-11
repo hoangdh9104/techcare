@@ -75,6 +75,7 @@
                                     @foreach ($order->orderProducts as $product)
                                         @php
                                             $variants = json_decode($product->variants);
+
                                         @endphp
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>
@@ -90,8 +91,8 @@
                                                     <p>Not a variant product</p>
                                                 @else
                                                     @foreach ($variants as $key => $variant)
-                                                        <b>{{ $key }}:</b> {{ $variant['name'] }} (
-                                                        {{ $settings['currency_icon'] }}{{ $variant['price'] }} )
+                                                        <b>{{ $key }}:</b> {{ $variant->name }} (
+                                                        {{ $settings['currency_icon'] }}{{ $variant->price }} )
                                                     @endforeach
                                                 @endif
                                             </td>
