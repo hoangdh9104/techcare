@@ -49,7 +49,7 @@ use App\Http\Controllers\Backend\VendorRequestController;
 use App\Models\VendorCondition;
 
 use App\Http\Controllers\Backend\TransactionController;
-
+use App\Http\Controllers\Backend\VnpaySettingController;
 use Illuminate\Support\Facades\Route;
 
 // admin routes
@@ -166,6 +166,8 @@ Route::resource('paypal-setting', PaypalSettingController::class);
 Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
 Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
 Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
+Route::put('vnpay-setting/{id}', [VnpaySettingController::class, 'update'])->name('vnpay-setting.update');
+
 
 // Advertisement routes
 Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
