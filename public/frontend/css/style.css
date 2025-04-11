@@ -9669,3 +9669,7 @@ span.wsus__new {
   height: 150px !important;
   object-fit: cover;
 }
+img.mr-3.rounded-circle{
+  height: 50px;
+  object-fit: cover;
+}

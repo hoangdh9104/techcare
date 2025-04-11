@@ -29,22 +29,36 @@ class ProductDataTable extends DataTable
             ->addColumn('type', function ($query) {
                 switch ($query->product_type) {
                     case 'new_arrival':
-                        return '<i class="badge badge-success">New Arrival</i>';
+                        return '<i class="badge badge-success">Hàng mới về</i>'; 
                         break;
                     case 'featured_product':
-                        return '<i class="badge badge-warning">Featured Product</i>';
+                        return '<i class="badge badge-warning">Sản phẩm nổi bật</i>'; // Sản phẩm muốn quảng bá
                         break;
                     case 'top_product':
-                        return '<i class="badge badge-info">Top Product</i>';
+                        return '<i class="badge badge-info">Sản phẩm bán chạy</i>';
                         break;
-
                     case 'best_product':
-                        return '<i class="badge badge-danger">Best Product</i>';
+                        return '<i class="badge badge-danger">Sản phẩm tốt nhất</i>';
                         break;
-
                     default:
-                        return '<i class="badge badge-dark">None</i>';
+                        return '<i class="badge badge-dark">Không có</i>';
                         break;
+                }
+            })
+            ->addColumn('price_display', function ($query) {
+                $hasVariants = $query->variants->count() > 0;
+                if ($hasVariants) {
+                    return '<span class="text-muted">Theo biến thể</span>';
+                } else {
+                    return number_format($query->price) . ' đ';
+                }
+            })
+            ->addColumn('has_variants', function ($query) {
+                $variantCount = $query->variants->count();
+                if ($variantCount > 0) {
+                    return '<span class="badge badge-primary"> ' . $variantCount . ' biến thể</span>';
+                } else {
+                    return '<span class="badge badge-light">Không có</span>';
                 }
             })
             ->addColumn('status', function ($query) {
@@ -69,8 +83,8 @@ class ProductDataTable extends DataTable
                 <i class="fas fa-cog"></i>
                 </button>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -9px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a class="dropdown-item has-icon" href="' . route('admin.products-image-gallery.index', ['product' => $query->id]) . '"><i class="far fa-heart"></i> Image gallery</a>
-                <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Variants</a>
+                <a class="dropdown-item has-icon" href="' . route('admin.products-image-gallery.index', ['product' => $query->id]) . '"><i class="far fa-heart"></i> Thư mục ảnh</a>
+                <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Biến thể</a>
                 </div>
                 </div>';
                 // return $editBtn . $deleteBtn . $moreBtn;
@@ -79,7 +93,7 @@ class ProductDataTable extends DataTable
             ->filterColumn('type', function ($query, $keyword) {
                 $query->whereRaw('LOWER(product_type) LIKE ?', ['%' . strtolower(trim($keyword)) . '%']);
             })
-            ->rawColumns(['image', 'type', 'status', 'action'])
+            ->rawColumns(['image', 'type', 'status', 'action','has_variants','price_display'])
             ->setRowId('id');
     }
 
@@ -118,21 +132,23 @@ class ProductDataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-    {
-        return [
-            Column::make('id'),
-            Column::make('image'),
-            Column::make('name'),
-            Column::make('price'),
-            Column::make('type')->width(150),
-            Column::make('status'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(200)
-                ->addClass('text-center'),
-        ];
-    }
+{
+    return [
+        Column::make('id')->title('STT'),
+        Column::make('image')->title('Hình ảnh'),
+        Column::make('name')->title('Tên sản phẩm'),
+        Column::make('price_display')->title('Giá')->addClass('text-right'),
+        Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
+        Column::make('type')->width(150)->title('Loại'),
+        Column::make('status')->title('Trạng thái'),
+        Column::computed('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(200)
+            ->addClass('text-center')
+            ->title('Thao tác'),
+    ];
+}
 
     /**
      * Get the filename for export.

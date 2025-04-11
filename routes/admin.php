@@ -95,7 +95,6 @@ Route::put('product/change-status', [ProductController::class, 'changeStatus'])-
 Route::get('product/get-subcategories', [ProductController::class, 'getSubCategories'])->name('product.get-subcategories');
 Route::get('product/get-childcategories', [ProductController::class, 'getChildCategories'])->name('product.get-child-categories');
 Route::resource('products', ProductController::class);
-
 // product image gallery route
 Route::resource('products-image-gallery', ProductImageGalleryController::class);
 
@@ -227,3 +226,5 @@ Route::put('terms-and-conditions/update', [TermsAndConditionController::class, '
 
 // Message route
 Route::get('messages',[MessageController::class,'index'])->name('messages.index');
+Route::get('get-messages',[MessageController::class,'getMessages'])->name('get-messages');
+Route::post('send-message',[MessageController::class,'sendMessage'])->name('send-message');

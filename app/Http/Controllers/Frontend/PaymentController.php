@@ -215,9 +215,9 @@ class PaymentController extends Controller
         $momoSetting = MomoSetting::first();
 
         return [
-            'partner_code' => $momoSetting->partner_code, 
-            'access_key' =>  $momoSetting->access_key, 
-            'secret_key' => $momoSetting->secret_key, 
+            'partner_code' => $momoSetting->partner_code,
+            'access_key' =>  $momoSetting->access_key,
+            'secret_key' => $momoSetting->secret_key,
             'return_url' => route('user.momo.success'),
             'notify_url' => route('user.momo.cancel'),
             'currency_name' => $momoSetting->currency_name,
@@ -231,7 +231,7 @@ class PaymentController extends Controller
         $momoSetting = MomoSetting::first();
 
         if (!$momoSetting || $momoSetting->status == 0) {
-            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error'); 
+            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error');
             return redirect()->route('user.momo.payment');
         }
         $config = $this->momoConfig();
@@ -301,7 +301,7 @@ class PaymentController extends Controller
                 ]);
                 return redirect()->away($jsonResult['payUrl']);
             } else {
-                $errorMsg = $jsonResult['message'] ?? 'Không có thông báo lỗi từ MoMo'; 
+                $errorMsg = $jsonResult['message'] ?? 'Không có thông báo lỗi từ MoMo';
                 toastr('Lỗi Momo: ' . $errorMsg, 'error');
                 return redirect()->route('user.momo.payment');
             }
@@ -322,7 +322,7 @@ class PaymentController extends Controller
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $momoSetting->currency_rate, 2);
         if (!$orderInfo) {
-            toastr('Không tìm thấy thông tin đơn hàng!!', 'error'); 
+            toastr('Không tìm thấy thông tin đơn hàng!!', 'error');
             return redirect()->route('user.momo.payment');
         }
 
@@ -335,7 +335,6 @@ class PaymentController extends Controller
                 $payableAmount,
                 $momoSetting->currency_name
             );
-
             $this->clearSession();
             toastr('Thanh toán Momo thành công!', 'success');
             return redirect()->route('home');

@@ -41,7 +41,7 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative; height: 95paymentvh;">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 95vh;">
                                                         <div class="wsus__chat_area_header">
                                                             <h2 id="chat-inbox-title">Chat with Daniel Paul</h2>
                                                         </div>
@@ -81,7 +81,8 @@
                                                                     class="message-box" autocomplete="off" name="message">
                                                                 <input type="hidden" name="receiver_id" id="receiver_id"
                                                                     value="">
-                                                                <button type="submit"><i class="fas fa-paper-plane send-button"
+                                                                <button type="submit"><i
+                                                                        class="fas fa-paper-plane send-button"
                                                                         aria-hidden="true"></i></button>
                                                             </form>
                                                         </div>
@@ -124,9 +125,10 @@
         }
 
         $(document).ready(function() {
-            $('.chat-user-profile').on('click', function() {
+            $('.chat-user-profile').on('click', function(){
 
                 let receiverId = $(this).data('id');
+                let senderImage = $(this).find('img').attr('src'); // Lấy ảnh người dùng
                 let chatUserName = $(this).find('h4').text(); // Lấy username của người chat cùng
 
                 $('#receiver_id').val(receiverId);
@@ -142,7 +144,9 @@
                     },
                     success: function(response) {
                         $.each(response, function(index, value) {
-                            let message = `
+
+                            if (value.sender_id == USER.id) {
+                                var message = `
                             <div class="wsus__chat_single single_chat_2">
                                 <div class="wsus__chat_single_img">
                                     <img src="${USER.image}"
@@ -154,6 +158,21 @@
                                 </div>
                             </div>
                             `
+                            } else {
+                                var message = `
+                            <div class="wsus__chat_single">
+                                <div class="wsus__chat_single_img">
+                                    <img src="${senderImage}"
+                                                                        alt="user" class="img-fluid">
+                                </div>
+                                <div class="wsus__chat_single_text">
+                                    <p>${value.message}</p>
+                                    <span>${formatDateTime(value.created_at)}</span>
+                                </div>
+                            </div>
+                            `
+                            }
+                            
                             mainChatInbox.append(message);
                         })
 
@@ -176,7 +195,7 @@
                 let messageData = $('.message-box').val();
 
                 var formSubmitting = false;
-                if(formSubmitting || messageData === "") {
+                if (formSubmitting || messageData === "") {
                     return;
                 }
 
@@ -206,14 +225,14 @@
                     },
                     success: function(response) {
                         $('.message-box').val('');
-                        
+
                     },
                     error: function(xhr, status, error) {
                         toastr.error(xhr.responseJSON.message);
                         $('.send-button').prop('disabled', false);
                         formSubmitting = false;
                     },
-                    complete: function() {                     
+                    complete: function() {
                         $('.send-button').prop('disabled', false);
                         formSubmitting = false;
                     }
