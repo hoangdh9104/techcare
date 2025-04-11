@@ -46,7 +46,7 @@ class ProductVariantController extends Controller
         $varinat->status = $request->status;
         $varinat->save();
 
-        toastr('Created Successfully!', 'success', 'success');
+        toastr('Tạo mới biến thể thành công!', 'success', 'success');
 
         return redirect()->route('admin.products-variant.index', ['product' => $request->product]);
     }
@@ -83,7 +83,7 @@ class ProductVariantController extends Controller
         $variant->status = $request->status;
         $variant->save();
 
-        toastr('Updated Successfully!', 'success', 'success');
+        toastr('Cập nhật biến thể!', 'success', 'success');
 
         return redirect()->route('admin.products-variant.edit', ['products_variant' => $variant->id]);
     }
@@ -96,12 +96,11 @@ class ProductVariantController extends Controller
         $variant = ProductVariant::findOrFail($id);
         $variantItemcheck = ProductVariantItem::where('product_variant_id', $variant->id)->count();
         if ($variantItemcheck > 0) {
-            return response(['status' => 'error', 'message' => 'This variant containt variant in it delete
-            the variant item first for delete this variant!']);
+            return response(['status' => 'error', 'message' => 'Biến thể này chứa các mục biến thể bên trong, hãy xóa các mục biến thể trước tiên để xóa biến thể này!']);
         }
         $variant->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'message' => 'Xóa biến thể thành công!']);
     }
     public function changeStatus(Request $request)
     {
@@ -109,6 +108,6 @@ class ProductVariantController extends Controller
         $varinat->status = $request->status;
         $varinat->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

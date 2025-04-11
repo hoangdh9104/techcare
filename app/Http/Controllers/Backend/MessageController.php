@@ -20,4 +20,34 @@ class MessageController extends Controller
 
         return view('admin.messenger.index', compact('chatUsers'));
     }
+
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            'message' => ['required'],
+            'receiver_id' => ['required'],
+        ]);
+
+        // Tạo mới đoạn chat
+        $message = new Chat();
+        $message->sender_id = auth()->user()->id;
+        $message->receiver_id = $request->receiver_id;
+        $message->message = $request->message;
+        $message->save();
+
+        return response(['status' => 'success', 'message' => 'Message sent successfully']);
+    }
+
+    public function getMessages(Request $request)
+    {
+        $senderId = auth()->user()->id;
+        $receiverId = $request->receiver_id;
+        // Lấy tất cả các tin nhắn giữa sender_id và receiver_id
+        $messages = Chat::whereIn('sender_id', [$senderId, $receiverId])
+            ->whereIn('receiver_id', [$senderId, $receiverId])
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response($messages);
+    }
 }
