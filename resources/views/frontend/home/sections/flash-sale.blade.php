@@ -164,7 +164,7 @@
                     </div>
                 </div>
             </div> --}}
-            
+
 
             @foreach ($flashSaleItems as $item)
                 @php
@@ -196,14 +196,13 @@
                                     data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
                             </li>
                             <li><a href="" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
-                            
+
                             {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                         </ul>
                         <div class="wsus__product_details">
                             <a class="wsus__category" href="#">{{ $product->category->name }}</a>
 
                             <p class="wsus__pro_rating">
-                              
                               @php
                                 $avgRating = $product->reviews()->avg('rating');
                                 $fullRating = round($avgRating);
@@ -217,7 +216,6 @@
                                 @endif
                             @endfor
 
-                              
                                 <span>({{count($product->reviews)}} review)</span>
                             </p>
                             <a class="wsus__pro_name"
@@ -331,7 +329,6 @@
                                         @endfor
 
                                         <span>({{count($product->reviews)}} review)</span>
-                                      
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
                                     <div class="wsus_pro_hot_deals">

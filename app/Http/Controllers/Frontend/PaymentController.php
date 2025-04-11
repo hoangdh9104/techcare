@@ -30,6 +30,7 @@ class PaymentController extends Controller
             return redirect()->route('user.checkout');
         }
         return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting'));
+        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting'));
     }
 
     public function paymentSuccess()
@@ -74,6 +75,7 @@ class PaymentController extends Controller
 
             // update product quantity
 
+            $updatedQty = ($product->qty - $item->qty);
             $updatedQty = ($product->qty - $item->qty);
             $product->qty = $updatedQty;
             $product->save();
@@ -308,7 +310,9 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             if ($config['test_mode']) {
                 toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error');
+                toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error');
             } else {
+                toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error');
                 toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error');
             }
         }
@@ -347,6 +351,8 @@ class PaymentController extends Controller
     public function momoCancel(Request $request)
     {
         // Khi hủy thanh toán trả vể trang payment
+        toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
+        return redirect()->route('user.payment');
         toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
         return redirect()->route('user.payment');
     }
