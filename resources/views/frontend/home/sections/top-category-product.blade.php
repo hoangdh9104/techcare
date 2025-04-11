@@ -62,7 +62,7 @@
                                         ->take(12)
                                         ->get();
                                 } else {
-                                    
+
                                     // Kiểm tra $lastKey['child_category'] có tồn tại không
                                     if (!isset($lastKey['child_category'])) {
                                         dd("Không tìm thấy key 'child_category' trong mảng lastKey");

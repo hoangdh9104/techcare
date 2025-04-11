@@ -67,12 +67,21 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
+
                             <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> ({{ $product->qty }}
                                 Sản phẩm)
                             </p>
                         @elseif($product->qty == 0)
                             <p class="wsus__stock_area"><span class="in_stock">Hết hàng</span> ({{ $product->qty }}
                                 Sản phẩm)
+
+                            {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
+                                item)
+                            </p>
+                        @elseif($product->qty == 0)
+                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
+                                item) --}}
+
                             </p>
                         @endif
 
@@ -115,13 +124,18 @@
                                                 <h5 class="mb-2">{{ $variant->name }}</h5>
                                                 <select class="select_2" name="variants_item[]">
                                                     @foreach ($variant->productVariantItem as $item)
-                                                        @if ($item->status != 0)
+                                                        @php
+                                                            $stockQty = $variantStockMap[$item->id] ?? 0;
+                                                        @endphp
+
+                                                        @if ($item->status != 0 && $stockQty > 0)
                                                             <option value="{{ $item->id }}"
                                                                 {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                 {{ $item->name }} (${{ $item->price }})
                                                             </option>
                                                         @endif
                                                     @endforeach
+
                                                 </select>
                                             </div>
                                         @endif
@@ -152,15 +166,17 @@
                                     </button>
 
                                 </li>
-                               
-                                <li><a  style="border:1px solid gray; padding: 7px 11px; border-radius:100%" href="javascrip:;" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
-                                
+
+                                <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%"
+                                        href="javascrip:;" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                            class="fal fa-heart"></i></a></li>
+
                             </ul>
                         </form>
                         <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -392,38 +408,38 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(document).ready(function(){
-            $('.message_modal').on('submit', function(e){
-                e.preventDefault();
-                 let formData = $(this).serialize();
+<script>
+    $(document).ready(function() {
+        $('.message_modal').on('submit', function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
 
-                 $.ajax({
-                    method: 'POST',
-                    url: '{{ route("user.send-message")}}',
-                    data: formData,
-                    beforeSend: function(){
-                        let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('user.send-message') }}',
+                data: formData,
+                beforeSend: function() {
+                    let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
                                      Sending...`
-                        $('.send-button').html(html);
-                        $('.send-button').prop('disabled',true);
-                    },
-                    success: function(response){
-                        $('.message-box').val('');
-                        toastr.success(response.message);
-                    },
-                    error: function(xhr, status, error){
-                        toastr.error(xhr.responseJSON.message);
-                        $('.send-button').html('Send');
-                        $('.send-button').prop('disabled',false);
-                    },
-                    complete: function(){
-                        $('.send-button').html('Send');
-                        $('.send-button').prop('disabled',false);
+                    $('.send-button').html(html);
+                    $('.send-button').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('.message-box').val('');
+                    toastr.success(response.message);
+                },
+                error: function(xhr, status, error) {
+                    toastr.error(xhr.responseJSON.message);
+                    $('.send-button').html('Send');
+                    $('.send-button').prop('disabled', false);
+                },
+                complete: function() {
+                    $('.send-button').html('Send');
+                    $('.send-button').prop('disabled', false);
 
-                    }
-                 })
+                }
             })
         })
-    </script>
+    })
+</script>
 @endpush

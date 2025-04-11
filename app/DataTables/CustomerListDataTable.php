@@ -76,11 +76,13 @@ class CustomerListDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+
             
             Column::make('id')->title('STT'),
             Column::make('name')->title('Khách hàng'),
             Column::make('email')->title('Email'),
             Column::make('status')->title('Trạng thái'),
+
         ];
     }
 

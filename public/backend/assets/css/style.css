@@ -2812,3 +2812,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .msg-notification {
   border: 5px solid #08c !important;
 }
+img.mr-3.rounded-circle{
+  height: 50px !important;
+  object-fit: cover !important;
+}

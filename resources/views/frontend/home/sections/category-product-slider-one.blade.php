@@ -1,6 +1,6 @@
 @php
     $categoryProductSliderSectionOne = json_decode($categoryProductSliderSectionOne->value);
-    
+
     $lastKey = [];
 
     foreach ($categoryProductSliderSectionOne as $key => $category) {

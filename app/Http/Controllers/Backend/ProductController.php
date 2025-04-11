@@ -25,6 +25,7 @@ class ProductController extends Controller
      */
     public function index(ProductDataTable $dataTable)
     {
+        
         return $dataTable->render('admin.product.index');
     }
 
@@ -35,7 +36,9 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.product.create', compact('categories', 'brands'));
+        $subCategories = SubCategory::all();
+        $childCategories = ChildCategory::all();
+        return view('admin.product.create', compact('categories', 'brands','subCategories', 'childCategories'));
     }
 
     /**
@@ -83,7 +86,7 @@ class ProductController extends Controller
         $product->seo_description = $request->seo_description;
         $product->save();
 
-        toastr('Created Successfully!', 'success');
+        toastr('Tạo sản phẩm thành công!', 'success');
 
         return redirect()->route('admin.products.index');
     }
@@ -100,14 +103,29 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        $product = Product::findOrFail($id);
-        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
-        $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
-        $categories = Category::all();
-        $brands = Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brands', 'subCategories', 'childCategories'));
+{
+    $product = Product::with('variants.productVariantItem')->findOrFail($id);
+
+    $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+    $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+    $categories = Category::all();
+    $brands = Brand::all();
+
+    // Tính tổng tồn kho từ các biến thể
+    $totalQty = 0;
+    if ($product->variants && $product->variants->isNotEmpty()) {
+        foreach ($product->variants as $variant) {
+            foreach ($variant->productVariantItem as $item) {
+                $totalQty += $item->qty ?? 0;
+            }
+        }
+    } else {
+        $totalQty = $product->qty ?? 0;
     }
+
+    return view('admin.product.edit', compact('product', 'categories', 'brands', 'subCategories', 'childCategories', 'totalQty'));
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -165,7 +183,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        if(OrderProduct::where('product_id',$product->id)->count()>0){
+        if (OrderProduct::where('product_id', $product->id)->count() > 0) {
             return response(['status' => 'error', 'message' => 'Danh mục này có sản phẩm đặt hàng bạn không thể xóa nó !']);
         }
         $this->deleteImage($product->thumb_image);

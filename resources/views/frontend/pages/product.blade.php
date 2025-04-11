@@ -185,7 +185,6 @@
                                                             $avgRating = $product->reviews('reviews')->avg('rating');
                                                             $fullRating = round($avgRating);
                                                         @endphp
-            
                                                         @for ($i = 1; $i <= 5; $i++)
                                                             @if ($i <= $fullRating)
                                                             <i class="fas fa-star"></i>
@@ -193,9 +192,15 @@
                                                             <i class="far fa-star"></i>
                                                             @endif
                                                         @endfor
+
             
                                                         <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
             
+
+
+                                                        {{-- <span>({{count($product->reviews)}} review)</span> --}}
+
+
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
@@ -268,7 +273,7 @@
                                                             $avgRating = $product->reviews('reviews')->avg('rating');
                                                             $fullRating = round($avgRating);
                                                         @endphp
-            
+
                                                         @for ($i = 1; $i <= 5; $i++)
                                                             @if ($i <= $fullRating)
                                                             <i class="fas fa-star"></i>
@@ -276,9 +281,15 @@
                                                             <i class="far fa-star"></i>
                                                             @endif
                                                         @endfor
+<<<<<<< HEAD
             
                                                         <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
             
+=======
+
+                                                        <span>({{count($product->reviews)}} review)</span>
+
+>>>>>>> 59b2a79074a527d8329e215415d817f1e2cbbf65
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
