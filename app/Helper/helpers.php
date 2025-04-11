@@ -133,8 +133,6 @@ function getShippingFee()
 // Get payable amount
 function getFinalPayableAmount()
 {
-function getFinalPayableAmount()
-{
     return getMainCartTotal() + getShippingFee();
 }
 function getCurrencyIcon()
