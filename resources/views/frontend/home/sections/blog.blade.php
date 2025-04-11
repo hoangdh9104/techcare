@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="wsus__section_header">
-                    <h3>Recent Blog</h3>
-                    <a class="see_btn" href="{{route('blog')}}">see more <i class="fas fa-caret-right"></i></a>
+                    <h3>Blog gần đây</h3>
+                    <a class="see_btn" href="{{route('blog')}}">Xem thêm <i class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>

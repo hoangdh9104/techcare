@@ -103,13 +103,13 @@ class ShippingRuleDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('type'),
-            Column::make('min_cost'),
-            Column::make('cost'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên'),
+            Column::make('type')->title('Loại'),
+            Column::make('min_cost')->title('Giá trị tối thiểu'),
+            Column::make('cost')->title('Giá trị'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

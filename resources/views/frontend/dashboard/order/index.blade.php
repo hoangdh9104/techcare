@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Orders</h3>
+                        <h3><i class="far fa-user"></i> Đơn hàng</h3>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
                                 {{ $dataTable->table() }}
@@ -30,19 +30,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="cancelOrderLabel">
-                            Enter reason for canceling order</h5>
+                            Nhập lý do hủy đơn hàng</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="order-id">
                         <div class="mb-3">
-                            <label for="cancel-reason" class="form-label">Reason for canceling order:</label>
+                            <label for="cancel-reason" class="form-label">Lý do hủy đơn hàng:</label>
                             <textarea class="form-control" id="cancel-reason" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger" id="confirm-cancel">Confirm cancellation</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-danger" id="confirm-cancel">Xác nhận hủy</button>
                     </div>
                 </div>
             </div>

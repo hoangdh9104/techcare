@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="wsus__section_header for_md">
-                    <h3>Popular Categories</h3>
+                    <h3>Danh mục phổ biến</h3>
                     <div class="monthly_top_filter">
 
                         @php
@@ -117,7 +117,7 @@
                                                 @endif
                                             @endfor
 
-                                            <span>({{count($item->reviews)}} review)</span>
+                                            <span>({{count($item->reviews)}} Đánh giá sản phẩm)</span>
 
                                         </p>
                                         @if (checkDiscount($item))

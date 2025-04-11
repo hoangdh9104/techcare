@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="wsus__mini_cart">
-        <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
+        <h4>Giỏ hàng <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
         <ul class="mini_cart_wrapper">
             @foreach (Cart::content() as $sidebarProduct)
                 <li id="mini_cart_{{ $sidebarProduct->rowId }}">
@@ -73,15 +73,15 @@
                 </li>
             @endforeach
             @if (Cart::content()->count() === 0)
-                <li class="text-center">Cart Is Empty!</li>
+                <li class="text-center">Giỏ hàng đang trống!</li>
             @endif
         </ul>
         <div class="mini_cart_action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
             <h5>sub total <span class="mini_cart_subtotal">{{ $settings->currency_icon }}{{ getCartTotal() }}</span>
             </h5>
             <div class="wsus__minicart_btn_area">
-                <a class="common_btn" href="{{ route('cart-details') }}">view cart</a>
-                <a class="common_btn" href="{{route('user.checkout')}}">checkout</a>
+                <a class="common_btn" href="{{ route('cart-details') }}">Xem giỏ hàng</a>
+                <a class="common_btn" href="{{route('user.checkout')}}">Thanh toán</a>
             </div>
         </div>
     </div>

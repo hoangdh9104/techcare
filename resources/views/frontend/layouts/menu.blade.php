@@ -52,13 +52,13 @@
 
                     <ul class="wsus__menu_item">
 
-                        <li><a class="#" href="{{ route('home') }}">home</a></li>
-                        <li><a class="#" href="#">vendors</a></li>
-                        <li><a href="{{route('vendor.index')}}">vendors</a></li>
-                        <li><a class="#" href="#">flash Sale</a></li>
+                        <li><a class="#" href="{{ route('home') }}">Trang chủ</a></li>
+                        {{-- <li><a class="#" href="#">vendors</a></li> --}}
+                        <li><a href="{{route('vendor.index')}}">Nhà cung cấp</a></li>
+                        <li><a class="#" href="#">Khuyến mãi</a></li>
                         <li><a class="#" href="{{route('blog')}}">blog</a></li>
                         <li><a class="#" href="#">about</a></li>
-                        <li><a class="#" href="{{route('contact')}}">contact</a></li>
+                        <li><a class="#" href="{{route('contact')}}">Liên hệ</a></li>
 
                         {{-- <li><a class={{setActive(['home'])}} href="{{url('/')}}">home</a></li>
                         <li><a class="{{setActive(['vendor.index'])}}" href="{{route('vendor.index')}}">vendors</a></li>
@@ -71,17 +71,17 @@
 
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
-                        <li><a href="{{route('product-traking.index')}}">track order</a></li>
+                        <li><a href="{{route('product-traking.index')}}">Theo dõi đơn hàng</a></li>
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
-                                <li><a href="{{ route('user.dashboard') }}">my account</a></li>
+                                <li><a href="{{ route('user.dashboard') }}">Tài khoản của tôi</a></li>
                             @elseif (auth()->user()->role === 'vendor')
-                                <li><a href="{{ route('vendor.dashboard') }}">Vendor Dashboard</a></li>
+                                <li><a href="{{ route('vendor.dashboard') }}">Nhà cung cấp</a></li>
                             @elseif (auth()->user()->role === 'admin')
-                                <li><a href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                                <li><a href="{{ route('admin.dashboard') }}">Admin</a></li>
                             @endif
                         @else
-                            <li><a href="{{ route('login') }}">login</a></li>
+                            <li><a href="{{ route('login') }}">Đăng nhập</a></li>
                         @endif
                     </ul>
                 </div>
@@ -129,11 +129,11 @@
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                role="tab" aria-controls="pills-home" aria-selected="true">Categories</button>
+                role="tab" aria-controls="pills-home" aria-selected="true">Danh mục sản phẩm</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                role="tab" aria-controls="pills-profile" aria-selected="false">main menu</button>
+                role="tab" aria-controls="pills-profile" aria-selected="false">Danh mục chính</button>
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
@@ -173,9 +173,9 @@
             <div class="wsus__mobile_menu_main_menu">
                 <div class="accordion accordion-flush" id="accordionFlushExample2">
                     <ul>
-                        <li><a href="{{ route('home') }}">home</a></li>
+                        <li><a href="{{ route('home') }}">Trang chủ</a></li>
 
-                        <li><a href="{{ route('vendor.index') }}">vendor</a></li>
+                        <li><a href="{{ route('vendor.index') }}">Nhà cung cấp</a></li>
 
                         <li><a href="{{ route('blog') }}">blog</a></li>
                         {{-- <li><a href="">about us</a></li>
@@ -185,11 +185,11 @@
 
 
 
-                        <li><a href="{{route('product-traking.index')}}">track order</a></li>
+                        <li><a href="{{route('product-traking.index')}}">tTheo dõi đơn hàng</a></li>
                         {{-- <li><a href="#">flash sale</a></li>
 
                         <li><a href="">track order</a></li> --}}
-                        <li><a href="{{ route('flash-sale') }}">flash sale</a></li>
+                        <li><a href="{{ route('flash-sale') }}">Khuyến mãi</a></li>
 
                     </ul>
                 </div>

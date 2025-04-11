@@ -83,12 +83,12 @@ class AdminReviewDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('product'),
-            Column::make('user'),
-            Column::make('rating'),
-            Column::make('review'),
-            Column::make('status'),
+            Column::make('id')->title('STT'),
+            Column::make('product')->title('Sản phẩm'),
+            Column::make('user')->title('Khách hàng'),
+            Column::make('rating')->title('Đánh giá'),
+            Column::make('review')->title('Nội dung'),
+            Column::make('status')->title('Trạng thái'),
         ];
     }
 

@@ -80,12 +80,12 @@ class SliderDataTable extends DataTable
     {
         return [
 
-            Column::make('id')->width(100),
-            Column::make('banner')->width(200),
-            Column::make('title'),
-            Column::make('serial'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT')->width(100),
+            Column::make('banner')->title('Ảnh banner')->width(200),
+            Column::make('title')->title('Tiêu đề'),
+            Column::make('serial')->title('Thứ tự'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

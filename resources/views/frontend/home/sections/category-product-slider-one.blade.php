@@ -81,7 +81,7 @@
                                     @endif
                                 @endfor
 
-                                <span>({{count($product->reviews)}} review)</span>
+                                <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
 
                             </p>
                             <a class="wsus__pro_name"
@@ -109,7 +109,7 @@
                                     <input name="quantity" type="hidden" min="1" max="100"
                                         value="1" />
                                 </div>
-                                <button class="add_cart" type="submit">add to cart</button>
+                                <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
 
                             </form>
                         </div>
@@ -165,7 +165,7 @@
                         <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                             <div class="wsus__pro_details_text">
                                 <a class="title" href="#">{{ $product->name }}</a>
-                                <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
                                 @if (checkDiscount($product))
                                     <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                         <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -187,12 +187,12 @@
                                         @endif
                                     @endfor
 
-                                    <span>({{count($product->reviews)}} review)</span>
+                                    <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
 
                                 </p>
                                 <p class="description">{!! $product->short_description !!}</p>
                                 <div class="wsus_pro_hot_deals">
-                                    <h5>offer ending time : </h5>
+                                    <h5>Kết thức ưu đãi : </h5>
                                     <div class="simply-countdown simply-countdown-one"></div>
                                 </div>
                                 <form class="shopping-cart-form" action="">
@@ -211,16 +211,16 @@
                                         <input name="quantity" type="hidden" min="1" max="100"
                                             value="1" />
                                     </div>
-                                    <button class="add_cart" type="submit">add to cart</button>
+                                    <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
                                     <ul class="wsus__button_area">
-                                        <li><button type="submit" class="add_cart" href="#">add to cart</button></li>
+                                        <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
                                         <li><a href="#" class="buy_now">Buy now</a></li>
                                         <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                         <li></li>
                                     </ul>
 
                                 </form>
-                                <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                                <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                             </div>
                         </div>
                     </div>

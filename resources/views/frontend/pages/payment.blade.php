@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{ $settings->site_name }} || Payment
+    {{ $settings->site_name }} || Thanh toán
 @endsection
 @section('content')
     <!--============================
@@ -11,10 +11,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>payment</h4>
+                        <h4>Thanh toán</h4>
                         <ul>
-                            <li><a href="{{ route('home') }}">home</a></li>
-                            <li><a href="javascript:;">payment</a></li>
+                            <li><a href="{{ route('home') }}">Trang chủ</a></li>
+                            <li><a href="javascript:;">Thanh toán</a></li>
                         </ul>
                     </div>
                 </div>
@@ -70,8 +70,7 @@
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
                                             <a class="nav-link common_btn text-center"
-                                                href="{{ route('user.paypal.payment') }}">Pay
-                                                with Paypal</a>
+                                                href="{{ route('user.paypal.payment') }}">Thanh toán bằng</a>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +80,7 @@
                                 <div class="row">
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
-                                            <button class="nav-link common_btn">Pay with Stripe</button>
+                                            <button class="nav-link common_btn">Thanh toán bằng Stripe</button>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +91,7 @@
                                     <div class="col-xl-12 m-auto">
                                         <div class="wsus__payment_area">
                                             <a class="nav-link common_btn text-center"
-                                                href="{{ route('user.momo.payment') }}">Pay with Momo</a>
+                                                href="{{ route('user.momo.payment') }}">Thanh toán bằng Momo</a>
                                         </div>
                                     </div>
                                 </div>
@@ -102,11 +101,11 @@
                     </div>
                     <div class="col-xl-4 col-lg-4">
                         <div class="wsus__pay_booking_summary" id="sticky_sidebar2">
-                            <h5>Order Summary</h5>
-                            <p>subtotal : <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                            <p>shipping fee(+) : <span>{{ $settings->currency_icon }}{{ getShippingFee() }} </span></p>
-                            <p>coupon(-) : <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
-                            <h6>total <span>{{ $settings->currency_icon }}{{ getFinalPayableAmount() }}</span></h6>
+                            <h5>Tóm tắt đơn hàng</h5>
+                            <p>Tổng cộng : <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
+                            <p>Phí vận chuyển(+) : <span>{{ $settings->currency_icon }}{{ getShippingFee() }} </span></p>
+                            <p>Phiếu giảm giá(-) : <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
+                            <h6>Tổng <span>{{ $settings->currency_icon }}{{ getFinalPayableAmount() }}</span></h6>
                         </div>
                     </div>
                 </div>

@@ -65,7 +65,7 @@
                                             @endif
                                         @endfor
 
-                                        <span>({{count($item->reviews)}} review)</span>
+                                        <span>({{count($item->reviews)}} Đánh giá sản phẩm)</span>
 
 
                                     </p>

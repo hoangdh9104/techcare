@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('content')
 @section('title')
-    {{ $settings->site_name }} Product Detail
+    {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
 
 
@@ -13,11 +13,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>products details</h4>
+                    <h4>Chi tiết sản phẩm</h4>
                     <ul>
-                        <li><a href="#">home</a></li>
-                        <li><a href="#">product</a></li>
-                        <li><a href="#">product details</a></li>
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Sản phẩm</a></li>
+                        <li><a href="#">Chi tiết sản phẩm</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,12 +67,12 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
-                                item)
+                            <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> ({{ $product->qty }}
+                                Sản phẩm)
                             </p>
                         @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $product->qty }}
-                                item)
+                            <p class="wsus__stock_area"><span class="in_stock">Hết hàng</span> ({{ $product->qty }}
+                                Sản phẩm)
                             </p>
                         @endif
 
@@ -97,12 +97,12 @@
                                 @endif
                             @endfor
 
-                            <span>({{ count($product->reviews) }} review)</span>
+                            <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
 
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
-                            <h5>offer ending time : </h5>
+                            <h5>Thời gian kết thúc : </h5>
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
                         <form class="shopping-cart-form" action="">
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quantity :</h5>
+                                <h5>Số lượng :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
@@ -137,8 +137,8 @@
                                 {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
-                                <li><button class="add_cart" type="submit">add to cart</button></li>
-                                <li><a class="buy_now" href="#">buy now</a></li>
+                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button></li>
+                                <li><a class="buy_now" href="#">Mua ngay</a></li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                                 <li>
@@ -157,7 +157,7 @@
                                 
                             </ul>
                         </form>
-                        <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                        <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
             
@@ -172,17 +172,17 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab7" data-bs-toggle="pill"
                                     data-bs-target="#pills-home22" type="button" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">Description</button>
+                                    aria-controls="pills-home" aria-selected="true">Mô tả</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact" type="button" role="tab"
-                                    aria-controls="pills-contact" aria-selected="false">Vendor Info</button>
+                                    aria-controls="pills-contact" aria-selected="false">Thông tin nhà cung cấp</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact2" type="button" role="tab"
-                                    aria-controls="pills-contact2" aria-selected="false">Reviews</button>
+                                    aria-controls="pills-contact2" aria-selected="false">Đánh giá</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent4">
@@ -225,14 +225,14 @@
                                                         @endif
                                                     @endfor
 
-                                                    <span>({{ count($product->reviews) }} review)</span>
+                                                    <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
 
                                                 </p>
-                                                <p><span>Store Name:</span>{{ $product->vendor->shop_name }} </p>
-                                                <p><span>Address:</span> {{ $product->vendor->address }}</p>
-                                                <p><span>Phone:</span> {{ $product->vendor->phone }}</p>
-                                                <p><span>mail:</span> {{ $product->vendor->email }}</p>
-                                                <a href="vendor_details.html" class="see_btn">visit store</a>
+                                                <p><span>Tên cửa hàng:</span>{{ $product->vendor->shop_name }} </p>
+                                                <p><span>Địa chỉ:</span> {{ $product->vendor->address }}</p>
+                                                <p><span>Điện thoại:</span> {{ $product->vendor->phone }}</p>
+                                                <p><span>Mail:</span> {{ $product->vendor->email }}</p>
+                                                <a href="vendor_details.html" class="see_btn">Xem cửa hàng</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
@@ -251,7 +251,7 @@
                                         <div class="row">
                                             <div class="col-xl-8 col-lg-7">
                                                 <div class="wsus__comment_area">
-                                                    <h4>Reviews <span>{{ count($reviews) }}</span></h4>
+                                                    <h4>Đánh giá <span>{{ count($reviews) }}</span></h4>
                                                     @foreach ($reviews as $review)
                                                         <div class="wsus__main_comment">
                                                             <div class="wsus__comment_img">
@@ -308,12 +308,12 @@
 
                                                     @if ($isBrought == true)
                                                         <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                            <h4>write a Review</h4>
+                                                            <h4>Viết đánh giá</h4>
                                                             <form action="{{ route('user.review.create') }}"
                                                                 enctype="multipart/form-data" method="POST">
                                                                 @csrf
                                                                 <p class="rating">
-                                                                    <span>select your rating : </span>
+                                                                    <span>Chọn xếp hạng của bạn : </span>
                                                                 </p>
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
@@ -347,8 +347,7 @@
                                                                     value="{{ $product->id }}">
                                                                 <input type="hidden" name="vendor_id"
                                                                     value="{{ $product->vendor_id }}">
-                                                                <button class="common_btn" type="submit">submit
-                                                                    review</button>
+                                                                <button class="common_btn" type="submit">Gửi đánh giá</button>
                                                             </form>
                                                         </div>
                                                     @endif
@@ -371,18 +370,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send Message</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Gửi tin nhắn</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" class="message_modal">
                         @csrf
                         <div class="form-group">
-                            <label for="">Message</label>
+                            <label for="">Tin nhắn</label>
                             <textarea name="message" class="form-control mt-2 message-box"></textarea>
                             <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 send-button">Send</button>
+                        <button type="submit" class="btn btn-primary mt-4 send-button">Gửi</button>
                     </form>
                 </div>
 

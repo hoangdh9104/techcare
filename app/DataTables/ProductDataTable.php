@@ -120,13 +120,13 @@ class ProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('image'),
-            Column::make('name'),
-            Column::make('price'),
-            Column::make('type')->width(150),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('image')->title('Hình ảnh')->width(100),
+            Column::make('name')->title('Tên sản phẩm'),
+            Column::make('price')->title('Giá'),
+            Column::make('type')->title('Loại')->width(150),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

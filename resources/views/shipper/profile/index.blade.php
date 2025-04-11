@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Shipper Profile</h3>
+                        <h3><i class="far fa-user"></i> Hồ sơ người gửi hàng</h3>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
-                                <h4>Basic Information</h4>
+                                <h4>Thông tin cơ bản</h4>
 
                                 <form action="{{ route('shipper.profile.store') }}" method="POST"
                                     enctype="multipart/form-data">
@@ -18,7 +18,7 @@
 
                                     <!-- Hiển thị ảnh đại diện nếu có -->
                                     <div class="form-group wsus__input">
-                                        <label>Preview</label><br>
+                                        <label>Xem trước</label><br>
                                         @if (!empty($profile->banner))
                                         <img width="200px" src="{{asset($profile->banner)}}" alt="">
 
@@ -28,18 +28,18 @@
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Avatar</label>
+                                        <label>Ảnh đại diện</label>
                                         <input type="file" class="form-control" name="banner">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" class="form-control" name="name"
                                             value="{{ old('name', $profile->name) }}">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Phone</label>
+                                        <label>Điện thoại</label>
                                         <input type="text" class="form-control" name="phone"
                                             value="{{ old('phone', $profile->phone) }}">
                                     </div>
@@ -51,13 +51,13 @@
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Address</label>
+                                        <label>Địa chỉ</label>
                                         <input type="text" class="form-control" name="address"
                                             value="{{ old('address', $profile->address) }}">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Description</label>
+                                        <label>Mô tả</label>
                                         <textarea class="summernote" name="description">{{ old('description', $profile->description) }}</textarea>
                                     </div>
 
@@ -79,7 +79,7 @@
                                             value="{{ old('insta_link', $profile->insta_link) }}">
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                     {{-- <pre>{{ print_r($profile, true) }}</pre> --}}
                                 </form>
 
