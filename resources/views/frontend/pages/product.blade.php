@@ -185,7 +185,6 @@
                                                             $avgRating = $product->reviews('reviews')->avg('rating');
                                                             $fullRating = round($avgRating);
                                                         @endphp
-
                                                         @for ($i = 1; $i <= 5; $i++)
                                                             @if ($i <= $fullRating)
                                                             <i class="fas fa-star"></i>

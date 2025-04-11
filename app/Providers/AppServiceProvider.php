@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        /* set time zone*/
+        /* set time zone */
         $generalSetting = GeneralSetting::first();
         $logoSetting = LogoSetting::first();
 

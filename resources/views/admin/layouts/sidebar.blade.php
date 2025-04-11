@@ -192,6 +192,7 @@
             </li>
 
             <li class="menu-header">Xem thêm</li>
+            <li class="menu-header">More</li>
             <li
                 class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index', 'admin.manage-user.index', 'admin.admin-list.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i

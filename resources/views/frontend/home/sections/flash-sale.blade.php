@@ -203,7 +203,6 @@
                             <a class="wsus__category" href="#">{{ $product->category->name }}</a>
 
                             <p class="wsus__pro_rating">
-
                               @php
                                 $avgRating = $product->reviews()->avg('rating');
                                 $fullRating = round($avgRating);
@@ -216,7 +215,6 @@
                                 <i class="far fa-star"></i>
                                 @endif
                             @endfor
-
 
                                 <span>({{count($product->reviews)}} review)</span>
                             </p>
@@ -331,7 +329,6 @@
                                         @endfor
 
                                         <span>({{count($product->reviews)}} review)</span>
-
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
                                     <div class="wsus_pro_hot_deals">
