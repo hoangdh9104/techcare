@@ -24,5 +24,6 @@ class VendorShopProfileSeeder extends Seeder
         $vendor->description ='Example :FPT POLYTECHNIC';
         $vendor->user_id =$user->id;
         $vendor->save();
+        $vendor->status =1;
     }
 }

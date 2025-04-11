@@ -23,6 +23,21 @@ class TransactionDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'transaction.action')
+            ->addColumn('invoice_id', function ($query) {
+                return '#' . $query->order->invocie_id;
+            })
+            ->addColumn('amount_in_base_currency', function ($query) {
+                return $query->amount . ' ' . $query->order->currency_name;
+            })
+            ->addColumn('amount_in_real_currency', function ($query) {
+                return $query->amount_real_currency . ' ' . $query->amount_real_currency_name;
+            })
+            ->filterColumn('invoice_id', function ($query, $keyword) {
+                $query->whereHas('order', function ($query) use ($keyword) {
+                    $query->where('invocie_id', 'like', "%$keyword%");
+                });
+            })
+
             ->setRowId('id');
     }
 
@@ -40,20 +55,20 @@ class TransactionDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('transaction-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('transaction-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -62,15 +77,14 @@ class TransactionDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('invoice_id'),
+            Column::make('transaction_id'),
+            Column::make('payment_method'),
+            Column::make('amount_in_base_currency'),
+            Column::make('amount_in_real_currency'),
+
         ];
     }
 

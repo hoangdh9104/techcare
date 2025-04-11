@@ -1,8 +1,8 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ url('/') }}"><img src="{{ asset($logoSetting->logo) }}" width="50px"
-                    alt="logo" class="img-fluid"></a>
+            <a href="{{ url('/') }}"><img src="{{ asset($logoSetting->logo) }}" width="50px" alt="logo"
+                    class="img-fluid"></a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ url('/') }}">||</a>
@@ -17,7 +17,8 @@
 
             {{-- Manage Website --}}
 
-            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.vendor-condition.index', 'admin.about.index', 'admin.terms-and-conditions.index']) }}">
+            <li
+                class="dropdown {{ setActive(['admin.slider.*', 'admin.vendor-condition.index', 'admin.about.index', 'admin.terms-and-conditions.index']) }}">
 
             <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
 
@@ -30,34 +31,38 @@
                 <ul class="dropdown-menu">
 
 
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link" href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
 
-                    <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link" href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li>
+                    <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li>
 
-                    <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link" href="{{ route('admin.about.index') }}">About Page</a></li>
+                    <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.about.index') }}">About Page</a></li>
 
-                    <li class="{{ setActive(['admin.terms-and-conditions.index']) }}"><a class="nav-link" href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
+                    <li class="{{ setActive(['admin.terms-and-conditions.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
 
-                    <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link" href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                    <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
+                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
 
                 </ul>
             </li>
             {{-- Manage Blog --}}
-            <li
-                class="dropdown {{ setActive(['admin.blog-category.*']) }}">
+            <li class="dropdown {{ setActive(['admin.blog-category.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i>
                     <span>Manage Blog</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.blog-category.*']) }}"><a class="nav-link"
                             href="{{ route('admin.blog-category.index') }}">Category Blog</a></li>
-                     <li class="{{ setActive(['admin.blog.*']) }}"><a class="nav-link"
-                             href="{{ route('admin.blog.index') }}">All Blog</a></li>
+                    <li class="{{ setActive(['admin.blog.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.blog.index') }}">All Blog</a></li>
                 </ul>
             </li>
             {{-- Manage Order --}}
             <li><a class="nav-link {{ setActive(['admin.messages.index']) }}"
-                href="{{ route('admin.messages.index') }}"><i class="fas fa-comment"></i>
-                <span>Messages</span></a></li>
+                    href="{{ route('admin.messages.index') }}"><i class="fas fa-comment"></i>
+                    <span>Messages</span></a></li>
 
             <li
                 class="dropdown {{ setActive([
@@ -128,7 +133,10 @@
                             href="{{ route('admin.seller-products.index') }}">Seller Product</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Product</a></li>
+                    <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.reviews.index') }}">Product Reviews
                 </ul>
+
             </li>
 
             {{-- Manage Coupons --}}
@@ -182,11 +190,11 @@
 
             <li class="menu-header">More</li>
             <li
-
                 class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index', 'admin.manage-user.index', 'admin.admin-list.index']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
 
-                {{-- class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index']) }}">
+                    {{-- class="dropdown {{ setActive(['admin.vendor-requests.index', 'admin.customer.index', 'admin.vendor-list.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
 
                         class="fas fa-columns"></i> --}}
@@ -206,11 +214,11 @@
 
 
                     <li class="{{ setActive(['admin.admin-list.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.admin-list.index') }}">Admin List</a>
+                            href="{{ route('admin.admin-list.index') }}">Admin List</a>
                     </li>
 
                     <li class="{{ setActive(['admin.manage-user.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.manage-user.index') }}">Manage user</a>
+                            href="{{ route('admin.manage-user.index') }}">Manage user</a>
                     </li>
 
 
