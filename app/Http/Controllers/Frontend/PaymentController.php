@@ -339,7 +339,6 @@ class PaymentController extends Controller
                 $payableAmount,
                 $momoSetting->currency_name
             );
-
             $this->clearSession();
             toastr('Thanh toán Momo thành công!', 'success');
             return redirect()->route('home');
