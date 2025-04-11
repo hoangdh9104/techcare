@@ -63,7 +63,7 @@
         <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
     @endif
 
-    <script>
+    {{-- <script>
         const USER = {
             id: "{{ auth()->user()->id }}",
             name: "{{ auth()->user()->nmae }}",
@@ -73,7 +73,7 @@
             key: "{{ $pusherSetting->pusher_key }}",
             cluster: "{{ $pusherSetting->pusher_cluster }}"
         }
-    </script>
+    </script> --}}
 
     @vite(['resources/js/app.js'])
 </head>

@@ -36,7 +36,7 @@
         const USER = {
             id: "{{auth()->user()->id}}",
             name: "{{auth()->user()->name}}",
-            image: "{{ asset(auth()->user()->image)}}", 
+            image: "{{ asset(auth()->user()->image)}}",
         }
     </script>
 </head>

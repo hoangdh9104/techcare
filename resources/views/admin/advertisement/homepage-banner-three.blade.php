@@ -4,9 +4,9 @@
             <form action="{{route('admin.homepage-banner-section-three')}} " method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <h5>Banner one</h5>
+                <h5>Banner 1</h5>
                 <div class="form-group">
-                    <label for="">Status</label>
+                    <label for="">Trạng thái</label>
                     <br>
                     <label class="custom-switch mt-2">
                         <input type="checkbox" {{ @$homepage_section_banner_three->banner_one->status==1 ? 'checked':'' }} name="banner_one_status" class="custom-switch-input" >
@@ -28,9 +28,9 @@
                     <input type="text" class="form-control" name="banner_one_url" value="{{ @$homepage_section_banner_three->banner_one->banner_url }}">
                 </div>
                 {{-- ------------------------------------------------------------------------- --}}
-                <h5>Banner two</h5>
+                <h5>Banner 2</h5>
                 <div class="form-group">
-                    <label for="">Status</label>
+                    <label for="">Trạng thái</label>
                     <br>
                     <label class="custom-switch mt-2">
                         <input type="checkbox" {{ @$homepage_section_banner_three->banner_two->status==1 ? 'checked':'' }} name="banner_two_status" class="custom-switch-input" >
@@ -52,9 +52,9 @@
                     <input type="text" class="form-control" name="banner_two_url" value="{{ @$homepage_section_banner_three->banner_two->banner_url }}">
                 </div>
                 {{-- --------------------------------------------------------------------------- --}}
-                <h5>Banner three</h5>
+                <h5>Banner 3</h5>
                 <div class="form-group">
-                    <label for="">Status</label>
+                    <label for="">Trạng thái</label>
                     <br>
                     <label class="custom-switch mt-2">
                         <input type="checkbox" {{ @$homepage_section_banner_three->banner_three->status==1 ? 'checked':'' }} name="banner_three_status" class="custom-switch-input" >
@@ -75,7 +75,7 @@
                     <label>Banner Url</label>
                     <input type="text" class="form-control" name="banner_three_url" value="{{ @$homepage_section_banner_three->banner_three->banner_url }}">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </form>
            </div>
        </div>
