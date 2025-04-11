@@ -19,21 +19,17 @@
                                 <div class="col-2">
                                     <div class="list-group" id="list-tab" role="tablist">
                                         <a class="list-group-item list-group-item-action active" id="list-home-list"
-                                            data-toggle="list" href="#list-home" role="tab">Homepage Banner Section
-                                            One</a>
+                                            data-toggle="list" href="#list-home" role="tab">Banner trang chủ 1</a>
                                         <a class="list-group-item list-group-item-action" id="list-profile-list"
-                                            data-toggle="list" href="#list-profile" role="tab">Homepage Banner Section
-                                            Two</a>
+                                            data-toggle="list" href="#list-profile" role="tab">Banner trang chủ 2</a>
                                         <a class="list-group-item list-group-item-action" id="list-messages-list"
-                                            data-toggle="list" href="#list-messages" role="tab">Homepage Banner Section
-                                            Three</a>
+                                            data-toggle="list" href="#list-messages" role="tab">Banner trang chủ 3</a>
                                         <a class="list-group-item list-group-item-action" id="list-settings-list"
-                                            data-toggle="list" href="#list-settings" role="tab">Homepage Banner Section
-                                            Four</a>
+                                            data-toggle="list" href="#list-settings" role="tab">Banner trang chủ 4</a>
                                         <a class="list-group-item list-group-item-action" id="list-product-list"
-                                            data-toggle="list" href="#list-product" role="tab">Products page banner</a>
+                                            data-toggle="list" href="#list-product" role="tab">Banner trong sản phẩm</a>
                                         <a class="list-group-item list-group-item-action" id="list-cart-list"
-                                            data-toggle="list" href="#list-cart" role="tab">Cart page banner</a>
+                                            data-toggle="list" href="#list-cart" role="tab">Banner trong giỏ hàng</a>
                                     </div>
                                 </div>
                                 <div class="col-8">

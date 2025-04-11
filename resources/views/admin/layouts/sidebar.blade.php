@@ -23,7 +23,7 @@
             <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
 
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>Manage website</span></a>
+                    <span>Giao diện trang web</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
@@ -31,8 +31,8 @@
                 <ul class="dropdown-menu">
 
 
-                    <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                    {{--
+                     --}}
 
                     <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li>
@@ -44,7 +44,7 @@
                             href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
 
                     <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
-                            href="{{ route('admin.home-page-setting') }}">Home Page Setting</a></li>
+                            href="{{ route('admin.home-page-setting') }}">Danh mục</a></li>
 
                 </ul>
             </li>
@@ -106,14 +106,14 @@
             <li
                 class="dropdown {{ setActive(['admin.category.*', 'admin.sub-category.*', 'admin.child-category.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i>
-                    <span>Manage Categories</span></a>
+                    <span>Quản lí danh mục</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.category.index') }}">Category</a></li>
+                            href="{{ route('admin.category.index') }}">Danh mục</a></li>
                     <li class="{{ setActive(['admin.sub-category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.sub-category.index') }}">Sub Category</a></li>
+                            href="{{ route('admin.sub-category.index') }}">Danh mục phụ</a></li>
                     <li class="{{ setActive(['admin.child-category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.child-category.index') }}">Child Category</a></li>
+                            href="{{ route('admin.child-category.index') }}">Danh mục con</a></li>
                 </ul>
             </li>
 
@@ -186,7 +186,7 @@
                 <a class="nav-link {{ setActive(['admin.advertisement.*']) }}"
                     href="{{ route('admin.advertisement.index') }}">
                     <i class="fas fa-ad"></i>
-                    <span>Advertisement</span>
+                    <span>Banner quảng cáo</span>
                 </a>
             </li>
 
