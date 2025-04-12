@@ -12,4 +12,12 @@ class ProductVariantItem extends Model
     {
         return $this->belongsTo(ProductVariant::class);
     }
+    protected $fillable = [
+        'product_variant_id',
+        'name',
+        'price',
+        'qty',
+        'is_default',
+        'status',
+    ];
 }

@@ -8,27 +8,27 @@
     <ul class="navbar-nav navbar-right">
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right">
-          <div class="dropdown-header">Messages
+          <div class="dropdown-header">Tin nhắn
             <div class="float-right">
-              <a href="#">Mark All As Read</a>
+              <a href="#">Đánh dấu đã đọc tất cả</a>
             </div>
           </div>
-        
+
           <div class="dropdown-footer text-center">
-            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+            <a href="#">Xem tất cả <i class="fas fa-chevron-right"></i></a>
           </div>
         </div>
       </li>
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right">
-          <div class="dropdown-header">Notifications
+          <div class="dropdown-header">Các thông báo
             <div class="float-right">
-              <a href="#">Mark All As Read</a>
+              <a href="#">Đánh dấu đã đọc tất cả</a>
             </div>
           </div>
-       
+
           <div class="dropdown-footer text-center">
-            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+            <a href="#">Xem tất cả<i class="fas fa-chevron-right"></i></a>
           </div>
         </div>
       </li>
@@ -37,11 +37,11 @@
         <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
           <a href="{{route('admin.profile')}}" class="dropdown-item has-icon">
-            <i class="far fa-user"></i> Profile
+            <i class="far fa-user"></i> Trang cá nhân
           </a>
-          
+
           <a href="{{route('admin.settings.index')}}" class="dropdown-item has-icon">
-            <i class="fas fa-cog"></i> Settings
+            <i class="fas fa-cog"></i> Cài đặt
           </a>
           <div class="dropdown-divider"></div>
           <!-- Authentication -->
@@ -49,7 +49,7 @@
             @csrf
             <a href="{{route('logout')}}"
                 onclick="event.preventDefault();this.closest('form').submit();" class="dropdown-item has-icon text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
             </a>
          </form>
 

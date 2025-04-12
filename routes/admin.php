@@ -97,7 +97,6 @@ Route::put('product/change-status', [ProductController::class, 'changeStatus'])-
 Route::get('product/get-subcategories', [ProductController::class, 'getSubCategories'])->name('product.get-subcategories');
 Route::get('product/get-childcategories', [ProductController::class, 'getChildCategories'])->name('product.get-child-categories');
 Route::resource('products', ProductController::class);
-
 // product image gallery route
 Route::resource('products-image-gallery', ProductImageGalleryController::class);
 
@@ -228,6 +227,9 @@ Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index']
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
 // Message route
 Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('messages',[MessageController::class,'index'])->name('messages.index');
+Route::get('get-messages',[MessageController::class,'getMessages'])->name('get-messages');
+Route::post('send-message',[MessageController::class,'sendMessage'])->name('send-message');
 // statistic
 Route::get('revenue/chart', [AdminController::class, 'getMonthlyRevenueChart'])->name('revenue.chart');
 Route::get('statistics/orders/data', [AdminController::class, 'getMonthlyOrderStatistics'])->name('statistics.orders.data');

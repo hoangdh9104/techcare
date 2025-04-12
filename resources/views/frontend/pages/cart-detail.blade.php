@@ -1,3 +1,4 @@
+
 @extends('frontend.layouts.master')
 
 @section('content')
@@ -110,11 +111,10 @@
                         </p>
                         <p class="total"><span>total:</span> <span
                                 id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span>
-
-                        </p>
-                        @if (session()->has('coupon_code'))
-                            <p>Applied Coupon: {{ session('coupon_code') }}</p>
-                        @endif
+                            </p>
+                             @if (session()->has('coupon_code'))
+                                    <p>Applied Coupon: {{ session('coupon_code') }}</p>
+                                @endif
 
 
                         <form id="coupon_form">
