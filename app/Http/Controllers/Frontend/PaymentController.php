@@ -12,6 +12,7 @@ use App\Models\PaypalSetting;
 use App\Models\Product;
 use App\Models\StripeSetting;
 use App\Models\Transaction;
+use App\Models\VnpaySetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -25,12 +26,12 @@ class PaymentController extends Controller
         $paypalSetting = PaypalSetting::first();
         $stripeSetting = StripeSetting::first();
         $momoSetting = MomoSetting::first();
+        $vnpaySetting = VnpaySetting::first();
         $codSetting = CodSetting::first();
         if (!Session::has('address')) {
             return redirect()->route('user.checkout');
         }
-        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting'));
-        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting'));
+        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting', 'vnpaySetting'));
     }
 
     public function paymentSuccess()
@@ -81,6 +82,7 @@ class PaymentController extends Controller
             $product->save();
         }
 
+
         // store transaction deteils
         $transaction = new Transaction();
         $transaction->order_id = $order->id;
@@ -88,7 +90,7 @@ class PaymentController extends Controller
         $transaction->payment_method = $paymentMethod;
         $transaction->amount = getFinalPayableAmount();
         $transaction->amount_real_currency = $paidAmount;
-        $transaction->amount_real_currency_name = $paidCurrencyName;
+        $transaction->amount_real_currency_name = $paidCurrencyName ?? 'VND';
         $transaction->save();
     }
 
@@ -374,5 +376,115 @@ class PaymentController extends Controller
         $this->clearSession();
         toastr('Payment COD successfully!', 'success');
         return redirect()->route('home');
+    }
+    // cấu hình vn pay
+
+    public function vnpayConfig()
+    {
+        $setting = VnpaySetting::first();
+
+        return [
+            'tmn_code' => $setting->tmn_code,
+            'hash_secret' => $setting->hash_secret,
+            'vnp_url' => $setting->payment_url,
+            'return_url' => route('user.vnpay.success'),
+            'currency_name' => $setting->currency_name ?? 'VND',
+            'currency_rate' => $setting->currency_rate ?? 1,
+            'test_mode' => $setting->mode == 1 ? false : true,
+        ];
+    }
+    // thanh tóan với vnpay
+    public function payWithVnpay(Request $request)
+    {
+        $setting = \App\Models\VnpaySetting::first();
+        if (!$setting || $setting->status == 0) {
+            toastr('Phương thức thanh toán VNPay hiện không khả dụng!', 'error');
+            return redirect()->route('user.payment');
+        }
+
+        $config = $this->vnpayConfig();
+        $total = getFinalPayableAmount();
+        $payableAmount = round($total * $config['currency_rate'], 2);
+
+        $vnp_TmnCode = $config['tmn_code'];
+        $vnp_HashSecret = $config['hash_secret'];
+        $vnp_Url = $config['vnp_url'];
+        $vnp_Returnurl = $config['return_url'];
+
+        $vnp_TxnRef = time(); // Mã đơn hàng
+        $vnp_OrderInfo = 'Thanh toán đơn hàng qua VNPay';
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = $payableAmount * 100; // VNPay tính theo VND x100
+        $vnp_Locale = 'vn';
+        $vnp_IpAddr = $request->ip();
+
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+        );
+
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+
+        // Lưu session để xác nhận sau khi thanh toán
+        Session::put('vnpay_order', [
+            'txn_ref' => $vnp_TxnRef,
+            'amount' => $total,
+            'vnpay_amount' => $payableAmount
+        ]);
+
+        return redirect($vnp_Url);
+    }
+
+    // xử lí sau thanh toán
+    public function vnpaySuccess(Request $request)
+    {
+        $orderInfo = Session::get('vnpay_order');
+        $vnp_ResponseCode = $request->get('vnp_ResponseCode');
+        $vnp_TxnRef = $request->get('vnp_TxnRef');
+
+        $setting = VnpaySetting::first();
+
+        if ($vnp_ResponseCode == '00') {
+            $this->storeOrder(
+                'vnpay',
+                1,
+                $vnp_TxnRef,
+                $orderInfo['vnpay_amount'],
+                $setting->currency_name
+            );
+
+            $this->clearSession();
+            toastr('Thanh toán VNPay thành công!', 'success');
+            return redirect()->route('home');
+        } else {
+            toastr('Thanh toán thất bại hoặc bị hủy!', 'error');
+            return redirect()->route('user.payment');
+        }
     }
 }
