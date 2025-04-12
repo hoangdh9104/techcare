@@ -138,8 +138,7 @@ class OrderController extends Controller
             'pending' => ['processed_and_ready_to_ship', 'canceled'],
             'processed_and_ready_to_ship' => ['dropped_off', 'canceled'],
             'dropped_off' => ['shipped'],
-            'shipped' => ['out_for_delivery'],
-            'out_for_delivery' => ['delivered'],
+            'shipped' => ['delivered'],
             'delivered' => ['received'],
         ];
 

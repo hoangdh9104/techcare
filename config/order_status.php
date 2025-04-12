@@ -19,10 +19,10 @@ return [
             'status' => 'Shipped',
             'details' => 'Your package has arrived at our logistics facility'
         ],
-        'out_for_delivery' => [
-            'status' => 'Out For Delivery',
-            'details' => 'Our delivery partner will attempt to delivery your package'
-        ],
+        // 'out_for_delivery' => [
+        //     'status' => 'Out For Delivery',
+        //     'details' => 'Our delivery partner will attempt to delivery your package'
+        // ],
         'delivered' => [
             'status' => 'Delivered',
             'details' => 'Delivered'

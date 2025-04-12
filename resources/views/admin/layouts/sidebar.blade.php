@@ -8,15 +8,14 @@
             <a href="{{ url('/') }}">||</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Dashboard</li>
+            <li class="menu-header">Bảng điều khiển</li>
             <li class="dropdown {{ setActive(['admin.dashboard', 'admin.ecommerceDashboard']) }}">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Trang chủ</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.dashboard']) }}"><a class="nav-link"
-                            href="{{ route('admin.dashboard') }}">General Dashboard</a></li>
+                            href="{{ route('admin.dashboard') }}">Tổng quan</a></li>
                     <li class="{{ setActive(['admin.ecommerceDashboard']) }}"><a class="nav-link"
-                            href="{{ route('admin.ecommerceDashboard') }}">Ecommerce
-                            Dashboard</a></li>
+                            href="{{ route('admin.ecommerceDashboard') }}">Biểu đồ trực quan</a></li>
                 </ul>
             </li>
             <li class="menu-header">Starter</li>
@@ -90,8 +89,8 @@
                             href="{{ route('admin.dropped_off-orders') }}">All Dropped Off Orders</a></li>
                     <li class="{{ setActive(['admin.shipped-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.shipped-orders') }}">All Shipped Orders</a></li>
-                    <li class="{{ setActive(['admin.out_for_delivery-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.out_for_delivery-orders') }}">All Out For Delivery Orders</a></li>
+                    {{-- <li class="{{ setActive(['admin.out_for_delivery-orders']) }}"><a class="nav-link"
+                            href="{{ route('admin.out_for_delivery-orders') }}">All Out For Delivery Orders</a></li> --}}
                     <li class="{{ setActive(['admin.delivered-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.delivered-orders') }}">All Delivered Orders</a></li>
                     <li class="{{ setActive(['admin.received-orders']) }}"><a class="nav-link"

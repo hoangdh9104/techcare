@@ -152,15 +152,17 @@
                                     </button>
 
                                 </li>
-                               
-                                <li><a  style="border:1px solid gray; padding: 7px 11px; border-radius:100%" href="javascrip:;" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
-                                
+
+                                <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%"
+                                        href="javascrip:;" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                            class="fal fa-heart"></i></a></li>
+
                             </ul>
                         </form>
                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -393,38 +395,38 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(document).ready(function(){
-            $('.message_modal').on('submit', function(e){
-                e.preventDefault();
-                 let formData = $(this).serialize();
+<script>
+    $(document).ready(function() {
+        $('.message_modal').on('submit', function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
 
-                 $.ajax({
-                    method: 'POST',
-                    url: '{{ route("user.send-message")}}',
-                    data: formData,
-                    beforeSend: function(){
-                        let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('user.send-message') }}',
+                data: formData,
+                beforeSend: function() {
+                    let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
                                      Sending...`
-                        $('.send-button').html(html);
-                        $('.send-button').prop('disabled',true);
-                    },
-                    success: function(response){
-                        $('.message-box').val('');
-                        toastr.success(response.message);
-                    },
-                    error: function(xhr, status, error){
-                        toastr.error(xhr.responseJSON.message);
-                        $('.send-button').html('Send');
-                        $('.send-button').prop('disabled',false);
-                    },
-                    complete: function(){
-                        $('.send-button').html('Send');
-                        $('.send-button').prop('disabled',false);
+                    $('.send-button').html(html);
+                    $('.send-button').prop('disabled', true);
+                },
+                success: function(response) {
+                    $('.message-box').val('');
+                    toastr.success(response.message);
+                },
+                error: function(xhr, status, error) {
+                    toastr.error(xhr.responseJSON.message);
+                    $('.send-button').html('Send');
+                    $('.send-button').prop('disabled', false);
+                },
+                complete: function() {
+                    $('.send-button').html('Send');
+                    $('.send-button').prop('disabled', false);
 
-                    }
-                 })
+                }
             })
         })
-    </script>
+    })
+</script>
 @endpush

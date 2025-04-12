@@ -1,687 +1,127 @@
 @extends('admin.layouts.master')
-@push('links')
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
-@endpush
+
 @section('content')
-    {{-- <section class="section">
+    <style>
+        /* Lớp CSS để highlight thẻ li */
+        .highlight {
+            background-color: #f8d7da;
+            /* Màu nền hightlight */
+            color: #721c24;
+            /* Màu chữ khi chọn */
+        }
+    </style>
+    <section class="section">
         <div class="section-header">
-            <h1>Chart.JS</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Modules</a></div>
-                <div class="breadcrumb-item">Chart.js</div>
+            <h1>Thống kê doanh thu</h1>
+        </div>
+        <div class="section-body">
+            {{-- Form lọc theo năm --}}
+            <form id="filterForm" class="mb-4">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-8 col-lg-9">
+                        <div class="form-group mb-2">
+                            <label for="year" class="font-weight-bold">Chọn năm</label>
+                            <input type="text" class="form-control datepicker" id="year" name="year"
+                                value="{{ now()->year }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="form-group mb-2">
+                            <button type="submit" class="btn btn-success w-100">Lọc dữ liệu</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            {{-- Biểu đồ doanh thu --}}
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biểu đồ doanh thu theo tháng trong năm</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyRevenueChart" height="120"></canvas>
+                </div>
             </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="section-header d-flex justify-content-between align-items-center">
+            <h1>Thống kê đơn hàng theo trạng thái</h1>
+
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">Chart.js</h2>
-            <p class="section-lead">
-                We use 'Chart.JS' made by @chartjs. You can check the full documentation <a
-                    href="http://www.chartjs.org/">here</a>.
-            </p>
-
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Line Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="chartjs-size-monitor"
-                                style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                                <div class="chartjs-size-monitor-expand"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                                </div>
-                            </div>
-                            <canvas id="myChart" width="670" height="335"
-                                style="display: block; height: 268px; width: 536px;"
-                                class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-header card-stats-title">
+                    <h4>Biểu đồ trạng thái đơn hàng theo tháng trong năm</h4>
+                    <form id="filterForm2" class="form-inline">
+                        <input type="month" name="month" class="form-control" id="monthPicker"
+                            value="{{ date('Y-m') }}">
+                        <button type="submit" class="btn btn-primary ml-2">Lọc</button>
+                    </form>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Bar Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="chartjs-size-monitor"
-                                style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                                <div class="chartjs-size-monitor-expand"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                                </div>
-                            </div>
-                            <canvas id="myChart2" width="670" height="335"
-                                style="display: block; height: 268px; width: 536px;"
-                                class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Doughnut Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="chartjs-size-monitor"
-                                style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                                <div class="chartjs-size-monitor-expand"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                                </div>
-                            </div>
-                            <canvas id="myChart3" width="670" height="335"
-                                style="display: block; height: 268px; width: 536px;"
-                                class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Pie Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="chartjs-size-monitor"
-                                style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                                <div class="chartjs-size-monitor-expand"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink"
-                                    style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                                </div>
-                            </div>
-                            <canvas id="myChart4" width="670" height="335"
-                                style="display: block; height: 268px; width: 536px;"
-                                class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
+                <div class="card-body">
+                    <canvas id="myChart3" width="670" height="335"
+                        style="display: block; height: 268px; width: 536px;" class="chartjs-render-monitor"></canvas>
+                    <div id="chartMessage" style="display: none;"></div>
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
     <section class="section">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-stats">
-                        <div class="card-stats-title">Order Statistics -
-                            <div class="dropdown d-inline">
-                                <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#"
-                                    id="orders-month">August</a>
-                                <ul class="dropdown-menu dropdown-menu-sm">
-                                    <li class="dropdown-title">Select Month</li>
-                                    <li><a href="#" class="dropdown-item">January</a></li>
-                                    <li><a href="#" class="dropdown-item">February</a></li>
-                                    <li><a href="#" class="dropdown-item">March</a></li>
-                                    <li><a href="#" class="dropdown-item">April</a></li>
-                                    <li><a href="#" class="dropdown-item">May</a></li>
-                                    <li><a href="#" class="dropdown-item">June</a></li>
-                                    <li><a href="#" class="dropdown-item">July</a></li>
-                                    <li><a href="#" class="dropdown-item active">August</a></li>
-                                    <li><a href="#" class="dropdown-item">September</a></li>
-                                    <li><a href="#" class="dropdown-item">October</a></li>
-                                    <li><a href="#" class="dropdown-item">November</a></li>
-                                    <li><a href="#" class="dropdown-item">December</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-stats-items">
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">24</div>
-                                <div class="card-stats-item-label">Pending</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">12</div>
-                                <div class="card-stats-item-label">Shipping</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">23</div>
-                                <div class="card-stats-item-label">Completed</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-archive"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Orders</h4>
-                        </div>
-                        <div class="card-body">
-                            59
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-chart">
-                        <div class="chartjs-size-monitor"
-                            style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                            <div class="chartjs-size-monitor-expand"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                            </div>
-                        </div>
-                        <canvas id="balance-chart" height="115" width="488"
-                            style="display: block; height: 92px; width: 391px;" class="chartjs-render-monitor"></canvas>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Balance</h4>
-                        </div>
-                        <div class="card-body">
-                            $187,13
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-chart">
-                        <div class="chartjs-size-monitor"
-                            style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                            <div class="chartjs-size-monitor-expand"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                            </div>
-                        </div>
-                        <canvas id="sales-chart" height="115" width="488"
-                            style="display: block; height: 92px; width: 391px;" class="chartjs-render-monitor"></canvas>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Sales</h4>
-                        </div>
-                        <div class="card-body">
-                            4,732
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="section-header d-flex justify-content-between align-items-center">
+            <h1>Thống kê người dùng và sản phẩm</h1>
         </div>
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Budget vs Sales</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="chartjs-size-monitor"
-                            style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                            <div class="chartjs-size-monitor-expand"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink"
-                                style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                            </div>
-                        </div>
-                        <canvas id="myChart" height="487" width="927"
-                            style="display: block; height: 390px; width: 742px;" class="chartjs-render-monitor"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card gradient-bottom">
-                    <div class="card-header">
-                        <h4>Top 5 Products</h4>
+                        <h4>Top 10 khách hàng mua nhiều nhất</h4>
+                        <!-- Dropdown chọn thời gian -->
                         <div class="card-header-action dropdown">
-                            <a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle">Month</a>
+                            <a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle"
+                                id="timeFilterBtn">Chọn thời gian</a>
                             <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                <li class="dropdown-title">Select Period</li>
-                                <li><a href="#" class="dropdown-item">Today</a></li>
-                                <li><a href="#" class="dropdown-item">Week</a></li>
-                                <li><a href="#" class="dropdown-item active">Month</a></li>
-                                <li><a href="#" class="dropdown-item">This Year</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="1">Hôm nay</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="2">Hôm qua</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="3">Tuần này</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="4">Tuần trước</a></li>
+                                <li><a href="#" class="dropdown-item highlight" data-filter="5">Tháng này</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="6">Tháng trước</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="7">Năm nay</a></li>
+                                <li><a href="#" class="dropdown-item" data-filter="8">Năm trước</a></li>
                             </ul>
                         </div>
                     </div>
+                    <!-- Thông báo nếu không có dữ liệu -->
+                    <div id="noCustomerData" class="text-center text-muted mt-3" style="display: none;">
+                        Không có dữ liệu khách hàng trong khoảng thời gian này.
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart4" height="390" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card gradient-bottom">
+                    <div class="card-header">
+                        <h4>Top 5 sản phẩm bán chạy</h4>
+
+                    </div>
+
                     <div class="card-body" id="top-5-scroll" tabindex="2"
                         style="height: 315px; overflow: hidden; outline: none;">
-                        <ul class="list-unstyled list-unstyled-border">
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-3-50.png"
-                                    alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">86 Sales</div>
-                                    </div>
-                                    <div class="media-title">oPhone S9 Limited</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="64%"
-                                                style="width: 64%;"></div>
-                                            <div class="budget-price-label">$68,714</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="43%"
-                                                style="width: 43%;"></div>
-                                            <div class="budget-price-label">$38,700</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-4-50.png"
-                                    alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">67 Sales</div>
-                                    </div>
-                                    <div class="media-title">iBook Pro 2018</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="84%"
-                                                style="width: 84%;"></div>
-                                            <div class="budget-price-label">$107,133</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="60%"
-                                                style="width: 60%;"></div>
-                                            <div class="budget-price-label">$91,455</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-1-50.png"
-                                    alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">63 Sales</div>
-                                    </div>
-                                    <div class="media-title">Headphone Blitz</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="34%"
-                                                style="width: 34%;"></div>
-                                            <div class="budget-price-label">$3,717</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="28%"
-                                                style="width: 28%;"></div>
-                                            <div class="budget-price-label">$2,835</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-3-50.png"
-                                    alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">28 Sales</div>
-                                    </div>
-                                    <div class="media-title">oPhone X Lite</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="45%"
-                                                style="width: 45%;"></div>
-                                            <div class="budget-price-label">$13,972</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="30%"
-                                                style="width: 30%;"></div>
-                                            <div class="budget-price-label">$9,660</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="mr-3 rounded" width="55" src="assets/img/products/product-5-50.png"
-                                    alt="product">
-                                <div class="media-body">
-                                    <div class="float-right">
-                                        <div class="font-weight-600 text-muted text-small">19 Sales</div>
-                                    </div>
-                                    <div class="media-title">Old Camera</div>
-                                    <div class="mt-1">
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-primary" data-width="35%"
-                                                style="width: 35%;"></div>
-                                            <div class="budget-price-label">$7,391</div>
-                                        </div>
-                                        <div class="budget-price">
-                                            <div class="budget-price-square bg-danger" data-width="28%"
-                                                style="width: 28%;"></div>
-                                            <div class="budget-price-label">$5,472</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                        <ul class="list-unstyled list-unstyled-border" id="top-selling-list">
+                            {{-- dữ liệu động --}}
                         </ul>
                     </div>
+
                     <div class="card-footer pt-3 d-flex justify-content-center">
                         <div class="budget-price justify-content-center">
-                            <div class="budget-price-square bg-primary" data-width="20" style="width: 20px;"></div>
-                            <div class="budget-price-label">Selling Price</div>
-                        </div>
-                        <div class="budget-price justify-content-center">
-                            <div class="budget-price-square bg-danger" data-width="20" style="width: 20px;"></div>
-                            <div class="budget-price-label">Budget Price</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Best Products</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="owl-carousel owl-theme" id="products-carousel">
-                            <div>
-                                <div class="product-item pb-3">
-                                    <div class="product-image">
-                                        <img alt="image" src="assets/img/products/product-4-50.png" class="img-fluid">
-                                    </div>
-                                    <div class="product-details">
-                                        <div class="product-name">iBook Pro 2018</div>
-                                        <div class="product-review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <div class="text-muted text-small">67 Sales</div>
-                                        <div class="product-cta">
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="product-item">
-                                    <div class="product-image">
-                                        <img alt="image" src="assets/img/products/product-3-50.png" class="img-fluid">
-                                    </div>
-                                    <div class="product-details">
-                                        <div class="product-name">oPhone S9 Limited</div>
-                                        <div class="product-review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half"></i>
-                                        </div>
-                                        <div class="text-muted text-small">86 Sales</div>
-                                        <div class="product-cta">
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="product-item">
-                                    <div class="product-image">
-                                        <img alt="image" src="assets/img/products/product-1-50.png" class="img-fluid">
-                                    </div>
-                                    <div class="product-details">
-                                        <div class="product-name">Headphone Blitz</div>
-                                        <div class="product-review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                        <div class="text-muted text-small">63 Sales</div>
-                                        <div class="product-cta">
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Top Countries</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="text-title mb-2">July</div>
-                                <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/id.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">Indonesia</div>
-                                            <div class="text-small text-muted">3,282 <i
-                                                    class="fas fa-caret-down text-danger"></i></div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/my.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">Malaysia</div>
-                                            <div class="text-small text-muted">2,976 <i
-                                                    class="fas fa-caret-down text-danger"></i></div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/us.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">United States</div>
-                                            <div class="text-small text-muted">1,576 <i
-                                                    class="fas fa-caret-up text-success"></i></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-6 mt-sm-0 mt-4">
-                                <div class="text-title mb-2">August</div>
-                                <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/id.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">Indonesia</div>
-                                            <div class="text-small text-muted">3,486 <i
-                                                    class="fas fa-caret-up text-success"></i></div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/ps.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">Palestine</div>
-                                            <div class="text-small text-muted">3,182 <i
-                                                    class="fas fa-caret-up text-success"></i></div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        <img class="img-fluid mt-1 img-shadow"
-                                            src="assets/modules/flag-icon-css/flags/4x3/de.svg" alt="image"
-                                            width="40">
-                                        <div class="media-body ml-3">
-                                            <div class="media-title">Germany</div>
-                                            <div class="text-small text-muted">2,317 <i
-                                                    class="fas fa-caret-down text-danger"></i></div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Invoices</h4>
-                        <div class="card-header-action">
-                            <a href="#" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive table-invoice">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th>Invoice ID</th>
-                                        <th>Customer</th>
-                                        <th>Status</th>
-                                        <th>Due Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">INV-87239</a></td>
-                                        <td class="font-weight-600">Kusnadi</td>
-                                        <td>
-                                            <div class="badge badge-warning">Unpaid</div>
-                                        </td>
-                                        <td>July 19, 2018</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">INV-48574</a></td>
-                                        <td class="font-weight-600">Hasan Basri</td>
-                                        <td>
-                                            <div class="badge badge-success">Paid</div>
-                                        </td>
-                                        <td>July 21, 2018</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">INV-76824</a></td>
-                                        <td class="font-weight-600">Muhamad Nuruzzaki</td>
-                                        <td>
-                                            <div class="badge badge-warning">Unpaid</div>
-                                        </td>
-                                        <td>July 22, 2018</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">INV-84990</a></td>
-                                        <td class="font-weight-600">Agung Ardiansyah</td>
-                                        <td>
-                                            <div class="badge badge-warning">Unpaid</div>
-                                        </td>
-                                        <td>July 22, 2018</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">INV-87320</a></td>
-                                        <td class="font-weight-600">Ardian Rahardiansyah</td>
-                                        <td>
-                                            <div class="badge badge-success">Paid</div>
-                                        </td>
-                                        <td>July 28, 2018</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Detail</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-hero">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="far fa-question-circle"></i>
-                        </div>
-                        <h4>14</h4>
-                        <div class="card-description">Customers need help</div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="tickets-list">
-                            <a href="#" class="ticket-item">
-                                <div class="ticket-title">
-                                    <h4>My order hasn't arrived yet</h4>
-                                </div>
-                                <div class="ticket-info">
-                                    <div>Laila Tazkiah</div>
-                                    <div class="bullet"></div>
-                                    <div class="text-primary">1 min ago</div>
-                                </div>
-                            </a>
-                            <a href="#" class="ticket-item">
-                                <div class="ticket-title">
-                                    <h4>Please cancel my order</h4>
-                                </div>
-                                <div class="ticket-info">
-                                    <div>Rizal Fakhri</div>
-                                    <div class="bullet"></div>
-                                    <div>2 hours ago</div>
-                                </div>
-                            </a>
-                            <a href="#" class="ticket-item">
-                                <div class="ticket-title">
-                                    <h4>Do you see my mother?</h4>
-                                </div>
-                                <div class="ticket-info">
-                                    <div>Syahdan Ubaidillah</div>
-                                    <div class="bullet"></div>
-                                    <div>6 hours ago</div>
-                                </div>
-                            </a>
-                            <a href="features-tickets.html" class="ticket-item ticket-more">
-                                View All <i class="fas fa-chevron-right"></i>
-                            </a>
+                            <div class="budget-price-square bg-primary" style="width: 20px;"></div>
+                            <div class="budget-price-label">Giá đã bán</div>
                         </div>
                     </div>
                 </div>
@@ -689,10 +129,347 @@
         </div>
     </section>
 @endsection
+
 @push('scripts')
-    {{-- <script src="{{ asset('backend/assets/js/page/modules-chartjs.js') }}"></script> --}}
-    <script src="{{ asset('backend/assets/modules/jquery.sparkline.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/modules/owlcarousel2/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/modules/chart.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/page/index.js') }}"></script>
+    <script>
+        "use strict";
+        // biểu đồ cột : xủ lý thống kê doanh thu
+        const ctx = document.getElementById("monthlyRevenueChart").getContext("2d");
+        let chart; // Biến để giữ biểu đồ, cập nhật lại khi lọc
+        function loadChart(year) {
+            fetch(`{{ route('admin.revenue.chart') }}?year=${year}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Không lấy được dữ liệu');
+                    return response.json();
+                })
+                .then(({
+                    labels,
+                    data
+                }) => {
+                    if (chart) chart.destroy(); // Xoá chart cũ nếu có
+
+                    chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: `Doanh thu từ ${year}`,
+                                data: data,
+                                backgroundColor: '#6777ef',
+                                borderColor: '#6777ef',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: value => value.toLocaleString('vi-VN') + ' ₫'
+                                    },
+                                    grid: {
+                                        color: '#f2f2f2'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error("Chart error:", error));
+        }
+        // Tải mặc định theo năm hiện tại
+        loadChart(document.getElementById("year").value);
+        // Xử lý form lọc
+        document.getElementById("filterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const year = document.getElementById("year").value;
+            loadChart(year);
+        });
+
+        // biểu đồ tròn: xử lý thống kê đơn hàng
+        const ctx2 = document.getElementById("myChart3").getContext('2d');
+        let myChart = new Chart(ctx2, {
+            // type: 'doughnut',
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [],
+                    backgroundColor: [
+                        '#191d21', '#63ed7a', '#ffa426', '#fc544b', '#6777ef',
+                        '#47c363', '#e83e8c', '#343a40', '#20c997', '#6f42c1'
+                    ],
+                    label: 'Trạng thái đơn hàng'
+                }],
+                labels: []
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        function loadOrderStatistics(month, year) {
+            fetch(`/admin/statistics/orders/data?month=${month}&year=${year}`)
+                .then(response => response.json())
+                .then(data => {
+                    const statusLabels = {
+                        'pending': 'Chờ xác nhận',
+                        'processed_and_ready_to_ship': 'Đang xử lý',
+                        'dropped_off': 'Đang đóng gói',
+                        'shipped': 'Đơn vị vận chuyển lấy hàng',
+                        'delivered': 'Đã giao hàng',
+                        'received': 'Hoàn thành',
+                        'canceled': 'Đã hủy',
+                    };
+
+                    const labels = Object.keys(data).map(key => statusLabels[key] || key);
+                    const values = Object.values(data);
+
+                    const chartWrapper = document.getElementById('chartWrapper');
+                    const chartCanvas = document.getElementById('myChart3');
+                    const chartMessage = document.getElementById('chartMessage');
+
+                    const isEmpty = !values || values.length === 0 || values.every(v => v === 0);
+
+                    if (isEmpty) {
+                        chartCanvas.style.display = "none";
+                        chartMessage.style.display = "block";
+                        chartMessage.innerHTML = `
+                    <div class="text-center text-muted p-5">
+                        <h5>Không có dữ liệu để hiển thị</h5>
+                        <p>Vui lòng chọn tháng khác hoặc thử lại sau.</p>
+                    </div>
+                `;
+                        return;
+                    }
+
+                    // Có dữ liệu, hiển thị lại canvas
+                    chartMessage.style.display = "none";
+                    chartCanvas.style.display = "block";
+
+                    myChart.data.labels = labels;
+                    myChart.data.datasets[0].data = values;
+                    myChart.update();
+                })
+                .catch(error => {
+                    const chartMessage = document.getElementById('chartMessage');
+                    const chartCanvas = document.getElementById('myChart3');
+
+                    chartCanvas.style.display = "none";
+                    chartMessage.style.display = "block";
+                    chartMessage.innerHTML = `
+                <div class="text-center text-danger p-5">
+                    <h5>Lỗi tải dữ liệu thống kê</h5>
+                    <p>${error.message}</p>
+                </div>
+            `;
+                    console.error("Lỗi khi tải thống kê đơn hàng:", error);
+                });
+        }
+        // Tải dữ liệu khi trang vừa load
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            document.getElementById('monthPicker').value = `${year}-${month}`;
+            loadOrderStatistics(month, year);
+        });
+        // Bắt sự kiện submit form lọc
+        document.getElementById('filterForm2').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const monthValue = document.getElementById('monthPicker').value;
+            const [year, month] = monthValue.split('-');
+
+            loadOrderStatistics(month, year);
+        });
+        // thống kê top 10 user mua hàng nhiều nhất
+        // Lấy tất cả các phần tử dropdown-item
+        var items = document.querySelectorAll('.dropdown-item');
+
+        // Lặp qua từng phần tử
+        items.forEach(function(item) {
+            item.addEventListener('click', function() {
+                // Xóa lớp highlight khỏi tất cả các mục
+                items.forEach(function(innerItem) {
+                    innerItem.classList.remove('highlight');
+                });
+
+                // Thêm lớp highlight vào mục đã chọn
+                item.classList.add('highlight');
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterItems = document.querySelectorAll('.dropdown-item[data-filter]');
+            const dropdownBtn = document.getElementById('timeFilterBtn');
+
+            filterItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Lấy filter và cập nhật button
+                    const filterValue = this.getAttribute('data-filter');
+                    const filterLabel = this.textContent.trim();
+                    dropdownBtn.textContent = filterLabel;
+
+                    // Highlight dropdown item
+                    filterItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Gọi hàm fetch dữ liệu và vẽ biểu đồ
+                    loadTopCustomersChart(filterValue);
+                });
+            });
+
+            // Tải dữ liệu mặc định ban đầu (tháng này)
+            loadTopCustomersChart(5);
+        });
+
+        function loadTopCustomersChart(filterValue) {
+            fetch(`/admin/statistics/top-customers?filter=${filterValue}`)
+                .then(res => res.json())
+                .then(data => {
+                    const noDataDiv = document.getElementById('noCustomerData');
+
+                    if (!data || data.length === 0) {
+                        // Hiển thị thông báo HTML
+                        noDataDiv.style.display = 'block';
+
+                        // Xóa biểu đồ nếu đang hiển thị
+                        if (window.topCustomerChart) {
+                            window.topCustomerChart.destroy();
+                            window.topCustomerChart = null;
+                        }
+
+                        return;
+                    }
+
+                    // Ẩn thông báo nếu có dữ liệu
+                    noDataDiv.style.display = 'none';
+
+                    const labels = data.map(customer => customer.name);
+                    const values = data.map(customer => customer.total_products);
+
+                    const ctx = document.getElementById("myChart4").getContext('2d');
+
+                    if (window.topCustomerChart) {
+                        window.topCustomerChart.destroy();
+                    }
+
+                    window.topCustomerChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Số lượng sản phẩm đã mua',
+                                data: values,
+                                fill: false,
+                                borderColor: '#6777ef',
+                                backgroundColor: '#6777ef',
+                                tension: 0.4,
+                                pointBackgroundColor: '#ffffff',
+                                pointBorderColor: '#6777ef',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `${context.dataset.label}: ${context.parsed.y} sản phẩm`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 100
+                                    },
+                                    grid: {
+                                        color: '#f2f2f2',
+                                        drawBorder: false
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        display: true
+                                    },
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Lỗi khi load top khách hàng:", err);
+                });
+        }
+        // top 5 sản phẩm bán chạy
+        fetch('/admin/top-selling?filter=5')
+            .then(response => response.json())
+            .then(data => {
+                const listContainer = document.getElementById('top-selling-list');
+                listContainer.innerHTML = '';
+
+                // Lấy doanh thu cao nhất để tính phần trăm
+                const maxRevenue = Math.max(...data.map(p => p.total_revenue));
+
+                data.forEach(product => {
+                    const revenuePercent = ((product.total_revenue / maxRevenue) * 100).toFixed(0);
+
+                    const li = document.createElement('li');
+                    li.className = 'media';
+
+                    li.innerHTML = `
+                <img class="mr-3 rounded" width="55" src="${product.image}" alt="product">
+                <div class="media-body">
+                    <div class="float-right">
+                        <div class="font-weight-600 text-muted text-small">${product.total_sold} lượt bán</div>
+                    </div>
+                    <div class="media-title">${product.name}</div>
+                    <div class="mt-1">
+                        <div class="budget-price">
+                            <div class="budget-price-square bg-primary" style="width: ${revenuePercent}%;"></div>
+                            <div class="budget-price-label">${formatCurrency(product.total_revenue)}₫</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    listContainer.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi lấy dữ liệu top selling:', error);
+            });
+
+        function formatCurrency(number) {
+            return new Intl.NumberFormat('vi-VN').format(number);
+        }
+    </script>
 @endpush
