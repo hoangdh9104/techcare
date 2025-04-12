@@ -432,6 +432,31 @@
                 }
             })
         })
+
+        // Khi thay đổi biến thể
+        $('select[name="variants_item[]"]').on('change', function() {
+            let variantId = $(this).val();
+
+            if (variantId) {
+                $.ajax({
+                    url: '{{ route('cart.get-variant-qty') }}', // Đường dẫn đến phương thức mới
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        variant_id: variantId
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            let variantQty = response.variant_qty;
+                            // alert('Số lượng biến thể đã có trong giỏ hàng: ' + variantQty);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseJSON.message);
+                    }
+                });
+            }
+        });
     })
 </script>
 @endpush

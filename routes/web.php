@@ -94,6 +94,8 @@ Route::get('cart-products', [CartController::class, 'getCartProduct'])->name('ca
 Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
 Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
+Route::post('/cart/get-variant-qty', [CartController::class, 'getVariantCartQty'])->name('cart.get-variant-qty');
+
 Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 

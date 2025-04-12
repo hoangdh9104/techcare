@@ -35,25 +35,21 @@ class ProductVariantItemController extends Controller
     {
         $request->validate([
             'variant_id' => ['integer', 'required'],
-            'prices' => ['required', 'array'],
-            'quantities' => ['required', 'array'],
+            'name' => ['required', 'max:200'],
+            'price' => ['required', 'integer'],
+            'qty' => ['required', 'integer'],
         ]);
 
-        foreach ($request->prices as $variantItemId => $otherVariants) {
-            foreach ($otherVariants as $otherVariantId => $price) {
-                $quantity = $request->quantities[$variantItemId][$otherVariantId];
-
+       
                 ProductVariantItem::create([
                     'product_variant_id' => $request->variant_id,
-                    'name' => "Tổ hợp: $variantItemId - $otherVariantId",
-                    'price' => $price,
-                    'qty' => $quantity,
-                    'is_default' => 0,
-                    'status' => 1,
+                    'name' => $request->name,
+                    'price' => $request->price,
+                    'qty' => $request->qty,
+                    'is_default' => $request->is_default,
+                    'status' => $request->status,
                 ]);
-            }
-        }
-
+       
         toastr('Tạo mới biến thể thành công!', 'success', 'success');
         return redirect()->route(
             'admin.products-variant-item.index',
