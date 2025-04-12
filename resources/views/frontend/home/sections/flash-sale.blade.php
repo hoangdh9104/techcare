@@ -241,7 +241,7 @@
                                             @endforeach
                                         </select>
                                     @endforeach
-                                    <input name="quantity" type="hidden" min="1" max="100"
+                                    <input name="quantity" type="hidden" min="1" max="9"
                                         value="1" />
                                 </div>
                                 <button class="add_cart" type="submit">add to cart</button>
@@ -356,7 +356,7 @@
                                             <h5>quentity :</h5>
                                             <div class="select_number">
                                                 <input class="number_area" name="quantity" type="text"
-                                                    min="1" max="100" value="1" />
+                                                    min="1" max="9" value="1" />
                                             </div>
                                             {{-- <h3>$50.00</h3> --}}
                                         </div>

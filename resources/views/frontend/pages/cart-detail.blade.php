@@ -75,8 +75,8 @@
                                                 <div class="product_qty_wrapper">
                                                     <button class="btn btn-danger product-decrement">-</button>
                                                     <input class="product-qty" data-rowid="{{ $item->rowId }}"
-                                                        type="text" min="1" max="100"
-                                                        value="{{ $item->qty }}" readonly />
+                                                        type="number" min="1" max="9"
+                                                        value="{{ $item->qty }}"  />
                                                     <button class="btn btn-success product-increment">+</button>
                                                 </div>
                                             </td>
@@ -163,9 +163,17 @@
                 }
             });
             // increment product quantity
-            $('.product-increment').on('click', function() {
+            $('.product-increment').off('click').on('click', function() {
                 let input = $(this).siblings('.product-qty');
-                let quantity = parseInt(input.val()) + 1;
+                let quantity = parseInt(input.val()) ;
+                if (quantity < 9) {
+                  quantity += 1; // Tăng số lượng
+                  input.val(quantity); 
+                } else {
+                    toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm !'); // Thông báo lỗi
+                    isUpdating = false; // Đặt lại trạng thái
+                    return; // Dừng hàm
+                 }
                 let rowId = input.data('rowid');
                 input.val(quantity);
                 $.ajax({
@@ -193,6 +201,46 @@
                     },
                 })
             })
+            //check số lượng sản phẩm giỏ hàng
+            $('.add_cart').on('click', function() {
+    let input = $(this).siblings('.product-qty');
+    let quantityToAdd = parseInt(input.val());
+    let rowId = input.data('rowid');
+
+    // Gọi AJAX để kiểm tra số lượng hiện tại trong giỏ hàng
+    $.ajax({
+        url: "{{ route('cart.check.quantity') }}", // Sử dụng route tương ứng
+        method: 'GET',
+        data: { rowId: rowId },
+        success: function(data) {
+            let currentQuantity = data.currentQuantity; // Số lượng hiện tại trong giỏ hàng
+            let totalQuantity = currentQuantity + quantityToAdd;
+
+            if (totalQuantity > 10) {
+                toastr.error('Bạn chỉ có thể thêm dưới số lượng dưới 10!');
+            } else {
+                // Gửi yêu cầu thêm sản phẩm vào giỏ hàng
+                $.ajax({
+                    url: "{{ route('add-to-cart') }}", // Sử dụng route tương ứng
+                    method: 'POST',
+                    data: {
+                        quantity: quantityToAdd,
+                        rowId: rowId
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                    },
+                    error: function() {
+                        toastr.error('Lỗi thêm vào giỏ hàng.');
+                    }
+                });
+            }
+        },
+        error: function() {
+            toastr.error('Lỗi kiểm tra số lượng.');
+        }
+    });
+});
             // decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');

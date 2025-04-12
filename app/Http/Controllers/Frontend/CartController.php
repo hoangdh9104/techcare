@@ -22,7 +22,7 @@ class CartController extends Controller
         $cartItems = Cart::content();
         if ($cartItems->count() == 0) {
             Session::forget('coupon');
-            toastr('Please add some products to your cart to view this page', 'warning', 'Cart is empty!');
+            toastr('Vui lòng thêm một số sản phẩm vào giỏ hàng của bạn để xem trang này', 'warning', 'Giỏ hàng trống!');
             return redirect()->route('home');
         }
 
@@ -99,6 +99,8 @@ class CartController extends Controller
                 toastr('This product "' . $item->name . '" has been deleted.', 'error');
             }
         }
+       
+        
         // Lấy lại dữ liệu giỏ hàng mới nhất sau khi cập nhật
         $cartItems = Cart::content();
         // banner
@@ -108,16 +110,28 @@ class CartController extends Controller
         return view('frontend.pages.cart-detail', compact('cartItems','cartpage_banner_section'));
     }
     /**
-
+     
      */
+    // lấy số lượng trong giỏ hàng
+    public function checkQuantity(Request $request)
+{
+    $rowId = $request->input('rowId');
+    $currentQuantity = Cart::get($rowId)->qty ?? 0; // Lấy số lượng hiện tại từ giỏ hàng
+
+    return response()->json(['currentQuantity' => $currentQuantity]);
+}
     public function addToCart(Request $request)
     {
         $product = Product::findOrFail($request->product_id);
+        $quantity = (int)$request->quantity;
+        if ($request->quantity > 10) {
+            return response(['status' => "error", 'message' => 'Bạn chỉ được chọn dưới 10 sản phẩm !']);
+        }
         // check product qty
         if ($product->qty == 0) {
-            return response(['status' => "error", 'message' => 'Product stock out!']);
+            return response(['status' => "error", 'message' => 'Sản phẩm đã hết hàng!']);
         } elseif ($product->qty < $request->quantity) {
-            return response(['status' => "error", 'message' => 'Quantity is not available in our stock !']);
+            return response(['status' => "error", 'message' => 'Số lượng không có sẵn trong kho của chúng tôi !']);
         }
         $variant = [];
         $variantTotalAmount = 0;
@@ -149,7 +163,7 @@ class CartController extends Controller
         $cartData['options']['slug'] = $product->slug;
         // dd($cartData);
         Cart::add($cartData);
-        return response(['status' => "success", 'message' => 'Added to cart successfully!']);
+        return response(['status' => "success", 'message' => 'Thêm sản phẩm vào giỏ hàng thành công!']);
     }
 
     // update product qty
@@ -160,13 +174,13 @@ class CartController extends Controller
         $product_id = Cart::get($request->rowId)->id;
         $product = Product::findOrFail($product_id);
         if ($product->qty == 0) {
-            return response(['status' => "error", 'message' => 'Product stock out!']);
+            return response(['status' => "error", 'message' => 'Sản phẩm đã hết hàng!']);
         } elseif ($product->qty < $request->quantity) {
-            return response(['status' => "error", 'message' => 'Quantity is not available in our stock !']);
+            return response(['status' => "error", 'message' => 'Số lượng không có sẵn trong kho của chúng tôi !']);
         }
         Cart::update($request->rowId, $request->quantity); // Will update the quantity
         $productTotal = $this->getProductTotal($request->rowId);
-        return response(['status' => 'success', 'message' => 'Product Quantity Updated', 'productTotal' => $productTotal]);
+        return response(['status' => 'success', 'message' => 'Số lượng sản phẩm được cập nhật', 'productTotal' => $productTotal]);
     }
     /** get product total */
     public function getProductTotal($rowId)
@@ -188,13 +202,13 @@ class CartController extends Controller
     public function clearCart()
     {
         Cart::destroy();
-        return response(['status' => 'success', 'message' => 'Cart cleared successfully ']);
+        return response(['status' => 'success', 'message' => 'Xóa giỏ hàng thành công']);
     }
     /** remove Product form cart */
     public function removeProduct($rowId)
     {
         Cart::remove($rowId);
-        toastr('Product removed successfully', 'success', 'Success');
+        toastr('Đã xóa sản phẩm thành công', 'success', 'Success');
         return redirect()->back();
     }
     /** get cart count */
@@ -211,7 +225,7 @@ class CartController extends Controller
     public function removeSidebarProduct(Request $request)
     {
         Cart::remove($request->rowId);
-        return response(['status' => 'success', 'message' => 'Product removed successfully']);
+        return response(['status' => 'success', 'message' => 'Đã xóa sản phẩm thành công']);
     }
 
     /** Apply coupon */
@@ -254,21 +268,21 @@ class CartController extends Controller
         $couponCode = trim(strip_tags($request->coupon_code));
 
         if (!$couponCode) {
-            return response()->json(['status' => 'error', 'message' => 'Coupon field is required']);
+            return response()->json(['status' => 'error', 'message' => 'Trường phiếu giảm giá là bắt buộc']);
         }
     
         $coupon = Coupon::where('code', $couponCode)->where('status', 1)->first();
     
         if (!$coupon || $coupon->start_date > Carbon::today() || $coupon->end_date < Carbon::today()) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid or expired coupon!']);
+            return response()->json(['status' => 'error', 'message' => 'Phiếu giảm giá không hợp lệ hoặc đã hết hạn!']);
         }
     
         if ($coupon->total_used >= $coupon->quantity) {
-            return response()->json(['status' => 'error', 'message' => 'This coupon has been fully used!']);
+            return response()->json(['status' => 'error', 'message' => 'Phiếu giảm giá này đã được sử dụng hết!']);
         }
     
         if (Session::has('applied_coupon')) {
-            return response()->json(['status' => 'error', 'message' => 'You can only use one coupon at a time!']);
+            return response()->json(['status' => 'error', 'message' => 'Bạn chỉ có thể sử dụng một phiếu giảm giá tại một thời điểm!']);
         }
     
         // Áp dụng mã giảm giá vào session

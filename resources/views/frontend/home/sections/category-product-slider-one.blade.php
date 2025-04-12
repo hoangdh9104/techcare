@@ -100,14 +100,14 @@
                                         <select class="d-none" name="variants_item[]">
                                             @foreach ($variant->productVariantItem as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                    {{ $item->is_default == 1 ? 'selected' : '' }}> 
                                                     {{ $item->name }} (${{ $item->price }})
                                                 </option>
                                             @endforeach
                                         </select>
                                     @endforeach
-                                    <input name="quantity" type="hidden" min="1" max="100"
-                                        value="1" />
+                                    <input name="quantity" type="hidden" min="1" max="9"
+                                        value="1" class="product-qty" data-rowid="{{ $item->rowId }}" />
                                 </div>
                                 <button class="add_cart" type="submit">add to cart</button>
 

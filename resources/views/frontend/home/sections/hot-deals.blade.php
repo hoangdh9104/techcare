@@ -87,7 +87,7 @@
                                                     @endforeach
                                                 </select>
                                             @endforeach
-                                            <input name="quantity" type="hidden" min="1" max="100"
+                                            <input name="quantity" type="hidden" min="1" max="9"
                                                 value="1" />
                                         </div>
                                         <button class="add_cart" type="submit">add to cart</button>
@@ -233,7 +233,7 @@
                                                 @endforeach
                                             </select>
                                         @endforeach
-                                        <input name="quantity" type="hidden" min="1" max="100"
+                                        <input name="quantity" type="hidden" min="1" max="9"
                                             value="1" />
                                     </div>
                                     <button class="add_cart" type="submit">add to cart</button>
