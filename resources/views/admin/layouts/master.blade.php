@@ -38,6 +38,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
     {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
     @if ($settings->layout == 'RTL')
@@ -49,9 +50,9 @@
         const USER = {
             id: "{{auth()->user()->id}}",
             name: "{{auth()->user()->name}}",
-            image: "{{ asset(auth()->user()->image)}}", 
+            image: "{{ asset(auth()->user()->image)}}",
         }
-    </script> 
+    </script>
 
     @vite(['resources/js/app.js'])
 </head>

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
     {{-- toastr css --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
 
@@ -31,7 +32,7 @@
      @if($settings->layout == 'RTL')
      <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
      @endif
-    
+
      {{-- Pusher --}}
 
      @vite(['resources/js/app.js'])
