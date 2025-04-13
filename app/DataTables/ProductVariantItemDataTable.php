@@ -45,9 +45,9 @@ class ProductVariantItemDataTable extends DataTable
             })
             ->addColumn('is_default', function ($query) {
                 if ($query->is_default == 1) {
-                    return '<i class="badge badge-success">defalut</i>';
+                    return '<i class="badge badge-success">Có</i>';
                 } else {
-                    return '<i class="badge badge-danger">no</i>';
+                    return '<i class="badge badge-danger">Không</i>';
                 }
             })
             ->addColumn('variant_name', function ($query) {
@@ -91,22 +91,23 @@ class ProductVariantItemDataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-    {
-        return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('variant_name'),
-            Column::make('price'),
-            Column::make('is_default'),
-            Column::make('status'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(200)
-                ->addClass('text-center'),
-        ];
-    }
-
+{
+    return [
+        Column::make('id')->title('STT'),
+        Column::make('name')->title('Tên'),
+        Column::make('variant_name')->title('Tên biến thể'),
+        Column::make('price')->title('Giá'),
+        Column::make('qty')->title('Tồn kho'),
+        Column::make('is_default')->title('Mặc định'),
+        Column::make('status')->title('Trạng thái'),  
+        Column::computed('action')
+            ->title('Hành động')
+            ->exportable(false)
+            ->printable(false)
+            ->width(200)
+            ->addClass('text-center'),
+    ];
+}
     /**
      * Get the filename for export.
      */

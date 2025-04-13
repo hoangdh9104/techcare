@@ -135,3 +135,9 @@ function getFinalPayableAmount()
 {
     return getMainCartTotal() + getShippingFee();
 }
+function getCurrencyIcon()
+{
+    $icon = GeneralSetting::first();
+
+    return $icon->currency_icon;
+}

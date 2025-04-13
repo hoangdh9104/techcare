@@ -47,35 +47,13 @@
     @endif
 
 
-    <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
+        const USER = {
+            id: "{{auth()->user()->id}}",
+            name: "{{auth()->user()->name}}",
+            image: "{{ asset(auth()->user()->image)}}", 
         }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
-    </script>
-    <!-- /END GA -->
-
-    {{-- @if ($settings->layout === 'RTL')
-  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
-  @endif --}}
-
-    {{-- <script>
-    const USER = {
-        id: "{{ auth()->user()->id }}",
-        name: "{{ auth()->user()->nmae }}",
-        image: "{{ asset(auth()->user()->image) }}"
-    }
-    const PUSHER = {
-        key: "{{ $pusherSetting->pusher_key }}",
-        cluster: "{{ $pusherSetting->pusher_cluster }}"
-    }
-  </script> --}}
+    </script> 
 
     @vite(['resources/js/app.js'])
 </head>

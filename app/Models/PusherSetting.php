@@ -9,11 +9,11 @@ class PusherSetting extends Model
 {
     use HasFactory;
 
-    protected $fillable =
-    [
+    protected $fillable = [
+        'id',
         'pusher_app_id',
         'pusher_key',
         'pusher_secret',
-        'pusher_cluster',
+        'pusher_cluster'
     ];
 }

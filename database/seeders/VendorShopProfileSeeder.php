@@ -25,5 +25,6 @@ class VendorShopProfileSeeder extends Seeder
         $vendor->user_id =$user->id;
         $vendor->status =1;
         $vendor->save();
+        $vendor->status =1;
     }
 }

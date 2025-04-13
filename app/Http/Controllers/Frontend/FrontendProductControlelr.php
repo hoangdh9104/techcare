@@ -85,7 +85,6 @@ class FrontendProductControlelr extends Controller
                         $query->where('name', 'LIKE', '%' . $request->search . '%')
                             ->orWhere('long_description', 'LIKE', '%' . $request->search . '%');
                     });
-
             })->paginate(12);
         } else {
             $products = Product::where(['status' => 1, 'is_approved' => 1])->orderBy('id', 'DESC')->paginate(12);
@@ -99,14 +98,43 @@ class FrontendProductControlelr extends Controller
         $productpage_banner_section = json_decode($productpage_banner_section?->value);
 
 
-        return view('frontend.pages.product', compact('products', 'categories', 'brands','productpage_banner_section'));
+        return view('frontend.pages.product', compact('products', 'categories', 'brands', 'productpage_banner_section'));
     }
     // show product detail page
     public function showProduct(string $slug)
     {
-        $product = Product::with(['category', 'productImageGalleries', 'variants', 'brand', 'vendor'])->where('slug', $slug)->where('status', 1)->first();
-        $reviews = ProductReview::where('product_id', $product->id)->where('status', 1)->paginate(10);
-        return view('frontend.pages.product-detail', compact('product', 'reviews'));
+        $product = Product::with([
+            'category',
+            'productImageGalleries',
+            'variants.productVariantItem',
+            'brand',
+            'vendor'
+        ])
+        ->where('slug', $slug)
+        ->where('status', 1)
+        ->firstOrFail();
+        
+        $reviews = ProductReview::where('product_id', $product->id)
+            ->where('status', 1)
+            ->paginate(10);
+        
+        // Tính tổng tồn kho
+        $totalQty = 0;
+        $variantStockMap = [];
+        if ($product->variants && $product->variants->isNotEmpty()) {
+            foreach ($product->variants as $variant) {
+                foreach ($variant->productVariantItem as $item) {
+                    $totalQty += $item->qty ?? 0;
+                    $variantStockMap[$item->id] = $item->qty ?? 0;
+                }
+            }
+        } else {
+            $totalQty = $product->qty ?? 0;
+        }
+        
+        return view('frontend.pages.product-detail', compact('product', 'reviews', 'totalQty', 'variantStockMap'));
+        
+        
     }
 
     public function changeListView(Request $request)

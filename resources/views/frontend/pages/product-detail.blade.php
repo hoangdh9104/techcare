@@ -67,11 +67,11 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
+                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
                                 item)
                             </p>
                         @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $product->qty }}
+                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
                                 item)
                             </p>
                         @endif
@@ -115,13 +115,18 @@
                                                 <h5 class="mb-2">{{ $variant->name }}</h5>
                                                 <select class="select_2" name="variants_item[]">
                                                     @foreach ($variant->productVariantItem as $item)
-                                                        @if ($item->status != 0)
+                                                        @php
+                                                            $stockQty = $variantStockMap[$item->id] ?? 0;
+                                                        @endphp
+
+                                                        @if ($item->status != 0 && $stockQty > 0)
                                                             <option value="{{ $item->id }}"
                                                                 {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                 {{ $item->name }} (${{ $item->price }})
                                                             </option>
                                                         @endif
                                                     @endforeach
+
                                                 </select>
                                             </div>
                                         @endif

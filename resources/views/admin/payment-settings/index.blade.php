@@ -21,6 +21,7 @@
                         <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab">Paypal</a>
                         <a class="list-group-item list-group-item-action" id="list-stripe-list" data-toggle="list" href="#list-stripe" role="tab">Stripe</a>
                         <a class="list-group-item list-group-item-action" id="list-momo-list" data-toggle="list" href="#list-momo" role="tab">Momo</a>
+                        <a class="list-group-item list-group-item-action" id="list-vnpay-list" data-toggle="list" href="#list-vnpay" role="tab">VNpay</a>
                         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">COD</a>
                       </div>
                     </div>
@@ -32,8 +33,11 @@
 
                         @include('admin.payment-settings.sections.momo-setting')
 
+                        @include('admin.payment-settings.sections.vnpay-setting')
+
+
                         @include('admin.payment-settings.sections.cod-setting')
-                        
+
                       </div>
                     </div>
                   </div>
@@ -44,4 +48,4 @@
     </div>
 </section>
 @endsection
-h
+
