@@ -123,6 +123,12 @@
                                                 <option {{ $order->payment_status === 1 ? 'selected' : '' }}
                                                     value="1">
                                                     Completed</option>
+                                                @if ($order->order_status === 'canceled' && $order->payment_method !== 'COD')
+                                                    <option {{ $order->payment_status === 1 ? 'selected' : '' }}
+                                                        value="2">
+                                                        Đã hoàn tiền
+                                                    </option>
+                                                @endif
                                             </select>
                                         </div>
 
@@ -141,6 +147,12 @@
                                             <label for="cancel_reason">Reason for cancellation</label>
                                             <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3"
                                                 placeholder="Enter reason for cancellation..."></textarea>
+                                        </div>
+                                        <!-- Ô nhập lý do tại sao đã được giao -->
+                                        <div class="form-group" id="delivered_reason_box" style="display: none;">
+                                            <label for="delivered_reason">Lý do đã được giao</label>
+                                            <textarea name="delivered_reason" id="delivered_reason" class="form-control" data-width="500px" rows="8"
+                                                placeholder="VD: Đơn hàng đã được giao bởi ai, đã thanh toán hay chưa..."></textarea>
                                         </div>
 
                                         <button type="button" id="update_status_btn" class="btn btn-primary">Save Order
@@ -247,6 +259,13 @@
                     $('#cancel_reason_box').hide(); // Hide it for other statuses
                     $('#cancel_reason').val(""); // Clear the input if status changes
                 }
+                if (status === 'delivered') {
+                    $('#delivered_reason_box').show(); // Hiển thị ô nhập lý do 'Lý do đã giao'
+                } else {
+                    $('#delivered_reason_box').hide(); // Ẩn ô nhập lý do cho các trạng thái khác
+                    $('#delivered_reason').val(
+                        ""); // Xóa giá trị trong ô nhập lý do nếu trạng thái thay đổi
+                }
             });
 
             // Handle status update when the button is clicked
@@ -254,6 +273,7 @@
                 let status = $('#order_status').val();
                 let id = $('#order_status').data('id');
                 let reason = $('#cancel_reason').val().trim(); // Get reason and remove extra spaces
+                let reason2 = $('#delivered_reason').val().trim(); // Get reason and remove extra spaces
 
                 // Validate reason if the status is "canceled"
                 if (status === 'canceled' && reason === '') {
@@ -269,7 +289,8 @@
                         _token: "{{ csrf_token() }}", // CSRF security token
                         status: status,
                         id: id,
-                        cancel_reason: reason
+                        cancel_reason: reason,
+                        delivered_reason: reason2 // Include delivered reason if status is delivered
                     },
                     beforeSend: function() {
                         $('#update_status_btn').prop('disabled', true).text('Updating...');

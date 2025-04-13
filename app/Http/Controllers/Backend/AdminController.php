@@ -249,16 +249,17 @@ class AdminController extends Controller
 
         // Truy vấn lấy 5 sản phẩm bán chạy nhất trong khoảng thời gian
         $topSellingProducts = OrderProduct::select(
-            'product_id',
-            DB::raw('SUM(qty) as total_sold'),
-            DB::raw('SUM(qty * (unit_price + variant_total)) as total_revenue')
+            'order_products.product_id',
+            DB::raw('SUM(order_products.qty) as total_sold'),
+            DB::raw('SUM(order_products.qty * (order_products.unit_price + order_products.variant_total)) as total_revenue')
         )
-            ->whereBetween('created_at', [$from, $to])
-            ->groupBy('product_id')
+            ->join('orders', 'orders.id', '=', 'order_products.order_id')
+            ->where('orders.order_status', 'received') // lọc trạng thái đơn hàng
+            ->whereBetween('orders.updated_at', [$from, $to])
+            ->groupBy('order_products.product_id')
             ->orderByDesc('total_sold')
             ->take(5)
             ->get();
-
         // Lấy thông tin sản phẩm
         $topSellingProductsWithDetails = $topSellingProducts->map(function ($orderProduct) {
             $product = Product::find($orderProduct->product_id);
