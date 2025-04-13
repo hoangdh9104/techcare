@@ -33,8 +33,8 @@
                     {{--
                      --}}
 
-                    <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li>
+                    {{-- <li class="{{ setActive(['admin.vendor-condition.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li> --}}
 
                     <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link"
                             href="{{ route('admin.about.index') }}">About Page</a></li>
@@ -53,15 +53,15 @@
                     <span>Quản lí bài viết</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.blog-category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.blog-category.index') }}">Category Blog</a></li>
+                            href="{{ route('admin.blog-category.index') }}">Danh mục bài viết</a></li>
                     <li class="{{ setActive(['admin.blog.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.blog.index') }}">All Blog</a></li>
+                            href="{{ route('admin.blog.index') }}">Tất cả bài viết</a></li>
                 </ul>
             </li>
             {{-- Manage Order --}}
             <li><a class="nav-link {{ setActive(['admin.messages.index']) }}"
                     href="{{ route('admin.messages.index') }}"><i class="fa-solid fa-message"></i>
-                    <span>Messages</span></a></li>
+                    <span>Tin nhắn</span></a></li>
 
             <li
                 class="dropdown {{ setActive([
@@ -81,7 +81,7 @@
                     <span>Quản lí đặt hàng</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.order.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.order.index') }}">All Orders</a></li>
+                            href="{{ route('admin.order.index') }}">Tất cả đơn hàng</a></li>
                     <li class="{{ setActive(['admin.pending-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.pending-orders') }}">All Pending Orders</a></li>
                     <li class="{{ setActive(['admin.processed-orders']) }}"><a class="nav-link"
@@ -158,13 +158,13 @@
                     </span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.flash-sale.index') }}">Flash Sale</a></li>
+                            href="{{ route('admin.flash-sale.index') }}">Giảm gía chớp nhoáng</a></li>
                     {{-- <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-profile.index') }}">Vender Profile</a></li> --}}
                     {{-- <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
                             href="{{ route('admin.shipping-rule.index') }}">Shipping Rule</a></li> --}}
                     <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.payment-settings.index') }}">Payment Settings</a></li>
+                            href="{{ route('admin.payment-settings.index') }}">Cài đặt thanh toán</a></li>
                 </ul>
             </li>
             {{-- <li class="dropdown {{ setActive(['admin.withdraw-method.*', 'admin.withdraw.index']) }}">
@@ -204,11 +204,11 @@
                     <li class="{{ setActive(['admin.customer.index']) }}"><a class="nav-link"
                             href="{{ route('admin.customer.index') }}">Danh sách khách hàng</a></li>
 
-                    <li class="{{ setActive(['admin.vendor-list.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.vendor-list.index') }}">Vendor list</a></li>
-
+                    {{-- <li class="{{ setActive(['admin.vendor-list.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-list.index') }}">Vendor list</a></li> --}}
+{{--
                     <li class="{{ setActive(['admin.vendor-requests.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a></li>
+                            href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a></li> --}}
 
 
 
