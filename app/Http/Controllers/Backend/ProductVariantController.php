@@ -36,7 +36,14 @@ class ProductVariantController extends Controller
     {
         $request->validate([
             'product' => ['integer', 'required'],
-            'name' => ['required', 'max:200', Rule::unique('product_variants', 'name')],
+            'name' => [
+                'required',
+                'max:200',
+                Rule::unique('product_variants', 'name')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('product_id', $request->product);
+                    }),
+            ],
             'status' => ['required']
         ]);
 

@@ -168,8 +168,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
 
     Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
-
-
+    Route::post('orders/{id}/received', [UserOrderController::class, 'markAsReceived'])->name('orders.received');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -200,6 +199,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Xử lý khi thanh toán thành công hoặc thất bại từ VNPay redirect về
     Route::get('/vnpay/return', [PaymentController::class, 'vnpaySuccess'])->name('vnpay.success');
 
+// Route::middleware(['auth', 'role:shipper'])->group(function () {
+//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+// });
     // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
     Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });

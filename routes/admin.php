@@ -52,9 +52,11 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VnpaySettingController;
 use Illuminate\Support\Facades\Route;
 
+
+
 // admin routes
 Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
+Route::get('ecommerce-dashboard', [AdminController::class, 'ecommerceDashboard'])->name('ecommerceDashboard');
 // Profile routes
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
@@ -225,8 +227,13 @@ Route::put('about/update', [AbountController::class, 'update'])->name('about.upd
 //terms and conditions route
 Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
-
 // Message route
+Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
 Route::get('messages',[MessageController::class,'index'])->name('messages.index');
 Route::get('get-messages',[MessageController::class,'getMessages'])->name('get-messages');
 Route::post('send-message',[MessageController::class,'sendMessage'])->name('send-message');
+// statistic
+Route::get('revenue/chart', [AdminController::class, 'getMonthlyRevenueChart'])->name('revenue.chart');
+Route::get('statistics/orders/data', [AdminController::class, 'getMonthlyOrderStatistics'])->name('statistics.orders.data');
+Route::get('statistics/top-customers', [AdminController::class, 'topCustomers'])->name('statistics.top-customers');
+Route::get('/top-selling', [AdminController::class, 'showTopSelling'])->name('top-selling');

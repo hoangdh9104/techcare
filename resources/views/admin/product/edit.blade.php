@@ -99,7 +99,6 @@
                                     <input type="text" class="form-control" name="price"
                                         value="{{ $product->price }}">
                                 </div>
-
                                 <div class="form-group">
                                     <label>Giá khuyến mại</label>
                                     <input type="text" class="form-control" name="offer_price"
@@ -127,20 +126,15 @@
                                     <label>Tồn kho</label>
                                     <input type="number" min="0" class="form-control" name="qty" value="{{ $totalQty }}" readonly>
                                 </div>
-                                
                                 <div class="form-group">
                                     <label>Video Link</label>
                                     <input type="text" class="form-control" name="video_link"
                                         value="{{ $product->video_link }}">
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Mô tả ngắn</label>
                                     <textarea name="short_description" class="form-control">{!! $product->short_description !!}</textarea>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Mô tả chi tiết</label>
                                     <textarea name="long_description" class="form-control summernote">{!! $product->long_description !!}</textarea>

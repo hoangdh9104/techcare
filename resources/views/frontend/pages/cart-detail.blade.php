@@ -29,6 +29,9 @@
                             <table>
                                 <tbody>
                                     <tr class="d-flex">
+                                        <th class="wsus__pro_tk">
+                                            N.O
+                                        </th>
                                         <th class="wsus__pro_img">
                                             product item
                                         </th>
@@ -36,9 +39,7 @@
                                         <th class="wsus__pro_name">
                                             product details
                                         </th>
-                                        <th class="wsus__pro_tk">
-                                            price
-                                        </th>
+
                                         <th class="wsus__pro_tk">
                                             total
                                         </th>
@@ -48,9 +49,13 @@
                                         <th class="wsus__pro_icon">
                                             <a href="#" class="common_btn clear_cart">clear cart</a>
                                         </th>
+
                                     </tr>
                                     @foreach ($cartItems as $item)
                                         <tr class="d-flex">
+                                            <td class="wsus__pro_tk">
+                                                <p>{{ $loop->iteration }}</p>
+                                            </td>
                                             <td class="wsus__pro_img"><img src="{{ asset($item->options->img) }}"
                                                     alt="{{ $item->name }}" class="img-fluid w-100">
                                             </td>
@@ -62,9 +67,7 @@
                                                         {{ $settings->currency_icon . $variant['price'] }}</span>
                                                 @endforeach
                                             </td>
-                                            <td class="wsus__pro_tk">
-                                                <p>{{ $settings->currency_icon . $item->price }}</p>
-                                            </td>
+
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
                                                     {{ $settings->currency_icon . ($item->price + $item->options->variants_total) * $item->qty }}
@@ -85,6 +88,7 @@
                                                 <a href="{{ route('cart.remove-product', $item->rowId) }}"><i
                                                         class="far fa-times"></i></a>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                     @if (count($cartItems) == 0)
@@ -107,7 +111,6 @@
                         </p>
                         <p class="total"><span>total:</span> <span
                                 id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span>
-
                             </p>
                              @if (session()->has('coupon_code'))
                                     <p>Applied Coupon: {{ session('coupon_code') }}</p>

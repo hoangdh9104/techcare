@@ -9,6 +9,8 @@ use App\Models\OrderStatusHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\TrelloTrait;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderReceivedMail;
 
 class UserOrderController extends Controller
 {
@@ -53,9 +55,41 @@ class UserOrderController extends Controller
             'order_id' => $order->id,
             'status' => 'canceled',
             'updated_by' => auth()->id(),
-            'reason' => 'Reason: ' . $request->reason
+            'reason' => 'Reason: ' . $request->reason,
+            'changed_at' => now()
         ]);
 
         return response()->json(['status' => 'success', 'message' => 'Order has been canceled and saved to history successfully!']);
+    }
+    public function markAsReceived($id)
+    {
+        $order = Order::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        if ($order->order_status !== 'delivered') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Only confirmed orders can be delivered.'
+            ]);
+        }
+
+        $order->update([
+            'order_status' => 'received',
+            'updated_at' => now(),
+        ]);
+        // Lưu vào lịch sử trạng thái đơn hàng
+        OrderStatusHistory::create([
+            'order_id' => $order->id,
+            'status' => 'received',
+            'updated_by' => auth()->id(),
+            'reason' => 'Reason: Order has been confirmed by ' . auth()->user()->name,
+            'changed_at' => now()
+        ]);
+        // Gửi email xác nhận
+        Mail::to(auth()->user()->email)->send(new OrderReceivedMail($order));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Thank you for your confirmation. The order has been marked as complete.'
+        ]);
     }
 }

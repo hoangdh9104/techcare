@@ -25,11 +25,17 @@ class UserOrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-
                 // Kiểm tra nếu đơn hàng có thể hủy
                 if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
-                    $cancelBtn = "<button data-id='{$query->id}' class='btn btn-danger cancel-order'><i class='fas fa-times'></i></button>";
+                    $cancelBtn = "<button data-id='{$query->id}' class='btn btn-outline-danger btn-sm cancel-order'>
+                    <i class='fas fa-times'></i> Cancel Order
+                  </button>";
                     return $showBtn . ' ' . $cancelBtn;
+                } elseif (in_array($query->order_status, ['delivered'])) {
+                    $receivedBtn = "<button data-id='{$query->id}' class='btn btn-outline-success btn-sm confirm-received'>
+                        <i class='fas fa-check'></i> Confirm received
+                    </button>";
+                    return $showBtn . ' ' . $receivedBtn;
                 }
 
                 return $showBtn;
@@ -140,7 +146,7 @@ class UserOrderDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(250)
                 ->addClass('text-center'),
         ];
     }
