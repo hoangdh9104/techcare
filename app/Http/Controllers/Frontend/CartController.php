@@ -231,93 +231,90 @@ class CartController extends Controller
     /** Apply coupon */
     public function applyCoupon(Request $request)
     {
-        // if ($request->coupon_code === null) {
-        //     return response(['status' => 'error', 'message' => 'Coupon filed is required']);
-        // }
-
-        // $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
-
-        // if ($coupon === null) {
-        //     return response(['status' => 'error', 'message' => 'Coupon not exist!']);
-        // } elseif ($coupon->start_date > date('Y-m-d')) {
-        //     return response(['status' => 'error', 'message' => 'Coupon not exist!']);
-        // } elseif ($coupon->end_date < date('Y-m-d')) {
-        //     return response(['status' => 'error', 'message' => 'Coupon is expired']);
-        // } elseif ($coupon->total_used >= $coupon->quantity) {
-        //     return response(['status' => 'error', 'message' => 'you can not apply this coupon']);
-        // }
-
-        // if ($coupon->discount_type === 'amount') {
-        //     Session::put('coupon', [
-        //         'coupon_name' => $coupon->name,
-        //         'coupon_code' => $coupon->code,
-        //         'discount_type' => 'amount',
-        //         'discount' => $coupon->discount
-        //     ]);
-        // } elseif ($coupon->discount_type === 'percent') {
-        //     Session::put('coupon', [
-        //         'coupon_name' => $coupon->name,
-        //         'coupon_code' => $coupon->code,
-        //         'discount_type' => 'percent',
-        //         'discount' => $coupon->discount
-        //     ]);
-        // }
-
-        // return response(['status' => 'success', 'message' => 'Coupon applied successfully!']);
-
         $couponCode = trim(strip_tags($request->coupon_code));
 
         if (!$couponCode) {
-            return response()->json(['status' => 'error', 'message' => 'Trường phiếu giảm giá là bắt buộc']);
+            return response()->json(['status' => 'error', 'message' => 'Vui lòng nhập mã giảm giá']);
+
         }
-    
+
         $coupon = Coupon::where('code', $couponCode)->where('status', 1)->first();
-    
-        if (!$coupon || $coupon->start_date > Carbon::today() || $coupon->end_date < Carbon::today()) {
-            return response()->json(['status' => 'error', 'message' => 'Phiếu giảm giá không hợp lệ hoặc đã hết hạn!']);
+
+
+        if (!$coupon) {
+            return response()->json(['status' => 'error', 'message' => 'Mã giảm giá không hợp lệ!']);
+
         }
-    
+
+        if (Carbon::parse($coupon->start_date)->isAfter(Carbon::today()) || Carbon::parse($coupon->end_date)->isBefore(Carbon::today())) {
+            return response()->json(['status' => 'error', 'message' => 'Mã giảm giá đã hết hạn hoặc chưa được kích hoạt!']);
+        }
+
         if ($coupon->total_used >= $coupon->quantity) {
-            return response()->json(['status' => 'error', 'message' => 'Phiếu giảm giá này đã được sử dụng hết!']);
+
+            return response()->json(['status' => 'error', 'message' => 'Mã giảm giá này đã được sử dụng hết!']);
+
         }
-    
+
+        // Xóa session mã giảm giá cũ nếu có
         if (Session::has('applied_coupon')) {
-            return response()->json(['status' => 'error', 'message' => 'Bạn chỉ có thể sử dụng một phiếu giảm giá tại một thời điểm!']);
+
+            Session::forget('applied_coupon');
         }
-    
-        // Áp dụng mã giảm giá vào session
+
+        $subTotal = $this->cartTotal();
+        $discount = 0;
+
+        if ($coupon->discount_type === 'amount') {
+            $discount = min($coupon->discount, $subTotal); // Đảm bảo giảm giá không vượt quá tổng tiền
+        } elseif ($coupon->discount_type === 'percent') {
+            $discount = ($subTotal * $coupon->discount / 100);
+        }
+
         Session::put('applied_coupon', [
             'coupon_name' => $coupon->name,
             'coupon_code' => $coupon->code,
             'discount_type' => $coupon->discount_type,
-            'discount' => $coupon->discount
+            'discount' => $discount
         ]);
-    
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Coupon applied successfully!',
-            'discount' => $coupon->discount,
+            'message' => 'Áp dụng mã giảm giá thành công!',
+            'discount' => $discount,
             'discount_type' => $coupon->discount_type
         ]);
     }
 
-    /** Calculate coupon discount */
     public function couponCalculation()
     {
-        if (Session::has('coupon')) {
-            $coupon = Session::get('coupon');
-            $subTotal = getCartTotal();
-            if ($coupon['discount_type'] === 'amount') {
-                $total = max(0, $subTotal - $coupon['discount']);
-                return response(['status' => 'success', 'cart_total' => $total, 'discount' => $coupon['discount']]);
-            } elseif ($coupon['discount_type'] === 'percent') {
-                $discount = ($subTotal * $coupon['discount'] / 100);
-                $total = $subTotal - $discount;
-                return response(['status' => 'success', 'cart_total' => $total, 'discount' => $discount]);
-            }
+        if (Session::has('applied_coupon')) {
+            $coupon = Session::get('applied_coupon');
+            $subTotal = $this->cartTotal();
+
+            $discount = $coupon['discount'];
+            $total = max(0, $subTotal - $discount); // Đảm bảo tổng tiền không âm
+
+            return response(['status' => 'success', 'cart_total' => $total, 'discount' => $discount]);
         } else {
-            $total = getCartTotal();
+            $total = $this->cartTotal();
             return response(['status' => 'success', 'cart_total' => $total, 'discount' => 0]);
         }
+    }
+
+    public function checkout()
+    {
+        $cartItems = Cart::content();
+        $subTotal = $this->cartTotal();
+        $discount = 0;
+
+        if (Session::has('applied_coupon')) {
+            $coupon = Session::get('applied_coupon');
+            $discount = $coupon['discount'];
+        }
+
+        $total = max(0, $subTotal - $discount); // Đảm bảo tổng tiền không âm
+
+        return view('frontend.pages.checkout', compact('cartItems', 'subTotal', 'discount', 'total'));
     }
 }

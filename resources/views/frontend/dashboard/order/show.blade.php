@@ -20,6 +20,12 @@
     .table th,
     .table td {
         vertical-align: middle;
+        padding: 0.75rem;
+    }
+
+    .table .btn {
+        font-size: 0.85rem;
+        padding: 4px 10px;
     }
 
     .badge {
@@ -29,8 +35,8 @@
 </style>
 @section('content')
     <!--=============================
-                                                                                                    DASHBOARD START
-                                                                                                  ==============================-->
+                                                                                                                                                                                                                                                            DASHBOARD START
+                                                                                                                                                                                                                                                          ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -42,8 +48,8 @@
                         <div class="wsus__dashboard_profile">
 
                             <!--============================
-                                                                                                                        INVOICE PAGE START
-                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                INVOICE PAGE START
+                                                                                                                                                                                                                                                                            ==============================-->
                             <section id="" class="invoice-print">
                                 <div class="">
                                     <div class="wsus__invoice_area">
@@ -89,59 +95,80 @@
                                             <div class="wsus__invoice_description">
                                                 <div class="table-responsive">
                                                     <table class="table">
-                                                        <tr>
-                                                            <th class="name">
-                                                                product
-                                                            </th>
-                                                            <th class="amount">
-                                                                Vendor
-                                                            </th>
-
-                                                            <th class="amount">
-                                                                amount
-                                                            </th>
-
-                                                            <th class="quentity">
-                                                                quantity
-                                                            </th>
-                                                            <th class="total">
-                                                                total
-                                                            </th>
-                                                        </tr>
-                                                        @foreach ($order->orderProducts as $product)
-                                                            @php
-                                                                $variants = json_decode($product->variants);
-                                                            @endphp
+                                                        <thead>
                                                             <tr>
-                                                                <td class="name">
-                                                                    <p>{{ $product->product_name }}</p>
-                                                                    @foreach ($variants as $key => $item)
-                                                                        <span>{{ $key }} :
-                                                                            {{ $item->name }}(
-                                                                            {{ $settings->currency_icon }}{{ $item->price }}
-                                                                            )</span>
-                                                                    @endforeach
-                                                                </td>
-                                                                <td class="amount">
-                                                                    {{ $product->vendor->shop_name }}
-                                                                </td>
-                                                                <td class="amount">
-                                                                    {{ $settings->currency_icon }}
-                                                                    {{ $product->unit_price }}
-                                                                </td>
+                                                                <th class="name">
+                                                                    product
+                                                                </th>
+                                                                <th class="amount">
+                                                                    Vendor
+                                                                </th>
 
-                                                                <td class="quentity">
-                                                                    {{ $product->qty }}
-                                                                </td>
-                                                                <td class="total">
-                                                                    {{ $settings->currency_icon }}
-                                                                    {{ $product->unit_price * $product->qty }}
-                                                                </td>
+                                                                <th class="amount">
+                                                                    amount
+                                                                </th>
+
+                                                                <th class="quentity">
+                                                                    quantity
+                                                                </th>
+                                                                <th class="total">
+                                                                    total
+                                                                </th>
+                                                                <th class="name"
+                                                                    class="{{ $order->order_status === 'received' ? '' : 'd-none' }}">
+                                                                    Review</th>
                                                             </tr>
-                                                        @endforeach
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($order->orderProducts as $product)
+                                                                @php
+                                                                    $variants = json_decode($product->variants);
+                                                                    $productUrl = route(
+                                                                        'product-detail',
+                                                                        $product->product->slug,
+                                                                    );
+                                                                @endphp
+                                                                <tr>
+                                                                    <td class="name">
+                                                                        <p>{{ $product->product_name }}</p>
+                                                                        @foreach ($variants as $key => $item)
+                                                                            <span>{{ $key }} :
+                                                                                {{ $item->name }}(
+                                                                                {{ $settings->currency_icon }}{{ $item->price }}
+                                                                                )</span>
+                                                                        @endforeach
+                                                                    </td>
+                                                                    <td class="amount">
+                                                                        {{ $product->vendor->shop_name }}
+                                                                    </td>
+                                                                    <td class="amount">
+                                                                        {{ $settings->currency_icon }}
+                                                                        {{ $product->unit_price }}
+                                                                    </td>
+
+                                                                    <td class="quentity">
+                                                                        {{ $product->qty }}
+                                                                    </td>
+                                                                    <td class="total">
+                                                                        {{ $settings->currency_icon }}
+                                                                        {{ $product->unit_price * $product->qty }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="{{ $order->order_status === 'received' ? '' : 'd-none' }} name">
+                                                                        <a href="{{ $productUrl }}"
+                                                                            class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1">
+                                                                            <i class="fas fa-star text-warning"></i> <span
+                                                                                class="d-none d-md-inline">Evaluate</span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
 
                                                     </table>
+
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="wsus__invoice_footer">
@@ -201,8 +228,8 @@
                                 </div>
                             </section>
                             <!--============================
-                                                                                                                        INVOICE PAGE END
-                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                INVOICE PAGE END
+                                                                                                                                                                                                                                                                            ==============================-->
                             <div class="col">
                                 <div class="mt-2 float-end">
                                     <button class="btn btn-warning print_invoice">Print</button>
@@ -216,8 +243,8 @@
         </div>
     </section>
     <!--=============================
-                                                                                                    DASHBOARD START
-                                                                                                  ==============================-->
+                                                                                                                                                                                                                                                            DASHBOARD START
+                                                                                                                                                                                                                                                          ==============================-->
 @endsection
 
 @push('scripts')

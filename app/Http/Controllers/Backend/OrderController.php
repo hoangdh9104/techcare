@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderStatusHistory;
 use App\Traits\TrelloTrait;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -114,22 +115,32 @@ class OrderController extends Controller
 
         $order->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted successfully!']);
+        return response(['status' => 'success', 'message' => 'Đã xóa thành công!']);
     }
     public function changeOrderStatus(Request $request)
     {
         // Tìm đơn hàng
         $order = Order::findOrFail($request->id);
+        $statusLabels = [
+            'pending' => 'Chờ xử lý',
+            'processed_and_ready_to_ship' => 'Đã xử lý - sẵn sàng giao',
+            'dropped_off' => 'Người bán đóng gói',
+            'shipped' => 'Người giao đã lấy hàng',
+            'delivered' => 'Đã giao hàng',
+            'received' => 'Khách đã nhận hàng',
+            'canceled' => 'Đã hủy',
+        ];
         $newStatus = $request->status;
         $currentStatus = $order->order_status;
         $reason = $request->cancel_reason ?? null; // Lấy lý do hủy đơn (nếu có)
+        $reason2 = $request->delivered_reason ?? null; // Lấy lý do hủy đơn (nếu có)
 
         // Các trạng thái không thể thay đổi
         $immutableStatuses = ['canceled', 'received'];
         if (in_array($currentStatus, $immutableStatuses)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => "Order has already been $currentStatus and cannot be changed."
+                'message' => "Đơn hàng đã ở trạng thái '{$statusLabels[$currentStatus]}' và không thể thay đổi."
             ], 400);
         }
 
@@ -138,8 +149,7 @@ class OrderController extends Controller
             'pending' => ['processed_and_ready_to_ship', 'canceled'],
             'processed_and_ready_to_ship' => ['dropped_off', 'canceled'],
             'dropped_off' => ['shipped'],
-            'shipped' => ['out_for_delivery'],
-            'out_for_delivery' => ['delivered'],
+            'shipped' => ['delivered'],
             'delivered' => ['received'],
         ];
 
@@ -147,7 +157,7 @@ class OrderController extends Controller
         if (!isset($validTransitions[$currentStatus]) || !in_array($newStatus, $validTransitions[$currentStatus])) {
             return response()->json([
                 'status' => 'error',
-                'message' => "Invalid status transition from $currentStatus to $newStatus."
+                'message' => "Thay đổi trạng thái đơn hàng phải theo trình tự. Chuyển đổi trạng thái không hợp lệ từ '{$statusLabels[$currentStatus]}' sang '{$statusLabels[$newStatus]}'."
             ], 400);
         }
 
@@ -156,7 +166,7 @@ class OrderController extends Controller
             if (empty($reason)) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Please provide a reason for order cancellation.'
+                    'message' => 'Vui lòng cung cấp lý do hủy đơn hàng!'
                 ], 400);
             }
 
@@ -164,7 +174,7 @@ class OrderController extends Controller
             if (in_array($currentStatus, ['shipped', 'out_for_delivery', 'delivered'])) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Cannot cancel an order that is already shipped or delivered.'
+                    'message' => 'Không thể hủy đơn hàng đã được vận chuyển hoặc giao hàng.'
                 ], 400);
             }
 
@@ -175,7 +185,27 @@ class OrderController extends Controller
                 $this->createTrelloRefundTask($order, $request->cancel_reason);
             }
         }
+        // Nếu trạng thái mới là "delivered", bắt buộc nhập lý do
+        if ($newStatus === 'delivered') {
+            if (empty($reason2)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Vui lòng cung cấp lý do tại sao đơn hàng được đánh dấu là đã giao.'
+                ], 400);
+            }
+            // Cập nhật trạng thái đơn hàng thành "delivered"
+            $order->order_status = 'delivered';
+            $order->save();
 
+            // Lưu lý do giao hàng vào bảng order_status_histories
+            DB::table('order_status_histories')->insert([
+                'order_id' => $order->id,
+                'status' => 'delivered',
+                'updated_by' => auth()->id(),
+                'changed_at' => now(),
+                'reason' => $reason2,  // Lý do giao hàng
+            ]);
+        }
         // Cập nhật trạng thái đơn hàng
         $order->update([
             'order_status' => $newStatus,
@@ -193,26 +223,39 @@ class OrderController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Order status updated successfully'
+            'message' => 'Trạng thái đơn hàng được cập nhật thành công'
         ]);
     }
 
     public function changePaymentStatus(Request $request)
     {
         $order = Order::findOrFail($request->id);
-
+        // Nếu đơn hàng đã hoàn tiền rồi thì không cho cập nhật lại thành trạng thái khác
+        if ($order->payment_status == 2 && in_array($request->status, [0, 1])) {
+            return response([
+                'status' => 'error',
+                'message' => 'Không thể thay đổi trạng thái vì đơn hàng đã được hoàn tiền.'
+            ], 400);
+        }
         // Nếu trạng thái thanh toán đã là "Completed" thì không cho phép cập nhật lại thành "Pending"
         if ($order->payment_status == 1 && $request->status == 0) {
             return response([
                 'status' => 'error',
-                'message' => 'Cannot revert payment status from Completed to Pending'
+                'message' => 'Không thể hoàn lại trạng thái thanh toán từ đã hoàn thành sang đang chờ xử lý'
             ]);
         }
         // Nếu đơn hàng chưa được giao (Delivered) hoặc chưa có xác nhận (Received), không thể đặt Payment Status = Completed
         if ($request->status == 1 && !in_array($order->order_status, ['delivered', 'received'])) {
             return response([
                 'status' => 'error',
-                'message' => 'Cannot mark payment as Completed for COD orders before the order is delivered or received'
+                'message' => 'Không thể đánh dấu thanh toán là đã hoàn tất cho các đơn hàng COD trước khi đơn hàng được giao hoặc nhận'
+            ], 400);
+        }
+        if ($request->status == 2 && !in_array($order->order_status, ['canceled']) && $order->payment_method !== 'COD') {
+            return response([
+                'status' => 'error',
+                'message' => 'Chỉ được hoàn tiền cho đơn hàng đã bị hủy và không thể hoàn tiền cho đơn hàng COD.'
+
             ], 400);
         }
 
@@ -222,7 +265,7 @@ class OrderController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Updated payment status'
+            'message' => 'Đã cập nhật trạng thái thanh toán'
         ]);
     }
 }

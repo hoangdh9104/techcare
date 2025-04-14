@@ -19,18 +19,15 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Tạo sản phẩm biến thể</h4>
-
                         </div>
                         <div class="card-body">
                             <form action="{{ route('admin.products-variant-item.store') }}" method="POST">
                                 @csrf
-
                                 <div class="form-group">
                                     <label>Tên biến thể</label>
                                     <input type="text" class="form-control" name="variant_name"
                                         value="{{ $variant->name }}" readonly>
                                 </div>
-
                                 <div class="form-group">
                                     <input type="hidden" class="form-control" name="variant_id"
                                         value="{{ $variant->id }}">

@@ -23,38 +23,37 @@
                   <div class="card-body">
                     {{ $dataTable->table() }}
                   </div>
-
+                    </div>
                 </div>
-              </div>
             </div>
 
-          </div>
-        </section>
-
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.body.addEventListener('click', async function (event) {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', async function(event) {
                 if (event.target.classList.contains('change-status')) {
                     const checkbox = event.target;
                     const isChecked = checkbox.checked;
                     const id = checkbox.getAttribute('data-id');
                     try {
-                        const response = await fetch("{{route('admin.products-variant-item.changes-status')}}", {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Đảm bảo thêm CSRF nếu Laravel yêu cầu
-                            },
-                            body: JSON.stringify({
-                                status: isChecked,
-                                id: id
-                            })
-                        });
+                        const response = await fetch(
+                            "{{ route('admin.products-variant-item.changes-status') }}", {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Đảm bảo thêm CSRF nếu Laravel yêu cầu
+                                },
+                                body: JSON.stringify({
+                                    status: isChecked,
+                                    id: id
+                                })
+                            });
 
                         const data = await response.json();
 

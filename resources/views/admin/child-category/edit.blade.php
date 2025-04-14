@@ -4,7 +4,7 @@
       <!-- Main Content -->
         <section class="section">
           <div class="section-header">
-            <h1>Sub Category</h1>
+            <h1>Danh mục con</h1>
           </div>
 
           <div class="section-body">
@@ -13,7 +13,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Update Sub Category</h4>
+                    <h4>Cập nhật danh mục con</h4>
 
                   </div>
                   <div class="card-body">
@@ -21,35 +21,35 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="inputState">Category</label>
+                            <label for="inputState">Danh mục</label>
                             <select id="inputState" class="form-control main-category" name="category">
-                              <option value="">Select</option>
+                              <option value="">Lựa chọn</option>
                               @foreach ($categories as $category)
                                 <option {{$category->id == $childCategory->category_id ? 'selected' : ''}} value="{{$category->id}}">{{$category->name}}</option>
                               @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="inputState">Sub Category</label>
+                            <label for="inputState">Danh mục con</label>
                             <select id="inputState" class="form-control sub-category" name="sub_category">
-                              <option value="">Select</option>
+                              <option value="">Lựa chọn</option>
                               @foreach ($subCategories as $subCategory)
                               <option {{$subCategory->id == $childCategory->sub_category_id ? 'selected' : ''}} value="{{$subCategory->id}}">{{$subCategory->name}}</option>
                               @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên</label>
                             <input type="text" class="form-control" name="name" value="{{$childCategory->name}}">
                         </div>
                         <div class="form-group">
-                            <label for="inputState">Status</label>
+                            <label for="inputState">Trạng thái</label>
                             <select id="inputState" class="form-control" name="status">
-                              <option {{$childCategory->status == 1 ? 'selected' : ''}} value="1">Active</option>
-                              <option {{$childCategory->status == 0 ? 'selected' : ''}} value="0">Inactive</option>
+                              <option {{$childCategory->status == 1 ? 'selected' : ''}} value="1">Hoạt động</option>
+                              <option {{$childCategory->status == 0 ? 'selected' : ''}} value="0">Tắt hoạt động</option>
                             </select>
                         </div>
-                        <button type="submmit" class="btn btn-primary">Update</button>
+                        <button type="submmit" class="btn btn-primary">Cập nhật</button>
                     </form>
                   </div>
 
