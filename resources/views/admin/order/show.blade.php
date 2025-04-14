@@ -19,110 +19,116 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="invoice-title">
-                                <h2></h2>
-                                <div class="invoice-number">Order #{{ $order->invocie_id }}</div>
+                                <h2>Chi tiết đơn hàng</h2>
+                                <div class="invoice-number">Mã đơn hàng: #{{ $order->invocie_id }}</div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-6">
                                     <address>
-                                        <strong>Billed To:</strong><br>
-                                        <b>Name:</b> {{ $address->name }}<br>
-                                        <b>Email: </b> {{ $address->email }}<br>
-                                        <b>Phone:</b> {{ $address->phone }}<br>
-                                        <b>Address:</b> {{ $address->address }},<br>
+                                        <h5>Thông tin người nhận</h5><br>
+                                        <b>Họ tên:</b> {{ $address->name }}<br>
+                                        <b>Email:</b> {{ $address->email }}<br>
+                                        <b>Số điện thoại:</b> {{ $address->phone }}<br>
+                                        <b>Địa chỉ:</b> {{ $address->address }},<br>
                                         {{ $address->city }}, {{ $address->state }}, {{ $address->zip }}<br>
                                         {{ $address->country }}
                                     </address>
                                 </div>
                                 <div class="col-md-6 text-md-right">
                                     <address>
-                                        <strong>Order Date:</strong><br>
-                                        {{ date('d F, Y', strtotime($order->created_at)) }}<br><br>
+                                        <strong>Ngày đặt hàng:</strong><br>
+                                        {{ date('d/m/Y', strtotime($order->created_at)) }}<br><br>
                                     </address>
                                 </div>
-
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <address>
-                                        <strong>Payment Information:</strong><br>
-                                        <b>Method:</b> {{ $order->payment_method }}<br>
-                                        <b>Transaction Id: </b>{{ @$order->transaction->transaction_id }} <br>
-                                        <b>Status: </b> {{ $order->payment_status === 1 ? 'Complete' : 'Pending' }}
+                                        <strong>Thông tin thanh toán:</strong><br>
+                                        <b>Phương thức:</b> {{ $order->payment_method }}<br>
+                                        <b>Mã giao dịch:</b> {{ @$order->transaction->transaction_id }}<br>
+                                        <b>Trạng thái:</b>
+                                        {{ $order->payment_status === 1 ? 'Đã thanh toán' : ($order->payment_status === 2 ? 'Đã hoàn tiền' : 'Đang chờ xử lý') }}
                                     </address>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
+
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <div class="section-title">Order Summary</div>
-                            <p class="section-lead">All items here cannot be deleted.</p>
+                            <div class="section-title">Tóm tắt đơn hàng</div>
+                            <p class="section-lead">Các sản phẩm trong đơn hàng không thể bị xóa.</p>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-md">
                                     <tr>
                                         <th data-width="40">#</th>
-                                        <th>Item</th>
-                                        <th>Variant</th>
-                                        <th>Vendor Name</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Quantity</th>
-                                        <th class="text-right">Totals</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Biến thể</th>
+                                        <th>Nhà bán</th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-right">Thành tiền</th>
                                     </tr>
                                     @foreach ($order->orderProducts as $product)
                                         @php
                                             $variants = json_decode($product->variants);
-
                                         @endphp
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>
                                             @if (isset($product->product->slug))
-                                                <td><a target="_blank"
-                                                        href="{{ route('product-detail', $product->product->slug) }}">{{ $product->product_name }}</a>
+                                                <td>
+                                                    <a target="_blank"
+                                                        href="{{ route('product-detail', $product->product->slug) }}">
+                                                        {{ $product->product_name }}
+                                                    </a>
                                                 </td>
                                             @else
                                                 <td>{{ $product->product_name }}</td>
                                             @endif
                                             <td>
                                                 @if (empty($variants))
-                                                    <p>Not a variant product</p>
+                                                    <p>Không có biến thể</p>
                                                 @else
                                                     @foreach ($variants as $key => $variant)
-                                                        <b>{{ $key }}:</b> {{ $variant->name }} (
-                                                        {{ $settings['currency_icon'] }}{{ $variant->price }} )
+                                                        <b>{{ $key }}:</b> {{ $variant->name }}
+                                                        ({{ $settings['currency_icon'] }}{{ $variant->price }})
+                                                        <br>
                                                     @endforeach
                                                 @endif
                                             </td>
                                             <td>{{ $product->vendor->shop_name }}</td>
-
                                             <td class="text-center">
-                                                {{ $settings->currency_icon }}{{ $product->unit_price }} </td>
+                                                {{ $settings->currency_icon }}{{ $product->unit_price }}
+                                            </td>
                                             <td class="text-center">{{ $product->qty }}</td>
                                             <td class="text-right">
                                                 {{ $settings->currency_icon }}{{ $product->unit_price * $product->qty + $product->variant_total }}
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </table>
+
                             </div>
                             <div class="row mt-4">
                                 <div class="col-lg-8">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="">Payment status</label>
+                                            <label for="">Trạng thái thanh toán</label>
 
                                             <select name="" id="payment_status" class="form-control"
                                                 data-id="{{ $order->id }}">
                                                 <option {{ $order->payment_status === 0 ? 'selected' : '' }}
                                                     value="0">
-                                                    Pending</option>
+                                                    Đang chờ xử lý
+                                                </option>
                                                 <option {{ $order->payment_status === 1 ? 'selected' : '' }}
                                                     value="1">
-                                                    Completed</option>
+                                                    Đã thanh toán
+                                                </option>
                                                 @if ($order->order_status === 'canceled' && $order->payment_method !== 'COD')
                                                     <option {{ $order->payment_status === 1 ? 'selected' : '' }}
                                                         value="2">
@@ -133,20 +139,25 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Order Status</label>
+                                            <label for="">Trạng thái đơn hàng</label>
                                             <select name="order_status" id="order_status" data-id="{{ $order->id }}"
                                                 class="form-control">
-                                                @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
+                                                {{-- @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
                                                     <option {{ $order->order_status === $key ? 'selected' : '' }}
                                                         value="{{ $key }}">{{ $orderStatus['status'] }}</option>
+                                                @endforeach --}}
+                                                @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
+                                                    <option {{ $order->order_status === $key ? 'selected' : '' }}
+                                                        value="{{ $key }}">
+                                                        {{ $orderStatus['status'] }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <!-- Ô nhập lý do hủy đơn -->
                                         <div class="form-group" id="cancel_reason_box" style="display: none;">
-                                            <label for="cancel_reason">Reason for cancellation</label>
-                                            <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3"
-                                                placeholder="Enter reason for cancellation..."></textarea>
+                                            <label for="cancel_reason">Lý do hủy bỏ</label>
+                                            <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3" placeholder="Nhập lý do hủy..."></textarea>
                                         </div>
                                         <!-- Ô nhập lý do tại sao đã được giao -->
                                         <div class="form-group" id="delivered_reason_box" style="display: none;">
@@ -155,24 +166,24 @@
                                                 placeholder="VD: Đơn hàng đã được giao bởi ai, đã thanh toán hay chưa..."></textarea>
                                         </div>
 
-                                        <button type="button" id="update_status_btn" class="btn btn-primary">Save Order
-                                            Status</button>
+                                        <button type="button" id="update_status_btn" class="btn btn-primary">Lưu trạng thái
+                                            đơn hàng</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-right">
                                     <div class="invoice-detail-item">
-                                        <div class="invoice-detail-name">Subtotal</div>
+                                        <div class="invoice-detail-name">Tạm tính</div>
                                         <div class="invoice-detail-value">{{ $settings->currency_icon }}
                                             {{ $order->sub_total }}</div>
                                     </div>
                                     <div class="invoice-detail-item">
-                                        <div class="invoice-detail-name">Shipping (+)</div>
+                                        <div class="invoice-detail-name">Phí vận chuyển (+)</div>
                                         <div class="invoice-detail-value">{{ $settings->currency_icon }}
                                             {{ @$shipping->cost }}</div>
                                     </div>
                                     <div class="invoice-detail-item">
-                                        <div class="invoice-detail-name">Coupon (-)</div>
-                                        <div class="invoice-detail-value">{{ $settings->currency_icon }}
+                                        <div class="invoice-detail-name">Mã giảm giá (-)</div>
+                                        <div class="invoice-detail-value">
                                             @php
                                                 $discount = 0; // Mặc định không có giảm giá
 
@@ -187,45 +198,50 @@
 
                                             <!-- Hiển thị giảm giá -->
                                             @if (@$coupon->discount_type === 'percent')
-                                                Coupon: {{ @$coupon->discount }}%
+                                                Mã giảm: {{ @$coupon->discount }}%
                                                 (- {{ $settings->currency_icon }}{{ $discount }})
                                             @elseif(@$coupon->discount_type === 'amount')
-                                                Coupon:{{ $settings->currency_icon }} {{ $discount }}
+                                                Mã giảm: {{ $settings->currency_icon }}{{ $discount }}
                                             @else
-                                                Coupon: {{ $settings->currency_icon }}{{ 0 }}
+                                                Mã giảm: {{ $settings->currency_icon }}{{ 0 }}
                                             @endif
-
                                         </div>
+
                                         <hr class="mt-2 mb-2">
+
                                         <div class="invoice-detail-item">
-                                            <div class="invoice-detail-name">Total</div>
+                                            <div class="invoice-detail-name">Tổng cộng</div>
                                             <div class="invoice-detail-value invoice-detail-value-lg">
-                                                {{ $settings->currency_icon }} {{ $order->amount }}</div>
+                                                {{ $settings->currency_icon }} {{ $order->amount }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="row mt-4">
                                 <div class="col-md-12">
-                                    <div class="section-title">Order Status History</div>
+                                    <div class="section-title">Lịch sử trạng thái đơn hàng</div>
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Status</th>
-                                                    <th>Reason</th>
-                                                    <th>Updated By</th>
-                                                    <th>Changed At</th>
+                                                    <th>STT</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Lý do</th>
+                                                    <th>Người cập nhật</th>
+                                                    <th>Thời gian thay đổi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($order->statusHistories as $history)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ ucfirst(str_replace('_', ' ', $history->status)) }}</td>
-                                                        <td>{{ $history->reason ?? 'N/A' }}</td>
-                                                        <td>{{ $history->user->name ?? 'System' }}</td>
+                                                        <td>{{ config('order_status.order_status_admin.' . $history->status . '.status') ?? ucfirst(str_replace('_', ' ', $history->status)) }}
+                                                        </td>
+                                                        </td>
+                                                        <td>{{ $history->reason ?? 'Không có' }}</td>
+                                                        <td>{{ $history->user->name ?? 'Hệ thống' }}</td>
                                                         <td>{{ date('d/m/Y H:i', strtotime($history->changed_at)) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -234,6 +250,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <hr>

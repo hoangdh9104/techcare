@@ -84,26 +84,27 @@
                     'admin.blog.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-truck"></i>
-                    <span>Quản lí đặt hàng</span></a>
+                    <span>Quản lí đơn hàng</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.order.*']) }}"><a class="nav-link"
                             href="{{ route('admin.order.index') }}">Tất cả đơn hàng</a></li>
                     <li class="{{ setActive(['admin.pending-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.pending-orders') }}">All Pending Orders</a></li>
+                            href="{{ route('admin.pending-orders') }}">Đơn hàng chờ xử lý</a></li>
                     <li class="{{ setActive(['admin.processed-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.processed-orders') }}">All Processed Orders</a></li>
+                            href="{{ route('admin.processed-orders') }}">Đơn hàng đã xử lý</a></li>
                     <li class="{{ setActive(['admin.dropped_off-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.dropped_off-orders') }}">All Dropped Off Orders</a></li>
+                            href="{{ route('admin.dropped_off-orders') }}">Đơn hàng đã đóng gói</a></li>
                     <li class="{{ setActive(['admin.shipped-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.shipped-orders') }}">All Shipped Orders</a></li>
+                            href="{{ route('admin.shipped-orders') }}">Đơn hàng đang vận chuyển</a>
+                    </li>
                     {{-- <li class="{{ setActive(['admin.out_for_delivery-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.out_for_delivery-orders') }}">All Out For Delivery Orders</a></li> --}}
                     <li class="{{ setActive(['admin.delivered-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.delivered-orders') }}">All Delivered Orders</a></li>
+                            href="{{ route('admin.delivered-orders') }}">Đơn hàng đã được giao</a></li>
                     <li class="{{ setActive(['admin.received-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.received-orders') }}">All Received Orders</a></li>
+                            href="{{ route('admin.received-orders') }}">Đơn hàng đã được nhận</a></li>
                     <li class="{{ setActive(['admin.canceled-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.canceled-orders') }}">All Canceled Orders</a></li>
+                            href="{{ route('admin.canceled-orders') }}">Đơn hàng đã bị hủy</a></li>
                 </ul>
             </li>
 

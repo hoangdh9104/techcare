@@ -115,12 +115,21 @@ class OrderController extends Controller
 
         $order->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted successfully!']);
+        return response(['status' => 'success', 'message' => 'Đã xóa thành công!']);
     }
     public function changeOrderStatus(Request $request)
     {
         // Tìm đơn hàng
         $order = Order::findOrFail($request->id);
+        $statusLabels = [
+            'pending' => 'Chờ xử lý',
+            'processed_and_ready_to_ship' => 'Đã xử lý - sẵn sàng giao',
+            'dropped_off' => 'Người bán đóng gói',
+            'shipped' => 'Người giao đã lấy hàng',
+            'delivered' => 'Đã giao hàng',
+            'received' => 'Khách đã nhận hàng',
+            'canceled' => 'Đã hủy',
+        ];
         $newStatus = $request->status;
         $currentStatus = $order->order_status;
         $reason = $request->cancel_reason ?? null; // Lấy lý do hủy đơn (nếu có)
@@ -131,7 +140,7 @@ class OrderController extends Controller
         if (in_array($currentStatus, $immutableStatuses)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => "Order has already been $currentStatus and cannot be changed."
+                'message' => "Đơn hàng đã ở trạng thái '{$statusLabels[$currentStatus]}' và không thể thay đổi."
             ], 400);
         }
 
@@ -148,7 +157,7 @@ class OrderController extends Controller
         if (!isset($validTransitions[$currentStatus]) || !in_array($newStatus, $validTransitions[$currentStatus])) {
             return response()->json([
                 'status' => 'error',
-                'message' => "Order status changes must be sequential. Invalid status transition from $currentStatus to $newStatus."
+                'message' => "Thay đổi trạng thái đơn hàng phải theo trình tự. Chuyển đổi trạng thái không hợp lệ từ '{$statusLabels[$currentStatus]}' sang '{$statusLabels[$newStatus]}'."
             ], 400);
         }
 
@@ -157,7 +166,7 @@ class OrderController extends Controller
             if (empty($reason)) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Please provide a reason for order cancellation.'
+                    'message' => 'Vui lòng cung cấp lý do hủy đơn hàng!'
                 ], 400);
             }
 
@@ -165,7 +174,7 @@ class OrderController extends Controller
             if (in_array($currentStatus, ['shipped', 'out_for_delivery', 'delivered'])) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Cannot cancel an order that is already shipped or delivered.'
+                    'message' => 'Không thể hủy đơn hàng đã được vận chuyển hoặc giao hàng.'
                 ], 400);
             }
 
@@ -214,14 +223,20 @@ class OrderController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Order status updated successfully'
+            'message' => 'Trạng thái đơn hàng được cập nhật thành công'
         ]);
     }
 
     public function changePaymentStatus(Request $request)
     {
         $order = Order::findOrFail($request->id);
-
+        // Nếu đơn hàng đã hoàn tiền rồi thì không cho cập nhật lại thành trạng thái khác
+        if ($order->payment_status == 2 && in_array($request->status, [0, 1])) {
+            return response([
+                'status' => 'error',
+                'message' => 'Không thể thay đổi trạng thái vì đơn hàng đã được hoàn tiền.'
+            ], 400);
+        }
         // Nếu trạng thái thanh toán đã là "Completed" thì không cho phép cập nhật lại thành "Pending"
         if ($order->payment_status == 1 && $request->status == 0) {
             return response([
@@ -250,7 +265,7 @@ class OrderController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Updated payment status'
+            'message' => 'Đã cập nhật trạng thái thanh toán'
         ]);
     }
 }
