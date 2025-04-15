@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\PaypalSetting;
 use App\Models\Product;
+use App\Models\ProductVariantCombination;
 use App\Models\StripeSetting;
 use App\Models\Transaction;
 use App\Models\VnpaySetting;
@@ -62,23 +63,29 @@ class PaymentController extends Controller
 
         // Store order products
         foreach (\Cart::content() as $item) {
+            $variantCombination = ProductVariantCombination::where('id', $item->options->variant_combination_id)->first(); // dùng first() thay vì get()
+            // dd($item->options->variant_combination_id);
             $product = Product::find($item->id);
+
             $orderProduct = new OrderProduct();
             $orderProduct->order_id = $order->id;
             $orderProduct->product_id = $product->id;
             $orderProduct->vendor_id = $product->vendor_id;
             $orderProduct->product_name = $product->name;
-            $orderProduct->variants = json_encode($item->options->variants);
-            $orderProduct->variant_total = $item->options->variants_total;
+            $orderProduct->variants = $item->options->variant_combination_id ?? '[]';
+            $orderProduct->variant_total = isset($item->options->variants_total) ? $item->options->variants_total : 0;
             $orderProduct->unit_price = $item->price;
             $orderProduct->qty = $item->qty;
             $orderProduct->save();
 
-            // update product quantity
+            // update product_variant_combination quantity
+            if ($variantCombination) {
+                $variantCombination->quantity -= $item->qty;
+                $variantCombination->save();
+            }
 
-            $updatedQty = ($product->qty - $item->qty);
-            $updatedQty = ($product->qty - $item->qty);
-            $product->qty = $updatedQty;
+            // update product quantity
+            $product->qty -= $item->qty;
             $product->save();
         }
 

@@ -22,12 +22,12 @@ class ProductVariantItemDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query){
+            ->addColumn('action', function ($query) {
 
-                $editBtn = "<a href='".route('admin.products-variant-item.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='".route('admin.products-variant-item.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                $editBtn = "<a href='" . route('admin.products-variant-item.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.products-variant-item.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
-                return $editBtn.$deleteBtn;
+                return $editBtn . $deleteBtn;
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
@@ -91,23 +91,21 @@ class ProductVariantItemDataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-{
-    return [
-        Column::make('id')->title('STT'),
-        Column::make('name')->title('Tên'),
-        Column::make('variant_name')->title('Tên biến thể'),
-        Column::make('price')->title('Giá'),
-        Column::make('qty')->title('Tồn kho'),
-        Column::make('is_default')->title('Mặc định'),
-        Column::make('status')->title('Trạng thái'),  
-        Column::computed('action')
-            ->title('Hành động')
-            ->exportable(false)
-            ->printable(false)
-            ->width(200)
-            ->addClass('text-center'),
-    ];
-}
+    {
+        return [
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên'),
+            Column::make('variant_name')->title('Tên biến thể'),
+            Column::make('is_default')->title('Mặc định'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')
+                ->title('Hành động')
+                ->exportable(false)
+                ->printable(false)
+                ->width(200)
+                ->addClass('text-center'),
+        ];
+    }
     /**
      * Get the filename for export.
      */
