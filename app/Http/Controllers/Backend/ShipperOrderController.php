@@ -9,6 +9,6 @@ class ShipperOrderController extends Controller
 {
     public function index()
     {
-        return view('shipper.orders.index'); 
+        return view('shipper.orders.index');
     }
 }

@@ -6669,7 +6669,7 @@ WISHLIST PAGE START
 =========================*/
 
 /*========================
-	DASHBOARD START
+	DASHBOARD START SHIPPERSHIPPER
 =========================*/
 #wsus__dashboard {
   padding: 40px 30px 40px 0px;
@@ -6680,7 +6680,7 @@ WISHLIST PAGE START
   align-items: center;
   justify-content: end;
   padding: 5px 20px;
-  background: #0b2c3d;
+  background: rgb(2, 82, 122);
 }
 
 .wsusd__dashboard_user {
@@ -6709,7 +6709,7 @@ WISHLIST PAGE START
 .dashboard_sidebar {
   width: 15%;
   height: 100vh;
-  background: #0b2c3d;
+  background: rgb(2, 82, 122);
   position: fixed;
   top: 0;
   left: 0;

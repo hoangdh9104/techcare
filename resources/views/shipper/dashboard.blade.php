@@ -9,11 +9,11 @@
             <div class="wsus__dashboard">
               <div class="row">
                 <div class="col-xl-2 col-6 col-md-4">
-                  <a class="wsus__dashboard_item red" href="dsahboard_order.html">
+                  {{-- <a class="wsus__dashboard_item red" href="dsahboard_order.html">
                     <i class="far fa-address-book"></i>
                     <p>order</p>
-                  </a>
-                </div>
+                  </a> --}}
+                {{-- </div>
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item green" href="dsahboard_download.html">
                     <i class="fal fa-cloud-download"></i>
@@ -43,7 +43,7 @@
                     <i class="fal fa-map-marker-alt"></i>
                     <p>address</p>
                   </a>
-                </div>
+                </div> --}}
               </div>
 
             </div>
