@@ -41,9 +41,11 @@
                                 alt="product" class="img-fluid w-100 img_2" />
                         </a>
                         <ul class="wsus__single_pro_icon">
+                            <li><a href="#" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
+                            </li>
                             <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i
                                         class="far fa-heart"></i></a></li>
-
                             {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                         </ul>
                         <div class="wsus__product_details">
@@ -54,7 +56,6 @@
                                     $avgRating = $product->reviews()->avg('rating');
                                     $fullRating = round($avgRating);
                                 @endphp
-
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($i <= $fullRating)
                                         <i class="fas fa-star"></i>
@@ -62,7 +63,6 @@
                                         <i class="far fa-star"></i>
                                     @endif
                                 @endfor
-
                                 <span>({{ count($product->reviews) }} review)</span>
                             </p>
                             <a class="wsus__pro_name"
@@ -74,25 +74,7 @@
                             @else
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
                             @endif
-                            <form class="shopping-cart-form" action="">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <div class="row">
-                                    @foreach ($product->variants as $variant)
-                                        <select class="d-none" name="variants_item[]">
-                                            @foreach ($variant->productVariantItem as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                    {{ $item->name }} (${{ $item->price }})
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    @endforeach
-                                    <input name="quantity" type="hidden" min="1" max="100"
-                                        value="1" />
-                                </div>
 
-
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -101,6 +83,88 @@
     </div>
 </section>
 
+@for ($i = 1; $i <= 5; $i++)
+    @if ($i <= $fullRating)
+        <i class="fas fa-star"></i>
+    @else
+        <i class="far fa-star"></i>
+    @endif
+@endfor
+<span>({{ count($product->reviews) }} review)</span>
+</p>
+<p class="description">{!! $product->short_description !!}</p>
+<div class="wsus_pro_hot_deals">
+    <h5>offer ending time : </h5>
+    <div class="simply-countdown simply-countdown-one"></div>
+</div>
+<form class="shopping-cart-form" action="">
+    <div class="wsus__selectbox">
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
+        <div class="row">
+            @foreach ($product->variants as $variant)
+                @if ($variant->status != 0)
+                    <div class="col-xl-6 col-sm-6 mb-3">
+                        <h5 class="mb-2">{{ $variant->name }}</h5>
+                        <select class="select_2 form-control" name="variants_item[]">
+                            @foreach ($variant->productVariantItem as $item)
+                                @if ($item->status != 0)
+                                    <option value="{{ $item->id }}"
+                                        {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                        {{ $item->name }} (${{ $item->price }})
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+            @endforeach
+
+        </div>
+    </div>
+    <div class="wsus__quentity">
+        <h5>quantity :</h5>
+        <div class="select_number">
+            <input class="number_area" name="quantity" type="text" min="1" max="100" value="1" />
+        </div>
+        {{-- <h3>$50.00</h3> --}}
+    </div>
+    <ul class="wsus__button_area">
+        <li><button class="add_cart" type="submit">add to cart</button></li>
+        <li><a class="buy_now" href="#">buy now</a></li>
+        <li><a href="#"><i class="fal fa-heart"></i></a></li>
+        <li><a href="#"><i class="far fa-random"></i></a></li>
+        <li>
+            <button type="button"
+                style="border: 1px solid gray;
+                                                padding: 7px 11px;
+                                                margin-left: 7px;
+                                                border-radius: 100%; background-color: #0088cc"
+                class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="far fa-comment-alt text-light"></i>
+            </button>
+
+        </li>
+
+        <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%" href="javascrip:;"
+                class="add_to_wishlist" data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+        </li>
+
+    </ul>
+</form>
+<p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+@endforeach
+
+<!--==========================
+                                                                      PRODUCT MODAL VIEW END
+                                                                    ===========================-->
 @push('scripts')
     <script>
         $(document).ready(function() {

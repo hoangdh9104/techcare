@@ -84,7 +84,7 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Login</h4></div>
+              <div class="card-header"><h4>Đăng nhập</h4></div>
 
               <div class="card-body">
                 <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
@@ -100,10 +100,10 @@
 
                   <div class="form-group">
                     <div class="d-block">
-                    	<label for="password" class="control-label">Password</label>
+                    	<label for="password" class="control-label">Mật khẩu</label>
                       <div class="float-right">
                         <a href="auth-forgot-password.html" class="text-small">
-                          Forgot Password?
+                          Quên mật khẩu ?
                         </a>
                       </div>
                     </div>
@@ -115,12 +115,12 @@
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                      <label class="custom-control-label" for="remember-me">Remember Me</label>
+                      <label class="custom-control-label" for="remember-me">Lưu thông tin</label>
                     </div>
                   </div>
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Login
+                      Đăng nhập
                     </button>
                   </div>
                 </form>
@@ -143,7 +143,7 @@
               </div>
             </div>
             <div class="mt-5 text-muted text-center">
-              Don't have an account? <a href="auth-register.html">Create One</a>
+              Không có tài khoản ? <a href="auth-register.html">Tạo tài khoản</a>
             </div>
             <div class="simple-footer">
               {{-- Copyright &copy; Stisla 2018 --}}

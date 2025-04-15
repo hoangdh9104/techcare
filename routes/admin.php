@@ -45,16 +45,18 @@ use App\Http\Controllers\Backend\TermsAndConditionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
-
+use App\Http\Controllers\Backend\ProductVariantCreateController;
 use App\Models\VendorCondition;
 
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VnpaySettingController;
 use Illuminate\Support\Facades\Route;
 
+
+
 // admin routes
 Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
+Route::get('ecommerce-dashboard', [AdminController::class, 'ecommerceDashboard'])->name('ecommerceDashboard');
 // Profile routes
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
@@ -98,7 +100,6 @@ Route::resource('products', ProductController::class);
 // product image gallery route
 Route::resource('products-image-gallery', ProductImageGalleryController::class);
 
-// product variant route
 Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
 Route::resource('products-variant', ProductVariantController::class);
 
@@ -225,8 +226,20 @@ Route::put('about/update', [AbountController::class, 'update'])->name('about.upd
 //terms and conditions route
 Route::get('terms-and-conditions', [TermsAndConditionController::class, 'index'])->name('terms-and-conditions.index');
 Route::put('terms-and-conditions/update', [TermsAndConditionController::class, 'update'])->name('terms-and-conditions.update');
-
 // Message route
-Route::get('messages',[MessageController::class,'index'])->name('messages.index');
-Route::get('get-messages',[MessageController::class,'getMessages'])->name('get-messages');
-Route::post('send-message',[MessageController::class,'sendMessage'])->name('send-message');
+Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('get-messages', [MessageController::class, 'getMessages'])->name('get-messages');
+Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-message');
+// statistic
+Route::get('revenue/chart', [AdminController::class, 'getMonthlyRevenueChart'])->name('revenue.chart');
+Route::get('statistics/orders/data', [AdminController::class, 'getMonthlyOrderStatistics'])->name('statistics.orders.data');
+Route::get('statistics/top-customers', [AdminController::class, 'topCustomers'])->name('statistics.top-customers');
+Route::get('/top-selling', [AdminController::class, 'showTopSelling'])->name('top-selling');
+// chi tiết sản phẩm biến thể
+// Route tạo biến thể cho sản phẩm
+Route::get('{product}/variants/create', [ProductVariantCreateController::class, 'create'])->name('variants.create');
+// Route lưu biến thể sản phẩm
+Route::post('{product}/variants', [ProductVariantCreateController::class, 'store'])->name('variants.store');
+// product variant route
+Route::put('products-value-variant/change-status', [ProductVariantCreateController::class, 'changeStatus'])->name('products-value-variant.change-status');

@@ -4,7 +4,7 @@
 <!-- Main Content -->
 <section class="section">
     <div class="section-header">
-        <h1>Child Category</h1>
+        <h1>Danh mục con</h1>
     </div>
 
     <div class="section-body">
@@ -24,10 +24,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>All Child Categories</h4>
+                        <h4>Tất cả danh mục con</h4>
                         <div class="card-header-action">
                             <a href="{{ route('admin.child-category.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create New
+                                <i class="fas fa-plus"></i> Tạo mới danh mục con
                             </a>
                         </div>
                     </div>

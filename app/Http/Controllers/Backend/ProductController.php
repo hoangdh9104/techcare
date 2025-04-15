@@ -58,6 +58,29 @@ class ProductController extends Controller
             'seo_title' => ['nullable', 'max:200'],
             'seo_description' => ['nullable', 'max:250'],
             'status' => ['required']
+        ], [
+            'image.required' => 'Vui lòng chọn hình ảnh.',
+            'image.image' => 'Tệp tải lên phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 3MB.',
+
+            'name.required' => 'Vui lòng nhập tên sản phẩm.',
+            'name.max' => 'Tên sản phẩm không được vượt quá 200 ký tự.',
+
+            'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
+            'brand.required' => 'Vui lòng chọn thương hiệu.',
+
+            'price.required' => 'Vui lòng nhập giá sản phẩm.',
+            'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
+
+            'short_description.required' => 'Vui lòng nhập mô tả ngắn.',
+            'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
+
+            'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
+
+            'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
+            'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
+
+            'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
         ]);
         $imagePath = $this->uploadImage($request, 'image', 'uploads');
         $product = new Product();
@@ -94,9 +117,9 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return view('admin.product.show', compact('product'));
     }
 
     /**
@@ -135,6 +158,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+<<<<<<< HEAD
         $product = Product::findOrFail($id);
 
         if ($product->status == 0) {
@@ -142,19 +166,102 @@ class ProductController extends Controller
         }
 
         $request->validate([
+=======
+        // $product = Product::findOrFail($id);
+        // $request->validate(
+        //     [
+        //         'image' => ['nullable', 'image', 'max:3000'],
+        //         'name' => ['required', 'max:200'],
+        //         'category' => ['required'],
+        //         'brand' => ['required'],
+        //         'price' => ['required'],
+
+        //         'short_description' => ['required', 'max: 600'],
+        //         'long_description' => ['required'],
+        //         'seo_title' => ['nullable', 'max:200'],
+        //         'seo_description' => ['nullable', 'max:250'],
+        //         'status' => ['required']
+        //     ],
+        //     [
+        //         'image.image' => 'Tệp tải lên phải là hình ảnh.',
+        //         'image.max' => 'Kích thước hình ảnh không được vượt quá 3MB.',
+
+        //         'name.required' => 'Vui lòng nhập tên sản phẩm.',
+        //         'name.max' => 'Tên sản phẩm không được vượt quá 200 ký tự.',
+
+        //         'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
+        //         'brand.required' => 'Vui lòng chọn thương hiệu.',
+
+        //         'price.required' => 'Vui lòng nhập giá sản phẩm.',
+        //         'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
+
+        //         'short_description.required' => 'Vui lòng nhập mô tả ngắn.',
+        //         'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
+
+        //         'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
+
+        //         'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
+        //         'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
+
+        //         'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
+        //     ]
+        // );
+        // // ✅ Nếu sản phẩm CHƯA có biến thể thì yêu cầu nhập qty
+        // if ($product->variantCombinations->count() == 0) {
+        //     $rules['qty'] = ['required', 'integer', 'min:0'];
+        // }
+        $product = Product::findOrFail($id);
+
+        // Định nghĩa rules cơ bản
+        $rules = [
+>>>>>>> 88942f5fc1950208b839417dab92714d0ecdeca5
             'image' => ['nullable', 'image', 'max:3000'],
             'name' => ['required', 'max:200'],
             'category' => ['required'],
             'brand' => ['required'],
             'price' => ['required'],
-            'qty' => ['required'],
-            'short_description' => ['required', 'max: 600'],
+            'short_description' => ['required', 'max:600'],
             'long_description' => ['required'],
             'seo_title' => ['nullable', 'max:200'],
             'seo_description' => ['nullable', 'max:250'],
-            'status' => ['required']
-        ]);
-        $product = Product::findOrFail($id);
+            'status' => ['required'],
+        ];
+
+        // ✅ Nếu sản phẩm CHƯA có biến thể thì yêu cầu nhập số lượng
+        if ($product->variantCombinations->count() == 0) {
+            $rules['qty'] = ['required', 'integer', 'min:0'];
+        }
+
+        // Thông báo lỗi
+        $messages = [
+            'image.image' => 'Tệp tải lên phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 3MB.',
+
+            'name.required' => 'Vui lòng nhập tên sản phẩm.',
+            'name.max' => 'Tên sản phẩm không được vượt quá 200 ký tự.',
+
+            'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
+            'brand.required' => 'Vui lòng chọn thương hiệu.',
+
+            'price.required' => 'Vui lòng nhập giá sản phẩm.',
+            'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
+            'qty.integer' => 'Số lượng phải là số nguyên.',
+            'qty.min' => 'Số lượng không được nhỏ hơn 0.',
+
+            'short_description.required' => 'Vui lòng nhập mô tả ngắn.',
+            'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
+
+            'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
+
+            'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
+            'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
+
+            'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
+        ];
+
+        // ✅ Thực hiện validate cuối cùng
+        $validatedData = $request->validate($rules, $messages);
+        // $product = Product::findOrFail($id);
         $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
         $product->thumb_image = empty(!$imagePath) ? $imagePath : $product->thumb_image;
         $product->name = $request->name;
@@ -164,7 +271,10 @@ class ProductController extends Controller
         $product->sub_category_id = $request->sub_category;
         $product->child_category_id = $request->child_category;
         $product->brand_id = $request->brand;
-        $product->qty = $request->qty;
+        if (isset($validatedData['qty'])) {
+            $product->qty = $validatedData['qty'];
+            $product->save();
+        }
         $product->short_description = $request->short_description;
         $product->long_description = $request->long_description;
         $product->video_link = $request->video_link;
@@ -181,7 +291,7 @@ class ProductController extends Controller
         $product->seo_description = $request->seo_description;
         $product->save();
 
-        toastr('Updated Successfully!', 'success');
+        toastr('Đã cập nhật sản phẩm!', 'success');
 
         return redirect()->route('admin.products.edit', $product->id);
     }
@@ -210,7 +320,7 @@ class ProductController extends Controller
             $variant->delete();
         }
         $product->delete();
-        return response(['status' => 'success', 'message' => 'Deleted product Successfully!']);
+        return response(['status' => 'success', 'message' => 'Xóa sản phẩm thành công!']);
     }
     // get all product sub categories
     public function getSubCategories(Request $request)
@@ -228,6 +338,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($request->id);
         $product->status = $request->status;
         $product->save();
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

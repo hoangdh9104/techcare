@@ -20,6 +20,12 @@
     .table th,
     .table td {
         vertical-align: middle;
+        padding: 0.75rem;
+    }
+
+    .table .btn {
+        font-size: 0.85rem;
+        padding: 4px 10px;
     }
 
     .badge {
@@ -29,8 +35,8 @@
 </style>
 @section('content')
     <!--=============================
-                                                                                                    DASHBOARD START
-                                                                                                  ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                            DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                          ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -38,12 +44,13 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Order Details</h3>
+                        <h3><i class="far fa-user"></i> Hóa đơn chi tiết</h3>
+
                         <div class="wsus__dashboard_profile">
 
                             <!--============================
-                                                                                                                        INVOICE PAGE START
-                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                INVOICE PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
                             <section id="" class="invoice-print">
                                 <div class="">
                                     <div class="wsus__invoice_area">
@@ -85,94 +92,120 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="wsus__invoice_description">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <tr>
-                                                            <th class="name">
-                                                                product
-                                                            </th>
-                                                            <th class="amount">
-                                                                Vendor
-                                                            </th>
-
-                                                            <th class="amount">
-                                                                amount
-                                                            </th>
-
-                                                            <th class="quentity">
-                                                                quantity
-                                                            </th>
-                                                            <th class="total">
-                                                                total
-                                                            </th>
-                                                        </tr>
-                                                        @foreach ($order->orderProducts as $product)
-                                                            @php
-                                                                $variants = json_decode($product->variants);
-                                                            @endphp
+                                                <!-- Chi tiết sản phẩm -->
+                                                <div class="table-responsive mt-4">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead class="bg-light text-center">
                                                             <tr>
-                                                                <td class="name">
-                                                                    <p>{{ $product->product_name }}</p>
-                                                                    @foreach ($variants as $key => $item)
-                                                                        <span>{{ $key }} :
-                                                                            {{ $item->name }}(
-                                                                            {{ $settings->currency_icon }}{{ $item->price }}
-                                                                            )</span>
-                                                                    @endforeach
-                                                                </td>
-                                                                <td class="amount">
-                                                                    {{ $product->vendor->shop_name }}
-                                                                </td>
-                                                                <td class="amount">
-                                                                    {{ $settings->currency_icon }}
-                                                                    {{ $product->unit_price }}
-                                                                </td>
-
-                                                                <td class="quentity">
-                                                                    {{ $product->qty }}
-                                                                </td>
-                                                                <td class="total">
-                                                                    {{ $settings->currency_icon }}
-                                                                    {{ $product->unit_price * $product->qty }}
-                                                                </td>
+                                                                <th>Sản phẩm</th>
+                                                                <th>Đơn giá</th>
+                                                                <th>Số lượng</th>
+                                                                <th>Tổng</th>
+                                                                <th
+                                                                    class="{{ $order->order_status === 'received' ? '' : 'd-none' }}">
+                                                                    Đánh
+                                                                    giá</th>
                                                             </tr>
-                                                        @endforeach
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($order->orderProducts as $product)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="product-info">
+                                                                            <div class="product-details">
+                                                                                <strong>{{ $product->product_name }}</strong>
+                                                                                {{-- Hiển thị các biến thể nếu có --}}
+                                                                            </div>
+                                                                            @php
+                                                                                $variant = null;
+                                                                                if (
+                                                                                    !empty($product->variants) &&
+                                                                                    $product->variants !== '[]'
+                                                                                ) {
+                                                                                    $variant = DB::table(
+                                                                                        'product_variant_combinations',
+                                                                                    )
+                                                                                        ->where(
+                                                                                            'id',
+                                                                                            $product->variants,
+                                                                                        ) // lấy đúng ID biến thể
+                                                                                        ->first();
+                                                                                }
+                                                                            @endphp
 
+                                                                            @if ($variant)
+                                                                                <div>
+                                                                                    <strong>Biến thể:</strong>
+                                                                                    {{ $variant->name }} <br>
+                                                                                    {{-- <strong>Giá:</strong> VND{{ $variant->price }} <br> --}}
+                                                                                    <img src="{{ asset($variant->image) }}"
+                                                                                        alt="Ảnh sản phẩm"
+                                                                                        style="width: 100px;">
+                                                                                </div>
+                                                                            @else
+                                                                                <p>Không có biến thể</p>
+                                                                            @endif
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-center">{{ $product->unit_price }}
+                                                                        {{ $settings->currency_icon }}</td>
+                                                                    <td class="text-center">{{ $product->qty }}</td>
+                                                                    <td class="text-center">
+                                                                        {{ $product->unit_price * $product->qty }}
+                                                                        {{ $settings->currency_icon }}</td>
+                                                                    <td
+                                                                        class="text-center {{ $order->order_status === 'received' ? '' : 'd-none' }}">
+                                                                        <a href="{{ route('product-detail', $product->product->slug) }}"
+                                                                            class="btn btn-sm btn-warning">
+                                                                            <i class="fas fa-star"></i> Đánh giá
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
                                                     </table>
                                                 </div>
+
+                                                <!-- Tổng tiền và chi phí -->
+                                                <div class="order-summary mt-4">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <p><strong>Thành tiền:</strong>{{ @$order->sub_total }}
+                                                                {{ $settings->currency_icon }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <p class="text-right"><strong>Phí vận chuyển:</strong>
+                                                                {{ @$shipping->cost }}{{ $settings->currency_icon }} </p>
+                                                            <p class="text-right"><strong>Giảm giá (-):</strong>
+                                                                {{ @$coupon->discount ?: 0 }}{{ $settings->currency_icon }}
+                                                            </p>
+                                                            <p class="text-right font-weight-bold"><strong>Tổng
+                                                                    cộng:</strong>
+                                                                {{ @$order->amount }}{{ $settings->currency_icon }} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="wsus__invoice_footer">
-
-                                            <p><span>Sub Total:</span>{{ @$settings->currency_icon }}
-                                                {{ @$order->sub_total }}</p>
-                                            <p><span>Shipping Fee(+):</span>{{ @$settings->currency_icon }}
-                                                {{ @$shipping->cost }} </p>
-                                            <p><span>Coupon(-):</span>{{ @$settings->currency_icon }}
-                                                {{ @$coupon->discount ? $coupon->discount : 0 }}</p>
-                                            <p><span>Total Amount :</span>{{ @$settings->currency_icon }}
-                                                {{ @$order->amount }}</p>
-
 
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-12">
                                         <div class="section-title mb-3">
-                                            <h5 class="text-primary">Order Status History</h5>
+                                            <h5 class="text-primary">Lịch sử đơn hàng</h5>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-hover">
                                                 <thead class="table-dark text-center">
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Status</th>
-                                                        <th>Reason</th>
-                                                        <th>Updated By</th>
-                                                        <th>Changed At</th>
+                                                        <th>STT</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Lý do</th>
+                                                        <th>Người cập nhật</th>
+                                                        <th>Thời gian thay đổi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -181,11 +214,11 @@
                                                             <td>{{ $key + 1 }}</td>
                                                             <td>
                                                                 <span>
-                                                                    {{ $history->status }}
+                                                                    {{ config('order_status.order_status_admin.' . $history->status . '.status') ?? ucfirst(str_replace('_', ' ', $history->status)) }}
                                                                 </span>
                                                             </td>
                                                             <td class="text-start">
-                                                                {{ $history->reason ?? 'N/A' }}
+                                                                {{ $history->reason ?? '' }}
                                                             </td>
                                                             <td>
                                                                 {{ $history->user->name ?? 'System' }}
@@ -201,8 +234,8 @@
                                 </div>
                             </section>
                             <!--============================
-                                                                                                                        INVOICE PAGE END
-                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                INVOICE PAGE END
+                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
                             <div class="col">
                                 <div class="mt-2 float-end">
                                     <button class="btn btn-warning print_invoice">Print</button>
@@ -216,8 +249,8 @@
         </div>
     </section>
     <!--=============================
-                                                                                                    DASHBOARD START
-                                                                                                  ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                            DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                          ==============================-->
 @endsection
 
 @push('scripts')

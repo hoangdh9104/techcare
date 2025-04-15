@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Sub-Category</h1>
+            <h1>Danh mục phụ</h1>
         </div>
 
         <div class="section-body">
@@ -13,7 +13,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Update Sub-Category</h4>
+                            <h4>Cập nhật danh mục phụ</h4>
 
                         </div>
                         <div class="card-body">
@@ -22,9 +22,9 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="inputState">Category</label>
+                                    <label for="inputState">Danh mục</label>
                                     <select id="inputState" class="form-control" name="category">
-                                        <option value="1">Select</option>
+                                        <option value="1">Lựa chọn</option>
                                         @foreach ($categories as $category)
                                             <option {{ $category->id == $subCategory->category_id ? 'selected' : '' }}
                                                 value="{{ $category->id }}">{{ $category->name }}</option>
@@ -32,19 +32,19 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Tên</label>
                                     <input type="text" class="form-control" name="name"
                                         value="{{ $subCategory->name }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputState">Status</label>
+                                    <label for="inputState">Trạng thái</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option value="1" @selected($subCategory->status == 1)>Active</option>
-                                        <option value="0" @selected($subCategory->status == 0)>Inactive</option>
+                                        <option value="1" @selected($subCategory->status == 1)>Hoạt động</option>
+                                        <option value="0" @selected($subCategory->status == 0)>Tắt hoạt động</option>
                                     </select>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
                             </form>
 
                         </div>

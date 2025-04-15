@@ -6,7 +6,7 @@
                 @method('PUT')
 
                 <div class="form-group">
-                    <label>VNPay Status</label>
+                    <label>Trạng thái VNpay</label>
                     <select name="status" class="form-control">
                         <option value="1" {{ $vnpaySetting->status == 1 ? 'selected' : '' }}>Enable</option>
                         <option value="0" {{ $vnpaySetting->status == 0 ? 'selected' : '' }}>Disable</option>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Account Mode</label>
+                    <label>Trạng thái tài khoản</label>
                     <select name="mode" class="form-control">
                         <option value="0" {{ $vnpaySetting->mode == 0 ? 'selected' : '' }}>Sandbox</option>
                         <option value="1" {{ $vnpaySetting->mode == 1 ? 'selected' : '' }}>Live</option>
@@ -42,7 +42,7 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </form>
         </div>
     </div>
