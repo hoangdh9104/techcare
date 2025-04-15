@@ -124,7 +124,16 @@
 
                                 <div class="form-group">
                                     <label>Tồn kho</label>
-                                    <input type="number" min="0" class="form-control" name="qty" value="{{ $totalQty }}" readonly>
+                                    @if ($product->variantCombinations->count() > 0)
+                                        {{-- Nếu đã có biến thể: hiện số lượng = tổng số lượng của biến thể, không cho sửa --}}
+                                        <input type="number" class="form-control"
+                                            value="{{ $product->variantCombinations->sum('quantity') }}" readonly>
+                                    @else
+                                        {{-- Nếu chưa có biến thể: cho phép nhập số lượng --}}
+                                        <input type="number" min="0" name="qty" class="form-control"
+                                            value="{{ $product->qty }}">
+                                    @endif
+
                                 </div>
                                 <div class="form-group">
                                     <label>Video Link</label>

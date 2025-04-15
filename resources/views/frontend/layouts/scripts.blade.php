@@ -5,6 +5,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        fetchSideBarCartProduct();
         // add product into cart
         $('.shopping-cart-form').on('submit', function(e) {
             e.preventDefault();
@@ -13,14 +14,21 @@
                 method: 'POST',
                 data: formData,
                 url: "{{ route('add-to-cart') }}",
+
                 success: function(data) {
-                    getCartCount()
-                    fetchSideBarCartProduct()
-                    $('.mini_cart_action').removeClass('d-none')
-                    toastr.success(data.message)
+                    if (data.status === 'success') {
+                        // xử lý thành công
+                        getCartCount()
+                        fetchSideBarCartProduct()
+                        $('.mini_cart_action').removeClass('d-none')
+                        toastr.success(data.message)
+                    } else {
+                        // xử lý lỗi phía server trả về
+                        toastr.error(data.message || 'Có lỗi xảy ra.')
+                    }
                 },
                 error: function(xhr, status, error) {
-
+                    toastr.error(data.message)
                 }
             });
         })
@@ -47,11 +55,15 @@
                                 <a class="wsus__cart_title" href="{{ url('product-detail') }}/${product.options.slug}">
                                     ${product.name}
                                 </a>
-                                <p>{{ $settings->currency_icon }}${product.price} <del>$150</del></p>
-                                <small>Variants total:
-                                    {{ $settings->currency_icon }}${ product.options.variants_total }</small>
+                                <p>${product.price} {{ $settings->currency_icon }} <del>$150</del></p>
+                                 <!-- Render variants dynamically in JavaScript -->
+                                    ${product.options.variants ? Object.keys(product.options.variants).map(variantKey => {
+                                        const variant = product.options.variants[variantKey];
+                                        const variantValue = Array.isArray(variant) ? variant[0] ?? '' : variant;
+                                        return `<span class="product-variant"><strong>${variantKey}:</strong> ${variantValue}</span>`;
+                                    }).join('') : ''}
                                 <br>
-                                <small>Qty: ${ product.qty }</small>
+                                <small>Số lượng: ${ product.qty }</small>
                             </div>
                         </li>`)
                     }
@@ -111,7 +123,7 @@
                 url: "{{ route('cart.sidebar-product-total') }}",
                 success: function(data) {
                     console.log(data);
-                    $('.mini_cart_subtotal').text("{{ $settings->currency_icon }}" + data)
+                    $('.mini_cart_subtotal').text(data + "{{ $settings->currency_icon }}")
                 },
                 error: function(xhr, status, error) {
 
@@ -119,23 +131,25 @@
             });
         }
         // add product to wishlist
-        $('.add_to_wishlist').on('click', function(e){
+        $('.add_to_wishlist').on('click', function(e) {
             e.preventDefault();
             let id = $(this).data('id');
 
             $.ajax({
                 method: 'GET',
                 url: "{{ route('wishlist.store') }}",
-                data: {id:id},
-                success:function(data){
-                    if(data.status === 'success'){
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
                         $('#wishlist_count').text(data.count)
                         toastr.success(data.message);
-                    }else if(data.status === 'error'){
+                    } else if (data.status === 'error') {
                         toastr.error(data.message);
                     }
                 },
-                error: function(data){
+                error: function(data) {
                     console.log(data);
                 }
             })

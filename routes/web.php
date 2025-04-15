@@ -199,9 +199,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Xử lý khi thanh toán thành công hoặc thất bại từ VNPay redirect về
     Route::get('/vnpay/return', [PaymentController::class, 'vnpaySuccess'])->name('vnpay.success');
 
-// Route::middleware(['auth', 'role:shipper'])->group(function () {
-//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
-// });
+    // Route::middleware(['auth', 'role:shipper'])->group(function () {
+    //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+    // });
     // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
     Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });
