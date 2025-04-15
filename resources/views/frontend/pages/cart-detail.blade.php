@@ -1,4 +1,3 @@
-
 @extends('frontend.layouts.master')
 
 @section('content')
@@ -108,10 +107,10 @@
                         <p class="total"><span>total:</span> <span
                                 id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span>
 
-                            </p>
-                             @if (session()->has('coupon_code'))
-                                    <p>Applied Coupon: {{ session('coupon_code') }}</p>
-                                @endif
+                        </p>
+                        @if (session()->has('coupon_code'))
+                            <p>Applied Coupon: {{ session('coupon_code') }}</p>
+                        @endif
 
 
                         <form id="coupon_form">
@@ -120,8 +119,6 @@
                             <button type="submit" class="common_btn">apply</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> go shop</a>
                     </div>
                 </div>
             </div>
@@ -167,6 +164,12 @@
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) + 1;
                 let rowId = input.data('rowid');
+
+                if (quantity > 10) {
+                    toastr.error('Bạn chỉ có thể thêm tối đa 10 sản phẩm!');
+                    return; // Dừng lại nếu vượt quá 10
+                }
+
                 input.val(quantity);
                 $.ajax({
                     url: "{{ route('cart.update.quantity') }}",
@@ -177,23 +180,23 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            let productId = '#' + rowId
-                            let totaAmount = "{{ $settings->currency_icon }}" + data
-                                .productTotal
-                            $(productId).text(totaAmount)
-                            renderCartSubTotal()
-                            toastr.success(data.message)
-                        } else if (data.status == 'error') {
-                            toastr.error(data.message)
+                            let productId = '#' + rowId;
+                            let totalAmount = "{{ $settings->currency_icon }}" + data
+                                .productTotal;
+                            $(productId).text(totalAmount);
+                            renderCartSubTotal();
+                            toastr.success(data.message);
+                        } else if (data.status === 'error') {
+                            toastr.error(data.message);
                         }
-
                     },
                     error: function(data) {
-
+                        console.error(data);
                     },
-                })
-            })
-            // decrement product quantity
+                });
+            });
+
+            /// decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) - 1;
@@ -271,6 +274,7 @@
             }
 
             // applay coupon on cart
+
             $('#coupon_form').on('submit', function(e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
@@ -303,6 +307,7 @@
                             $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
                             $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
                         }
+                        
                     },
                     error: function(data) {
                         console.log(data);

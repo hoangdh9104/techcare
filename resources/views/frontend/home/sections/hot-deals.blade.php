@@ -32,12 +32,7 @@
                                 </a>
 
                                 <ul class="wsus__single_pro_icon">
-                                    <li>
-                                        <a href="#" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal-{{ $product->id }}">
-                                            <i class="far fa-eye"></i>
-                                        </a>
-                                    </li>
+                                    
                                     <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
                                     {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 </ul>
@@ -90,7 +85,7 @@
                                             <input name="quantity" type="hidden" min="1" max="100"
                                                 value="1" />
                                         </div>
-                                        <button class="add_cart" type="submit">add to cart</button>
+                                        
                                     </form>
                                 </div>
                             </div>
@@ -236,7 +231,7 @@
                                         <input name="quantity" type="hidden" min="1" max="100"
                                             value="1" />
                                     </div>
-                                    <button class="add_cart" type="submit">add to cart</button>
+                                    
 
                                     <ul class="wsus__button_area">
                                         <li><button type="submit" class="add_cart" href="#">add to cart</button></li>

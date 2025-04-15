@@ -48,7 +48,7 @@ function calculateDiscountPercent($originalPrice, $discountPrice)
 
 // Kiểm tra loại sản phẩm
 
-function productType( $type)
+function productType($type)
 {
     switch ($type) {
         case 'new_arrival':
@@ -83,6 +83,25 @@ function limitText($text, $limit = 20)
 {
     return \Str::limit($text, $limit);
 }
+
+/** get cart discount */
+function getCartDiscount()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        if ($coupon['discount_type'] === 'amount') {
+            return $coupon['discount'];
+        } else if ($coupon['discount_type'] === 'percent') {
+            $discount = $subTotal - ($subTotal * $coupon['discount'] / 100);
+            // $discount = ($subTotal * $coupon['discount'] / 100);
+            return $discount;
+        }
+    } else {
+        return 0;
+    }
+}
+
 /** get payable total amount */
 function getMainCartTotal()
 {
@@ -102,22 +121,6 @@ function getMainCartTotal()
     }
 }
 
-/** get cart discount */
-function getCartDiscount()
-{
-    if (Session::has('coupon')) {
-        $coupon = Session::get('coupon');
-        $subTotal = getCartTotal();
-        if ($coupon['discount_type'] === 'amount') {
-            return $coupon['discount'];
-        } else if ($coupon['discount_type'] === 'percent') {
-            $discount = $subTotal - ($subTotal * $coupon['discount'] / 100);
-            return $discount;
-        }
-    } else {
-        return 0;
-    }
-}
 
 // Shipping fee from sesssion
 
@@ -140,4 +143,11 @@ function getCurrencyIcon()
     $icon = GeneralSetting::first();
 
     return $icon->currency_icon;
+}
+
+if (!function_exists('checkDiscount')) {
+    function checkDiscount($product)
+    {
+        return $product->offer_price > 0 && $product->offer_price < $product->price;
+    }
 }

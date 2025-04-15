@@ -143,7 +143,6 @@
                             </div>
                             <ul class="wsus__button_area">
                                 <li><button class="add_cart" type="submit">add to cart</button></li>
-                                <li><a class="buy_now" href="#">buy now</a></li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                                 <li>
@@ -402,6 +401,11 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('.message_modal').on('submit', function(e) {
             e.preventDefault();
             let formData = $(this).serialize();
@@ -433,30 +437,76 @@
             })
         })
 
-        // Khi thay đổi biến thể
-        $('select[name="variants_item[]"]').on('change', function() {
-            let variantId = $(this).val();
+        $('.shopping-cart-form').on('submit', function(e) {
+            e.preventDefault();
+            let form = $(this);
+            let formData = form.serialize();
+            let quantityInput = form.find('input[name="quantity"]');
+            let quantity = parseInt(quantityInput.val());
+            let productId = form.find('input[name="product_id"]').val();
+            let variants = form.find('select[name="variants_item[]"]').map(function() {
+                return $(this).val();
+            }).get();
 
-            if (variantId) {
-                $.ajax({
-                    url: '{{ route('cart.get-variant-qty') }}', // Đường dẫn đến phương thức mới
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        variant_id: variantId
-                    },
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            let variantQty = response.variant_qty;
-                            // alert('Số lượng biến thể đã có trong giỏ hàng: ' + variantQty);
+            // Kiểm tra trước nếu số lượng vượt quá 10
+            if (quantity > 10) {
+                toastr.error('Số lượng tối đa cho sản phẩm này là 10!');
+                return;
+            }
+            
+
+        
+
+            $.ajax({
+                url: "{{ route('cart.get-product-qty') }}",
+                method: 'POST',
+                data: {
+                    product_id: productId,
+                    variants_item: variants,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        let currentQty = response.current_qty;
+                        if (currentQty + quantity > 10) {
+                            toastr.error(
+                                'Số lượng tối đa trong giỏ hàng cho sản phẩm này là 10!'
+                                );
+                            return;
                         }
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseJSON.message);
+
+                        // Thêm vào giỏ hàng
+                        $.ajax({
+                            url: "{{ route('add-to-cart') }}",
+                            method: 'POST',
+                            data: formData,
+                            success: function(data) {
+                                if (data.status === 'success') {
+                                    // Cập nhật số lượng giỏ hàng
+                                    $.get("{{ route('cart-count') }}",
+                                        function(count) {
+                                            $('.cart-count').text(count);
+                                        });
+                                } else {
+                                    toastr.error(data.message);
+                                }
+                            },
+                            error: function(xhr) {
+                                toastr.error(xhr.responseJSON.message);
+                            }
+                        });
                     }
-                });
+                },
+                error: function(xhr) {
+                    toastr.error('xhr.responseJSON.message');
+                }
+            });
+        }).on('keypress', function(e) {
+            // Ngăn submit form khi nhấn Enter
+            if (e.which === 13) {
+                e.preventDefault();
             }
         });
-    })
+    });
 </script>
 @endpush

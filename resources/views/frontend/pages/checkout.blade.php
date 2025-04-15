@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            BREADCRUMB START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                BREADCRUMB START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                BREADCRUMB END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CHECK OUT PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                CHECK OUT PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -91,8 +91,10 @@
                         @endforeach
                         <div class="wsus__order_details_summery">
                             <p>subtotal: <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                            <p>shipping fee(+): <span id="shipping_fee">{{ $settings->currency_icon }}0</span></p>
+                            <p>shipping fee(+): <span
+                                    id="shipping_fee">{{ $settings->currency_icon }}{{ getShippingFee() }}</span></p>
                             <p>coupon (-): <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
+                            
                             <p><b>total:</b>
                                 <span><b data-id="{{ getMainCartTotal() }}"
                                         id="total_amount">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</b></span>
@@ -215,6 +217,7 @@
             $('input[type="radio"]').prop('checked', false);
             $('#shipping_method_id').val("");
             $('#shipping_address_id').val("");
+
             $('.shipping_method').on('click', function() {
                 let shippingFee = $(this).data('id')
                 let currentTotalAmount = $('#total_amount').data('id')
@@ -224,11 +227,14 @@
                 $('#shipping_fee').text("{{ $settings->currency_icon }}" + shippingFee);
                 $('#total_amount').text("{{ $settings->currency_icon }}" + totalAmount);
 
+                
             })
+
             $('.shipping_address').on('click', function() {
                 $('#shipping_address_id').val($(this).data('id'));
 
             })
+
             $('#submitCheckoutForm').on('click', function(e) {
                 e.preventDefault();
                 if ($('#shipping_method_id').val() == "") {

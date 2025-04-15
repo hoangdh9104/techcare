@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index(ProductDataTable $dataTable)
     {
-        
+
         return $dataTable->render('admin.product.index');
     }
 
@@ -38,7 +38,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $subCategories = SubCategory::all();
         $childCategories = ChildCategory::all();
-        return view('admin.product.create', compact('categories', 'brands','subCategories', 'childCategories'));
+        return view('admin.product.create', compact('categories', 'brands', 'subCategories', 'childCategories'));
     }
 
     /**
@@ -103,28 +103,31 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-{
-    $product = Product::with('variants.productVariantItem')->findOrFail($id);
-
-    $subCategories = SubCategory::where('category_id', $product->category_id)->get();
-    $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
-    $categories = Category::all();
-    $brands = Brand::all();
-
-    // Tính tổng tồn kho từ các biến thể
-    $totalQty = 0;
-    if ($product->variants && $product->variants->isNotEmpty()) {
-        foreach ($product->variants as $variant) {
-            foreach ($variant->productVariantItem as $item) {
-                $totalQty += $item->qty ?? 0;
-            }
+    {
+        $product = Product::with('variants.productVariantItem')->findOrFail($id);
+        if ($product->status == 0) {
+            return redirect()->route('admin.products.index')->with('error', 'Sản phẩm này đã bị vô hiệu hóa và không thể chỉnh sửa.');
         }
-    } else {
-        $totalQty = $product->qty ?? 0;
-    }
 
-    return view('admin.product.edit', compact('product', 'categories', 'brands', 'subCategories', 'childCategories', 'totalQty'));
-}
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+        $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        // Tính tổng tồn kho từ các biến thể
+        $totalQty = 0;
+        if ($product->variants && $product->variants->isNotEmpty()) {
+            foreach ($product->variants as $variant) {
+                foreach ($variant->productVariantItem as $item) {
+                    $totalQty += $item->qty ?? 0;
+                }
+            }
+        } else {
+            $totalQty = $product->qty ?? 0;
+        }
+
+        return view('admin.product.edit', compact('product', 'categories', 'brands', 'subCategories', 'childCategories', 'totalQty'));
+    }
 
 
     /**
@@ -132,6 +135,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $product = Product::findOrFail($id);
+
+        if ($product->status == 0) {
+            return redirect()->route('admin.products.index')->with('error', 'Sản phẩm này đã bị vô hiệu hóa và không thể cập nhật.');
+        }
+
         $request->validate([
             'image' => ['nullable', 'image', 'max:3000'],
             'name' => ['required', 'max:200'],
