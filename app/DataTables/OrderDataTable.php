@@ -53,7 +53,7 @@ class OrderDataTable extends DataTable
                     case 'processed_and_ready_to_ship':
                         return "<span class='badge bg-info'>Đã xử lý - Sẵn sàng giao</span>";
                     case 'dropped_off':
-                        return "<span class='badge bg-info'>Đã gửi hàng</span>";
+                        return "<span class='badge bg-info'>Đã đã gói</span>";
                     case 'shipped':
                         return "<span class='badge bg-info'>Đang vận chuyển</span>";
                         // case 'out_for_delivery':
@@ -68,6 +68,9 @@ class OrderDataTable extends DataTable
                         return "<span class='badge bg-secondary'>Không xác định</span>";
                 }
             })
+            ->addColumn('product_qty', function ($query) {
+                return $query->orderProducts->sum('qty'); // thay 'qty' bằng tên cột chứa số lượng nếu bạn đặt tên khác
+            })
             ->rawColumns(['order_status', 'action', 'payment_status'])
             ->setRowId('id');
     }
@@ -77,7 +80,7 @@ class OrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['user', 'orderProducts']);
     }
 
     /**

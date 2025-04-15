@@ -3,7 +3,46 @@
 @section('title')
     {{ $settings->site_name }} Product Detail
 @endsection
+<style>
+    .btn-check:checked+.btn-variant {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
 
+    .btn-variant {
+        font-size: 14px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-variant:hover {
+        background-color: #f1f1f1;
+    }
+
+    .variant-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .variant-box {
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background-color: #fafafa;
+    }
+</style>
 
 <!--============================
                                                                                                                                                                                                                                                                                                                                                                 BREADCRUMB START
@@ -67,11 +106,11 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
+                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
                                 item)
                             </p>
                         @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
+                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $product->qty }}
                                 item)
                             </p>
                         @endif
@@ -102,35 +141,41 @@
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
-                            <h5>offer ending time : </h5>
+                            <h5>offer ending time : {{ $product->offer_end_date }} </h5>
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
                         <form class="shopping-cart-form" action="">
                             <div class="wsus__selectbox">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
-                                    @foreach ($product->variants as $variant)
-                                        @if ($variant->status != 0)
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">{{ $variant->name }}</h5>
-                                                <select class="select_2" name="variants_item[]">
-                                                    @foreach ($variant->productVariantItem as $item)
-                                                        @php
-                                                            $stockQty = $variantStockMap[$item->id] ?? 0;
-                                                        @endphp
+                                    <div class="row g-4">
+                                        @foreach ($product->variants as $variant)
+                                            @if ($variant->status)
+                                                <div class="col-md-6">
+                                                    <div class="variant-box">
+                                                        <label class="form-label">{{ $variant->name }}</label>
+                                                        <div class="variant-options">
 
-                                                        @if ($item->status != 0 && $stockQty > 0)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                                {{ $item->name }} (${{ $item->price }})
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
+                                                            @foreach ($variant->productVariantItem as $item)
+                                                                @if ($item->status)
+                                                                    <input type="radio" class="btn-check"
+                                                                        name="variants_items[{{ $variant->id }}][]"
+                                                                        id="variant_{{ $variant->id }}_{{ $item->id }}"
+                                                                        value="{{ $item->id }}" autocomplete="off"
+                                                                        {{ $item->is_default ? 'checked' : '' }}>
 
-                                                </select>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                                                    <label class="btn btn-variant"
+                                                                        for="variant_{{ $variant->id }}_{{ $item->id }}">
+                                                                        {{ $item->name }}
+                                                                    </label>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                             <div class="wsus__quentity">

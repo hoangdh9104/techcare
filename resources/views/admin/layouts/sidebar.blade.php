@@ -97,8 +97,6 @@
                     <li class="{{ setActive(['admin.shipped-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.shipped-orders') }}">Đơn hàng đang vận chuyển</a>
                     </li>
-                    {{-- <li class="{{ setActive(['admin.out_for_delivery-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.out_for_delivery-orders') }}">All Out For Delivery Orders</a></li> --}}
                     <li class="{{ setActive(['admin.delivered-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.delivered-orders') }}">Đơn hàng đã được giao</a></li>
                     <li class="{{ setActive(['admin.received-orders']) }}"><a class="nav-link"
