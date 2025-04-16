@@ -54,7 +54,7 @@
 
                         <li><a class="#" href="{{ route('home') }}">Trang chủ</a></li>
                         {{-- <li><a class="#" href="#">vendors</a></li> --}}
-                        <li><a href="{{route('vendor.index')}}">Nhà cung cấp</a></li>
+                        {{-- <li><a href="{{route('vendor.index')}}">Nhà cung cấp</a></li> --}}
                         <li><a class="#" href="#">Khuyến mãi</a></li>
                         <li><a class="#" href="{{route('blog')}}">blog</a></li>
                         <li><a class="#" href="#">about</a></li>

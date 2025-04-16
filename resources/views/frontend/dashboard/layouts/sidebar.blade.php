@@ -27,10 +27,10 @@
         <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"><i
                     class="fal fa-gift-card"></i> Địa chỉ</a></li>
 
-        @if (auth()->user()->role !== 'vendor')
+        {{-- @if (auth()->user()->role !== 'vendor')
             <li><a class="{{ setActive(['user.vendor-request.*']) }}"
                     href="{{ route('user.vendor-request.index') }}"><i class="far fa-user"></i> Yêu cầu của nhà cung cấp</a></li>
-        @endif
+        @endif --}}
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
