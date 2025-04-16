@@ -43,8 +43,8 @@ return [
             'details' => 'Đơn hàng đang chờ xử lý.'
         ],
         'processed_and_ready_to_ship' => [
-            'status' => 'Đã xử lý và sẵn sàng giao',
-            'details' => 'Đơn hàng đã được xử lý và sẵn sàng giao.'
+            'status' => 'Đã xử lý ',
+            'details' => 'Đơn hàng đã được xử lý .'
         ],
         'dropped_off' => [
             'status' => 'Đã đóng gói',

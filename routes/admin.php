@@ -233,6 +233,7 @@ Route::get('get-messages', [MessageController::class, 'getMessages'])->name('get
 Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-message');
 // statistic
 Route::get('revenue/chart', [AdminController::class, 'getMonthlyRevenueChart'])->name('revenue.chart');
+Route::get('daily-revenue/data', [AdminController::class, 'getDailyRevenue']);
 Route::get('statistics/orders/data', [AdminController::class, 'getMonthlyOrderStatistics'])->name('statistics.orders.data');
 Route::get('statistics/top-customers', [AdminController::class, 'topCustomers'])->name('statistics.top-customers');
 Route::get('/top-selling', [AdminController::class, 'showTopSelling'])->name('top-selling');

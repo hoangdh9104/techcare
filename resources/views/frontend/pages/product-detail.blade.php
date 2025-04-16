@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('content')
 @section('title')
-    {{ $settings->site_name }} Product Detail
+    {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
 <style>
     .btn-check:checked+.btn-variant {
