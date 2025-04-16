@@ -125,8 +125,8 @@ class OrderController extends Controller
 
         $statusLabels = [
             'pending' => 'Chờ xử lý',
-            'processed_and_ready_to_ship' => 'Đã xử lý - sẵn sàng giao',
-            'dropped_off' => 'Người bán đóng gói',
+            // 'processed_and_ready_to_ship' => 'Đã xử lý - sẵn sàng giao',
+            // 'dropped_off' => 'Người bán đóng gói',
             'shipped' => 'Người giao đã lấy hàng',
             'delivered' => 'Đã giao hàng',
             'received' => 'Khách đã nhận hàng',
@@ -148,9 +148,9 @@ class OrderController extends Controller
 
         // Các trạng thái hợp lệ (không cho phép nhảy cóc)
         $validTransitions = [
-            'pending' => ['processed_and_ready_to_ship', 'canceled'],
-            'processed_and_ready_to_ship' => ['dropped_off', 'canceled'],
-            'dropped_off' => ['shipped'],
+            'pending' => ['shipped', 'canceled'],
+            // 'processed_and_ready_to_ship' => ['dropped_off', 'canceled'],
+            // 'dropped_off' => ['shipped'],
             'shipped' => ['delivered'],
             'delivered' => ['received'],
         ];

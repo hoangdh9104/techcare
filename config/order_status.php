@@ -42,14 +42,14 @@ return [
             'status' => 'Đang chờ xử lý',
             'details' => 'Đơn hàng đang chờ xử lý.'
         ],
-        'processed_and_ready_to_ship' => [
-            'status' => 'Đã xử lý và sẵn sàng giao',
-            'details' => 'Đơn hàng đã được xử lý và sẵn sàng giao.'
-        ],
-        'dropped_off' => [
-            'status' => 'Đã đóng gói',
-            'details' => 'Gói hàng của bạn đã được người bán giao đi'
-        ],
+        // 'processed_and_ready_to_ship' => [
+        //     'status' => 'Đã xử lý và sẵn sàng giao',
+        //     'details' => 'Đơn hàng đã được xử lý và sẵn sàng giao.'
+        // ],
+        // 'dropped_off' => [
+        //     'status' => 'Đã đóng gói',
+        //     'details' => 'Gói hàng của bạn đã được người bán giao đi'
+        // ],
         'shipped' => [
             'status' => 'Người giao đã lấy',
             'details' => 'Đơn hàng đã được giao cho đối tác.'
