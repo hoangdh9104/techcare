@@ -168,8 +168,7 @@
                                                 <i class="fas fa-play"></i>
                                             </a>
                                         @endif
-<<<<<<< HEAD
-                                    @endfor
+                                    {{-- @endfor --}}
 
                                     <span>({{count($product->reviews)}} review)</span>
 
@@ -194,32 +193,6 @@
                                         @endforeach
                                         <input name="quantity" type="hidden" min="1" max="9"
                                             value="1" />
-=======
-                                        <div class="row modal_slider">
-                                            <div class="col-xl-12">
-                                                <div class="modal_slider_img">
-                                                    <img src="{{ asset($product->thumb_image) }}"
-                                                        alt="{{ $product->name }}" class="img-fluid w-100">
-                                                </div>
-                                            </div>
-                                            @if (count($product->productImageGalleries) == 0)
-                                                <div class="col-xl-12">
-                                                    <div class="modal_slider_img">
-                                                        <img src="{{ asset($product->thumb_image) }}"
-                                                            alt="{{ $product->name }}" class="img-fluid w-100">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @foreach ($product->productImageGalleries as $productImage)
-                                                <div class="col-xl-12">
-                                                    <div class="modal_slider_img">
-                                                        <img src="{{ asset($productImage->image) }}"
-                                                            alt="{{ $product->name }}" class="img-fluid w-100">
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
->>>>>>> 639a22d093b1d1f0a6dce02d8198155dafb6cb4d
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">

@@ -120,13 +120,13 @@
 
                                 <div class="form-group">
                                     <label>Mô tả ngắn</label>
-                                    <textarea name="short_description" class="form-control"></textarea>
+                                    <textarea name="short_description" class="form-control">{{ old('short_description') }}</textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Mô tả chi tiết</label>
-                                    <textarea name="long_description" class="form-control summernote"></textarea>
+                                    <textarea name="long_description" class="form-control summernote">{{ old('long_description') }}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Seo Mô tả</label>
-                                    <textarea name="seo_description" class="form-control"></textarea>
+                                    <textarea name="seo_description" class="form-control">{{ old('seo_description') }}</textarea>
                                 </div>
 
                                 <div class="form-group">

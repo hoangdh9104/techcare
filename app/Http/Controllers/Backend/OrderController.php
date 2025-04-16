@@ -12,6 +12,7 @@ use App\DataTables\ProcessedOrderDataTable;
 use App\DataTables\ReceivedOrderDataTable;
 use App\DataTables\ShippedOrderDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\ProductVariantCombination;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderStatusHistory;
@@ -81,7 +82,6 @@ class OrderController extends Controller
         $order = Order::with(['orderProducts.product', 'statusHistories' => function ($query) {
             $query->orderBy('changed_at', 'desc');
         }])->findOrFail($id);
-
         return view('admin.order.show', compact('order'));
     }
 
@@ -120,7 +120,9 @@ class OrderController extends Controller
     public function changeOrderStatus(Request $request)
     {
         // Tìm đơn hàng
-        $order = Order::findOrFail($request->id);
+        // $order = Order::findOrFail($request->id);
+        $order = Order::with('orderProducts')->find($request->id);
+
         $statusLabels = [
             'pending' => 'Chờ xử lý',
             'processed_and_ready_to_ship' => 'Đã xử lý - sẵn sàng giao',
@@ -177,7 +179,20 @@ class OrderController extends Controller
                     'message' => 'Không thể hủy đơn hàng đã được vận chuyển hoặc giao hàng.'
                 ], 400);
             }
+            // ✅ Cập nhật lại tồn kho sản phẩm & biến thể
+            foreach ($order->orderProducts as $orderProduct) {
+                // Tăng số lượng sản phẩm chính
+                DB::table('products')
+                    ->where('id', $orderProduct->product_id)
+                    ->increment('qty', $orderProduct->qty);
 
+                // Nếu có biến thể, tăng số lượng cho biến thể
+                if (!empty($orderProduct->variants) && $orderProduct->variants !== '[]') {
+                    DB::table('product_variant_combinations')
+                        ->where('id', $orderProduct->variants)
+                        ->increment('quantity', $orderProduct->qty);
+                }
+            }
             // Nếu đơn hàng thanh toán qua thẻ/ví (không phải COD), cập nhật trạng thái thanh toán
             if ($order->payment_method != 'COD' && $order->payment_status == 1) {
                 $order->payment_status = 0;

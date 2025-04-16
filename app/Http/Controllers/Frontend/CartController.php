@@ -265,10 +265,20 @@ class CartController extends Controller
         $subTotal = $this->cartTotal();
         $discount = 0;
 
-        if ($coupon->discount_type === 'amount') {
-            $discount = min($coupon->discount, $subTotal); // Đảm bảo giảm giá không vượt quá tổng tiền
-        } elseif ($coupon->discount_type === 'percent') {
-            $discount = ($subTotal * $coupon->discount / 100);
+        if($coupon->discount_type === 'amount'){
+            Session::put('coupon', [
+                'coupon_name' => $coupon->name,
+                'coupon_code' => $coupon->code,
+                'discount_type' => 'amount',
+                'discount' => $coupon->discount
+            ]);
+        }elseif($coupon->discount_type === 'percent'){
+            Session::put('coupon', [
+                'coupon_name' => $coupon->name,
+                'coupon_code' => $coupon->code,
+                'discount_type' => 'percent',
+                'discount' => $coupon->discount
+            ]);
         }
 
         Session::put('applied_coupon', [

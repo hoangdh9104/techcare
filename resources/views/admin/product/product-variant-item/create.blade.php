@@ -41,15 +41,6 @@
                                     <label>Tên sản phẩm biến thể</label>
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 </div>
-
-                                <div class="form-group">
-                                    <label>Giá <code>(Để 0 nếu giá giữ nguyên)</code></label>
-                                    <input type="text" class="form-control" name="price" value="{{ old('price') }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tồn kho</label>
-                                    <input type="text" class="form-control" name="qty" value="{{ old('qty') }}">
-                                </div>
                                 {{-- which variants will be pre activated or pre selected in that page will be determined by this option. --}}
                                 <div class="form-group">
                                     <label for="inputState">Mặc định</label>

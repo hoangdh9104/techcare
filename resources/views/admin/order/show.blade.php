@@ -90,23 +90,34 @@
                                                 <td>{{ $product->product_name }}</td>
                                             @endif
                                             <td>
-                                                @if (empty($variants))
-                                                    <p>Không có biến thể</p>
+                                                @php
+                                                    $variant = null;
+                                                    if (!empty($product->variants) && $product->variants !== '[]') {
+                                                        $variant = DB::table('product_variant_combinations')
+                                                            ->where('id', $product->variants) // lấy đúng ID biến thể
+                                                            ->first();
+                                                    }
+                                                @endphp
+
+                                                @if ($variant)
+                                                    <div>
+                                                        <strong>Sản phẩm:</strong> {{ $product->product_name }} <br>
+                                                        <strong>Biến thể:</strong> {{ $variant->name }} <br>
+                                                        {{-- <strong>Giá:</strong> VND{{ $variant->price }} <br> --}}
+                                                        <img src="{{ asset($variant->image) }}" alt="Ảnh sản phẩm"
+                                                            style="width: 100px;">
+                                                    </div>
                                                 @else
-                                                    @foreach ($variants as $key => $variant)
-                                                        <b>{{ $key }}:</b> {{ $variant->name }}
-                                                        ({{ $settings['currency_icon'] }}{{ $variant->price }})
-                                                        <br>
-                                                    @endforeach
+                                                    <p>Không có biến thể</p>
                                                 @endif
                                             </td>
                                             <td>{{ $product->vendor->shop_name }}</td>
                                             <td class="text-center">
-                                                {{ $settings->currency_icon }}{{ $product->unit_price }}
+                                                {{ $product->unit_price }}{{ $settings->currency_icon }}
                                             </td>
                                             <td class="text-center">{{ $product->qty }}</td>
                                             <td class="text-right">
-                                                {{ $settings->currency_icon }}{{ $product->unit_price * $product->qty + $product->variant_total }}
+                                                {{ $product->unit_price * $product->qty + $product->variant_total }}{{ $settings->currency_icon }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -173,13 +184,13 @@
                                 <div class="col-lg-4 text-right">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Tạm tính</div>
-                                        <div class="invoice-detail-value">{{ $settings->currency_icon }}
-                                            {{ $order->sub_total }}</div>
+                                        <div class="invoice-detail-value">
+                                            {{ $order->sub_total }}{{ $settings->currency_icon }}</div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Phí vận chuyển (+)</div>
-                                        <div class="invoice-detail-value">{{ $settings->currency_icon }}
-                                            {{ @$shipping->cost }}</div>
+                                        <div class="invoice-detail-value">
+                                            {{ @$shipping->cost }}{{ $settings->currency_icon }}</div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Mã giảm giá (-)</div>
@@ -199,11 +210,11 @@
                                             <!-- Hiển thị giảm giá -->
                                             @if (@$coupon->discount_type === 'percent')
                                                 Mã giảm: {{ @$coupon->discount }}%
-                                                (- {{ $settings->currency_icon }}{{ $discount }})
+                                                (- {{ $discount }}{{ $settings->currency_icon }})
                                             @elseif(@$coupon->discount_type === 'amount')
-                                                Mã giảm: {{ $settings->currency_icon }}{{ $discount }}
+                                                Mã giảm: {{ $discount }}{{ $settings->currency_icon }}
                                             @else
-                                                Mã giảm: {{ $settings->currency_icon }}{{ 0 }}
+                                                Mã giảm: {{ 0 }}{{ $settings->currency_icon }}
                                             @endif
                                         </div>
 
@@ -212,7 +223,7 @@
                                         <div class="invoice-detail-item">
                                             <div class="invoice-detail-name">Tổng cộng</div>
                                             <div class="invoice-detail-value invoice-detail-value-lg">
-                                                {{ $settings->currency_icon }} {{ $order->amount }}
+                                                {{ $order->amount }} {{ $settings->currency_icon }}
                                             </div>
                                         </div>
                                     </div>
