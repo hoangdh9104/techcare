@@ -42,6 +42,16 @@
         border-radius: 10px;
         background-color: #fafafa;
     }
+
+    .out_stock {
+        color: #d9534f;
+        /* đỏ cảnh báo */
+        font-weight: 600;
+        background-color: #fcebea;
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-block;
+    }
 </style>
 
 <!--============================
@@ -106,21 +116,24 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
-                                item)
+                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                    class="in_stock">Còn hàng</span>
+                                ({{ $product->qty }}
+                                sản phẩm)
                             </p>
                         @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $product->qty }}
-                                item)
+                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                    class="in_stock">Hết hàng</span>
+                                ({{ $product->qty }}
+                                sản phẩm)
                             </p>
                         @endif
-
                         @if (checkDiscount($product))
                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                <del id="product-price">{{ $settings->currency_icon }}{{ $product->price }}</del>
                             </h4>
                         @else
-                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                            <h4 id="product-price">{{ $product->price }}{{ $settings->currency_icon }}</h4>
                         @endif
                         <p class="wsus_pro_rating">
                             @php
@@ -135,18 +148,16 @@
                                     <i class="far fa-star"></i>
                                 @endif
                             @endfor
-
-                            <span>({{ count($product->reviews) }} review)</span>
-
+                            <span>({{ count($product->reviews) }} đánh giá)</span>
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
-                            <h5>offer ending time : {{ $product->offer_end_date }} </h5>
+                            <h5>Thời gian kết thúc ưu đãi : {{ $product->offer_end_date }} </h5>
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
                         <form class="shopping-cart-form" action="">
                             <div class="wsus__selectbox">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
                                     <div class="row g-4">
                                         @foreach ($product->variants as $variant)
@@ -155,13 +166,13 @@
                                                     <div class="variant-box">
                                                         <label class="form-label">{{ $variant->name }}</label>
                                                         <div class="variant-options">
-
                                                             @foreach ($variant->productVariantItem as $item)
                                                                 @if ($item->status)
                                                                     <input type="radio" class="btn-check"
                                                                         name="variants_items[{{ $variant->id }}][]"
                                                                         id="variant_{{ $variant->id }}_{{ $item->id }}"
                                                                         value="{{ $item->id }}" autocomplete="off"
+                                                                        data-name="{{ Str::slug($item->name, '') }}"
                                                                         {{ $item->is_default ? 'checked' : '' }}>
 
                                                                     <label class="btn btn-variant"
@@ -187,7 +198,9 @@
                                 {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
-                                <li><button class="add_cart" type="submit">add to cart</button></li>
+                                <li><button id="add-to-cart-btn" class="add_cart" type="submit">Thêm vào giỏ
+                                        hàng</button></li>
+                                {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                                 <li>
@@ -208,7 +221,7 @@
 
                             </ul>
                         </form>
-                        <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                        <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                     </div>
                 </div>
 
@@ -481,77 +494,85 @@
                 }
             })
         })
+    })
+    document.addEventListener('DOMContentLoaded', function() {
+        const baseSku = '{{ strtoupper(Str::slug(Str::limit($product->name, 10, ''), '')) }}'; // VD: AOTHUNNAM
 
-        $('.shopping-cart-form').on('submit', function(e) {
-            e.preventDefault();
-            let form = $(this);
-            let formData = form.serialize();
-            let quantityInput = form.find('input[name="quantity"]');
-            let quantity = parseInt(quantityInput.val());
-            let productId = form.find('input[name="product_id"]').val();
-            let variants = form.find('select[name="variants_item[]"]').map(function() {
-                return $(this).val();
-            }).get();
+        const variantRadios = document.querySelectorAll('input[type=radio][name^="variants_items"]');
 
-            // Kiểm tra trước nếu số lượng vượt quá 10
-            if (quantity > 10) {
-                toastr.error('Số lượng tối đa cho sản phẩm này là 10!');
-                return;
-            }
-            
+        variantRadios.forEach(radio => {
+            radio.addEventListener('change', updateSku);
+        });
+        console.log(variantRadios);
 
-        
+        function updateSku() {
+            let attributeParts = [];
 
-            $.ajax({
-                url: "{{ route('cart.get-product-qty') }}",
-                method: 'POST',
-                data: {
-                    product_id: productId,
-                    variants_item: variants,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        let currentQty = response.current_qty;
-                        if (currentQty + quantity > 10) {
-                            toastr.error(
-                                'Số lượng tối đa trong giỏ hàng cho sản phẩm này là 10!'
-                                );
-                            return;
-                        }
-
-                        // Thêm vào giỏ hàng
-                        $.ajax({
-                            url: "{{ route('add-to-cart') }}",
-                            method: 'POST',
-                            data: formData,
-                            success: function(data) {
-                                if (data.status === 'success') {
-                                    // Cập nhật số lượng giỏ hàng
-                                    $.get("{{ route('cart-count') }}",
-                                        function(count) {
-                                            $('.cart-count').text(count);
-                                        });
-                                } else {
-                                    toastr.error(data.message);
-                                }
-                            },
-                            error: function(xhr) {
-                                toastr.error(xhr.responseJSON.message);
-                            }
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    toastr.error('xhr.responseJSON.message');
+            // Lấy tất cả radio được chọn
+            document.querySelectorAll('input[type=radio][name^="variants_items"]:checked').forEach(input => {
+                const slugValue = input.dataset.name?.toUpperCase();
+                if (slugValue) {
+                    attributeParts.push(slugValue);
                 }
             });
-        }).on('keypress', function(e) {
-            // Ngăn submit form khi nhấn Enter
-            if (e.which === 13) {
-                e.preventDefault();
+            console.log(attributeParts);
+
+            if (attributeParts.length === 0) {
+                console.log('không có biến thể sản phẩm');
+                return;
             }
-        });
+            const productId = document.getElementById('product_id').value
+            const finalSku = baseSku + '-' + attributeParts.join('-');
+            console.log(baseSku);
+            console.log(attributeParts);
+            console.log('SKU:', finalSku); // ✅ In ra SKU
+            // gọi API để lấy thông tin sản phẩm theo SKU:
+            fetch(`/get-variant-combination?sku=${finalSku}&product_id=${productId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        console.log('Không tìm thấy SKU');
+                        document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                            `;
+                        // Ẩn cột giá
+                        document.getElementById('product-price').style.display = 'none';
+                        // Ẩn nút "Thêm vào giỏ hàng"
+                        document.getElementById('add-to-cart-btn').style.display = 'none';
+                    } else {
+                        console.log(data);
+                        // Nếu có SKU hợp lệ và status == 1
+                        if (data.status == 1) {
+                            document.getElementById('add-to-cart-btn').style.display =
+                                'inline-block'; // Hiển thị lại nút
+                            document.getElementById('product-price').style.display =
+                                'block'; // Hiển thị lại cột giá
+                            document.getElementById('product-price').innerText = data.price + ' VNĐ';
+                            if (data.quantity > 0) {
+                                document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="in_stock">Còn hàng</span>
+                                (${data.quantity} sản phẩm)
+                            `;
+                            } else {
+                                document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                                (${data.quantity} sản phẩm)
+                            `;
+                            }
+                        } else {
+                            document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                            `;
+                            // Ẩn cột giá
+                            document.getElementById('product-price').style.display = 'none';
+                            // Ẩn nút "Thêm vào giỏ hàng"
+                            document.getElementById('add-to-cart-btn').style.display = 'none';
+                        }
+                    }
+                });
+        }
+        // Load SKU mặc định ban đầu
+        updateSku();
     });
 </script>
 @endpush

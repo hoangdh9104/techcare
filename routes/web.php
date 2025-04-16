@@ -33,6 +33,7 @@ use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\VNPayController;
+use App\Http\Controllers\Frontend\ProductController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
 
@@ -130,7 +131,8 @@ Route::post('contact', [PageController::class, 'handleContactForm'])->name('hand
 //product track route
 Route::get('product-traking', [ProductTrackController::class, 'index'])->name('product-traking.index');
 // Route::get('product-traking', [ProductTrackController::class, 'track'])->name('product-traking.track');
-
+// lấy chi tiết sản phẩm biển thể
+Route::get('/get-variant-combination', [ProductController::class, 'getVariantCombination'])->name('variant.combination');
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
