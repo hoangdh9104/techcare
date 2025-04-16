@@ -28,6 +28,13 @@ return new class extends Migration
             $table->string('order_status');
             $table->timestamps();
         });
+        Schema::create('order_shippers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->constrained('orders');
+            $table->string('status');
+            $table->timestamp('delivered_at')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

@@ -111,7 +111,6 @@
                                                     <p>Không có biến thể</p>
                                                 @endif
                                             </td>
-                                            <td>{{ $product->vendor->shop_name }}</td>
                                             <td class="text-center">
                                                 {{ $product->unit_price }}{{ $settings->currency_icon }}
                                             </td>

@@ -8,6 +8,7 @@ use App\Models\GeneralSetting;
 use App\Models\MomoSetting;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\OrderShipper;
 use App\Models\PaypalSetting;
 use App\Models\Product;
 use App\Models\ProductVariantCombination;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Str;
 
 
 class PaymentController extends Controller
@@ -58,7 +60,15 @@ class PaymentController extends Controller
         $order->shpping_method = json_encode(Session::get('shipping_method'));
         $order->coupon = json_encode(Session::get('coupon'));
         $order->order_status = 'pending';
+        $order->order_code = 'ORD' . strtoupper(Str::random(8));
         $order->save();
+
+        $orderShipper = new OrderShipper();
+        $orderShipper->order_id = $order->id;
+        $orderShipper->status = 'Chờ giao hàng'; // Trạng thái shipper là chờ giao
+        $orderShipper->created_at = now();
+        $orderShipper->updated_at = now();
+        $orderShipper->save();
 
 
         // Store order products
