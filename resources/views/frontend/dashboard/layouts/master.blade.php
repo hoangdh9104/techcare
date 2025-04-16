@@ -51,6 +51,7 @@
   ==============================-->
     <div class="wsus__dashboard_menu">
         <div class="wsusd__dashboard_user">
+            {{-- {{ dd(Auth::user()->image) }} --}}
             <img src="{{ Auth::user()->image ? asset(Auth::user()->image) : asset('backend/assets/img/avatar/avatar-1.png') }}"
                 class="rounded-circle mr-1" alt="img" class="img-fluid">
             <p>{{ Auth::user()->name }}</p>

@@ -19,21 +19,33 @@ class OrderShipperDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
+    // public function dataTable(QueryBuilder $query): EloquentDataTable
+    // {
+    //     return (new EloquentDataTable($query))
+    //         ->addColumn('action_shipper', function ($order) {
+    //             // Hiển thị nút thao tác dựa trên status
+    //             if (in_array($order->status, ['pending', 'waiting'])) {
+    //                 return '<a href="' . route('shipper.orders.pickup', $order->order_id) . '" class="btn btn-sm btn-primary">Nhận đơn</a>';
+    //             } elseif ($order->status === 'in_delivery') {
+    //                 return '<a href="' . route('shipper.orders.deliver', $order->order_id) . '" class="btn btn-sm btn-success">Giao hàng</a>';
+    //             } else {
+    //                 return '';
+    //             }
+    //         })
+    //         ->rawColumns(['action_shipper']) // Cho phép HTML
+    //         ->setRowId('id');
+    // }
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))
+{
+    return (new EloquentDataTable($query))
         ->addColumn('action_shipper', function ($order) {
-            if ($order->status === 'pending') {
-                return '<a href="' . route('shipper.order.pickup', $order->id) . '" class="btn btn-sm btn-primary">Nhận đơn</a>';
-            } elseif ($order->status === 'in_delivery') {
-                return '<a href="' . route('shipper.order.deliver', $order->id) . '" class="btn btn-sm btn-success">Giao hàng</a>';
-            } else {
-                return '';
-            }
+            return '<a href="' . route('shipper.orders.show', $order->order_id) . '" class="btn btn-sm btn-info">Xem</a>';
         })
-        ->rawColumns(['action_shipper']) // quan trọng: để Laravel không escape HTML
+        ->rawColumns(['action_shipper']) // Cho phép hiển thị HTML
         ->setRowId('id');
-    }
+}
+
+
 
     /**
      * Get the query source of dataTable.
@@ -44,6 +56,7 @@ class OrderShipperDataTable extends DataTable
             ->join('orders', 'orders.id', '=', 'order_shippers.order_id')
             ->select([
                 'order_shippers.id',
+                'order_shippers.order_id',  // Đảm bảo order_id có
                 'orders.order_code',
                 'order_shippers.status',
                 'order_shippers.delivered_at',
@@ -51,6 +64,7 @@ class OrderShipperDataTable extends DataTable
                 'order_shippers.updated_at'
             ]);
     }
+
 
     /**
      * Optional method if you want to use the html builder.
@@ -76,24 +90,24 @@ class OrderShipperDataTable extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     */public function getColumns(): array
-{
-    return [
-        Column::make('id')->title('ID'),
-        Column::make('order_code')->title('Mã đơn'),
-        Column::make('status')->title('Trạng thái'),
-        Column::make('delivered_at')->title('Giao lúc'),
-        Column::make('created_at')->title('Tạo lúc'),
-        Column::make('updated_at')->title('Cập nhật'),
+     */ public function getColumns(): array
+    {
+        return [
+            Column::make('id')->title('ID'),
+            Column::make('order_code')->title('Mã đơn'),
+            Column::make('status')->title('Trạng thái'),
+            Column::make('delivered_at')->title('Giao lúc'),
+            Column::make('created_at')->title('Tạo lúc'),
+            Column::make('updated_at')->title('Cập nhật'),
 
-        Column::computed('action_shipper') 
-            ->exportable(false)
-            ->printable(false)
-            ->width(100)
-            ->addClass('text-center')
-            ->title('Thao tác'),
-    ];
-}
+            Column::computed('action_shipper')
+                ->exportable(false)
+                ->printable(false)
+                ->width(100)
+                ->addClass('text-center')
+                ->title('Thao tác'),
+        ];
+    }
 
 
     /**

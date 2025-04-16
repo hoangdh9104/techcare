@@ -11,8 +11,11 @@ Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboar
 // Shipper profile
 Route::resource('shipper/profile', ShipperProfileController::class);
 // shiper order
-Route::resource('shipper/order', ShipperOrderController::class);
+// Route::resource('shipper/order', ShipperOrderController::class);
 
-Route::get('/shipper/orders/{id}/pickup', [ShipperOrderController::class, 'pickUpOrder'])->name('shipper.order.pickup');
-Route::get('/shipper/orders/{id}/deliver', [ShipperOrderController::class, 'deliver'])->name('shipper.order.deliver');
+Route::resource('orders', ShipperOrderController::class);
+
+Route::get('orders/{id}/pickup', [ShipperOrderController::class, 'pickUpOrder'])->name('orders.pickup');
+Route::get('orders/{id}/deliver', [ShipperOrderController::class, 'deliverOrder'])->name('orders.deliver');
+Route::get('orders/{id}', [ShipperOrderController::class, 'showOrder'])->name('orders.show');
 

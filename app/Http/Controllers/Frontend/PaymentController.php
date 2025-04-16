@@ -65,6 +65,7 @@ class PaymentController extends Controller
 
         $orderShipper = new OrderShipper();
         $orderShipper->order_id = $order->id;
+        $orderShipper->shipper_id = auth()->id();
         $orderShipper->status = 'Chờ giao hàng'; // Trạng thái shipper là chờ giao
         $orderShipper->created_at = now();
         $orderShipper->updated_at = now();
