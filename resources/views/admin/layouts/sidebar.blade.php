@@ -53,7 +53,7 @@
                 </ul>
             </li>
             {{-- Manage Blog --}}
-            <li class="dropdown {{ setActive(['admin.blog-category.*']) }}">
+            <li class="dropdown {{ setActive(['admin.blog-category.*', 'admin.blog.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fa-solid fa-newspaper"></i>
                     <span>Quản lí bài viết</span></a>
@@ -79,9 +79,7 @@
                     'admin.dropped_off-orders',
                     'admin.delivered-orders',
                     'admin.canceled-orders',
-                    'admin.blog-category.*',
                     'admin.received-orders',
-                    'admin.blog.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-truck"></i>
                     <span>Quản lí đơn hàng</span></a>
@@ -123,7 +121,7 @@
 
             {{-- Manage Product --}}
             <li
-                class="dropdown {{ setActive(['admin.brand.*', 'admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*', 'admin.seller-products.*', 'admin.seller-pending-products.*', 'admin.reviews.*']) }}">
+                class="dropdown {{ setActive(['admin.brand.*', 'admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*', 'admin.seller-products.*', 'admin.seller-pending-products.*', 'admin.reviews.*', 'admin.variants.create', 'admin.variants.edit']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fa-solid fa-bag-shopping"></i>
                     <span>Quản lí sản phẩm</span></a>
@@ -131,14 +129,14 @@
                     <li class="{{ setActive(['admin.brand.*']) }}"><a class="nav-link"
                             href="{{ route('admin.brand.index') }}">Thương hiệu/Nhãn hàng</a></li>
                     <li
-                        class="{{ setActive(['admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*']) }}">
+                        class="{{ setActive(['admin.products.*', 'admin.products-image-gallery.*', 'admin.products-variant.*', 'admin.products-variant-item.*', 'admin.variants.create', 'admin.variants.edit']) }}">
                         <a class="nav-link" href="{{ route('admin.products.index') }}">Sản phẩm</a>
                     </li>
-                    <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link"
+                    {{-- <li class="{{ setActive(['admin.seller-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-products.index') }}">Seller Product</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.*']) }}"><a class="nav-link"
                             href="{{ route('admin.seller-pending-products.index') }}">Seller Pending Product</a>
-                    </li>
+                    </li> --}}
 
                     <li class="{{ setActive(['admin.reviews.*']) }}"><a class="nav-link"
                             href="{{ route('admin.reviews.index') }}">Đánh giá sản phẩm</a></li>
