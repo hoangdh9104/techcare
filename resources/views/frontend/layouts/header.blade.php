@@ -66,7 +66,7 @@
                         <p>
                             {{ $sidebarProduct->price }}{{ $settings->currency_icon }}
                         </p>
-                        <small>Qty: {{ $sidebarProduct->qty }}</small>
+                        <small>Số lượng: {{ $sidebarProduct->qty }}</small>
                     </div>
                 </li>
             @endforeach

@@ -46,7 +46,6 @@
                                         <th class="wsus__pro_icon">
                                             <a href="#" class="common_btn clear_cart">Xóa giỏ hàng</a>
                                         </th>
-
                                     </tr>
                                     @foreach ($cartItems as $item)
                                         <tr class="d-flex">
@@ -287,8 +286,8 @@
                     success: function(data) {
                         if (data.status === 'success') {
                             let productId = '#' + rowId
-                            let totaAmount = "{{ $settings->currency_icon }}" + data
-                                .productTotal
+                            let totaAmount = data
+                                .productTotal + "{{ $settings->currency_icon }}"
                             $(productId).text(totaAmount)
                             renderCartSubTotal()
                             toastr.success(data.message)
@@ -321,8 +320,8 @@
                     success: function(data) {
                         if (data.status === 'success') {
                             let productId = '#' + rowId
-                            let totaAmount = "{{ $settings->currency_icon }}" + data
-                                .productTotal
+                            let totaAmount = data
+                                .productTotal + "{{ $settings->currency_icon }}"
                             $(productId).text(totaAmount)
                             renderCartSubTotal()
                             calculateCouponDescount()

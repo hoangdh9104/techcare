@@ -38,38 +38,43 @@
                 type: 'GET',
                 url: "{{ route('cart-products') }}",
                 success: function(data) {
-                    $('.mini_cart_wrapper').html("")
-                    let html = ''
-                    for (let item in data) {
-                        let product = data[item]
-                        html += (`<li id="mini_cart_${product.rowId}">
-                            <div class="wsus__cart_img">
-                                <a href="{{ url('product-detail') }}/${product.options.slug}">
-                                    <img src="{{ asset('/') }}${product.options.img}" alt="product" class="img-fluid w-100">
-                                </a>
-                                <a class="wsis__del_icon remove_sidebar_product" data-id='${product.rowId}' href="#">
-                                    <i class="fas fa-minus-circle"></i>
-                                </a>
-                            </div>
-                            <div class="wsus__cart_text">
-                                <a class="wsus__cart_title" href="{{ url('product-detail') }}/${product.options.slug}">
-                                    ${product.name}
-                                </a>
-                                <p>${product.price} {{ $settings->currency_icon }} <del>$150</del></p>
-                                 <!-- Render variants dynamically in JavaScript -->
-                                    ${product.options.variants ? Object.keys(product.options.variants).map(variantKey => {
-                                        const variant = product.options.variants[variantKey];
-                                        const variantValue = Array.isArray(variant) ? variant[0] ?? '' : variant;
-                                        return `<span class="product-variant"><strong>${variantKey}:</strong> ${variantValue}</span>`;
-                                    }).join('') : ''}
-                                <br>
-                                <small>Số lượng: ${ product.qty }</small>
-                            </div>
-                        </li>`)
+                    if (data && Object.keys(data).length) {
+                        $('.mini_cart_wrapper').html("")
+                        let html = ''
+                        for (let item in data) {
+                            let product = data[item]
+                            html += (`<li id="mini_cart_${product.rowId}">
+                                            <div class="wsus__cart_img">
+                                                <a href="{{ url('product-detail') }}/${product.options.slug}">
+                                                    <img src="{{ asset('/') }}${product.options.img}" alt="product" class="img-fluid w-100">
+                                                </a>
+                                                <a class="wsis__del_icon remove_sidebar_product" data-id='${product.rowId}' href="#">
+                                                    <i class="fas fa-minus-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="wsus__cart_text">
+                                                <a class="wsus__cart_title" href="{{ url('product-detail') }}/${product.options.slug}">
+                                                    ${product.name}
+                                                </a>
+                                                <p>${product.price} {{ $settings->currency_icon }}</p>
+                                                <!-- Render variants dynamically in JavaScript -->
+                                                    ${product.options.variants ? Object.keys(product.options.variants).map(variantKey => {
+                                                        const variant = product.options.variants[variantKey];
+                                                        const variantValue = Array.isArray(variant) ? variant[0] ?? '' : variant;
+                                                        return `<span class="product-variant"><strong>${variantKey}:</strong> ${variantValue}</span>`;
+                                                    }).join('') : ''}
+                                                <br>
+                                                <small>Số lượng: ${ product.qty }</small>
+                                            </div>
+                                        </li>`)
+                        }
+                        $('.mini_cart_wrapper').html(html)
+                        getSidebarCartSubTotal()
+                    } else {
+                        $('.mini_cart_wrapper').html("")
+                        let html = '<li class="text-center">Cart Is Empty!</li>'
+                        $('.mini_cart_wrapper').html(html)
                     }
-                    $('.mini_cart_wrapper').html(html)
-                    getSidebarCartSubTotal()
-
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
