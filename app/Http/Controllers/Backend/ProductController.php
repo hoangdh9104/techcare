@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+use App\Models\Order; 
+use Carbon\Carbon;
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
@@ -51,6 +52,8 @@ class ProductController extends Controller
             'name' => ['required', 'max:200'],
             'category' => ['required'],
             'brand' => ['required'],
+            'warranty_code' => 'nullable|string|max:100|unique:products', // Kiểm tra mã bảo hành duy nhất
+            // 'order_id' => 'required|exists:orders,id',
             'price' => ['required'],
             'qty' => ['required'],
             'short_description' => ['required', 'max: 600'],
@@ -83,6 +86,7 @@ class ProductController extends Controller
             'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
         ]);
         $imagePath = $this->uploadImage($request, 'image', 'uploads');
+        // $order = Order::find($request->order_id);
         $product = new Product();
         $product->thumb_image = $imagePath;
         $product->name = $request->name;
@@ -103,12 +107,19 @@ class ProductController extends Controller
         $product->offer_end_date = $request->offer_end_date;
         $product->product_type = $request->product_type;
         $product->status = $request->status;
+        $product->warranty_code = $request->warranty_code;
+        if ($request->warranty_code) {
+            $product->warranty_expiration_date = Carbon::now()->addDays(30);
+        }
+    
         // sản phẩm khi đc tạo bởi admin thì is_approved === true
         $product->is_approved = 1;
         $product->seo_title = $request->seo_title;
         $product->seo_description = $request->seo_description;
         $product->save();
-
+       
+    
+        // Product::create($validatedData);
         toastr('Tạo sản phẩm thành công!', 'success');
 
         return redirect()->route('admin.products.index');
@@ -206,6 +217,8 @@ class ProductController extends Controller
             'name' => ['required', 'max:200'],
             'category' => ['required'],
             'brand' => ['required'],
+            'warranty_code' => 'nullable|string|max:100|unique:products', // Kiểm tra mã bảo hành duy nhất
+            // 'order_id' => 'nullable',
             'price' => ['required'],
             'short_description' => ['required', 'max:600'],
             'long_description' => ['required'],
@@ -272,6 +285,7 @@ class ProductController extends Controller
         $product->offer_end_date = $request->offer_end_date;
         $product->product_type = $request->product_type;
         $product->status = $request->status;
+        $product->warranty_code = $request->warranty_code;
         // sản phẩm khi đc tạo bởi admin thì is_approved === true
         $product->is_approved = 1;
         $product->seo_title = $request->seo_title;

@@ -78,6 +78,16 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="warranty_code">Mã bảo hành</label>
+                                    <input type="text" name="warranty_code" id="warranty_code" class="form-control"  value="{{ old('warranty_code') }}"  required>
+                                    @if ($errors->has('warranty_code'))
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('warranty_code') }}
+                                        </div>
+                                    @endif
+                                </div> 
+
+                                <div class="form-group">
                                     <label>Giá</label>
                                     <input type="text" class="form-control" name="price" value="{{ old('price') }}">
                                 </div>
