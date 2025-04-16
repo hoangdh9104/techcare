@@ -195,7 +195,8 @@
                             <li><a href="#" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
                             </li>
-                            <li><a href="" class="add_to_wishlist"  data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                            <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                        class="far fa-heart"></i></a></li>
                             {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                         </ul>
                         <div class="wsus__product_details">
@@ -323,14 +324,14 @@
                                                 <i class="far fa-star"></i>
                                             @endif
                                         @endfor
-                                        <span>({{count($product->reviews)}} review)</span>
+                                        <span>({{ count($product->reviews) }} review)</span>
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
                                     <div class="wsus_pro_hot_deals">
                                         <h5>offer ending time : </h5>
                                         <div class="simply-countdown simply-countdown-one"></div>
                                     </div>
-                                    <form class="shopping-cart-form" action="">
+                                    {{-- <form class="shopping-cart-form" action="">
                                         <div class="wsus__selectbox">
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <div class="row">
@@ -361,7 +362,6 @@
                                                 <input class="number_area" name="quantity" type="text"
                                                     min="1" max="100" value="1" />
                                             </div>
-                                            {{-- <h3>$50.00</h3> --}}
                                         </div>
                                         <ul class="wsus__button_area">
                                             <li><button class="add_cart" type="submit">add to cart</button></li>
@@ -387,7 +387,7 @@
                                             </li>
 
                                         </ul>
-                                    </form>
+                                    </form> --}}
                                     <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                                 </div>
                             </div>

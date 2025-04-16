@@ -228,7 +228,7 @@
                                             <h5>offer ending time : </h5>
                                             <div class="simply-countdown simply-countdown-one"></div>
                                         </div>
-                                        <form class="shopping-cart-form" action="">
+                                        {{-- <form class="shopping-cart-form" action="">
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <div class="row">
                                                 @foreach ($product->variants as $variant)
@@ -255,7 +255,7 @@
                                                             class="fal fa-heart"></i></a></li>
                                                 <li></li>
                                             </ul>
-                                        </form>
+                                        </form> --}}
                                         <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
                                     </div>
                                 </div>
