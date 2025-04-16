@@ -167,8 +167,8 @@
                             href="{{ route('admin.flash-sale.index') }}">Giảm gía chớp nhoáng</a></li>
                     {{-- <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-profile.index') }}">Vender Profile</a></li> --}}
-                    {{-- <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.shipping-rule.index') }}">Shipping Rule</a></li> --}}
+                    <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.shipping-rule.index') }}">Chính sách vận chuyển</a></li>
                     <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link"
                             href="{{ route('admin.payment-settings.index') }}">Cài đặt thanh toán</a></li>
                 </ul>
