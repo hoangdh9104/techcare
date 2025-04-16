@@ -157,15 +157,11 @@ class CartController extends Controller
 
 
         $cartItems = Cart::content();
-
-        if (count($cartItems) === 0) {
+        if ($cartItems->count() == 0) {
             Session::forget('coupon');
             toastr('Vui lòng thêm một số sản phẩm vào giỏ hàng của bạn để xem trang này', 'warning', 'Giỏ hàng trống!');
             return redirect()->route('home');
-        } else if ($cartItems->count() > 10) {
-            toastr('Bạn chỉ có thể thêm tối đa 10 sản phẩm vào giỏ hàng!', 'error', 'Giỏ hàng');
         }
-
 
         // Duyệt qua từng mục trong giỏ hàng để đồng bộ dữ liệu mới nhất từ CSDL
         foreach ($cartItems as $item) {
@@ -194,52 +190,52 @@ class CartController extends Controller
                 //                 ->first();
                 //         }
 
-                if ($variantModel) {
-                    // Lấy tên biến thể chính từ ProductVariant
-                    $variantName = $variantModel->productVariant->name ?? 'Không xác định';
-                    $updatedVariants[$variantKey] = [
-                        'id'     => $variantModel->id,      // Lưu ID để tiện cho việc cập nhật sau này
-                        'name'   => $variantModel->name,    // Tên mới từ admin
-                        'price'  => $variantModel->price,
-                        'detail' => $variantModel->detail,   // Chi tiết biến thể nếu có
-                        'variant_name' => $variantName // Cập nhật cả tên biến thể chính
-                    ];
-                    $newVariantTotalAmount += $variantModel->price;
-                }
+                //         if ($variantModel) {
+                //             // Lấy tên biến thể chính từ ProductVariant
+                //             $variantName = $variantModel->productVariant->name ?? 'Unknown';
+                //             $updatedVariants[$variantKey] = [
+                //                 'id'     => $variantModel->id,      // Lưu ID để tiện cho việc cập nhật sau này
+                //                 'name'   => $variantModel->name,    // Tên mới từ admin
+                //                 'price'  => $variantModel->price,
+                //                 'detail' => $variantModel->detail,   // Chi tiết biến thể nếu có
+                //                 'variant_name' => $variantName // Cập nhật cả tên biến thể chính
+                //             ];
+                //             $newVariantTotalAmount += $variantModel->price;
+                //         }
+                //     }
+                // }
+
+                // // So sánh các thông tin: nếu có bất kỳ thay đổi nào thì cập nhật lại dữ liệu trong giỏ
+                // if (
+                //     $item->price != $newProductPrice ||
+                //     $item->name  != $newProductName ||
+                //     $item->options['img'] != $newProductImg ||
+                //     $item->options['slug'] != $newProductSlug ||
+                //     $item->options['variants_total'] != $newVariantTotalAmount ||
+                //     json_encode($item->options['variants']) !== json_encode($updatedVariants) ||
+                //     array_column($item->options['variants'], 'name') !== array_column($updatedVariants, 'name') ||
+                //     array_column($item->options['variants'], 'detail') !== array_column($updatedVariants, 'detail') ||
+                //     array_column($item->options['variants'], 'variant_name') !== array_column($updatedVariants, 'variant_name') // Kiểm tra tên biến thể chính
+                // ) {
+                //     $newOptions = [
+                //         'variants'       => $updatedVariants,
+                //         'variants_total' => $newVariantTotalAmount,
+                //         'img'            => $newProductImg,
+                //         'slug'           => $newProductSlug
+                //     ];
+
+                //     Cart::update($item->rowId, [
+                //         'price'   => $newProductPrice,
+                //         'name'    => $newProductName,
+                //         'options' => $newOptions
+                //     ]);
+                // }
+            } else {
+                // Nếu sản phẩm đã bị xóa khỏi CSDL, loại bỏ khỏi giỏ hàng
+                Cart::remove($item->rowId);
+                toastr('This product "' . $item->name . '" has been deleted.', 'error');
             }
         }
-
-        // // So sánh các thông tin: nếu có bất kỳ thay đổi nào thì cập nhật lại dữ liệu trong giỏ
-        // if (
-        //     $item->price != $newProductPrice ||
-        //     $item->name  != $newProductName ||
-        //     $item->options['img'] != $newProductImg ||
-        //     $item->options['slug'] != $newProductSlug ||
-        //     $item->options['variants_total'] != $newVariantTotalAmount ||
-        //     json_encode($item->options['variants']) !== json_encode($updatedVariants) ||
-        //     array_column($item->options['variants'], 'name') !== array_column($updatedVariants, 'name') ||
-        //     array_column($item->options['variants'], 'detail') !== array_column($updatedVariants, 'detail') ||
-        //     array_column($item->options['variants'], 'variant_name') !== array_column($updatedVariants, 'variant_name') // Kiểm tra tên biến thể chính
-        // ) {
-        //     $newOptions = [
-        //         'variants'       => $updatedVariants,
-        //         'variants_total' => $newVariantTotalAmount,
-        //         'img'            => $newProductImg,
-        //         'slug'           => $newProductSlug
-        //     ];
-
-        //     Cart::update($item->rowId, [
-        //         'price'   => $newProductPrice,
-        //         'name'    => $newProductName,
-        //         'options' => $newOptions
-        //     ]);
-        // }
-        // } else {
-        //     // Nếu sản phẩm đã bị xóa khỏi CSDL, loại bỏ khỏi giỏ hàng
-        //     Cart::remove($item->rowId);
-        //     toastr('Sản phẩm "' . $item->name . '" không còn tồn tại.', 'error');
-        // }
-
         // Lấy lại dữ liệu giỏ hàng mới nhất sau khi cập nhật
         $cartItems = Cart::content();
         // banner

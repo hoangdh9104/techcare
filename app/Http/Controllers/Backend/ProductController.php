@@ -158,15 +158,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-<<<<<<< HEAD
-        $product = Product::findOrFail($id);
-
-        if ($product->status == 0) {
-            return redirect()->route('admin.products.index')->with('error', 'Sản phẩm này đã bị vô hiệu hóa và không thể cập nhật.');
-        }
-
-        $request->validate([
-=======
         // $product = Product::findOrFail($id);
         // $request->validate(
         //     [
@@ -214,7 +205,6 @@ class ProductController extends Controller
 
         // Định nghĩa rules cơ bản
         $rules = [
->>>>>>> 88942f5fc1950208b839417dab92714d0ecdeca5
             'image' => ['nullable', 'image', 'max:3000'],
             'name' => ['required', 'max:200'],
             'category' => ['required'],
@@ -259,7 +249,7 @@ class ProductController extends Controller
             'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
         ];
 
-        // ✅ Thực hiện validate cuối cùng
+        //  Thực hiện validate cuối cùng
         $validatedData = $request->validate($rules, $messages);
         // $product = Product::findOrFail($id);
         $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
