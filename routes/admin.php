@@ -243,3 +243,5 @@ Route::get('{product}/variants/create', [ProductVariantCreateController::class, 
 Route::post('{product}/variants', [ProductVariantCreateController::class, 'store'])->name('variants.store');
 // product variant route
 Route::put('products-value-variant/change-status', [ProductVariantCreateController::class, 'changeStatus'])->name('products-value-variant.change-status');
+Route::get('products-value-variant/edit/{combinationId}', [ProductVariantCreateController::class, 'edit'])->name('variants.edit');
+Route::put('products-value-variant/update/{combinationId}', [ProductVariantCreateController::class, 'update'])->name('variants.update');

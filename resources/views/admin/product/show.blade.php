@@ -77,14 +77,9 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Biến thể sản phẩm</h5>
-                @if ($product->variantCombinations && $product->variantCombinations->count() > 0)
-                    <a href="{{ route('admin.variants.create', $product->id) }}" class="btn btn-primary btn-sm">
-                        Tạo biến thể
-                    </a>
-                @else
-                    <span>Vui lòng tạo thuộc tính để có thể tạo biến thể</span>
-                @endif
-
+                <a href="{{ route('admin.variants.create', $product->id) }}" class="btn btn-primary btn-sm">
+                    Tạo sản phẩm biến thể
+                </a>
             </div>
             <div class="card-body">
                 @if ($product->variants && $product->variants->count() > 0)
@@ -168,13 +163,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-warning">Sửa</a>
-                                        <form action="#" method="POST" class="d-inline">
+                                        <a href="{{ route('admin.variants.edit', $combination->id) }}"
+                                            class="btn btn-sm btn-warning">Sửa</a>
+                                        {{-- <form action="#" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
