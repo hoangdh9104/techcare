@@ -3,7 +3,56 @@
 @section('title')
     {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
+<style>
+    .btn-check:checked+.btn-variant {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
 
+    .btn-variant {
+        font-size: 14px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-variant:hover {
+        background-color: #f1f1f1;
+    }
+
+    .variant-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .variant-box {
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background-color: #fafafa;
+    }
+
+    .out_stock {
+        color: #d9534f;
+        /* đỏ cảnh báo */
+        font-weight: 600;
+        background-color: #fcebea;
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+</style>
 
 <!--============================
                                                                                                                                                                                                                                                                                                                                                                 BREADCRUMB START
@@ -68,13 +117,6 @@
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
 
-                            <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> ({{ $product->qty }}
-                                Sản phẩm)
-                            </p>
-                        @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">Hết hàng</span> ({{ $product->qty }}
-                                Sản phẩm)
-
                             {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
                                 item)
                             </p>
@@ -82,15 +124,26 @@
                             <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
                                 item) --}}
 
+
+                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                    class="in_stock">Còn hàng</span>
+                                ({{ $product->qty }}
+                                sản phẩm)
+                            </p>
+                        @elseif($product->qty == 0)
+                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                    class="in_stock">Hết hàng</span>
+                                ({{ $product->qty }}
+                                sản phẩm)
+
                             </p>
                         @endif
-
                         @if (checkDiscount($product))
                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                <del id="product-price">{{ $settings->currency_icon }}{{ $product->price }}</del>
                             </h4>
                         @else
-                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                            <h4 id="product-price">{{ $product->price }}{{ $settings->currency_icon }}</h4>
                         @endif
                         <p class="wsus_pro_rating">
                             @php
@@ -106,40 +159,46 @@
                                 @endif
                             @endfor
 
-                            <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
-
+                            <span>({{ count($product->reviews) }} đánh giá)</span>
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
-                            <h5>Thời gian kết thúc : </h5>
+                            <h5>Thời gian kết thúc ưu đãi : {{ $product->offer_end_date }} </h5>
+
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
                         <form class="shopping-cart-form" action="">
                             <div class="wsus__selectbox">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
-                                    @foreach ($product->variants as $variant)
-                                        @if ($variant->status != 0)
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">{{ $variant->name }}</h5>
-                                                <select class="select_2" name="variants_item[]">
-                                                    @foreach ($variant->productVariantItem as $item)
-                                                        @php
-                                                            $stockQty = $variantStockMap[$item->id] ?? 0;
-                                                        @endphp
+                                    <div class="row g-4">
+                                        @foreach ($product->variants as $variant)
+                                            @if ($variant->status)
+                                                <div class="col-md-6">
+                                                    <div class="variant-box">
+                                                        <label class="form-label">{{ $variant->name }}</label>
+                                                        <div class="variant-options">
+                                                            @foreach ($variant->productVariantItem as $item)
+                                                                @if ($item->status)
+                                                                    <input type="radio" class="btn-check"
+                                                                        name="variants_items[{{ $variant->id }}][]"
+                                                                        id="variant_{{ $variant->id }}_{{ $item->id }}"
+                                                                        value="{{ $item->id }}" autocomplete="off"
+                                                                        data-name="{{ Str::slug($item->name, '') }}"
+                                                                        {{ $item->is_default ? 'checked' : '' }}>
 
-                                                        @if ($item->status != 0 && $stockQty > 0)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                                {{ $item->name }} (${{ $item->price }})
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                                                    <label class="btn btn-variant"
+                                                                        for="variant_{{ $variant->id }}_{{ $item->id }}">
+                                                                        {{ $item->name }}
+                                                                    </label>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                             <div class="wsus__quentity">
@@ -151,8 +210,11 @@
                                 {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
-                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button></li>
-                                <li><a class="buy_now" href="#">Mua ngay</a></li>
+
+                                <li><button id="add-to-cart-btn" class="add_cart" type="submit">Thêm vào giỏ
+                                        hàng</button></li>
+                                {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
+
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a></li>
                                 <li>
@@ -441,5 +503,84 @@
             })
         })
     })
+    document.addEventListener('DOMContentLoaded', function() {
+        const baseSku = '{{ strtoupper(Str::slug(Str::limit($product->name, 10, ''), '')) }}'; // VD: AOTHUNNAM
+
+        const variantRadios = document.querySelectorAll('input[type=radio][name^="variants_items"]');
+
+        variantRadios.forEach(radio => {
+            radio.addEventListener('change', updateSku);
+        });
+        console.log(variantRadios);
+
+        function updateSku() {
+            let attributeParts = [];
+
+            // Lấy tất cả radio được chọn
+            document.querySelectorAll('input[type=radio][name^="variants_items"]:checked').forEach(input => {
+                const slugValue = input.dataset.name?.toUpperCase();
+                if (slugValue) {
+                    attributeParts.push(slugValue);
+                }
+            });
+            console.log(attributeParts);
+
+            if (attributeParts.length === 0) {
+                console.log('không có biến thể sản phẩm');
+                return;
+            }
+            const productId = document.getElementById('product_id').value
+            const finalSku = baseSku + '-' + attributeParts.join('-');
+            console.log(baseSku);
+            console.log(attributeParts);
+            console.log('SKU:', finalSku); // ✅ In ra SKU
+            // gọi API để lấy thông tin sản phẩm theo SKU:
+            fetch(`/get-variant-combination?sku=${finalSku}&product_id=${productId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        console.log('Không tìm thấy SKU');
+                        document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                            `;
+                        // Ẩn cột giá
+                        document.getElementById('product-price').style.display = 'none';
+                        // Ẩn nút "Thêm vào giỏ hàng"
+                        document.getElementById('add-to-cart-btn').style.display = 'none';
+                    } else {
+                        console.log(data);
+                        // Nếu có SKU hợp lệ và status == 1
+                        if (data.status == 1) {
+                            document.getElementById('add-to-cart-btn').style.display =
+                                'inline-block'; // Hiển thị lại nút
+                            document.getElementById('product-price').style.display =
+                                'block'; // Hiển thị lại cột giá
+                            document.getElementById('product-price').innerText = data.price + ' VNĐ';
+                            if (data.quantity > 0) {
+                                document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="in_stock">Còn hàng</span>
+                                (${data.quantity} sản phẩm)
+                            `;
+                            } else {
+                                document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                                (${data.quantity} sản phẩm)
+                            `;
+                            }
+                        } else {
+                            document.getElementById('product-quantity').innerHTML = `
+                                <span id="stock-status" class="out_stock">Hết hàng</span>
+                            `;
+                            // Ẩn cột giá
+                            document.getElementById('product-price').style.display = 'none';
+                            // Ẩn nút "Thêm vào giỏ hàng"
+                            document.getElementById('add-to-cart-btn').style.display = 'none';
+                        }
+                    }
+                });
+        }
+        // Load SKU mặc định ban đầu
+        updateSku();
+    });
 </script>
 @endpush

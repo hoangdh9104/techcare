@@ -29,7 +29,7 @@ class ProductDataTable extends DataTable
             ->addColumn('type', function ($query) {
                 switch ($query->product_type) {
                     case 'new_arrival':
-                        return '<i class="badge badge-success">Hàng mới về</i>'; 
+                        return '<i class="badge badge-success">Hàng mới về</i>';
                         break;
                     case 'featured_product':
                         return '<i class="badge badge-warning">Sản phẩm nổi bật</i>'; // Sản phẩm muốn quảng bá
@@ -54,7 +54,7 @@ class ProductDataTable extends DataTable
                 }
             })
             ->addColumn('has_variants', function ($query) {
-                $variantCount = $query->variants->count();
+                $variantCount = $query->variantCombinations->count();
                 if ($variantCount > 0) {
                     return '<span class="badge badge-primary"> ' . $variantCount . ' biến thể</span>';
                 } else {
@@ -76,6 +76,7 @@ class ProductDataTable extends DataTable
                 return $button;
             })
             ->addColumn('action', function ($query) {
+                $showBtn = "<a href='" . route('admin.products.show', $query->id) . "' class='btn btn-info mr-1'><i class='far fa-eye'></i></a>";
                 $editBtn = "<a href='" . route('admin.products.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
                 // $deleteBtn = "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
                 $moreBtn = '<div class="dropdown d-inline dropleft">
@@ -84,16 +85,16 @@ class ProductDataTable extends DataTable
                 </button>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -9px, 0px); top: 0px; left: 0px; will-change: transform;">
                 <a class="dropdown-item has-icon" href="' . route('admin.products-image-gallery.index', ['product' => $query->id]) . '"><i class="far fa-heart"></i> Thư mục ảnh</a>
-                <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Biến thể</a>
+                <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Thuộc tính</a>
                 </div>
                 </div>';
                 // return $editBtn . $deleteBtn . $moreBtn;
-                return $editBtn . $moreBtn;
+                return $showBtn . $editBtn . $moreBtn;
             })
             ->filterColumn('type', function ($query, $keyword) {
                 $query->whereRaw('LOWER(product_type) LIKE ?', ['%' . strtolower(trim($keyword)) . '%']);
             })
-            ->rawColumns(['image', 'type', 'status', 'action','has_variants','price_display'])
+            ->rawColumns(['image', 'type', 'status', 'action', 'has_variants', 'price_display'])
             ->setRowId('id');
     }
 
@@ -133,39 +134,43 @@ class ProductDataTable extends DataTable
      */
     public function getColumns(): array
 
-    // {
-    //     return [
-    //         Column::make('id')->title('STT'),
-    //         Column::make('image')->title('Hình ảnh')->width(100),
-    //         Column::make('name')->title('Tên sản phẩm'),
-    //         Column::make('price')->title('Giá'),
-    //         Column::make('type')->title('Loại')->width(150),
-    //         Column::make('status')->title('Trạng thái'),
-    //         Column::computed('action')->title('Hành động')
-    //             ->exportable(false)
-    //             ->printable(false)
-    //             ->width(200)
-    //             ->addClass('text-center'),
-    //     ];
-    // }
 
 {
-    return [
-        Column::make('id')->title('STT'),
-        Column::make('image')->title('Hình ảnh'),
-        Column::make('name')->title('Tên sản phẩm'),
-        Column::make('price_display')->title('Giá')->addClass('text-right'),
-        Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
-        Column::make('type')->width(150)->title('Loại'),
-        Column::make('status')->title('Trạng thái'),
-        Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(200)
-            ->addClass('text-center')
-            ->title('Thao tác'),
-    ];
-}
+//     return [
+//         Column::make('id')->title('STT'),
+//         Column::make('image')->title('Hình ảnh'),
+//         Column::make('name')->title('Tên sản phẩm'),
+//         Column::make('price_display')->title('Giá')->addClass('text-right'),
+//         Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
+//         Column::make('type')->width(150)->title('Loại'),
+//         Column::make('status')->title('Trạng thái'),
+//         Column::computed('action')
+//             ->exportable(false)
+//             ->printable(false)
+//             ->width(200)
+//             ->addClass('text-center')
+//             ->title('Thao tác'),
+//     ];
+// }
+
+//     {
+        return [
+            Column::make('id')->title('STT'),
+            Column::make('image')->title('Hình ảnh'),
+            Column::make('name')->title('Tên sản phẩm'),
+            Column::make('price_display')->title('Giá')->addClass('text-right'),
+            Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
+            Column::make('type')->width(150)->title('Loại'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(200)
+                ->addClass('text-center')
+                ->title('Thao tác'),
+        ];
+    }
+
 
 
     /**

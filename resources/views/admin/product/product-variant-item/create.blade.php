@@ -19,18 +19,15 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Tạo sản phẩm biến thể</h4>
-
                         </div>
                         <div class="card-body">
                             <form action="{{ route('admin.products-variant-item.store') }}" method="POST">
                                 @csrf
-
                                 <div class="form-group">
                                     <label>Tên biến thể</label>
                                     <input type="text" class="form-control" name="variant_name"
                                         value="{{ $variant->name }}" readonly>
                                 </div>
-
                                 <div class="form-group">
                                     <input type="hidden" class="form-control" name="variant_id"
                                         value="{{ $variant->id }}">
@@ -43,15 +40,6 @@
                                 <div class="form-group">
                                     <label>Tên sản phẩm biến thể</label>
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Giá <code>(Để 0 nếu giá giữ nguyên)</code></label>
-                                    <input type="text" class="form-control" name="price" value="{{ old('price') }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tồn kho</label>
-                                    <input type="text" class="form-control" name="qty" value="{{ old('qty') }}">
                                 </div>
                                 {{-- which variants will be pre activated or pre selected in that page will be determined by this option. --}}
                                 <div class="form-group">

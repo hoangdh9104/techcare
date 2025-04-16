@@ -40,39 +40,36 @@ class DeliveredOrderDataTable extends DataTable
                 return date('d-M-Y', strtotime($query->created_at));
             })
             ->addColumn('payment_status', function ($query) {
-                if ($query->payment_status === 1) {
-                    return "<span class='badge bg-success'>complete</span>";
+                if ($query->payment_status === 2) {
+                    return "<span class='badge bg-info'>Đã hoàn tiền</span>";
+                } elseif ($query->payment_status === 1) {
+                    return "<span class='badge bg-success'>Đã thanh toán</span>";
                 } else {
-                    return "<span class='badge bg-warning'>pending</span>";
+                    return "<span class='badge bg-warning'>Chờ thanh toán</span>";
                 }
             })
             ->addColumn('order_status', function ($query) {
                 switch ($query->order_status) {
                     case 'pending':
-                        return "<span class='badge bg-warning'>pending</span>";
-                        break;
+                        return "<span class='badge bg-warning'>Chờ xử lý</span>";
                     case 'processed_and_ready_to_ship':
-                        return "<span class='badge bg-info'>processed</span>";
-                        break;
+                        return "<span class='badge bg-info'>Đã xử lý - Sẵn sàng giao</span>";
                     case 'dropped_off':
-                        return "<span class='badge bg-info'>dropped off</span>";
-                        break;
+                        return "<span class='badge bg-info'>Đã đóng gói</span>";
                     case 'shipped':
-                        return "<span class='badge bg-info'>shipped</span>";
-                        break;
+                        return "<span class='badge bg-info'>Đang vận chuyển</span>";
                     case 'out_for_delivery':
-                        return "<span class='badge bg-primary'>out for delivery</span>";
-                        break;
+                        return "<span class='badge bg-primary'>Đang giao hàng</span>";
                     case 'delivered':
-                        return "<span class='badge bg-success'>delivered</span>";
-                        break;
+                        return "<span class='badge bg-success'>Đã giao</span>";
                     case 'canceled':
-                        return "<span class='badge bg-danger'>canceled</span>";
-                        break;
+                        return "<span class='badge bg-danger'>Đã hủy</span>";
                     default:
-                        # code...
-                        break;
+                        return "<span class='badge bg-secondary'>Không xác định</span>";
                 }
+            })
+            ->addColumn('product_qty', function ($query) {
+                return $query->orderProducts->sum('qty');
             })
             ->rawColumns(['order_status', 'action', 'payment_status'])
             ->setRowId('id');
@@ -83,7 +80,7 @@ class DeliveredOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->where('order_status', 'delivered')->newQuery();
+        return $model->with(['user', 'orderProducts'])->where('order_status', 'delivered')->newQuery();
     }
 
     /**
@@ -114,19 +111,20 @@ class DeliveredOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('STT'),
-            Column::make('invocie_id')->title('Mã đơn hàng'),
+
+
+            Column::make('id')->title('Mã đơn'),
+            Column::make('invocie_id')->title('Mã hóa đơn'),
             Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt hàng'),
+            Column::make('date')->title('Ngày đặt'),
             Column::make('product_qty')->title('Số lượng sản phẩm'),
-            Column::make('amount')->title('Số tiền'),
+            Column::make('amount')->title('Tổng tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),
             Column::make('payment_status')->title('Trạng thái thanh toán'),
-
             Column::make('payment_method')->title('Phương thức thanh toán'),
+            Column::computed('action')
+                ->title('Thao tác')
 
-
-            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

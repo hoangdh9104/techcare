@@ -120,13 +120,13 @@
 
                                 <div class="form-group">
                                     <label>Mô tả ngắn</label>
-                                    <textarea name="short_description" class="form-control"></textarea>
+                                    <textarea name="short_description" class="form-control">{{ old('short_description') }}</textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Mô tả chi tiết</label>
-                                    <textarea name="long_description" class="form-control summernote"></textarea>
+                                    <textarea name="long_description" class="form-control summernote">{{ old('long_description') }}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -139,17 +139,14 @@
                                         <option value="best_product">Sản phẩm tốt nhất</option>
                                     </select>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Seo tiêu đề</label>
                                     <input type="text" class="form-control" name="seo_title"
                                         value="{{ old('seo_title') }}">
                                 </div>
-
                                 <div class="form-group">
                                     <label>Seo Mô tả</label>
-                                    <textarea name="seo_description" class="form-control"></textarea>
+                                    <textarea name="seo_description" class="form-control">{{ old('seo_description') }}</textarea>
                                 </div>
 
                                 <div class="form-group">

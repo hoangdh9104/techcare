@@ -8,16 +8,34 @@
                         @foreach ($sliders as $slider)
 
 
-                        <div class="col-xl-12">
+
+                        {{-- <div class="col-xl-12">
                             <div class="wsus__single_slider" style="background: url({{asset($slider->banner)}});">
                                 <div class="wsus__single_slider_text">
                                     <h3>{{$slider->type}}</h3>
                                     <h1>{{$slider->title}}</h1>
                                     <h6>Bắt đầu {{ $settings->currency_icon}}{{$slider->starting_price	}}</h6>
-                                    <a class="common_btn" href="{{$slider->btn_url}}">Mua ngay</a>
+                                    <a class="common_btn" href="{{$slider->btn_url}}">Mua ngay</a> --}}
+
+                            <div class="col-xl-12">
+                                <div class="wsus__single_slider" style="background: url({{ asset($slider->banner) }});">
+                                    <div class="wsus__single_slider_text">
+                                        <h3 class="text-primary fw-semibold">{{ $slider->type }}</h3>
+                                        <h1 class="text-white fw-bold display-4"
+                                            style="text-shadow: 1px 1px 4px rgba(0,0,0,0.5);">
+                                            {{ $slider->title }}
+                                        </h1>
+                                        <h6 class="mt-2 text-lg">
+                                            Start at
+                                            <span class="text-green-400 font-extrabold text-2xl drop-shadow-md">
+                                                {{ $settings->currency_icon }}{{ $slider->starting_price }}
+                                            </span>
+                                        </h6>
+                                        <a class="common_btn" href="{{ $slider->btn_url }}">shop now</a>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                 </div>

@@ -22,39 +22,43 @@ class ProductVariantItemController extends Controller
     {
         $variant = ProductVariant::findOrFail($variantId);
         $product = Product::findOrFail($productId);
-
-        // Lấy danh sách các biến thể khác của sản phẩm
-        $otherVariants = ProductVariant::where('product_id', $productId)
-            ->where('id', '!=', $variantId)
-            ->with('productVariantItem') // Lấy các item của biến thể
-            ->get();
-
-        return view('admin.product.product-variant-item.create', compact('variant', 'product', 'otherVariants'));
+        return view('admin.product.product-variant-item.create', compact('variant', 'product'));
     }
     public function store(Request $request)
     {
         $request->validate([
             'variant_id' => ['integer', 'required'],
-            'prices' => ['required', 'array'],
-            'quantities' => ['required', 'array'],
+            // 'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')],
+            'name' => [
+                'required',
+                'max:200',
+                Rule::unique('product_variant_items', 'name')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('product_variant_id', $request->variant_id);
+                    }),
+            ],
+            'is_default' => ['required'],
+            'status' => ['required'],
         ]);
+        // Kiểm tra nếu đã có biến thể mặc định
+        if ($request->is_default == 1) {
+            $existsDefault = ProductVariantItem::where('product_variant_id', $request->variant_id)
+                ->where('is_default', 1)
+                ->exists();
 
-        foreach ($request->prices as $variantItemId => $otherVariants) {
-            foreach ($otherVariants as $otherVariantId => $price) {
-                $quantity = $request->quantities[$variantItemId][$otherVariantId];
-
-                ProductVariantItem::create([
-                    'product_variant_id' => $request->variant_id,
-                    'name' => "Tổ hợp: $variantItemId - $otherVariantId",
-                    'price' => $price,
-                    'qty' => $quantity,
-                    'is_default' => 0,
-                    'status' => 1,
-                ]);
+            if ($existsDefault) {
+                return redirect()->back()->withErrors([
+                    'is_default' => 'Đã tồn tại một biến thể mặc định cho nhóm biến thể này.',
+                ])->withInput();
             }
         }
-
-        toastr('Tạo mới biến thể thành công!', 'success', 'success');
+        $variantItem = new ProductVariantItem();
+        $variantItem->product_variant_id = $request->variant_id;
+        $variantItem->name = $request->name;
+        $variantItem->is_default = $request->is_default;
+        $variantItem->status = $request->status;
+        $variantItem->save();
+        toastr('Tạo mới chi tiết biến thể thành công!', 'success', 'success');
         return redirect()->route(
             'admin.products-variant-item.index',
             ['productId' => $request->product_id, 'variantId' => $request->variant_id]
@@ -70,9 +74,10 @@ class ProductVariantItemController extends Controller
         $variantItem = ProductVariantItem::findOrFail($variantItemId);
 
         $request->validate([
-            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')->ignore($variantItemId)],
-            'price' => ['integer', 'required'],
-            'qty' => ['integer', 'required'],
+            'name' => ['required', 'max:200',  Rule::unique('product_variant_items', 'name')
+                ->where(function ($query) use ($request) {
+                    return $query->where('product_variant_id', $request->variant_id);
+                })->ignore($variantItemId)],
             'is_default' => ['required'],
             'status' => ['required']
         ]);
@@ -91,8 +96,6 @@ class ProductVariantItemController extends Controller
 
         // Cập nhật dữ liệu
         $variantItem->name = $request->name;
-        $variantItem->price = $request->price;
-        $variantItem->qty = $request->qty;
         $variantItem->is_default = $request->is_default;
         $variantItem->status = $request->status;
         $variantItem->save();

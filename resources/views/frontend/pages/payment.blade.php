@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                                    BREADCRUMB START
-                                                                                ==============================-->
+                                                                                            BREADCRUMB START
+                                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                                    BREADCRUMB END
-                                                                                ==============================-->
+                                                                                            BREADCRUMB END
+                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                    PAYMENT PAGE START
-                                                                                ==============================-->
+                                                                                            PAYMENT PAGE START
+                                                                                        ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -53,6 +53,11 @@
                                     <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-momo" type="button" role="tab"
                                         aria-controls="v-pills-momo" aria-selected="false">Momo</button>
+                                @endif
+                                @if ($vnpaySetting->status == 1)
+                                    <button class="nav-link common_btn" id="v-pills-vnpay-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-vnpay" type="button" role="tab"
+                                        aria-controls="v-pills-vnpay" aria-selected="false">VNPay</button>
                                 @endif
                                 @if ($codSetting->status == 1)
                                     <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
@@ -96,6 +101,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade show" id="v-pills-vnpay" role="tabpanel"
+                                aria-labelledby="v-pills-vnpay-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+                                            <a class="nav-link common_btn text-center"
+                                                href="{{ route('user.vnpay.payment') }}">Pay with VNPay</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             @include('frontend.pages.payment-gateway.cod')
                         </div>
                     </div>
@@ -113,6 +130,6 @@
         </div>
     </section>
     <!--============================
-                                                                                    PAYMENT PAGE END
-                                                                                ==============================-->
+                                                                                            PAYMENT PAGE END
+                                                                                        ==============================-->
 @endsection

@@ -99,7 +99,6 @@
                                     <input type="text" class="form-control" name="price"
                                         value="{{ $product->price }}">
                                 </div>
-
                                 <div class="form-group">
                                     <label>Giá khuyến mại</label>
                                     <input type="text" class="form-control" name="offer_price"
@@ -125,22 +124,26 @@
 
                                 <div class="form-group">
                                     <label>Tồn kho</label>
-                                    <input type="number" min="0" class="form-control" name="qty" value="{{ $totalQty }}" readonly>
+                                    @if ($product->variantCombinations->count() > 0)
+                                        {{-- Nếu đã có biến thể: hiện số lượng = tổng số lượng của biến thể, không cho sửa --}}
+                                        <input type="number" class="form-control"
+                                            value="{{ $product->variantCombinations->sum('quantity') }}" readonly>
+                                    @else
+                                        {{-- Nếu chưa có biến thể: cho phép nhập số lượng --}}
+                                        <input type="number" min="0" name="qty" class="form-control"
+                                            value="{{ $product->qty }}">
+                                    @endif
+
                                 </div>
-                                
                                 <div class="form-group">
                                     <label>Video Link</label>
                                     <input type="text" class="form-control" name="video_link"
                                         value="{{ $product->video_link }}">
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Mô tả ngắn</label>
                                     <textarea name="short_description" class="form-control">{!! $product->short_description !!}</textarea>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Mô tả chi tiết</label>
                                     <textarea name="long_description" class="form-control summernote">{!! $product->long_description !!}</textarea>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\VendorController;
 // use App\Http\Controllers\Frontend\FrontendProductController;
 
 
+use App\Http\Controllers\Backend\VNPaySettingController;
 use App\Http\Controllers\Frontend\BlogController;
 
 use App\Http\Controllers\Frontend\CartController;
@@ -31,6 +32,8 @@ use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\VNPayController;
+use App\Http\Controllers\Frontend\ProductController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
 
@@ -125,7 +128,8 @@ Route::post('contact', [PageController::class, 'handleContactForm'])->name('hand
 //product track route
 Route::get('product-traking', [ProductTrackController::class, 'index'])->name('product-traking.index');
 // Route::get('product-traking', [ProductTrackController::class, 'track'])->name('product-traking.track');
-
+// lấy chi tiết sản phẩm biển thể
+Route::get('/get-variant-combination', [ProductController::class, 'getVariantCombination'])->name('variant.combination');
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -145,11 +149,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
 
     // Send message route
-    Route::post('send-message',[UserMessageController::class,'sendMessage'])->name('send-message');
-    Route::get('get-messages',[UserMessageController::class,'getMessages'])->name('get-messages');
+    Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
+    Route::get('get-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
 
     // Message route
-    Route::get('messages',[UserMessageController::class,'index'])->name('messages.index');
+    Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
 
     // user address route
     Route::resource('address', UserAddressController::class);
@@ -166,8 +170,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
 
     Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
-
-
+    Route::post('orders/{id}/received', [UserOrderController::class, 'markAsReceived'])->name('orders.received');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -189,5 +192,18 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Cod route
     Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
-});
+    // VPpay route
+    // Route::get('/vnpay/payment', [PaymentController::class, 'createPayment'])->name('vnpay.payment');
+    // Route::get('/vnpay/return', [PaymentController::class, 'return'])->name('vnpay.return');
+    // Route::get('/vnpay/cancel', [PaymentController::class, 'cancel'])->name('vnpay.cancel');
+    Route::get('/vnpay/payment', [PaymentController::class, 'payWithVnpay'])->name('vnpay.payment');
 
+    // Xử lý khi thanh toán thành công hoặc thất bại từ VNPay redirect về
+    Route::get('/vnpay/return', [PaymentController::class, 'vnpaySuccess'])->name('vnpay.success');
+
+    // Route::middleware(['auth', 'role:shipper'])->group(function () {
+    //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+    // });
+    // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
+    Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
+});
