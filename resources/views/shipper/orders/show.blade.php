@@ -27,8 +27,8 @@
 
                                             <p><strong>Địa chỉ:</strong>
                                                 {{ $addressData['address'] ?? '' }},
-                                                {{ $addressData['city'] ?? '' }},
-                                                ZIP: {{ $addressData['zip'] ?? '' }}
+                                                {{ $addressData['city'] ?? '' }}
+                                                {{-- ZIP: {{ $addressData['zip'] ?? '' }} --}}
                                             </p>
                                             <p><strong>Trạng thái:</strong> {{ ucfirst($order->order_status) }}</p>
                                             <p><strong>Thành tiền:</strong> {{ number_format($order->amount) }}đ</p>
