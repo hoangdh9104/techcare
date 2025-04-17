@@ -21,7 +21,7 @@ class CodSettingController extends Controller
             ]
         );
 
-        toastr('Updated Successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công!', 'success', 'Success');
         return redirect()->back();
     }
 }
