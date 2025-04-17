@@ -38,7 +38,7 @@ class MomoSettingController extends Controller
             ]
         );
 
-        toastr('Update Successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công!', 'success', 'Success');
         return redirect()->back();
     }
 }

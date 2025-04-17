@@ -24,15 +24,32 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $paypalSetting = PaypalSetting::first();
-        $stripeSetting = StripeSetting::first();
+        // Kiểm tra số lượng đơn hàng trong ngày
+        $user = Auth::user();
+        $today = now()->startOfDay();
+        $orderCountToday = Order::where('user_id', $user->id)
+            ->where('created_at', '>=', $today)
+            ->count();
+
+        if ($orderCountToday >= 10) {
+            toastr('Bạn đã đạt giới hạn 10 đơn hàng trong ngày!', 'error');
+            return redirect()->route('home');
+        }
+
+        // Kiểm tra tổng giá trị đơn hàng
+        $totalAmount = getFinalPayableAmount();
+        $isOver30Million = $totalAmount > 30000000;
+
+        // Lấy các cài đặt thanh toán
         $momoSetting = MomoSetting::first();
         $vnpaySetting = VnpaySetting::first();
-        $codSetting = CodSetting::first();
+        $codSetting = $isOver30Million ? null : CodSetting::first(); // Ẩn COD nếu đơn hàng > 30 triệu
+
         if (!Session::has('address')) {
             return redirect()->route('user.checkout');
         }
-        return view('frontend.pages.payment', compact('paypalSetting', 'stripeSetting', 'momoSetting', 'codSetting', 'vnpaySetting'));
+
+        return view('frontend.pages.payment', compact('momoSetting', 'codSetting', 'vnpaySetting', 'isOver30Million'));
     }
 
     public function paymentSuccess()
@@ -111,113 +128,6 @@ class PaymentController extends Controller
             Session::forget('momo_order');
         }
     }
-
-    public function paypalConfig()
-    {
-        $paypalSetting = PaypalSetting::first();
-
-        $config = [
-
-            // Chạy trên localhost thì chọn sanbox, chay trên server chọn live
-            'mode'    => $paypalSetting->mode === 1 ? 'live' : 'sandbox', // Can only be 'sandbox' Or 'live'. If empty or invalid, 'live' will be used.
-            'sandbox' => [
-                'client_id'         => $paypalSetting->client_id,
-                'client_secret'     => $paypalSetting->secret_key,
-                'app_id'            => '',
-            ],
-            'live' => [
-                'client_id'         => $paypalSetting->client_id,
-                'client_secret'     => $paypalSetting->secret_key,
-                'app_id'            => '',
-            ],
-
-            'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'
-            'currency'       => $paypalSetting->currency_name,
-            'notify_url'     => '', // Change this accordingly for your application.
-            'locale'         => 'en_US', // force gateway language  i.e. it_IT, es_ES, en_US ... (for express checkout only)
-            'validate_ssl'   =>  true, // Validate SSL when creating api client.
-        ];
-
-        return $config;
-    }
-
-    // Paypal redirect
-    public function payWithPaypal()
-    {
-        $config = $this->paypalConfig();
-        $paypalSetting = PaypalSetting::first();
-
-
-        $provider = new PayPalClient($config);
-        $provider->getAccessToken();
-
-        // $provider->setApiCredentials($config);
-
-
-        // Số tiền phải trả dựa trên currency rate
-
-        $total = getFinalPayableAmount();
-        $payableAmount = round($total * $paypalSetting->currency_rate, 2);
-
-        $response = $provider->createOrder([
-            "intent" => "CAPTURE",
-            "application_context" => [
-                "return_url" => route('user.paypal.success'),
-                "cancel_url" => route('user.paypal.cancel'),
-            ],
-            "purchase_units" => [
-                [
-                    "amount" => [
-                        "currency_code" => $config['currency'],
-                        "value" => $payableAmount,
-                    ]
-                ]
-            ]
-        ]);
-        // Nếu id tồn tại và khác null thì chuyển hướng đến link. Nếu link rel là approve thì chuyển hướng tới paypal
-        if (isset($response['id']) && $response['id'] != null) {
-            foreach ($response['links'] as $link) {
-                if ($link['rel'] === 'approve') {
-                    return redirect()->away($link['href']);
-                }
-            }
-        } else {
-            return redirect()->route('user.paypal.cancel');
-        }
-    }
-
-    public function paypalSuccess(Request $request)
-    {
-        $config = $this->paypalConfig();
-
-        $provider = new PayPalClient($config);
-        $provider->getAccessToken();
-
-        $response = $provider->capturePaymentOrder($request->token);
-        // Nếu status tồn tại và status = COMPLETED thì chuyển hướng trang payment
-        if (isset($response['status']) && $response['status'] === 'COMPLETED') {
-            // Số tiền phải trả dựa trên currency rate
-            $paypalSetting = PaypalSetting::first();
-            $total = getFinalPayableAmount();
-            $paidAmount = round($total * $paypalSetting->currency_rate, 2);
-            $this->storeOrder('paypal', 1, $response['id'], $paidAmount, $paypalSetting->currency_name);
-
-            // Clear session
-            $this->clearSession();
-
-            return redirect()->route('home');
-        }
-
-        return redirect()->route('user.paypal.cancel');
-    }
-
-    public function paypalCancel()
-    {
-        toastr('Something went wrong try again later !', 'error', 'Error');
-        return redirect()->route('user.payment');
-    }
-
-
     // MOMO
 
     // GIAO DỊCH TỐI THIỂU 1000Đ, TỐI ĐA 50.000.000đ
@@ -362,7 +272,6 @@ class PaymentController extends Controller
         // Khi hủy thanh toán trả vể trang payment
         toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
         return redirect()->route('user.payment');
-        
     }
 
     public function payWithCod(Request $request)
@@ -380,7 +289,7 @@ class PaymentController extends Controller
         $this->storeOrder('COD', 0, \Str::random(10), $payableAmount, $setting->currency_name);
         // clear session
         $this->clearSession();
-        toastr('Payment COD successfully!', 'success');
+        toastr('Đặt hàng thành công!', 'success');
         return redirect()->route('home');
     }
     // cấu hình vn pay
