@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Sản phẩm biến thể</h1>
+            <h1>Chi tiết thuộc tính</h1>
         </div>
         <div class="mb-3">
             <a href="{{ route('admin.products-variant.index', ['product' => $product->id]) }}" class="btn btn-primary">Quay

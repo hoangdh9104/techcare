@@ -38,14 +38,27 @@ class ShippingRuleController extends Controller
             'status' => 'required|in:1,0',
             'min_cost' => 'nullable|numeric|min:0',
         ];
-
+        $messages = [
+            'name.required' => 'Vui lòng nhập tên quy tắc.',
+            'name.string' => 'Tên quy tắc phải là chuỗi.',
+            'name.max' => 'Tên quy tắc không được vượt quá 200 ký tự.',
+            'type.required' => 'Vui lòng chọn loại quy tắc.',
+            'type.in' => 'Loại quy tắc không hợp lệ.',
+            'cost.required' => 'Vui lòng nhập phí vận chuyển.',
+            'cost.numeric' => 'Phí vận chuyển phải là số.',
+            'cost.min' => 'Phí vận chuyển không được nhỏ hơn 0.',
+            'status.required' => 'Vui lòng chọn trạng thái.',
+            'status.in' => 'Trạng thái không hợp lệ.',
+            'min_cost.numeric' => 'Giá trị đơn hàng tối thiểu phải là số.',
+            'min_cost.min' => 'Giá trị đơn hàng tối thiểu không được nhỏ hơn 0.',
+        ];
         // Nếu type = min_cost thì min_cost bắt buộc
         if ($request->input('type') === 'min_cost') {
             $rules['min_cost'] = 'required|numeric|min:0';
         }
 
         // Validate
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules, $messages);
 
         // Tạo mới dữ liệu
         $shipping = new ShippingRule();
@@ -58,7 +71,7 @@ class ShippingRuleController extends Controller
 
 
         // Thông báo & điều hướng
-        toastr('Created Successfully!', 'success', 'Success');
+        toastr('Tạo mới thành công!', 'success', 'Success');
         return redirect()->route('admin.shipping-rule.index');
     }
 
@@ -92,14 +105,27 @@ class ShippingRuleController extends Controller
             'status' => 'required|in:1,0',
             'min_cost' => 'nullable|numeric|min:0',
         ];
-
+        $messages = [
+            'name.required' => 'Vui lòng nhập tên quy tắc.',
+            'name.string' => 'Tên quy tắc phải là chuỗi.',
+            'name.max' => 'Tên quy tắc không được vượt quá 200 ký tự.',
+            'type.required' => 'Vui lòng chọn loại quy tắc.',
+            'type.in' => 'Loại quy tắc không hợp lệ.',
+            'cost.required' => 'Vui lòng nhập phí vận chuyển.',
+            'cost.numeric' => 'Phí vận chuyển phải là số.',
+            'cost.min' => 'Phí vận chuyển không được nhỏ hơn 0.',
+            'status.required' => 'Vui lòng chọn trạng thái.',
+            'status.in' => 'Trạng thái không hợp lệ.',
+            'min_cost.numeric' => 'Giá trị đơn hàng tối thiểu phải là số.',
+            'min_cost.min' => 'Giá trị đơn hàng tối thiểu không được nhỏ hơn 0.',
+        ];
         // Nếu type = min_cost thì min_cost bắt buộc
         if ($request->input('type') === 'min_cost') {
             $rules['min_cost'] = 'required|numeric|min:0';
         }
 
         // Validate
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules, $messages);
         $shipping = ShippingRule::findOrFail($id);
         $shipping->name = $validatedData['name'];
         $shipping->type = $validatedData['type'];
@@ -107,7 +133,7 @@ class ShippingRuleController extends Controller
         $shipping->cost = $validatedData['cost'];
         $shipping->status = $validatedData['status'];
         $shipping->save();
-        toastr('Update Successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công!', 'success', 'Success');
         return redirect()->route('admin.shipping-rule.index');
     }
 
