@@ -63,7 +63,7 @@
                                         <i class="far fa-star"></i>
                                     @endif
                                 @endfor
-                                <span>({{ count($product->reviews) }} review)</span>
+                                <span>({{ count($product->reviews) }} đánh giá)</span>
                             </p>
                             <a class="wsus__pro_name"
                                 href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>

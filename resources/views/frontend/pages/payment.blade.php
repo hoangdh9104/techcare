@@ -47,7 +47,7 @@
                                         data-bs-target="#v-pills-vnpay" type="button" role="tab"
                                         aria-controls="v-pills-vnpay" aria-selected="false">VNPay</button>
                                 @endif
-                                @if ($codSetting && $codSetting->status == 1 && !$isOver50Million)
+                                @if ($codSetting && $codSetting->status == 1 && !$isOver30Million)
                                     <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-cod" type="button" role="tab"
                                         aria-controls="v-pills-cod" aria-selected="false">COD</button>

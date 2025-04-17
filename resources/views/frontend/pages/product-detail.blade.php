@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @section('content')
 @section('title')
-    {{ $settings->site_name }} Product Detail
+    {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
 <style>
     .btn-check:checked+.btn-variant {
@@ -62,11 +62,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>products details</h4>
+                    <h4>Chi tiết sản phẩm</h4>
                     <ul>
-                        <li><a href="#">home</a></li>
-                        <li><a href="#">product</a></li>
-                        <li><a href="#">product details</a></li>
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Sản phẩm</a></li>
+                        <li><a href="#">Chi tiết sản phẩm</a></li>
                     </ul>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quantity :</h5>
+                                <h5>Tồn kho :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
@@ -236,17 +236,17 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab7" data-bs-toggle="pill"
                                     data-bs-target="#pills-home22" type="button" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">Description</button>
+                                    aria-controls="pills-home" aria-selected="true">Mô tả</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact" type="button" role="tab"
-                                    aria-controls="pills-contact" aria-selected="false">Vendor Info</button>
+                                    aria-controls="pills-contact" aria-selected="false">Thông tin người bán</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact2" type="button" role="tab"
-                                    aria-controls="pills-contact2" aria-selected="false">Reviews</button>
+                                    aria-controls="pills-contact2" aria-selected="false">Đánh giá</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent4">
@@ -289,14 +289,14 @@
                                                         @endif
                                                     @endfor
 
-                                                    <span>({{ count($product->reviews) }} review)</span>
+                                                    <span>({{ count($product->reviews) }} đánh giá)</span>
 
                                                 </p>
-                                                <p><span>Store Name:</span>{{ $product->vendor->shop_name }} </p>
-                                                <p><span>Address:</span> {{ $product->vendor->address }}</p>
-                                                <p><span>Phone:</span> {{ $product->vendor->phone }}</p>
-                                                <p><span>mail:</span> {{ $product->vendor->email }}</p>
-                                                <a href="vendor_details.html" class="see_btn">visit store</a>
+                                                <p><span>Tên cửa hàng:</span>{{ $product->vendor->shop_name }} </p>
+                                                <p><span>Địa chỉ:</span> {{ $product->vendor->address }}</p>
+                                                <p><span>Số điện thoại:</span> {{ $product->vendor->phone }}</p>
+                                                <p><span>Mail:</span> {{ $product->vendor->email }}</p>
+                                                <a href="vendor_details.html" class="see_btn">Ghé cửa hàng</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
@@ -315,7 +315,7 @@
                                         <div class="row">
                                             <div class="col-xl-8 col-lg-7">
                                                 <div class="wsus__comment_area">
-                                                    <h4>Reviews <span>{{ count($reviews) }}</span></h4>
+                                                    <h4>Đánh giá <span>{{ count($reviews) }}</span></h4>
                                                     @foreach ($reviews as $review)
                                                         <div class="wsus__main_comment">
                                                             <div class="wsus__comment_img">
@@ -372,19 +372,19 @@
 
                                                     @if ($isBrought == true)
                                                         <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                            <h4>write a Review</h4>
+                                                            <h4>Viết đánh giá</h4>
                                                             <form action="{{ route('user.review.create') }}"
                                                                 enctype="multipart/form-data" method="POST">
                                                                 @csrf
                                                                 <p class="rating">
-                                                                    <span>select your rating : </span>
+                                                                    <span>Chọn điểm đánh giá : </span>
                                                                 </p>
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
                                                                         <div class="wsus__single_com mb-4">
                                                                             <select name="rating" id=""
                                                                                 class="form-control">
-                                                                                <option value="">Select</option>
+                                                                                <option value="">Vui lòng chọn</option>
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -411,8 +411,8 @@
                                                                     value="{{ $product->id }}">
                                                                 <input type="hidden" name="vendor_id"
                                                                     value="{{ $product->vendor_id }}">
-                                                                <button class="common_btn" type="submit">submit
-                                                                    review</button>
+                                                                <button class="common_btn" type="submit">Xác nhận
+                                                                    </button>
                                                             </form>
                                                         </div>
                                                     @endif
@@ -435,14 +435,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send Message</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Gửi tin nhắn</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" class="message_modal">
                         @csrf
                         <div class="form-group">
-                            <label for="">Message</label>
+                            <label for="">Tin nhắn</label>
                             <textarea name="message" class="form-control mt-2 message-box"></textarea>
                             <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
@@ -525,7 +525,7 @@
             const finalSku = baseSku + '-' + attributeParts.join('-');
             console.log(baseSku);
             console.log(attributeParts);
-            console.log('SKU:', finalSku); // ✅ In ra SKU
+            console.log('SKU:', finalSku); //  In ra SKU
             // gọi API để lấy thông tin sản phẩm theo SKU:
             fetch(`/get-variant-combination?sku=${finalSku}&product_id=${productId}`)
                 .then(res => res.json())

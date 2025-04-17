@@ -152,7 +152,7 @@ class PaymentController extends Controller
         $momoSetting = MomoSetting::first();
 
         if (!$momoSetting || $momoSetting->status == 0) {
-            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error');
+            toastr('Phương thức thanh toán Momo hiện không khả dụng!', 'error','Thanh toán');
             return redirect()->route('user.momo.payment');
         }
         $config = $this->momoConfig();
@@ -228,11 +228,9 @@ class PaymentController extends Controller
             }
         } catch (\Exception $e) {
             if ($config['test_mode']) {
-                toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error');
-                toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error');
+                toastr('Lỗi Momo Sandbox ' . $e->getMessage(), 'error','Thanh toán');
             } else {
-                toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error');
-                toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error');
+                toastr('Lỗi Momo Production: ' . $e->getMessage(), 'error','Thanh toán');
             }
         }
     }
@@ -245,7 +243,7 @@ class PaymentController extends Controller
         $total = getFinalPayableAmount();
         $payableAmount = round($total * $momoSetting->currency_rate, 2);
         if (!$orderInfo) {
-            toastr('Không tìm thấy thông tin đơn hàng!!', 'error');
+            toastr('Không tìm thấy thông tin đơn hàng!!', 'error','Thanh toán');
             return redirect()->route('user.momo.payment');
         }
 
@@ -259,10 +257,10 @@ class PaymentController extends Controller
                 $momoSetting->currency_name
             );
             $this->clearSession();
-            toastr('Thanh toán Momo thành công!', 'success');
+            toastr('Thanh toán Momo thành công!', 'success','Thanh toán');
             return redirect()->route('home');
         } else {
-            toastr('Lỗi thanh toán Momo! Mã: ' . $request->resultCode, 'error');
+            toastr('Lỗi thanh toán Momo! Mã: ' . $request->resultCode, 'error','Thanh toán');
             return redirect()->route('user.momo.payment');
         }
     }
@@ -270,7 +268,7 @@ class PaymentController extends Controller
     public function momoCancel(Request $request)
     {
         // Khi hủy thanh toán trả vể trang payment
-        toastr('Bạn đã hủy thanh toán qua MoMo', 'warning');
+        toastr('Bạn đã hủy thanh toán qua MoMo', 'warning','Thanh toán');
         return redirect()->route('user.payment');
     }
 
@@ -289,7 +287,7 @@ class PaymentController extends Controller
         $this->storeOrder('COD', 0, \Str::random(10), $payableAmount, $setting->currency_name);
         // clear session
         $this->clearSession();
-        toastr('Đặt hàng thành công!', 'success');
+        toastr('Đặt hàng thành công!', 'success','Thanh toán');
         return redirect()->route('home');
     }
     // cấu hình vn pay
@@ -313,7 +311,7 @@ class PaymentController extends Controller
     {
         $setting = \App\Models\VnpaySetting::first();
         if (!$setting || $setting->status == 0) {
-            toastr('Phương thức thanh toán VNPay hiện không khả dụng!', 'error');
+            toastr('Phương thức thanh toán VNPay hiện không khả dụng!', 'error','Thanh toán');
             return redirect()->route('user.payment');
         }
 
@@ -395,10 +393,10 @@ class PaymentController extends Controller
             );
 
             $this->clearSession();
-            toastr('Thanh toán VNPay thành công!', 'success');
+            toastr('Thanh toán VNPay thành công!', 'success','Thanh toán');
             return redirect()->route('home');
         } else {
-            toastr('Thanh toán thất bại hoặc bị hủy!', 'error');
+            toastr('Thanh toán thất bại hoặc bị hủy!', 'error','Thanh toán');
             return redirect()->route('user.payment');
         }
     }
