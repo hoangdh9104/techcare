@@ -9,34 +9,185 @@
             color: #721c24;
             /* Màu chữ khi chọn */
         }
+
+        .card-custom {
+            background-color: #fff6ed;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-custom2 {
+            background-color: #bbecb1;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-custom3 {
+            background-color: #a3d8f9;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-icon-circle {
+            background-color: #f7941d;
+            color: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .card-growth {
+            font-size: 14px;
+            color: #2ecc71;
+            background-color: #e9fbe7;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .card-menu {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            cursor: pointer;
+        }
     </style>
+    {{-- doanh thu --}}
     <section class="section">
         <div class="section-header">
             <h1>Thống kê doanh thu</h1>
         </div>
-        <div class="section-body">
-            {{-- Form lọc theo năm --}}
-            <form id="filterForm" class="mb-4">
-                <div class="row g-2 align-items-end">
-                    <div class="col-md-8 col-lg-9">
-                        <div class="form-group mb-2">
-                            <label for="year" class="font-weight-bold">Chọn năm</label>
-                            <input type="text" class="form-control datepicker" id="year" name="year"
-                                value="{{ now()->year }}">
+        <div class="row mb-3">
+            <!-- Tổng doanh thu -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card-custom">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="card-icon-circle">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="card-menu dropdown">
+                            <i class="fas fa-ellipsis-v dropdown-toggle" id="dropdownTime1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" style="cursor:pointer;"></i>
+                            <div class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="dropdownTime1"
+                                style="min-width: 250px;">
+                                <div class="dropdown-divider"></div>
+                                <label for="selectTime" class="font-weight-semibold">Chọn ngày:</label>
+                                <input type="date" id="selectTime" class="form-control mt-2" style="width: 100%;" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-3">
-                        <div class="form-group mb-2">
-                            <button type="submit" class="btn btn-success w-100">Lọc dữ liệu</button>
+                    <div class="mt-3">
+                        <div class="card-title">Tổng doanh thu</div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="card-value">$12,145</div>
+                            <div class="card-growth">+20%</div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
 
-            {{-- Biểu đồ doanh thu --}}
+            <!-- Tổng đơn hàng -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card-custom2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="card-icon-circle">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="card-menu">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="card-title">Tổng đơn hàng</div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="card-value">42</div>
+                            <div class="card-growth">+12%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tổng sản phẩm bán được -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card-custom3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="card-icon-circle">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="card-menu">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="card-title">Tổng sản phẩm đã bán</div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="card-value">1,201</div>
+                            <div class="card-growth">+8%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-body">
+            {{-- Biểu đồ doanh thu theo ngày --}}
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biểu đồ doanh thu theo ngày trong tháng</h4>
+                    {{-- Form lọc theo tháng và năm --}}
+                    <form id="filterForm3" class="form-inline">
+                        <input type="month" name="month" class="form-control" id="monthPickerfilterForm3"
+                            value="{{ date('Y-m') }}">
+                        <button type="submit" class="btn btn-primary ml-2">Lọc</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <canvas id="dailyRevenueChart" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="section-body">
+            {{-- Biểu đồ doanh thu theo tháng --}}
             <div class="card">
                 <div class="card-header">
                     <h4>Biểu đồ doanh thu theo tháng trong năm</h4>
+                    {{-- Form lọc theo năm --}}
+                    <form id="filterForm" class="form-inline">
+                        <input type="number" class="form-control" id="year" name="year" value="{{ now()->year }}"
+                            placeholder="Nhập năm">
+                        <button type="submit" class="btn btn-primary ml-2">Lọc</button>
+                    </form>
                 </div>
                 <div class="card-body">
                     <canvas id="monthlyRevenueChart" height="120"></canvas>
@@ -44,12 +195,12 @@
             </div>
         </div>
     </section>
+
+    {{-- end doanh thu --}}
     <section class="section">
         <div class="section-header d-flex justify-content-between align-items-center">
             <h1>Thống kê đơn hàng theo trạng thái</h1>
-
         </div>
-
         <div class="section-body">
             <div class="card">
                 <div class="card-header card-stats-title">
@@ -133,7 +284,8 @@
 @push('scripts')
     <script>
         "use strict";
-        // biểu đồ cột : xủ lý thống kê doanh thu
+
+        // biểu đồ cột : xủ lý thống kê doanh thu theo tháng trong năm
         const ctx = document.getElementById("monthlyRevenueChart").getContext("2d");
         let chart; // Biến để giữ biểu đồ, cập nhật lại khi lọc
         function loadChart(year) {
@@ -147,7 +299,6 @@
                     data
                 }) => {
                     if (chart) chart.destroy(); // Xoá chart cũ nếu có
-
                     chart = new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -186,7 +337,17 @@
                         }
                     });
                 })
-                .catch(error => console.error("Chart error:", error));
+                .catch(error => {
+                    if (error.response && error.response.error) {
+                        // Hiển thị thông báo lỗi từ API
+                        toastr.error(error.response.error);
+                    } else {
+                        // Xử lý trường hợp lỗi không có thông báo cụ thể từ API
+                        console.log(error);
+
+                        toastr.error('Có lỗi xảy ra, vui lòng thử lại.');
+                    }
+                });
         }
         // Tải mặc định theo năm hiện tại
         loadChart(document.getElementById("year").value);
@@ -471,5 +632,86 @@
         function formatCurrency(number) {
             return new Intl.NumberFormat('vi-VN').format(number);
         }
+        // biểu đồ cột : xủ lý thống kê doanh thu theo ngày trong tháng
+        const ctx3 = document.getElementById("dailyRevenueChart").getContext("2d");
+        let chart3;
+
+        function loadChart3(month, year) {
+            fetch(`/admin/daily-revenue/data?month=${month}&year=${year}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Không lấy được dữ liệu');
+                    return response.json();
+                })
+                .then(({
+                    labels,
+                    data
+                }) => {
+                    if (chart3) chart3.destroy(); // Xoá chart cũ nếu có
+
+                    chart3 = new Chart(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: `Doanh thu từ tháng ${month}`,
+                                data: data,
+                                backgroundColor: '#6777ef',
+                                borderColor: '#6777ef',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: value => value.toLocaleString('vi-VN') + ' ₫'
+                                    },
+                                    grid: {
+                                        color: '#f2f2f2'
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.error) {
+                        // Hiển thị thông báo lỗi từ API
+                        toastr.error(error.response.data.error);
+                    } else {
+                        // Xử lý trường hợp lỗi không có thông báo cụ thể từ API
+                        toastr.error('Có lỗi xảy ra, vui lòng thử lại.');
+                    }
+                });
+        }
+        // // Tải dữ liệu khi trang vừa load
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            document.getElementById('monthPickerfilterForm3').value = `${year}-${month}`;
+            loadChart3(month, year);
+        });
+        // Xử lý form lọc
+        document.getElementById("filterForm3").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const monthValue = document.getElementById('monthPickerfilterForm3').value;
+            const [year, month] = monthValue.split('-');
+            console.log(monthValue, year, month);
+            loadChart3(month, year);
+        });
     </script>
 @endpush

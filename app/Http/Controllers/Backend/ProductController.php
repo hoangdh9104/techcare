@@ -128,6 +128,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::with('variants.productVariantItem')->findOrFail($id);
+        if ($product->status == 0) {
+            return redirect()->route('admin.products.index')->with('error', 'Sản phẩm này đã bị vô hiệu hóa và không thể chỉnh sửa.');
+        }
 
         $subCategories = SubCategory::where('category_id', $product->category_id)->get();
         $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
@@ -246,7 +249,7 @@ class ProductController extends Controller
             'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
         ];
 
-        // ✅ Thực hiện validate cuối cùng
+        //  Thực hiện validate cuối cùng
         $validatedData = $request->validate($rules, $messages);
         // $product = Product::findOrFail($id);
         $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
