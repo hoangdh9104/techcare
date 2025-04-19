@@ -110,7 +110,7 @@
                                             @endforeach
                                         </select>
                                     @endforeach
-                                    <input name="quantity" type="hidden" min="1" max="100"
+                                    <input name="quantity" type="hidden" min="1" max="9"
                                         value="1" />
                                 </div>
                                 <button class="add_cart" type="submit">add to cart</button>
@@ -193,11 +193,35 @@
 
                                         <span>({{ count($product->reviews) }} review)</span>
 
+<<<<<<< HEAD
+                                </p>
+                                <p class="description">{!! $product->short_description !!}</p>
+                                <div class="wsus_pro_hot_deals">
+                                    <h5>offer ending time : </h5>
+                                    <div class="simply-countdown simply-countdown-one"></div>
+                                </div>
+                                <form class="shopping-cart-form" action="">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="row">
+                                        @foreach ($product->variants as $variant)
+                                            <select class="d-none" name="variants_item[]">
+                                                @foreach ($variant->productVariantItem as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                        {{ $item->name }} (${{ $item->price }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endforeach
+                                        <input name="quantity" type="hidden" min="1" max="9"
+                                            value="1" />
+=======
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
                                     <div class="wsus_pro_hot_deals">
                                         <h5>offer ending time : </h5>
                                         <div class="simply-countdown simply-countdown-one"></div>
+>>>>>>> 639a22d093b1d1f0a6dce02d8198155dafb6cb4d
                                     </div>
                                     {{-- <form class="shopping-cart-form" action="">
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">

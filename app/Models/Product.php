@@ -48,4 +48,10 @@ class Product extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
+    protected $fillable = [
+       
+        'warranty_code', // Mã bảo hành
+        'warranty_duration',
+        'warranty_expiration_date', // Ngày hết hạn bảo hành
+    ];
 }

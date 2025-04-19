@@ -51,7 +51,7 @@
                             <input type="number" name="price" id="price" class="form-control"
                                 value="{{ old('price') }}" placeholder="Nhập giá thêm nếu có">
                         </div>
-
+                        
                         <div class="col-md-4 mb-3">
                             <label for="quantity" class="form-label">Số lượng</label>
                             <input type="number" name="quantity" id="quantity" class="form-control"

@@ -68,26 +68,36 @@
                     <div class="wsus__order_details" id="sticky_sidebar">
                         <p class="wsus__product">Phương thức vận chuyển</p>
                         @foreach ($shippingMethods as $method)
-                            @if ($method->type == 'min_cost' && getMainCartTotal() >= $method->min_cost)
-                                <div class="form-check">
-                                    <input class="form-check-input shipping_method" type="radio" name="exampleRadios"
-                                        id="exampleRadios1" value="{{ $method->id }}" data-id="{{ $method->cost }}">
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        {{ $method->name }} (2-3 ngày)
-                                        <span>Chi phí( {{ $method->cost }} {{ $settings->currency_icon }})</span>
-                                    </label>
-                                </div>
-                            @elseif($method->type == 'flat_cost')
-                                <div class="form-check">
-                                    <input class="form-check-input shipping_method" type="radio" name="exampleRadios"
-                                        id="exampleRadios1" value="{{ $method->id }}" data-id="{{ $method->cost }}">
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        {{ $method->name }} (Trong ngày)
-                                        <span>Chi phí( {{ $method->cost }} {{ $settings->currency_icon }})</span>
-                                    </label>
-                                </div>
+                        @if ($method->type == 'min_cost' && getMainCartTotal() >= $method->min_cost)
+                            <div class="form-check">
+                                <input class="form-check-input shipping_method" type="radio" name="shipping_method" 
+                                    id="shippingMethod{{ $method->id }}" value="{{ $method->id }}" data-id="{{ $method->cost }}">
+                                <label class="form-check-label" for="shippingMethod{{ $method->id }}">
+                                    {{ $method->name }}
+                                    <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
+                                </label>
+                                @if ($method->cost == 0)
+                                    <span style="color: red" class="text-danger">Giao hàng từ 3-5 ngày.</span>
+                                @elseif ($method->cost > 0)
+                                    <span style="color: red" class="text-danger">Giao hàng hỏa tốc.</span>
+                                @endif
+                            </div>
+                        @elseif($method->type == 'flat_cost')
+                            <div class="form-check">
+                                <input class="form-check-input shipping_method" type="radio" name="shipping_method" 
+                                    id="shippingMethod{{ $method->id }}" value="{{ $method->id }}" data-id="{{ $method->cost }}">
+                                <label class="form-check-label" for="shippingMethod{{ $method->id }}">
+                                    {{ $method->name }}
+                                    <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
+                                </label>
+                                @if ($method->cost == 0)
+                                <span style="color: red" class="text-muted , color:red" >Giao hàng từ 3-5 ngày.</span>
+                            @elseif ($method->cost > 0)
+                                <span style="color: red" class="text-muted">Giao hàng hỏa tốc.</span>
                             @endif
-                        @endforeach
+                            </div>
+                        @endif
+                    @endforeach
                         <div class="wsus__order_details_summery">
                             <p>Tổng đơn hàng: <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
                             <p>Phí vận chuyển(+): <span
