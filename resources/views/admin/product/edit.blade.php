@@ -94,15 +94,7 @@
                                     <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="warranty_code">Mã bảo hành</label>
-                                    <input type="text" name="warranty_code" id="warranty_code" value="{{ $product->warranty_code }}" class="form-control"  required>
-                                    @if ($errors->has(''))
-                                        <div class="alert alert-danger">
-                                            {{ $errors->first('warranty_code') }}
-                                        </div>
-                                    @endif
-                                </div> 
+                              
 
                                 <div class="form-group">
                                     <label>Giá</label>

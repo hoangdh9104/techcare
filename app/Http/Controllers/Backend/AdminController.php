@@ -90,13 +90,18 @@ class AdminController extends Controller
     }
     public function getMonthlyRevenueChart(Request $request)
     {
-        // Lấy ngày từ input, nếu không có thì mặc định là hôm nay
-        $date = $request->input('year', Carbon::now()->toDateString());
-        $date = Carbon::parse($date);
+        // Lấy năm từ input, nếu không có thì mặc định là năm hiện tại
+        $year = $request->input('year', Carbon::now()->year);
 
-        $year = $date->year;
-        $startMonth = $date->month;
+        // Kiểm tra xem năm có hợp lệ không (phải là một số và có độ dài 4 ký tự)
+        if (!is_numeric($year) || strlen($year) != 4) {
+            return response()->json([
+                'error' => 'Năm không hợp lệ. Vui lòng nhập năm đúng (4 chữ số).'
+            ], 400); // Trả về lỗi với mã trạng thái 400 (Bad Request)
+        }
 
+        // Lấy tháng bắt đầu từ input, nếu không có thì mặc định là tháng 1
+        $startMonth = 1;
         // Truy vấn doanh thu từ tháng bắt đầu đến tháng 12
         $revenues = DB::table('orders')
             ->select(
@@ -203,7 +208,7 @@ class AdminController extends Controller
 
         return response()->json($data);
     }
-    // Phương thức để hiển thị top 5 sản phẩm bán chạy
+    // top 5 sản phẩm bán chạy
     public function showTopSelling(Request $request)
     {
         $filter = $request->get('filter', 5); // Mặc định là Tháng này
@@ -274,5 +279,47 @@ class AdminController extends Controller
         });
 
         return response()->json($topSellingProductsWithDetails);
+    }
+    public function getDailyRevenue(Request $request)
+    {
+        $month = $request->input('month');
+        $year = $request->input('year');
+        // Validate: month và year phải là số hợp lệ
+        if (!is_numeric($month) || $month < 1 || $month > 12 || !is_numeric($year) || strlen($year) != 4) {
+            return response()->json(['error' => 'Tháng hoặc năm không hợp lệ.'], 400);
+        }
+
+        try {
+            // Số ngày trong tháng
+            $daysInMonth = Carbon::createFromDate($year, $month, 1)->daysInMonth;
+
+            // Lấy doanh thu mỗi ngày
+            $revenues = DB::table('orders')
+                ->select(
+                    DB::raw('DAY(updated_at) as day'),
+                    DB::raw('SUM(amount) as total')
+                )
+                ->whereYear('updated_at', $year)
+                ->whereMonth('updated_at', $month)
+                ->where('payment_status', 1)
+                ->groupBy(DB::raw('DAY(updated_at)'))
+                ->pluck('total', 'day');
+
+            // Chuẩn bị dữ liệu trả về
+            $labels = [];
+            $data = [];
+
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                $labels[] = 'Ngày ' . $day;
+                $data[] = $revenues[$day] ?? 0;
+            }
+
+            return response()->json([
+                'labels' => $labels,
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Đã xảy ra lỗi xử lý dữ liệu.'], 500);
+        }
     }
 }

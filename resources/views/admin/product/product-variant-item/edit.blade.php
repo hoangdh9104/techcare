@@ -21,7 +21,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Cập nhật sản phẩm biến thể</h4>
+                            <h4>Cập nhật chi tiết thuộc tính</h4>
 
                         </div>
                         <div class="card-body">
@@ -30,13 +30,13 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label>Tên biến thể</label>
+                                    <label>Tên thuộc tính</label>
                                     <input type="text" class="form-control" name="variant_name"
                                         value="{{ $variantItem->productVariant->name }}" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Tên sản phẩm biến thể</label>
+                                    <label>Tên chi tiết thuộc tính</label>
                                     <input type="text" class="form-control" name="name"
                                         value="{{ $variantItem->name }}">
                                 </div>

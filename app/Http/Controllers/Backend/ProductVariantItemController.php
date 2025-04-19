@@ -74,7 +74,10 @@ class ProductVariantItemController extends Controller
         $variantItem = ProductVariantItem::findOrFail($variantItemId);
 
         $request->validate([
-            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')->ignore($variantItemId)],
+            'name' => ['required', 'max:200',  Rule::unique('product_variant_items', 'name')
+                ->where(function ($query) use ($request) {
+                    return $query->where('product_variant_id', $request->variant_id);
+                })->ignore($variantItemId)],
             'is_default' => ['required'],
             'status' => ['required']
         ]);
