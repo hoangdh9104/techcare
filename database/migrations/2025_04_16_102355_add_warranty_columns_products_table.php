@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->string('warranty_code')->nullable()->unique(); // Mã bảo hành duy nhất
+            $table->integer('warranty_duration')->nullable(); // Thời gian bảo hành (tháng)
         $table->date('warranty_expiration_date')->nullable(); // Ngày hết hạn bảo hành
         });
     }

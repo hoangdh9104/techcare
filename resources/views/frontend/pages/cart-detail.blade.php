@@ -122,8 +122,6 @@
                             <button type="submit" class="common_btn btn btn-sm fs-6">Áp dụng</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Thanh toán</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> Đi mua sắm</a>
                     </div>
                 </div>
             </div>
@@ -183,8 +181,8 @@
                                                 <div class="product_qty_wrapper">
                                                     <button class="btn btn-danger product-decrement">-</button>
                                                     <input class="product-qty" data-rowid="{{ $item->rowId }}"
-                                                        type="number" min="1" max="9"
-                                                        value="{{ $item->qty }}"  />
+                                                        type="text" min="1" max="100"
+                                                        value="{{ $item->qty }}" readonly />
                                                     <button class="btn btn-success product-increment">+</button>
                                                 </div>
                                             </td>
@@ -283,6 +281,12 @@
                     return; // Dừng hàm
                  }
                 let rowId = input.data('rowid');
+
+                if (quantity > 10) {
+                    toastr.error('Bạn chỉ có thể thêm tối đa 10 sản phẩm!');
+                    return; // Dừng lại nếu vượt quá 10
+                }
+
                 input.val(quantity);
                 $.ajax({
                     url: "{{ route('cart.update.quantity') }}",
@@ -302,53 +306,12 @@
                         } else if (data.status == 'error') {
                             toastr.error(data.message)
                         }
-
                     },
                     error: function(data) {
-
+                        console.error(data);
                     },
                 })
             })
-            //check số lượng sản phẩm giỏ hàng
-            $('.add_cart').on('click', function() {
-    let input = $(this).siblings('.product-qty');
-    let quantityToAdd = parseInt(input.val());
-    let rowId = input.data('rowid');
-
-    // Gọi AJAX để kiểm tra số lượng hiện tại trong giỏ hàng
-    $.ajax({
-        url: "{{ route('cart.check.quantity') }}", // Sử dụng route tương ứng
-        method: 'GET',
-        data: { rowId: rowId },
-        success: function(data) {
-            let currentQuantity = data.currentQuantity; // Số lượng hiện tại trong giỏ hàng
-            let totalQuantity = currentQuantity + quantityToAdd;
-
-            if (totalQuantity > 10) {
-                toastr.error('Bạn chỉ có thể thêm dưới số lượng dưới 10!');
-            } else {
-                // Gửi yêu cầu thêm sản phẩm vào giỏ hàng
-                $.ajax({
-                    url: "{{ route('add-to-cart') }}", // Sử dụng route tương ứng
-                    method: 'POST',
-                    data: {
-                        quantity: quantityToAdd,
-                        rowId: rowId
-                    },
-                    success: function(response) {
-                        toastr.success(response.message);
-                    },
-                    error: function() {
-                        toastr.error('Lỗi thêm vào giỏ hàng.');
-                    }
-                });
-            }
-        },
-        error: function() {
-            toastr.error('Lỗi kiểm tra số lượng.');
-        }
-    });
-});
             // decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');
@@ -427,6 +390,7 @@
             }
 
             // applay coupon on cart
+
             $('#coupon_form').on('submit', function(e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
@@ -459,6 +423,7 @@
                             $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
                             $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
                         }
+
                     },
                     error: function(data) {
                         console.log(data);

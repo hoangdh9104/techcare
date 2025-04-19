@@ -29,7 +29,6 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\PaymentSettingController;
-use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
@@ -39,7 +38,6 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
-use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\TermsAndConditionController;
 use App\Http\Controllers\Backend\VendorConditionController;
@@ -160,10 +158,7 @@ Route::put('change-approve-status', [SellerProductController::class, 'changeAppr
 
 // Payment setting
 Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
-Route::resource('paypal-setting', PaypalSettingController::class);
 Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
-Route::resource('paypal-setting', PaypalSettingController::class);
-Route::put('stripe-setting/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
 Route::put('momo-setting/{id}', [MomoSettingController::class, 'update'])->name('momo-setting.update');
 Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
 Route::put('vnpay-setting/{id}', [VnpaySettingController::class, 'update'])->name('vnpay-setting.update');

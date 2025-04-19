@@ -8,8 +8,8 @@
                 <div class="form-group">
                     <label>Trạng thái VNpay</label>
                     <select name="status" class="form-control">
-                        <option value="1" {{ $vnpaySetting->status == 1 ? 'selected' : '' }}>Enable</option>
-                        <option value="0" {{ $vnpaySetting->status == 0 ? 'selected' : '' }}>Disable</option>
+                        <option value="1" {{ $vnpaySetting->status == 1 ? 'selected' : '' }}>Kích hoạt</option>
+                        <option value="0" {{ $vnpaySetting->status == 0 ? 'selected' : '' }}>Không kích hoạt</option>
                     </select>
                 </div>
 

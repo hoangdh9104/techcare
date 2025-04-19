@@ -51,6 +51,7 @@ class Product extends Model
     protected $fillable = [
        
         'warranty_code', // Mã bảo hành
+        'warranty_duration',
         'warranty_expiration_date', // Ngày hết hạn bảo hành
     ];
 }

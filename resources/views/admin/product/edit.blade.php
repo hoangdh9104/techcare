@@ -94,7 +94,15 @@
                                     <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
                                 </div>
 
-                              
+                                <div class="form-group">
+                                    <label for="warranty_duration">Thời gian bảo hành</label>
+                                    <select name="warranty_duration" class="form-control" id="warranty_duration">
+                                        <option value="3">3 tháng</option>
+                                        <option value="6">6 tháng</option>
+                                        <option value="9">9 tháng</option>
+                                        <option value="12">12 tháng</option>
+                                    </select>
+                                </div>
 
                                 <div class="form-group">
                                     <label>Giá</label>
