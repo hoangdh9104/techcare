@@ -5,7 +5,7 @@
     @include('frontend.dashboard.layouts.sidebar')
     
     <div class="row">
-        <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
+        <div class="col-xl-9 col-xxl-10 col-lg-9 mx-auto">
           <div class="dashboard_content mt-2 mt-md-0">
             <h3><i class="fal fa-gift-card"></i>Tạo địa chỉ</h3>
             <div class="wsus__dashboard_add wsus__add_address">

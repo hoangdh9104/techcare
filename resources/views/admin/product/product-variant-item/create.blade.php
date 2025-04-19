@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Biến thể sản phẩm</h1>
+            <h1>Chi tiết thuộc tính</h1>
         </div>
         <div class="mb-3">
             <a class="btn btn-primary"
@@ -18,13 +18,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tạo sản phẩm biến thể</h4>
+                            <h4>Tạo chi tiết thuộc tính</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('admin.products-variant-item.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Tên biến thể</label>
+                                    <label>Tên thuộc tính</label>
                                     <input type="text" class="form-control" name="variant_name"
                                         value="{{ $variant->name }}" readonly>
                                 </div>
@@ -38,7 +38,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Tên sản phẩm biến thể</label>
+                                    <label>Tên chi tiết thuộc tính</label>
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 </div>
                                 {{-- which variants will be pre activated or pre selected in that page will be determined by this option. --}}

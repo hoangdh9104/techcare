@@ -4,7 +4,7 @@
     <div class="container-fluid">
     @include('frontend.dashboard.layouts.sidebar')
       <div class="row">
-        <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
+        <div class="col-xl-9 col-xxl-10 col-lg-9 mx-auto">
           <h2>Người dùng</h2><br>
           <div class="dashboard_content">
             <div class="wsus__dashboard">

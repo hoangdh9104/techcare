@@ -114,7 +114,7 @@
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
                         <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li>
->>>>>>> 0a93190900ec363ec786dcdbed3858cd3b27c3ba
+
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
                                 <li><a href="{{ route('user.dashboard') }}">Tài khoản của tôi</a></li>

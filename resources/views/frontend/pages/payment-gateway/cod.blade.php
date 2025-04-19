@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xl-12 m-auto">
             <div class="wsus__payment_area">
-                <a class="nav-link common_btn text-center" href="{{ route('user.cod.payment') }}">Tiếp tục</a>
+                <a class="nav-link common_btn text-center" href="{{ route('user.cod.payment') }}">Mua hàng</a>
             </div>
         </div>
     </div>

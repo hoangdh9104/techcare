@@ -78,7 +78,7 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Your Name" name="name">
+                                            <input type="text" placeholder="Tên của bạn" name="name">
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
@@ -89,12 +89,12 @@
 
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="text" placeholder="Subject" name="subject">
+                                            <input type="text" placeholder="Chủ đề lời nhắn của bạn" name="subject">
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <textarea cols="3" rows="5" placeholder="Message" name="message"></textarea>
+                                            <textarea cols="3" rows="5" placeholder="Nội dung lời nhắn" name="message"></textarea>
                                         </div>
                                         <button type="submit" class="common_btn" id="form-submit">Gửi ngay</button>
                                     </div>

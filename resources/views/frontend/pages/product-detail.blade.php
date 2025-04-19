@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>Số lượng :</h5>
+                                <h5>Tồn kho :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
@@ -255,7 +255,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact" type="button" role="tab"
-                                    aria-controls="pills-contact" aria-selected="false">Thông tin nhà cung cấp</button>
+                                    aria-controls="pills-contact" aria-selected="false">Thông tin người bán</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
@@ -303,14 +303,14 @@
                                                         @endif
                                                     @endfor
 
-                                                    <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
+                                                    <span>({{ count($product->reviews) }} đánh giá)</span>
 
                                                 </p>
                                                 <p><span>Tên cửa hàng:</span>{{ $product->vendor->shop_name }} </p>
                                                 <p><span>Địa chỉ:</span> {{ $product->vendor->address }}</p>
-                                                <p><span>Điện thoại:</span> {{ $product->vendor->phone }}</p>
+                                                <p><span>Số điện thoại:</span> {{ $product->vendor->phone }}</p>
                                                 <p><span>Mail:</span> {{ $product->vendor->email }}</p>
-                                                <a href="vendor_details.html" class="see_btn">Xem cửa hàng</a>
+                                                <a href="vendor_details.html" class="see_btn">Ghé cửa hàng</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
@@ -391,14 +391,14 @@
                                                                 enctype="multipart/form-data" method="POST">
                                                                 @csrf
                                                                 <p class="rating">
-                                                                    <span>Chọn xếp hạng của bạn : </span>
+                                                                    <span>Chọn điểm đánh giá : </span>
                                                                 </p>
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
                                                                         <div class="wsus__single_com mb-4">
                                                                             <select name="rating" id=""
                                                                                 class="form-control">
-                                                                                <option value="">Select</option>
+                                                                                <option value="">Vui lòng chọn</option>
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -425,7 +425,8 @@
                                                                     value="{{ $product->id }}">
                                                                 <input type="hidden" name="vendor_id"
                                                                     value="{{ $product->vendor_id }}">
-                                                                <button class="common_btn" type="submit">Gửi đánh giá</button>
+                                                                <button class="common_btn" type="submit">Xác nhận
+                                                                    </button>
                                                             </form>
                                                         </div>
                                                     @endif
@@ -472,6 +473,11 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('.message_modal').on('submit', function(e) {
             e.preventDefault();
             let formData = $(this).serialize();
@@ -533,7 +539,7 @@
             const finalSku = baseSku + '-' + attributeParts.join('-');
             console.log(baseSku);
             console.log(attributeParts);
-            console.log('SKU:', finalSku); // ✅ In ra SKU
+            console.log('SKU:', finalSku); //  In ra SKU
             // gọi API để lấy thông tin sản phẩm theo SKU:
             fetch(`/get-variant-combination?sku=${finalSku}&product_id=${productId}`)
                 .then(res => res.json())

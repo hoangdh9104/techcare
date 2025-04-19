@@ -4,18 +4,18 @@
 @endsection
 @section('content')
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                BREADCRUMB START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    BREADCRUMB START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>Thanh toán</h4>
+                        <h4>thanh toán</h4>
                         <ul>
                             <li><a href="{{ route('home') }}">Trang chủ</a></li>
 
-                            <li><a href="javascrip:;">Thanh toán</a></li>
+                            <li><a href="javascrip:;">thanh toán</a></li>
                         </ul>
                     </div>
                 </div>
@@ -23,20 +23,20 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    BREADCRUMB END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                CHECK OUT PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CHECK OUT PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-7">
                     <div class="wsus__check_form">
                         <a href="javascript:;" style="margin-left:auto;" class="common_btn" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">Địa chỉ mới</a>
+                            data-bs-target="#exampleModal">Thêm địa chỉ mới</a>
                         <div class="row">
                             @foreach ($addresses as $address)
                                 <div class="col-xl-6">
@@ -45,7 +45,7 @@
                                             <input class="form-check-input shipping_address" data-id="{{ $address->id }}"
                                                 type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
-                                                Chọn Địa chỉ
+                                                Chọn địa chỉ
                                             </label>
                                         </div>
                                         <ul>
@@ -54,7 +54,7 @@
                                             <li><span>Email :</span> {{ $address->email }}</li>
                                             <li><span>Quốc gia :</span> {{ $address->country }}</li>
                                             <li><span>Thành phố :</span> {{ $address->city }}</li>
-                                            <li><span>Mã bưu chính :</span> {{ $address->zip }}</li>
+                                            <li><span>Zip Code :</span> {{ $address->zip }}</li>
                                             <li><span>Địa chỉ :</span> {{ $address->address }}</li>
                                         </ul>
                                     </div>
@@ -73,12 +73,8 @@
                                     <input class="form-check-input shipping_method" type="radio" name="exampleRadios"
                                         id="exampleRadios1" value="{{ $method->id }}" data-id="{{ $method->cost }}">
                                     <label class="form-check-label" for="exampleRadios1">
-                                        {{ $method->name }}
-
-                                        {{-- <span>Chi phí( {{ $settings->currency_icon }} {{ $method->cost }})</span> --}}
-
-                                        <span>cost( {{ $method->cost }} {{ $settings->currency_icon }})</span>
-
+                                        {{ $method->name }} (2-3 ngày)
+                                        <span>Chi phí( {{ $method->cost }} {{ $settings->currency_icon }})</span>
                                     </label>
                                 </div>
                             @elseif($method->type == 'flat_cost')
@@ -86,30 +82,19 @@
                                     <input class="form-check-input shipping_method" type="radio" name="exampleRadios"
                                         id="exampleRadios1" value="{{ $method->id }}" data-id="{{ $method->cost }}">
                                     <label class="form-check-label" for="exampleRadios1">
-                                        {{ $method->name }}
-
-                                        {{-- <span>Chi phí( {{ $settings->currency_icon }} {{ $method->cost }})</span> --}}
-
-                                        <span>cost( {{ $method->cost }} {{ $settings->currency_icon }})</span>
-
+                                        {{ $method->name }} (Trong ngày)
+                                        <span>Chi phí( {{ $method->cost }} {{ $settings->currency_icon }})</span>
                                     </label>
                                 </div>
                             @endif
                         @endforeach
                         <div class="wsus__order_details_summery">
-
-                            {{-- <p>Tổng cộng: <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                            <p>Phí vận chuyển(+): <span id="shipping_fee">{{ $settings->currency_icon }}0</span></p>
-                            <p>Phiếu giảm giá (-): <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
-                            <p><b>Tổng cộng:</b> --}}
-
-                            <p>subtotal: <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
-                            <p>shipping fee(+): <span id="shipping_fee">0{{ $settings->currency_icon }}</span></p>
-                            {{-- <p>coupon (-): <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p> --}}
-                            <p>coupon(-): <span
+                            <p>Tổng đơn hàng: <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                            <p>Phí vận chuyển(+): <span
+                                    id="shipping_fee">{{ getShippingFee() }}{{ $settings->currency_icon }}</span></p>
+                            <p>Giảm giá(-): <span
                                     id="discount">{{ getCartDiscount() }}{{ $settings->currency_icon }}</span>
-                            <p><b>total:</b>
-
+                            <p><b>Tổng thanh toán:</b>
                                 <span><b data-id="{{ getMainCartTotal() }}"
                                         id="total_amount">{{ getMainCartTotal() }}{{ $settings->currency_icon }}</b></span>
                             </p>
@@ -119,7 +104,7 @@
                                 <input class="form-check-input agree_term" type="checkbox" value=""
                                     id="flexCheckChecked3">
                                 <label class="form-check-label" for="flexCheckChecked3">
-                                    Tôi đã đọc và đồng ý với <a href="#">điều khoản và điều kiện của trang web *</a>
+                                    Tôi đã đọc và đồng ý với <a href="#">chính sách *</a> của cửa hàng
                                 </label>
                             </div>
                         </div>
@@ -139,7 +124,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm địa chỉ mới</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm địa chỉ</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-0">
@@ -168,7 +153,7 @@
                                     <div class="col-md-6">
                                         <div class="wsus__check_single_form">
                                             <select class="select_2" name="country">
-                                                <option value="AL">Country / Region *</option>
+                                                <option value="AL">Quốc gia</option>
                                                 @foreach (config('settings.country_list') as $key => $country)
                                                     <option {{ $country == old('country') ? 'selected' : '' }}
                                                         value="{{ $key }}">
@@ -206,7 +191,7 @@
 
                                     <div class="col-xl-12">
                                         <div class="wsus__check_single_form">
-                                            <button type="submit" class="btn btn-primary">Lưu thau đổi</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -231,6 +216,7 @@
             $('input[type="radio"]').prop('checked', false);
             $('#shipping_method_id').val("");
             $('#shipping_address_id').val("");
+
             $('.shipping_method').on('click', function() {
                 let shippingFee = $(this).data('id')
                 let currentTotalAmount = $('#total_amount').data('id')
@@ -240,19 +226,22 @@
                 $('#shipping_fee').text(shippingFee + "{{ $settings->currency_icon }}");
                 $('#total_amount').text(totalAmount + "{{ $settings->currency_icon }}");
 
+
             })
+
             $('.shipping_address').on('click', function() {
                 $('#shipping_address_id').val($(this).data('id'));
 
             })
+
             $('#submitCheckoutForm').on('click', function(e) {
                 e.preventDefault();
                 if ($('#shipping_method_id').val() == "") {
-                    toastr.error('Shipping method is requred');
+                    toastr.error('Vui lòng chọn phương thức vận chuyển');
                 } else if ($('#shipping_address_id').val() == "") {
-                    toastr.error('Shipping address is requred');
+                    toastr.error('Vui lòng chọn địa chỉ nhận hàng');
                 } else if (!$('.agree_term').prop('checked')) {
-                    toastr.error('You have to agree website terms and conditions');
+                    toastr.error('Bạn phải đồng ý với điều khoản và điều kiện của cửa hàng.');
                 } else {
                     $.ajax({
                         url: "{{ route('user.checkout.form-submit') }}",
@@ -275,9 +264,6 @@
                         }
                     })
                 }
-
-
-
             })
         })
     </script>

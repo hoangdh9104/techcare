@@ -158,7 +158,7 @@ class ProductDataTable extends DataTable
             Column::make('id')->title('STT'),
             Column::make('image')->title('Hình ảnh'),
             Column::make('name')->title('Tên sản phẩm'),
-            Column::make('price_display')->title('Giá')->addClass('text-right'),
+            // Column::make('price_display')->title('Giá')->addClass('text-right'),
             Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
             Column::make('type')->width(150)->title('Loại'),
             Column::make('status')->title('Trạng thái'),

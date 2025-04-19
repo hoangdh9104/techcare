@@ -122,11 +122,10 @@
                             <button type="submit" class="common_btn btn btn-sm fs-6">Áp dụng</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Thanh toán</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> Đi mua sắm</a>
                     </div>
                 </div>
             </div>
+
             {{-- <div class="row">
                 <div class="col-xl-9">
                     <div class="wsus__cart_list">
@@ -239,6 +238,7 @@
                     </div>
                 </div>
             </div> --}}
+
         </div>
     </section>
     <section id="wsus__single_banner">
@@ -281,6 +281,12 @@
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) + 1;
                 let rowId = input.data('rowid');
+
+                if (quantity > 10) {
+                    toastr.error('Bạn chỉ có thể thêm tối đa 10 sản phẩm!');
+                    return; // Dừng lại nếu vượt quá 10
+                }
+
                 input.val(quantity);
                 $.ajax({
                     url: "{{ route('cart.update.quantity') }}",
@@ -300,14 +306,14 @@
                         } else if (data.status == 'error') {
                             toastr.error(data.message)
                         }
-
                     },
                     error: function(data) {
-
+                        console.error(data);
                     },
-                })
-            })
-            // decrement product quantity
+                });
+            });
+
+            /// decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) - 1;
@@ -385,6 +391,7 @@
             }
 
             // applay coupon on cart
+
             $('#coupon_form').on('submit', function(e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
@@ -417,6 +424,7 @@
                             $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
                             $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
                         }
+
                     },
                     error: function(data) {
                         console.log(data);

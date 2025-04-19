@@ -96,7 +96,7 @@ class ProductVariantItemDataTable extends DataTable
         return [
             Column::make('id')->title('STT'),
             Column::make('name')->title('Tên'),
-            Column::make('variant_name')->title('Tên biến thể'),
+            Column::make('variant_name')->title('Tên thuộc tính'),
             Column::make('is_default')->title('Mặc định'),
             Column::make('status')->title('Trạng thái'),
             Column::computed('action')

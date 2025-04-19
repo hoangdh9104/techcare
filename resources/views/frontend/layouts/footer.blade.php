@@ -57,7 +57,7 @@
                     </form>
                     <div class="footer_payment">
                         <p>Chúng tôi đang sử dụng phương thức thanh toán an toàn cho:</p>
-                        <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid">
+                        {{-- <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid"> --}}
                     </div>
                 </div>
             </div>
