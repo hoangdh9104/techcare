@@ -238,11 +238,11 @@
                                     data-bs-target="#pills-home22" type="button" role="tab"
                                     aria-controls="pills-home" aria-selected="true">Mô tả</button>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            {{-- <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact" type="button" role="tab"
                                     aria-controls="pills-contact" aria-selected="false">Thông tin người bán</button>
-                            </li>
+                            </li> --}}
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact2" type="button" role="tab"
@@ -268,13 +268,13 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-xxl-5 col-md-6">
                                             <div class="wsus__vebdor_img">
-                                                <img src="{{ asset($product->vendor->banner) }}" alt="vensor"
+                                                <img src="{{ asset($product->banner) }}" alt="vensor"
                                                     class="img-fluid w-100">
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                             <div class="wsus__pro_det_vendor_text">
-                                                <h4>{{ $product->vendor->user->name }}</h4>
+                                                <h4>{{ $product->name }}</h4>
                                                 <p class="wsus_pro_rating">
                                                     @php
                                                         $avgRating = $product->reviews('reviews')->avg('rating');
@@ -292,16 +292,16 @@
                                                     <span>({{ count($product->reviews) }} đánh giá)</span>
 
                                                 </p>
-                                                <p><span>Tên cửa hàng:</span>{{ $product->vendor->shop_name }} </p>
-                                                <p><span>Địa chỉ:</span> {{ $product->vendor->address }}</p>
-                                                <p><span>Số điện thoại:</span> {{ $product->vendor->phone }}</p>
-                                                <p><span>Mail:</span> {{ $product->vendor->email }}</p>
+                                                <p><span>Tên cửa hàng:</span>{{ $product->shop_name }} </p>
+                                                <p><span>Địa chỉ:</span> {{ $product->address }}</p>
+                                                <p><span>Số điện thoại:</span> {{ $product->phone }}</p>
+                                                <p><span>Mail:</span> {{ $product->email }}</p>
                                                 <a href="vendor_details.html" class="see_btn">Ghé cửa hàng</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-12">
                                             <div class="wsus__vendor_details">
-                                                {!! $product->vendor->description !!}
+                                                {!! $product->description !!}
                                             </div>
                                         </div>
                                     </div>
@@ -410,7 +410,7 @@
                                                                 <input type="hidden" name="product_id"
                                                                     value="{{ $product->id }}">
                                                                 <input type="hidden" name="vendor_id"
-                                                                    value="{{ $product->vendor_id }}">
+                                                                    value="{{ $product }}">
                                                                 <button class="common_btn" type="submit">Xác nhận
                                                                     </button>
                                                             </form>
@@ -444,7 +444,7 @@
                         <div class="form-group">
                             <label for="">Tin nhắn</label>
                             <textarea name="message" class="form-control mt-2 message-box"></textarea>
-                            <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
+                            <input type="hidden" name="receiver_id" value="{{ $product->user_id }}">
                         </div>
                         <button type="submit" class="btn btn-primary mt-4 send-button">Send</button>
                     </form>

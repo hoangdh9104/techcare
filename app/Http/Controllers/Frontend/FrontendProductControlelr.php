@@ -107,17 +107,17 @@ class FrontendProductControlelr extends Controller
             'category',
             'productImageGalleries',
             'variants.productVariantItem',
-            'brand',
-            'vendor'
+            'brand'
+
         ])
         ->where('slug', $slug)
         ->where('status', 1)
         ->firstOrFail();
-        
+
         $reviews = ProductReview::where('product_id', $product->id)
             ->where('status', 1)
             ->paginate(10);
-        
+
         // Tính tổng tồn kho
         $totalQty = 0;
         $variantStockMap = [];
@@ -131,10 +131,10 @@ class FrontendProductControlelr extends Controller
         } else {
             $totalQty = $product->qty ?? 0;
         }
-        
+
         return view('frontend.pages.product-detail', compact('product', 'reviews', 'totalQty', 'variantStockMap'));
-        
-        
+
+
     }
 
     public function changeListView(Request $request)
