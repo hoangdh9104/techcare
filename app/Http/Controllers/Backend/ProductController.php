@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+use App\Models\Order; 
+use Carbon\Carbon;
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
@@ -44,76 +45,89 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'image' => ['required', 'image', 'max:3000'],
-            'name' => ['required', 'max:200'],
-            'category' => ['required'],
-            'brand' => ['required'],
-            'price' => ['required'],
-            'qty' => ['required'],
-            'short_description' => ['required', 'max: 600'],
-            'long_description' => ['required'],
-            'seo_title' => ['nullable', 'max:200'],
-            'seo_description' => ['nullable', 'max:250'],
-            'status' => ['required']
-        ], [
-            'image.required' => 'Vui lòng chọn hình ảnh.',
-            'image.image' => 'Tệp tải lên phải là hình ảnh.',
-            'image.max' => 'Kích thước hình ảnh không được vượt quá 3MB.',
+   public function store(Request $request)
+{
+    // Xác thực dữ liệu
+    $request->validate([
+        'image' => ['required', 'image', 'max:3000'],
+        'name' => ['required', 'max:200'],
+        'category' => ['required'],
+        'brand' => ['required'],
+        'warranty_code' => 'nullable|string|max:100|unique:products', // Kiểm tra mã bảo hành duy nhất
+        'warranty_duration' => 'required|in:3,6,9,12', // Thêm xác thực cho thời gian bảo hành
+        'price' => ['required'],
+        'qty' => ['required'],
+        'short_description' => ['required', 'max:600'],
+        'long_description' => ['required'],
+        'seo_title' => ['nullable', 'max:200'],
+        'seo_description' => ['nullable', 'max:250'],
+        'status' => ['required']
+    ], [
+        'image.required' => 'Vui lòng chọn hình ảnh.',
+        'image.image' => 'Tệp tải lên phải là hình ảnh.',
+        'image.max' => 'Kích thước hình ảnh không được vượt quá 3MB.',
+        'name.required' => 'Vui lòng nhập tên sản phẩm.',
+        'name.max' => 'Tên sản phẩm không được vượt quá 200 ký tự.',
+        'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
+        'brand.required' => 'Vui lòng chọn thương hiệu.',
+        'price.required' => 'Vui lòng nhập giá sản phẩm.',
+        'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
+        'short_description.required' => 'Vui lòng nhập mô tả ngắn.',
+        'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
+        'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
+        'warranty_duration.required' => 'Vui lòng chọn thời gian bảo hành.',
+        'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
+        'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
+        'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
+    ]);
 
-            'name.required' => 'Vui lòng nhập tên sản phẩm.',
-            'name.max' => 'Tên sản phẩm không được vượt quá 200 ký tự.',
+    // Tải hình ảnh
+    $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
-            'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
-            'brand.required' => 'Vui lòng chọn thương hiệu.',
+    // Tạo sản phẩm mới
+    $product = new Product();
+    $product->thumb_image = $imagePath;
+    $product->name = $request->name;
+    $product->slug = Str::slug($request->name);
+    $product->vendor_id = Auth::user()->vendor->id;
+    $product->category_id = $request->category;
+    $product->sub_category_id = $request->sub_category;
+    $product->child_category_id = $request->child_category;
+    $product->brand_id = $request->brand;
+    $product->qty = $request->qty;
+    $product->short_description = $request->short_description;
+    $product->long_description = $request->long_description;
+    $product->video_link = $request->video_link;
+    $product->sku = $request->sku;
+    $product->price = $request->price;
+    $product->offer_price = $request->offer_price;
+    $product->offer_start_date = $request->offer_start_date;
+    $product->offer_end_date = $request->offer_end_date;
+    $product->product_type = $request->product_type;
+    $product->status = $request->status;
+    $product->warranty_code = $request->warranty_code;
+    $product->warranty_duration = $request->warranty_duration;
+    $product->warranty_dwarranty_expiration_dateuration = $request->warranty_expiration_date;
+    
 
-            'price.required' => 'Vui lòng nhập giá sản phẩm.',
-            'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
-
-            'short_description.required' => 'Vui lòng nhập mô tả ngắn.',
-            'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
-
-            'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
-
-            'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
-            'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
-
-            'status.required' => 'Vui lòng chọn trạng thái hiển thị của sản phẩm.',
-        ]);
-        $imagePath = $this->uploadImage($request, 'image', 'uploads');
-        $product = new Product();
-        $product->thumb_image = $imagePath;
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->vendor_id = Auth::user()->vendor->id;
-        $product->category_id = $request->category;
-        $product->sub_category_id = $request->sub_category;
-        $product->child_category_id = $request->child_category;
-        $product->brand_id = $request->brand;
-        $product->qty = $request->qty;
-        $product->short_description = $request->short_description;
-        $product->long_description = $request->long_description;
-        $product->video_link = $request->video_link;
-        $product->sku = $request->sku;
-        $product->price = $request->price;
-        $product->offer_price = $request->offer_price;
-        $product->offer_start_date = $request->offer_start_date;
-        $product->offer_end_date = $request->offer_end_date;
-        $product->product_type = $request->product_type;
-        $product->status = $request->status;
-        // sản phẩm khi đc tạo bởi admin thì is_approved === true
-        $product->is_approved = 1;
-        $product->seo_title = $request->seo_title;
-        $product->seo_description = $request->seo_description;
-        $product->save();
-
-        toastr('Tạo sản phẩm thành công!', 'success');
-
-        return redirect()->route('admin.products.index');
+    // Xác định ngày hết hạn bảo hành
+    if ($request->warranty_code) {
+        $warrantyDuration = $request->warranty_duration; // Lấy thời gian bảo hành từ request
+        $product->warranty_expiration_date = Carbon::now()->addMonths($warrantyDuration);
     }
 
+    // Sản phẩm khi được tạo bởi admin thì is_approved === true
+    $product->is_approved = 1;
+    $product->seo_title = $request->seo_title;
+    $product->seo_description = $request->seo_description;
+
+    // Lưu sản phẩm
+    $product->save();
+    
+    toastr('Tạo sản phẩm thành công!', 'success');
+
+    return redirect()->route('admin.products.index');
+}
     /**
      * Display the specified resource.
      */
@@ -209,6 +223,8 @@ class ProductController extends Controller
             'name' => ['required', 'max:200'],
             'category' => ['required'],
             'brand' => ['required'],
+            'warranty_code' => 'nullable|string|max:100|unique:products', // Kiểm tra mã bảo hành duy nhất
+            'warranty_duration' => 'required|in:3,6,9,12', // Thêm xác thực cho thời gian bảo hành
             'price' => ['required'],
             'short_description' => ['required', 'max:600'],
             'long_description' => ['required'],
@@ -242,7 +258,7 @@ class ProductController extends Controller
             'short_description.max' => 'Mô tả ngắn không được vượt quá 600 ký tự.',
 
             'long_description.required' => 'Vui lòng nhập mô tả chi tiết.',
-
+            'warranty_duration.required' => 'Vui lòng chọn thời gian bảo hành.',
             'seo_title.max' => 'Tiêu đề SEO không được vượt quá 200 ký tự.',
             'seo_description.max' => 'Mô tả SEO không được vượt quá 250 ký tự.',
 
@@ -275,6 +291,14 @@ class ProductController extends Controller
         $product->offer_end_date = $request->offer_end_date;
         $product->product_type = $request->product_type;
         $product->status = $request->status;
+        $product->warranty_code = $request->warranty_code;
+        $product->warranty_duration = $request->warranty_duration;
+        $product->warranty_expiration_date = $request->warranty_expiration_date;
+         // Xác định ngày hết hạn bảo hành
+    if ($request->warranty_code) {
+        $warrantyDuration = $request->warranty_duration; // Lấy thời gian bảo hành từ request
+        $product->warranty_expiration_date = Carbon::now()->addMonths($warrantyDuration);
+    }
         // sản phẩm khi đc tạo bởi admin thì is_approved === true
         $product->is_approved = 1;
         $product->seo_title = $request->seo_title;

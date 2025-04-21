@@ -30,6 +30,12 @@
                                 <td>{{ number_format($product->offer_price) }}đ</td>
                             </tr>
                         @endif
+
+                        <tr>
+                            <th>Mã bảo hành:</th>
+                            <td>{{ $product->warranty_code  }}</td>
+                        </tr>
+                        
                         <tr>
                             <th>Tồn kho:</th>
                             <td>{{ $product->qty }}</td>
