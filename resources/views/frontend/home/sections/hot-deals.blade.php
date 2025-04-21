@@ -74,6 +74,25 @@
                                         <p class="wsus__price">
                                             {{ $settings->currency_icon }}{{ $product->price }}</p>
                                     @endif
+
+                                    {{-- <form class="shopping-cart-form" action="">
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <div class="row">
+                                            @foreach ($product->variants as $variant)
+                                                <select class="d-none" name="variants_item[]">
+                                                    @foreach ($variant->productVariantItem as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                            {{ $item->name }} (${{ $item->price }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            @endforeach
+                                            <input name="quantity" type="hidden" min="1" max="100"
+                                                value="1" />
+                                        </div>
+                                        <button class="add_cart" type="submit">add to cart</button>
+                                    </form> --}}
                                 </div>
                             </div>
                         </div>
@@ -149,30 +168,31 @@
                                                 <i class="fas fa-play"></i>
                                             </a>
                                         @endif
-                                        <div class="row modal_slider">
-                                            <div class="col-xl-12">
-                                                <div class="modal_slider_img">
-                                                    <img src="{{ asset($product->thumb_image) }}"
-                                                        alt="{{ $product->name }}" class="img-fluid w-100">
-                                                </div>
-                                            </div>
-                                            @if (count($product->productImageGalleries) == 0)
-                                                <div class="col-xl-12">
-                                                    <div class="modal_slider_img">
-                                                        <img src="{{ asset($product->thumb_image) }}"
-                                                            alt="{{ $product->name }}" class="img-fluid w-100">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @foreach ($product->productImageGalleries as $productImage)
-                                                <div class="col-xl-12">
-                                                    <div class="modal_slider_img">
-                                                        <img src="{{ asset($productImage->image) }}"
-                                                            alt="{{ $product->name }}" class="img-fluid w-100">
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
+                                    {{-- @endfor --}}
+
+                                    <span>({{count($product->reviews)}} review)</span>
+
+                                </p>
+                                <p class="description">{!! $product->short_description !!}</p>
+                                <div class="wsus_pro_hot_deals">
+                                    <h5>offer ending time : </h5>
+                                    <div class="simply-countdown simply-countdown-one"></div>
+                                </div>
+                                <form class="shopping-cart-form" action="">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="row">
+                                        @foreach ($product->variants as $variant)
+                                            <select class="d-none" name="variants_item[]">
+                                                @foreach ($variant->productVariantItem as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                        {{ $item->name }} (${{ $item->price }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endforeach
+                                        <input name="quantity" type="hidden" min="1" max="9"
+                                            value="1" />
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">

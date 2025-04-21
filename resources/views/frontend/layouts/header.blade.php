@@ -66,7 +66,17 @@
                         <p>
                             {{ $sidebarProduct->price }}{{ $settings->currency_icon }}
                         </p>
+                        <small>Variants total:
+                            {{ $settings->currency_icon }}{{ $sidebarProduct->options->variants_total }}</small>
+                        <br>
+                        {{-- <small>Qty: {{ $sidebarProduct->qty > 9 ? 9 : $sidebarProduct->qty }}</small> --}}
+                        
+
+                        <small>Qty: {{ $sidebarProduct->qty }}</small>
+
+
                         <small>Số lượng: {{ $sidebarProduct->qty }}</small>
+
                     </div>
                 </li>
             @endforeach

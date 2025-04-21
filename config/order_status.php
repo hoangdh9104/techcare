@@ -42,6 +42,7 @@ return [
             'status' => 'Đang chờ xử lý',
             'details' => 'Đơn hàng đang chờ xử lý.'
         ],
+
         'processed_and_ready_to_ship' => [
             'status' => 'Đã xử lý ',
             'details' => 'Đơn hàng đã được xử lý .'
