@@ -13,7 +13,7 @@
                     <div class="col-12">
                         <h4>Flash Sale</h4>
                         <ul>
-                            <li><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="{{ url('/') }}">Trang chủ</a></li>
                             <li><a href="javascript:;">Flash Sale</a></li>
                         </ul>
                     </div>
@@ -40,8 +40,8 @@
                             <div class="wsus__offer_details_banner_text">
                                 <p>apple watch</p>
                                 <span>up 50% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
+                                <p>cho tất cả sản phẩm</p>
+                                <p><b>duy nhất hôm nay</b></p>
                             </div>
                         </div>
                     </div>
@@ -51,9 +51,9 @@
                                 class="img-fluid w-100">
                             <div class="wsus__offer_details_banner_text">
                                 <p>xiaomi power bank</p>
-                                <span>up 37% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
+                                <span>lên tới 37%</span>
+                                <p>cho tất cả sản phẩm</p>
+                                <p><b>duy nhất hôm nay</b></p>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                         <div class="wsus__section_header rounded-0">
                             <h3>FLash Sale</h3>
                             <div class="wsus__offer_countdown">
-                                <span class="end_text">ends time :</span>
+                                <span class="end_text">kết thúc :</span>
                                 <div class="simply-countdown simply-countdown-one"></div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                             <input name="quantity" type="hidden" min="1" max="100"
                                                 value="1" />
                                         </div>
-                                        <button class="add_cart" type="submit">add to cart</button>
+                                        
 
                                     </form>
                                 </div>
@@ -223,7 +223,19 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                        @if ($product->qty > 0)
+                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                class="in_stock">Còn hàng</span>
+                                            ({{ $product->qty }}
+                                            sản phẩm)
+                                        </p>
+                                    @elseif($product->qty == 0)
+                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                class="in_stock">Hết hàng</span>
+                                            ({{ $product->qty }}
+                                            sản phẩm)
+                                        </p>
+                                    @endif
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                                 <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -245,7 +257,7 @@
                                                 @endif
                                             @endfor
 
-                                            <span>({{ count($product->reviews) }} review)</span>
+                                            <span>({{ count($product->reviews) }} đánh giá)</span>
 
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
