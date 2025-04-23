@@ -125,7 +125,6 @@
                     </div>
                 </div>
             </div>
-
             {{-- <div class="row">
                 <div class="col-xl-9">
                     <div class="wsus__cart_list">
@@ -137,25 +136,21 @@
                                             N.O
                                         </th>
                                         <th class="wsus__pro_img">
-                                            Mục sản phẩm
+                                            product item
                                         </th>
 
                                         <th class="wsus__pro_name">
-                                            Chi tiết sản phẩm
+                                            product details
                                         </th>
 
                                         <th class="wsus__pro_tk">
-                                            Giá
-                                        </th>
-
-                                        <th class="wsus__pro_tk">
-                                            Tổng số
+                                            total
                                         </th>
                                         <th class="wsus__pro_select">
-                                            Số lượng
+                                            quantity
                                         </th>
                                         <th class="wsus__pro_icon">
-                                            <a href="#" class="common_btn clear_cart">Xóa giỏ hàng</a>
+                                            <a href="#" class="common_btn clear_cart">clear cart</a>
                                         </th>
 
                                     </tr>
@@ -202,7 +197,7 @@
                                     @if (count($cartItems) == 0)
                                         <tr class="d-flex">
                                             <td class="wsus__pro_icon" rowspan="2" style="width:100%">
-                                                Giỏ hàng trống!
+                                                Cart is empty!
                                             </td>
                                         </tr>
                                     @endif
@@ -213,32 +208,29 @@
                 </div>
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
-                        <h6>Tổng giỏ hàng</h6>
-                        <p>Tổng phụ: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                        <p>Phiếu giảm giá(-): <span id="discount">{{ $settings->currency_icon }}{{ getCartDiscount() }}</span>
+                        <h6>total cart</h6>
+                        <p>subtotal: <span id="sub_total">{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
+                        <p>coupon(-): <span id="discount">{{ $settings->currency_icon }}{{ getCartDiscount() }}</span>
                         </p>
-                        <p class="total"><span>Tổng:</span> <span
+                        <p class="total"><span>total:</span> <span
                                 id="cart_total">{{ $settings->currency_icon }}{{ getMainCartTotal() }}</span>
-
                         </p>
                         @if (session()->has('coupon_code'))
                             <p>Applied Coupon: {{ session('coupon_code') }}</p>
                         @endif
 
 
-
                         <form id="coupon_form">
                             <input type="text" placeholder="Coupon Code" name="coupon_code"
                                 value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
-                            <button type="submit" class="common_btn">Áp dụng</button>
+                            <button type="submit" class="common_btn">apply</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Thanh toán</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">checkout</a>
                         <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> Đi mua sắm</a>
+                                class="fab fa-shopify"></i> go shop</a>
                     </div>
                 </div>
             </div> --}}
-
         </div>
     </section>
     <section id="wsus__single_banner">
@@ -277,9 +269,17 @@
                 }
             });
             // increment product quantity
-            $('.product-increment').on('click', function() {
+            $('.product-increment').off('click').on('click', function() {
                 let input = $(this).siblings('.product-qty');
-                let quantity = parseInt(input.val()) + 1;
+                let quantity = parseInt(input.val()) ;
+                if (quantity < 9) {
+                  quantity += 1; // Tăng số lượng
+                  input.val(quantity); 
+                } else {
+                    toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm !'); // Thông báo lỗi
+                    isUpdating = false; // Đặt lại trạng thái
+                    return; // Dừng hàm
+                 }
                 let rowId = input.data('rowid');
 
                 if (quantity > 10) {
@@ -310,10 +310,9 @@
                     error: function(data) {
                         console.error(data);
                     },
-                });
-            });
-
-            /// decrement product quantity
+                })
+            })
+            // decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) - 1;

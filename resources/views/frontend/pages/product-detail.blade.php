@@ -167,6 +167,12 @@
 
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
+                        <div class="variant-details">
+                            <h4>{{ $product->variant_name }}</h4>
+                            {{-- <p>Mã bảo hành: <span class="text-danger">{{ $product->warranty_code }}</span></p> --}}
+                            <p>Thời gian bảo hành: <span class="text-danger">{{ $product->warranty_duration }} tháng</span></p>
+                            {{-- <p>Ngày hết hạn bảo hành: <span class="text-danger">{{ $product->warranty_expiration_date->format('d/m/Y') }}</span></p> --}}
+                        </div>
                         <form class="shopping-cart-form" action="">
                             <div class="wsus__selectbox">
                                 <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
@@ -202,7 +208,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>Tồn kho :</h5>
+                                <h5>quantity :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />

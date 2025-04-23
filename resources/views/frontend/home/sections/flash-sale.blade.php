@@ -95,7 +95,6 @@
                             @else
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
                             @endif
-
                             {{-- <form class="shopping-cart-form" action="">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
@@ -112,9 +111,9 @@
                                     <input name="quantity" type="hidden" min="1" max="100"
                                         value="1" />
                                 </div>
-                                <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                <button class="add_cart" type="submit">add to cart</button>
 
-
+                            </form> --}}
                         </div>
                     </div>
                 </div>
@@ -122,7 +121,6 @@
         </div>
     </div>
 </section>
-
 <!--==========================
                                       PRODUCT MODAL VIEW START
                                     ===========================-->
@@ -175,7 +173,7 @@
                             <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">{{ $product->name }}</a>
-                                    <p class="wsus__stock_area"><span class="in_stock">còn hàng</span> (167 sản phẩm)</p>
+                                    <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
                                     @if (checkDiscount($product))
                                         <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                             <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -196,13 +194,11 @@
                                                 <i class="far fa-star"></i>
                                             @endif
                                         @endfor
-
                                         <span>({{ count($product->reviews) }} review)</span>
-
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
                                     <div class="wsus_pro_hot_deals">
-                                        <h5>Thời gian hết ưu đãi : </h5>
+                                        <h5>offer ending time : </h5>
                                         <div class="simply-countdown simply-countdown-one"></div>
                                     </div>
                                     {{-- <form class="shopping-cart-form" action="">
@@ -231,17 +227,13 @@
                                             </div>
                                         </div>
                                         <div class="wsus__quentity">
-
                                             <h5>quantity :</h5>
-
                                             <div class="select_number">
                                                 <input class="number_area" name="quantity" type="text"
                                                     min="1" max="100" value="1" />
                                             </div>
                                         </div>
                                         <ul class="wsus__button_area">
-
-
                                             <li><button class="add_cart" type="submit">add to cart</button></li>
                                             <li><a class="buy_now" href="#">buy now</a></li>
                                             <li><a href="#"><i class="fal fa-heart"></i></a></li>
@@ -267,7 +259,6 @@
                                         </ul>
                                     </form> --}}
                                     <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
-
                                 </div>
                             </div>
                         </div>
@@ -281,7 +272,6 @@
 <!--==========================
                                                                       PRODUCT MODAL VIEW END
                                                                     ===========================-->
-
 @push('scripts')
     <script>
         $(document).ready(function() {
