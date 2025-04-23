@@ -1,18 +1,17 @@
 @extends('frontend.layouts.master')
 @section('content')
-
     <!--============================
-         BREADCRUMB START
-    ==============================-->
+                                                             BREADCRUMB START
+                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>login / register</h4>
+                        <h4>Đăng nhập / Đăng ký</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">login / register</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li><a href="#">Đăng nhập / Đăng ký</a></li>
                         </ul>
                     </div>
                 </div>
@@ -20,13 +19,13 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+                                                            BREADCRUMB END
+                                                        ==============================-->
 
 
     <!--============================
-       LOGIN/REGISTER PAGE START
-    ==============================-->
+                                                           LOGIN/REGISTER PAGE START
+                                                        ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -36,12 +35,12 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-home-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-homes" type="button" role="tab" aria-controls="pills-homes"
-                                    aria-selected="true">login</button>
+                                    aria-selected="true">Đăng nhập</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-profile-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-profiles" type="button" role="tab"
-                                    aria-controls="pills-profiles" aria-selected="true">signup</button>
+                                    aria-controls="pills-profiles" aria-selected="true">Đăng ký</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent2">
@@ -53,7 +52,8 @@
                                         <!-- Email Address -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="name_email@gmail.com">
+                                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                                placeholder="name_email@gmail.com">
                                         </div>
                                         <!-- Password -->
                                         <div class="wsus__login_input">
@@ -65,14 +65,15 @@
                                             <div class="form-check form-switch">
                                                 <input name="remember" class="form-check-input" type="checkbox"
                                                     id="flexSwitchCheckDefault">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault">Remember
-                                                    me</label>
+                                                <label class="form-check-label" for="flexSwitchCheckDefault">Lưu đăng
+                                                    nhập</label>
                                             </div>
                                             @if (Route::has('password.request'))
-                                                <a class="forget_p" href="{{ route('password.request') }}">forget password ?</a>
+                                                <a class="forget_p" href="{{ route('password.request') }}">Quên mật khẩu
+                                                    ?</a>
                                             @endif
                                         </div>
-                                        <button class="common_btn" type="submit">login</button>
+                                        <button class="common_btn" type="submit">Đăng nhập</button>
                                         {{-- <p class="social_text">Sign in with social account</p>
                                         <ul class="wsus__login_link">
                                             <li><a href="#"><i class="fab fa-google"></i></a></li>
@@ -88,27 +89,30 @@
                                 <div class="wsus__login">
                                     <form method="POST" action="{{ route('register') }}">
                                         @csrf
-                                         <!-- Name -->
+                                        <!-- Name -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="text" id="name" name="name" value="{{old('name')}}" placeholder="Name">
+                                            <input type="text" id="name" name="name" value="{{ old('name') }}"
+                                                placeholder="Tên">
                                         </div>
-                                         <!-- Email Address -->
+                                        <!-- Email Address -->
                                         <div class="wsus__login_input">
                                             <i class="far fa-envelope"></i>
-                                            <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="Email">
+                                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                                placeholder="Email">
                                         </div>
                                         <!-- Password -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input id="password" type="password" name="password" placeholder="Password">
+                                            <input id="password" type="password" name="password" placeholder="Mật khẩu">
                                         </div>
-                                         <!-- Confirm Password -->
+                                        <!-- Confirm Password -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password">
+                                            <input id="password_confirmation" type="password" name="password_confirmation"
+                                                placeholder="Xác nhận mật khẩu">
                                         </div>
-                                        <button class="common_btn mt-3" type="submit">signup</button>
+                                        <button class="common_btn mt-3" type="submit">Đăng ký</button>
                                     </form>
                                 </div>
                             </div>
@@ -119,6 +123,6 @@
         </div>
     </section>
     <!--============================
-       LOGIN/REGISTER PAGE END
-    ==============================-->
+                                                           LOGIN/REGISTER PAGE END
+                                                        ==============================-->
 @endsection
