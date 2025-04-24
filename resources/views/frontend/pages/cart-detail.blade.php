@@ -7,10 +7,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>cart View</h4>
+                        <h4>Xem giỏ hàng </h4>
                         <ul>
-                            <li><a href="{{ route('home') }}">home</a></li>
-                            <li><a href="javascrip:;">cart view</a></li>
+                            <li><a href="{{ route('home') }}">trang chủ</a></li>
+                            <li><a href="javascrip:;">Xem giỏ hàng </a></li>
                         </ul>
                     </div>
                 </div>

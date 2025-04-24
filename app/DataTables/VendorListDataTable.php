@@ -1,4 +1,4 @@
-<?php
+->title('Khách hàng')<?php
 
 namespace App\DataTables;
 
@@ -80,12 +80,12 @@ class VendorListDataTable extends DataTable
     {
         return [
             
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('shop_name'),
-            Column::make('role'),
-            Column::make('status'),
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Khách hàng'),
+            Column::make('email')->title('Email'),
+            Column::make('shop_name')->title('Tên cửa hàng'),
+            Column::make('role')->title('Vai trò'),
+            Column::make('status')->title('Trạng thái'),
             
         ];
     }

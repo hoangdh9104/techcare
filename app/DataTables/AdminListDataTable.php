@@ -86,12 +86,12 @@ class AdminListDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('role'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên'),
+            Column::make('email')->title('Email'),
+            Column::make('role')->title('Quyền'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
             ->exportable(false)
             ->printable(false)
             ->width(60)

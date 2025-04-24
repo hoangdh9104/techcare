@@ -48,17 +48,19 @@
 
 <body>
 
-
+     <!-- Header cao 70px -->
+        @include('frontend.layouts.header')
+    </header>
     <!--=============================
     DASHBOARD MENU START
   ==============================-->
-    <div class="wsus__dashboard_menu">
+    {{-- <div class="wsus__dashboard_menu">
         <div class="wsusd__dashboard_user">
             <img src="{{ Auth::user()->image ? asset(Auth::user()->image) : asset('backend/assets/img/avatar/avatar-1.png') }}"
                 class="rounded-circle mr-1" alt="img" class="img-fluid">
             <p>{{ Auth::user()->name }}</p>
         </div>
-    </div>
+    </div> --}}
     <!--=============================
     DASHBOARD MENU END
   ==============================-->
@@ -82,7 +84,7 @@
     <!--============================
     SCROLL BUTTON  END
   ==============================-->
-
+    @include('frontend.layouts.footer')
 
     <!--jquery library js-->
     <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>

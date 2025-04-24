@@ -61,6 +61,7 @@
 
                                         <span>({{ count($product->reviews) }} đánh giá)</span>
 
+
                                     </p>
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>
@@ -151,6 +152,7 @@
 </section>
 
 @foreach ($typeBaseProducts as $key => $products)
+
     @foreach ($products as $product)
         <section class="product_popup_modal">
             <div class="modal fade" id="exampleModal-{{ $product->id }}" tabindex="-1" aria-hidden="true">
@@ -232,6 +234,7 @@
                                         <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

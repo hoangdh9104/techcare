@@ -4,7 +4,7 @@
             <div class="col-xl-12">
                 <div class="offer_time" style="background: url({{ asset('frontend/images/flash_sell_bg.jpg') }})">
                     <div class="wsus__flash_coundown">
-                        <span class=" end_text">Flash Sale</span>
+                        <span class=" end_text">Khuyến mãi</span>
                         <div class="simply-countdown simply-countdown-one"></div>
                         <a class="common_btn" href="{{ route('flash-sale') }}">Xem tất cả <i
                                 class="fas fa-caret-right"></i></a>
@@ -52,6 +52,27 @@
                             <a class="wsus__category" href="#">{{ $product->category->name }}</a>
 
                             <p class="wsus__pro_rating">
+
+                              {{-- @php
+                                $avgRating = $product->reviews()->avg('rating');
+                                $fullRating = round($avgRating);
+                              @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullRating)
+                                <i class="fas fa-star"></i>
+                                @else
+                                <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+
+
+                              
+                                <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span> --}}
+
+                                {{-- <span>({{count($product->reviews)}} review)</span> --}}
+
+
                                 @php
                                     $avgRating = $product->reviews()->avg('rating');
                                     $fullRating = round($avgRating);

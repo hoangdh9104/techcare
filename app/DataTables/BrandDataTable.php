@@ -95,12 +95,12 @@ class BrandDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('logo')->width(200),
-            Column::make('name')->width(300),
-            Column::make('is_featured'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('logo')->title('logo')->width(200),
+            Column::make('name')->title('Tên')->width(300),
+            Column::make('is_featured')->title('Nổi bật'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)
