@@ -24,19 +24,31 @@ class CustomerListDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('status', function ($query) {
-            if ($query->status == 'active') {
-                $button = '<label class="custom-switch mt-2">
-                            <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
-                            <span class="custom-switch-indicator"></span>
-                        </label>';
-            } else {
-                $button = '<label class="custom-switch mt-2">
-                            <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
-                            <span class="custom-switch-indicator"></span>
-                        </label>';
-            }return $button;
+            // if ($query->status == 'active') {
+            //     $button = '<label class="custom-switch mt-2">
+            //                 <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
+            //                 <span class="custom-switch-indicator"></span>
+            //             </label>';
+            // } else {
+            //     $button = '<label class="custom-switch mt-2">
+            //                 <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
+            //                 <span class="custom-switch-indicator"></span>
+            //             </label>';
+            // }return $button;
+            switch ($query->status) {
+                case 'active':
+                    return "<span class='badge bg-success'>Đang hoạt động</span>";
+                case 'inactive':
+                    return "<span class='badge bg-danger'>Ngừng hoạt động</span>";
+                default:
+                    return "<span class='badge bg-secondary'>Không xác định</span>";
+            }
         })
-        ->rawColumns(['status'])
+        ->addColumn('action', function ($query) {
+            $showBtn = "<a href='" . route('admin.customer.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+            return $showBtn;
+        })
+        ->rawColumns(['status','action'])
             ->setRowId('id');
     }
 
@@ -81,7 +93,13 @@ class CustomerListDataTable extends DataTable
             Column::make('id')->title('STT'),
             Column::make('name')->title('Khách hàng'),
             Column::make('email')->title('Email'),
-            Column::make('status')->title('Trạng thái'),
+            Column::make('status')->title('Trạng thái khách hàng'),
+            Column::computed('action')
+                ->title('Thao tác')
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
 
         ];
     }
