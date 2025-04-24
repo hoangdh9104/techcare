@@ -6706,7 +6706,7 @@ WISHLIST PAGE START
   color: #fff;
 }
 
-.dashboard_sidebar {
+/* .dashboard_sidebar {
   width: 15%;
   height: 100vh;
   background: #0b2c3d;
@@ -6714,7 +6714,52 @@ WISHLIST PAGE START
   top: 0;
   left: 0;
   z-index: 9;
+} */
+.dashboard_topnav {
+  background-color: white;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  margin-top: -40px; 
+  margin-left: -20px;
+  width: 1530px;
+  margin-bottom: 20px;
 }
+
+.dashboard_nav_links {
+  list-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard_nav_links li {
+  margin: 0 15px;
+  white-space: nowrap;
+}
+
+.dashboard_nav_links a {
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none !important;  /* Bỏ gạch chân */
+  display: inline-block;
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.dashboard_nav_links a:hover,
+.dashboard_nav_links a.active {
+  color: #0079c1;
+  border-bottom: 2px solid #0079c1;
+  text-decoration: none !important;  /* Bỏ underline cả khi hover/active */
+}
+
+
 
 .dash_logo {
   width: 100%;
@@ -7244,6 +7289,7 @@ WISHLIST PAGE START
   border: 1px solid #eee;
   overflow: hidden;
   position: relative;
+  height: 200px;
 }
 
 .wsus__dash_pro_img input {

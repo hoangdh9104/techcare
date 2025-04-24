@@ -127,6 +127,21 @@ class UserOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+
+            // Column::make('id')->title('STT'),
+            // Column::make('invoice_id')->title('Id hóa đơn'),
+            // Column::make('customer')->title('Khách hàng'),
+            // Column::make('date')->title('Ngày đặt hàng'),
+            // Column::make('product_qty')->title('Số lượng sản phẩm'),
+            // Column::make('amount')->title('Số tiền'),
+            // Column::make('order_status')->title('Trạng thái đơn hàng'),
+            // Column::make('payment_status')->title('Trạng thái thanh toán'),
+
+            // Column::make('payment_method')->title('Phương thức thanh toán'),
+
+
+            // Column::computed('action')->title('Hành động')
+
             Column::make('id')
                 ->title('ID')
                 ->width(10), // Set fixed width for better alignment
@@ -155,6 +170,7 @@ class UserOrderDataTable extends DataTable
                 ->title('Phương thức thanh toán')
                 ->width(150),
             Column::computed('action')
+
                 ->exportable(false)
                 ->printable(false)
                 ->width(250) // Adjust width of action column

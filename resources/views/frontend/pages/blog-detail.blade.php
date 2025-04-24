@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || About
+{{$settings->site_name}} || Giới thiệu
 @endsection
 
 @section('content')
@@ -10,10 +10,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>blog dtails</h4>
+                    <h4>Chi tiết blog</h4>
                     <ul>
                         <li><a href="#">blog</a></li>
-                        <li><a href="#">blog details</a></li>
+                        <li><a href="#">Chi tiết blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                         {!!$blog->description!!}
                     </div>
                     <div class="wsus__share_blog">
-                        <p>share:</p>
+                        <p>Chia sẻ:</p>
                         <ul>
                             <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}
                                 "><i class="fab fa-facebook-f"></i></a></li>
@@ -60,7 +60,7 @@
                     <div class="wsus__related_post">
                         <div class="row">
                             <div class="col-xl-12">
-                                <h5>More Post</h5>
+                                <h5>Thêm bài đăng</h5>
                             </div>
                         </div>
                         <div class="row blog_det_slider">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="wsus__comment_area">
-                        <h4>comment <span>{{count($comments)}}</span></h4>
+                        <h4>Bình luận <span>{{count($comments)}}</span></h4>
                         @foreach ($comments as $comment)
                         <div class="wsus__main_comment">
                             <div class="wsus__comment_img">
@@ -97,7 +97,7 @@
                         </div>    
                         @endforeach
                         @if (count($comments) == 0 )
-                        <i>Be a first one to comment</i>
+                        <i>Hãy là người đầu tiên bình luận</i>
                         @endif
                         
                         <div id="pagination">
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="wsus__post_comment">
-                        <h4>post a comment</h4>
+                        <h4>Đăng bình luận</h4>
                         {{-- @if (auth()->check()) --}}
 
                         <form action="{{route('blog-comment')}}" method="POST">
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             
-                            <button class="common_btn" type="submit">Post Comment</button>
+                            <button class="common_btn" type="submit">Đăng bình luận</button>
                         </form>
                         {{-- @else
                         <p>Please login in to comment on post !</p>
@@ -136,34 +136,34 @@
             <div class="col-xxl-3 col-xl-4 col-lg-4">
                 <div class="wsus__blog_sidebar" id="sticky_sidebar">
                     <div class="wsus__blog_search">
-                        <h4>search</h4>
+                        <h4>Tìm kiếm</h4>
                         <form>
                             <input type="text" placeholder="Search">
                             <button type="submit" class="common_btn"><i class="far fa-search"></i></button>
                         </form>
                     </div>
                     <div class="wsus__blog_category">
-                        <h4>Categories</h4>
+                        <h4>Thể loại</h4>
                         <ul>
-                            <li><a href="#">Clothes</a></li>
-                            <li><a href="#">Entertainment</a></li>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Technology</a></li>
-                            <li><a href="#">Shoes</a></li>
-                            <li><a href="#">electronic</a></li>
-                            <li><a href="#">Others</a></li>
+                            <li><a href="#">Quần áo</a></li>
+                            <li><a href="#">Giải trí</a></li>
+                            <li><a href="#">Thời trang</a></li>
+                            <li><a href="#">Phong cách sống</a></li>
+                            <li><a href="#">Công nghệ</a></li>
+                            <li><a href="#">Giày dép</a></li>
+                            <li><a href="#">Điện tử</a></li>
+                            <li><a href="#">Khác</a></li>
                         </ul>
                     </div>
                     <div class="wsus__blog_post">
-                        <h4>Popular Post</h4>
+                        <h4>Bài đăng phổ biến</h4>
                         <div class="wsus__blog_post_single">
                             <a href="#" class="wsus__blog_post_img">
                                 <img src="images/location_1.jpg" alt="blog" class="imgofluid w-100">
                             </a>
                             <div class="wsus__blog_post_text">
-                                <a href="#">One Thing Separates Creators</a>
-                                <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                                <a href="#">Một điều phân biệt người sáng tạo</a>
+                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
                             </div>
                         </div>
                         <div class="wsus__blog_post_single">
@@ -171,8 +171,8 @@
                                 <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
                             </a>
                             <div class="wsus__blog_post_text">
-                                <a href="#">One Thing Separates Creators</a>
-                                <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                                <a href="#">Một điều phân biệt người sáng tạo</a>
+                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
                             </div>
                         </div>
                         <div class="wsus__blog_post_single">
@@ -180,8 +180,8 @@
                                 <img src="images/location_3.jpg" alt="blog" class="imgofluid w-100">
                             </a>
                             <div class="wsus__blog_post_text">
-                                <a href="#">One Thing Separates Creators</a>
-                                <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                                <a href="#">Một điều phân biệt người sáng tạo</a>
+                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
                             </div>
                         </div>
                         <div class="wsus__blog_post_single">
@@ -189,8 +189,8 @@
                                 <img src="images/location_4.jpg" alt="blog" class="imgofluid w-100">
                             </a>
                             <div class="wsus__blog_post_text">
-                                <a href="#">One Thing Separates Creators</a>
-                                <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                                <a href="#">Một điều phân biệt người sáng tạo</a>
+                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
                             </div>
                         </div>
                         <div class="wsus__blog_post_single">
@@ -198,23 +198,23 @@
                                 <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
                             </a>
                             <div class="wsus__blog_post_text">
-                                <a href="#">One Thing Separates Creators</a>
-                                <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                                <a href="#">Một điều phân biệt người sáng tạo</a>
+                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
                             </div>
                         </div>
 
                     </div>
                     <div class="wsus__popular_tag">
-                        <h4>popular tags</h4>
+                        <h4>Thẻ phổ biến</h4>
                         <ul>
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Style</a></li>
-                            <li><a href="#">Travel</a></li>
-                            <li><a href="#">Women</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Hobbies</a></li>
-                            <li><a href="#">Shopping</a></li>
-                            <li><a href="#">Photography</a></li>
+                            <li><a href="#">Thời trang</a></li>
+                            <li><a href="#">Phong cách</a></li>
+                            <li><a href="#">Du lịch</a></li>
+                            <li><a href="#">Phụ nữ</a></li>
+                            <li><a href="#">Đàn ông</a></li>
+                            <li><a href="#">Sở thích</a></li>
+                            <li><a href="#">Mua sắm</a></li>
+                            <li><a href="#">Nhiếp ảnh</a></li>
                         </ul>
                     </div>
                 </div>

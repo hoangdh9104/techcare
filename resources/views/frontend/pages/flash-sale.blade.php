@@ -11,10 +11,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>Flash Sale</h4>
+                        <h4>Giảm giá</h4>
                         <ul>
-                            <li><a href="{{ url('/') }}">Home</a></li>
-                            <li><a href="javascript:;">Flash Sale</a></li>
+                            <li><a href="{{ url('/') }}">Trang chủ</a></li>
+                            <li><a href="javascript:;">Giảm giá</a></li>
                         </ul>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
                                 class="img-fluid w-100">
                             <div class="wsus__offer_details_banner_text">
                                 <p>apple watch</p>
-                                <span>up 50% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
+                                <span>giảm giá 50%</span>
+                                <p>cho tất cả sản phẩm</p>
+                                <p><b>chỉ hôm nay</b></p>
                             </div>
                         </div>
                     </div>
@@ -50,10 +50,10 @@
                             <img src="{{ asset('frontend/images/offer_banner_3.png') }}" alt="offrt img"
                                 class="img-fluid w-100">
                             <div class="wsus__offer_details_banner_text">
-                                <p>xiaomi power bank</p>
-                                <span>up 37% 0ff</span>
-                                <p>for all poduct</p>
-                                <p><b>today only</b></p>
+                                <p>sạc dự phòng xiaomi</p>
+                                <span>giảm giá 37%</span>
+                                <p>cho tất cả sản phẩm</p>
+                                <p><b>chỉ hôm nay</b></p>
                             </div>
                         </div>
                     </div>
@@ -62,9 +62,9 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="wsus__section_header rounded-0">
-                            <h3>FLash Sale</h3>
+                            <h3>Khuyến mãi</h3>
                             <div class="wsus__offer_countdown">
-                                <span class="end_text">ends time :</span>
+                                <span class="end_text">THời gian kết thúc :</span>
                                 <div class="simply-countdown simply-countdown-one"></div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                             @endif
                                         @endfor
 
-                                        <span>({{ count($product->reviews) }} review)</span>
+                                        <span>({{ count($product->reviews) }} Đánh giá sản  phẩm)</span>
 
                                     </p>
                                     <a class="wsus__pro_name"
@@ -150,7 +150,7 @@
                                             <input name="quantity" type="hidden" min="1" max="100"
                                                 value="1" />
                                         </div>
-                                        <button class="add_cart" type="submit">add to cart</button>
+                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
 
                                     </form>
                                 </div>
@@ -223,7 +223,7 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                        <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 sản phẩm)</p>
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                                 <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -245,12 +245,12 @@
                                                 @endif
                                             @endfor
 
-                                            <span>({{ count($product->reviews) }} review)</span>
+                                            <span>({{ count($product->reviews) }} Đánh giá sản phẩn)</span>
 
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
                                         <div class="wsus_pro_hot_deals">
-                                            <h5>offer ending time : </h5>
+                                            <h5>Thời gian kết thúc : </h5>
                                             <div class="simply-countdown simply-countdown-one"></div>
                                         </div>
                                         <form class="shopping-cart-form" action="">
@@ -277,7 +277,7 @@
                                                 </div>
                                             </div>
                                             <div class="wsus__quentity">
-                                                <h5>quantity :</h5>
+                                                <h5>Số lượng :</h5>
                                                 <div class="select_number">
                                                     <input class="number_area" name="quantity" type="text"
                                                         min="1" max="100" value="1" />
@@ -285,15 +285,15 @@
                                                 {{-- <h3>$50.00</h3> --}}
                                             </div>
                                             <ul class="wsus__button_area">
-                                                <li><button class="add_cart" type="submit">add to cart</button></li>
-                                                <li><a class="buy_now" href="#">buy now</a></li>
+                                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button></li>
+                                                <li><a class="buy_now" href="#">Mua ngay</a></li>
                                                 <li><a href="#" class="add_to_wishlist"
                                                         data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
                                                 </li>
                                                 {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                             </ul>
                                         </form>
-                                        <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                                        <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                     </div>
                                 </div>
                             </div>

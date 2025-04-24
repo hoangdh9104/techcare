@@ -111,6 +111,8 @@ class DeliveredOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+
+
             Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
             Column::make('customer')->title('Khách hàng'),
@@ -122,6 +124,7 @@ class DeliveredOrderDataTable extends DataTable
             Column::make('payment_method')->title('Phương thức thanh toán'),
             Column::computed('action')
                 ->title('Thao tác')
+
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

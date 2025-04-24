@@ -24,21 +24,21 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group wsus__input">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" class="form-control" name="name"
                                             value="{{ $variant->name }}">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label for="inputState">Status</label>
+                                        <label for="inputState">Trạng thái</label>
                                         <select id="inputState" class="form-control" name="status">
-                                            <option {{ $variant->status == 1 ? 'selected' : '' }} value="1">Active
+                                            <option {{ $variant->status == 1 ? 'selected' : '' }} value="1">Hoạt động
                                             </option>
-                                            <option {{ $variant->status == 0 ? 'selected' : '' }} value="0">Inactive
+                                            <option {{ $variant->status == 0 ? 'selected' : '' }} value="0">Không hoạt động
                                             </option>
                                         </select>
                                     </div>
-                                    <button type="submmit" class="btn btn-primary">Update</button>
+                                    <button type="submmit" class="btn btn-primary">Cập nhật</button>
                                 </form>
                             </div>
                         </div>

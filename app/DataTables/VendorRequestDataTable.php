@@ -86,12 +86,12 @@ class VendorRequestDataTable extends DataTable
     {
         return [
             
-            Column::make('id'),
-            Column::make('user_name'),
-            Column::make('shop_name'),
-            Column::make('shop_email'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('user_name')->title('Tên người dùng'),
+            Column::make('shop_name')->title('Tên cửa hàng'),
+            Column::make('shop_email')->title('Email cửa hàng'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)

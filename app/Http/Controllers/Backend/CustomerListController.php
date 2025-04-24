@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\CustomerListDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\CustomerStatusHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,10 +21,22 @@ class CustomerListController extends Controller
     public function statusChange(Request $request)
     {
         $customer = User::findOrFail($request->id);
-        $customer->status = $request->status == 'true' ? 'active' : 'inactive';
+        $reason = $request->reason ?? '';
+        $customer->status = $request->status == 'active' ? 'active' : 'inactive';
         $customer->save();
 
-        return response(['message' => 'Status has been updated!']);
+        CustomerStatusHistory::create([
+            'user_id' => $customer->id,
+            'status' => $customer->status,
+            'reason' => $reason,
+            'updated_by' => auth()->user()->id,
+            'changed_at' => now(),
+        ]);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Trạng thái khách hàng được cập nhật thành công'
+        ]);
     }
 
     /**
@@ -47,7 +60,8 @@ class CustomerListController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = User::findOrFail($id);
+        return view('admin.customer-list.show', compact('customer'));
     }
 
     /**

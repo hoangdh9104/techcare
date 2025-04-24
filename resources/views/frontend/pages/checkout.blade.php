@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{ $settings->site_name }} || Checkout
+    {{ $settings->site_name }} || Thanh toán
 @endsection
 @section('content')
     <!--============================
@@ -122,7 +122,7 @@
                             <input type="hidden" name="shipping_method_id" id="shipping_method_id" value="">
                             <input type="hidden" name="shipping_address_id" id="shipping_address_id" value="">
                         </form>
-                        <a href="" id="submitCheckoutForm" class="common_btn">Place Order</a>
+                        <a href="" id="submitCheckoutForm" class="common_btn">Đặt hàng</a>
                     </div>
                 </div>
             </div>

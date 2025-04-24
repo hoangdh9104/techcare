@@ -99,6 +99,7 @@
 
                     <ul class="wsus__menu_item">
 
+
                         <li class="{{ setActive(['home']) }}"><a class="#" href="{{ route('home') }}">Trang chủ</a>
                         </li>
                         {{-- <li class="{{ setActive(['vendor.index']) }}"><a href="{{ route('vendor.index') }}">Nhà cung
@@ -113,13 +114,16 @@
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
                         <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li>
+
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
                                 <li><a href="{{ route('user.dashboard') }}">Tài khoản của tôi</a></li>
-                            @elseif (auth()->user()->role === 'vendor')
-                                <li><a href="{{ route('vendor.dashboard') }}">Bảng điều khiển nhà cung cấp</a></li>
+                            {{-- @elseif (auth()->user()->role === 'vendor')
+
+                                <li><a href="{{ route('vendor.dashboard') }}">Bảng điều khiển nhà cung cấp</a></li> --}}
                             @elseif (auth()->user()->role === 'admin')
                                 <li><a href="{{ route('admin.dashboard') }}">Bảng điều khiển quản trị</a></li>
+
                             @endif
                         @else
                             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
@@ -169,11 +173,13 @@
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+
                 role="tab" aria-controls="pills-home" aria-selected="true">Danh mục</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                 role="tab" aria-controls="pills-profile" aria-selected="false">Menu chính</button>
+
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
@@ -215,13 +221,17 @@
                     <ul>
                         <li><a href="{{ route('home') }}">Trang chủ</a></li>
 
+
                         {{-- <li><a href="{{ route('vendor.index') }}">Nhà cung cấp</a></li> --}}
+
 
                         <li><a href="{{ route('blog') }}">Blog</a></li>
 
                         <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li>
 
+
                         <li><a href="{{ route('flash-sale') }}">Khuyến mãi đặc biệt</a></li>
+
 
                     </ul>
                 </div>

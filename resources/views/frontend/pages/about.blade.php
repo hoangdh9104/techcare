@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || About
+{{$settings->site_name}} || Giới thiệu
 @endsection
 
 @section('content')
@@ -13,10 +13,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>About</h4>
+                        <h4>Giới thiệu</h4>
                         <ul>
-                            <li><a href="{{route('home')}}">home</a></li>
-                            <li><a href="javascript:;">About</a></li>
+                            <li><a href="{{route('home')}}">Trang chủ</a></li>
+                            <li><a href="javascript:;">Giới thiệu</a></li>
                         </ul>
                     </div>
                 </div>
