@@ -163,7 +163,7 @@
 
                 $.ajax({
                     method: 'POST',
-                    url: '{{ route('user.send-message') }}',
+                    url: '{{ route("admin.send-message") }}',
                     data: formData,
                     beforeSend: function() {
                         $('.send-button').prop('disabled', true);
