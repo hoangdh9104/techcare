@@ -37,7 +37,7 @@ class MessageController extends Controller
         $message->save();
 
         // Gửi sự kiện đến client
-        broadcast(new MessageEvent($message->message, $message->receiver_id));
+        broadcast(new MessageEvent($message->message, $message->receiver_id, $message->created_at));
 
         return response(['status' => 'success', 'message' => 'Message sent successfully']);
     }

@@ -50,6 +50,7 @@
                                 <input type="text" class="form-control message-box" placeholder="Type a message"
                                     name="message">
                                 <input type="hidden" name="receiver_id" id="receiver_id" value="">
+                               
                                 <button class="btn btn-primary">
                                     <i class="far fa-paper-plane"></i>
                                 </button>
@@ -74,8 +75,8 @@
                 hour: '2-digit',
                 minute: '2-digit',
             }
-            const formatedDateTime = new Intl.DateTimeFormat('en-US', options).format(new Date(dateTimeString));
-            return formatedDateTime;
+            const formatedDateTime = new Intl.DateTimeFormat('vi-VN', options).format(new Date(dateTimeString));
+            return formatedDateTime.replace('tháng ', ''); 
         }
 
         function scrollToBottom() {
