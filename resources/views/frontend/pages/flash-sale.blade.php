@@ -150,8 +150,6 @@
                                             <input name="quantity" type="hidden" min="1" max="100"
                                                 value="1" />
                                         </div>
-                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
-
                                     </form>
                                 </div>
                             </div>
