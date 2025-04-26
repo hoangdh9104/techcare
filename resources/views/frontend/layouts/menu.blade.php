@@ -102,12 +102,9 @@
 
                         <li class="{{ setActive(['home']) }}"><a class="#" href="{{ route('home') }}">Trang chủ</a>
                         </li>
-                        {{-- <li class="{{ setActive(['vendor.index']) }}"><a href="{{ route('vendor.index') }}">Nhà cung
-                                cấp</a></li> --}}
-                        <li><a class="#" href="#">Khuyến mãi đặc biệt</a></li>
-                        <li class="{{ setActive(['blog']) }}"><a class="#" href="{{ route('blog') }}">Blog</a>
+                        <li class="{{ setActive(['flash-sale']) }}"><a class="#" href="{{ route('flash-sale') }}">Khuyến mãi đặc biệt</a></li>
+                        <li class="{{ setActive(['blog']) }}"><a class="#" href="{{ route('blog') }}">Bài viết</a>
                         </li>
-                        <li><a class="#" href="#">Giới thiệu</a></li>
                         <li class="{{ setActive(['contact']) }}"><a class="#" href="{{ route('contact') }}">Liên
                                 hệ</a></li>
 
@@ -225,7 +222,7 @@
                         {{-- <li><a href="{{ route('vendor.index') }}">Nhà cung cấp</a></li> --}}
 
 
-                        <li><a href="{{ route('blog') }}">Blog</a></li>
+                        <li><a href="{{ route('blog') }}">Bài viết</a></li>
 
                         <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li>
 

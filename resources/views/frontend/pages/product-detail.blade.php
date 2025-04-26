@@ -220,9 +220,8 @@
                                 <li><button id="add-to-cart-btn" class="add_cart" type="submit">Thêm vào giỏ
                                         hàng</button></li>
                                 {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
-
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
+                                {{-- <li><a href="#"><i class="fal fa-heart"></i></a></li> --}}
+                                {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 <li>
                                     <button type="button"
                                         style="border: 1px solid gray;
@@ -235,7 +234,7 @@
 
                                 </li>
 
-                                <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%"
+                                <li><a style="border:1px solid gray; padding: 0px 11px; border-radius:100%"
                                         href="javascrip:;" class="add_to_wishlist" data-id="{{ $product->id }}"><i
                                             class="fal fa-heart"></i></a></li>
 

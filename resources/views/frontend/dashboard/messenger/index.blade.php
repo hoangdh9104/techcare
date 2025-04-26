@@ -47,28 +47,6 @@
                                                         </div>
                                                         <div class="wsus__chat_area_body">
 
-                                                            {{-- <div class="wsus__chat_single single_chat_2">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Hello Paul</p>
-                                                                    <span>15 August, 2022, 12:57 PM</span>
-                                                                </div>
-                                                            </div> --}}
-
-                                                            {{-- <div class="wsus__chat_single">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Hi Joe, Thanks for your contact</p>
-                                                                    <span>15 August, 2022, 12:58 PM</span>
-                                                                </div>
-                                                            </div> --}}
-
                                                         </div>
                                                         <div class="wsus__chat_area_footer"
                                                             style="margin-top: 50px;
@@ -116,8 +94,8 @@
                 hour: '2-digit',
                 minute: '2-digit',
             }
-            const formatedDateTime = new Intl.DateTimeFormat('en-US', options).format(new Date(dateTimeString));
-            return formatedDateTime;
+            const formatedDateTime = new Intl.DateTimeFormat('vi-VN', options).format(new Date(dateTimeString));
+            return formatedDateTime.replace('tháng ', '');
         }
 
         function scrollToBottom() {
@@ -125,7 +103,7 @@
         }
 
         $(document).ready(function() {
-            $('.chat-user-profile').on('click', function(){
+            $('.chat-user-profile').on('click', function() {
 
                 let receiverId = $(this).data('id');
                 let senderImage = $(this).find('img').attr('src'); // Lấy ảnh người dùng
@@ -172,7 +150,7 @@
                             </div>
                             `
                             }
-                            
+
                             mainChatInbox.append(message);
                         })
 
