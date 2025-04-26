@@ -7,7 +7,8 @@
     <a href="{{route('shipper.dashboard')}}" class="dash_logo"><img src="{{ asset($logoSetting->logo) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
       {{-- <li><a class="" href="dsahboard.html"><i class="fas fa-tachometer"></i>Dashboard</a></li> --}}
-      <li><a class="" href="{{ route('shipper.orders.index') }}"><i class="fa-solid fa-bag-shopping"></i>Order</a></li>
+      <li><a class="{{ setActive(['shipper.orders.index']) }}" href="{{ route('shipper.orders.index') }}"><i class="fa-solid fa-bag-shopping"></i>All Order</a></li>
+      {{-- <li><a class="" href="{{ route('shipper.orders.index') }}"><i class="fa-solid fa-bag-shopping"></i>Order</a></li> --}}
       <li><a href="{{ route('shipper.profile.index') }}"><i class="far fa-user"></i> My Profile</a></li>
       <form method="POST" action="{{ route('logout') }}">
         @csrf

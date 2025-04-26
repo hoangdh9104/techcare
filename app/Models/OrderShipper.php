@@ -24,5 +24,14 @@ class OrderShipper extends Model
     // {
     //     return $this->hasMany(OrderItem::class, 'order_shipper_id');
     // }
+    public function shipper()
+    {
+        return $this->belongsTo(User::class, 'shipper_id');
+    }
 
+    public function statusHistories()
+    {
+        return $this->hasMany(OrderStatusHistory::class, 'order_id', 'order_id')
+            ->with(['user', 'shipper']);
+    }
 }

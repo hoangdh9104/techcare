@@ -27,11 +27,11 @@
         <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"><i
                     class="fal fa-gift-card"></i> Addresses</a></li>
 
-        @if (auth()->user()->role !== 'vendor')
+        {{-- @if (auth()->user()->role !== 'vendor')
             <li><a class="{{ setActive(['user.vendor-request.*']) }}"
                     href="{{ route('user.vendor-request.index') }}"><i class="far fa-user"></i> Request to be a
                     vendor</a></li>
-        @endif
+        @endif --}}
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf

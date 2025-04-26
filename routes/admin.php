@@ -10,9 +10,7 @@ use App\Http\Controllers\Backend\AdminListController;
 
 use App\Http\Controllers\Backend\AdminReviewController;
 
-use App\Http\Controllers\Backend\AdminVendorProfileControlle;
 
-use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BlogController;
@@ -32,6 +30,7 @@ use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
+use App\Http\Controllers\Backend\ProductVariantCreateController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SellerProductController;
@@ -40,11 +39,8 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\TermsAndConditionController;
-use App\Http\Controllers\Backend\VendorConditionController;
-use App\Http\Controllers\Backend\VendorListController;
-use App\Http\Controllers\Backend\VendorRequestController;
-use App\Http\Controllers\Backend\ProductVariantCreateController;
-use App\Models\VendorCondition;
+
+
 
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VnpaySettingController;
@@ -87,8 +83,6 @@ Route::resource('brand', BrandController::class);
 Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
 Route::resource('coupons', CouponController::class);
 
-/* Vendor profile route */
-Route::resource('vendor-profile', AdminVendorProfileController::class);
 
 /* Product route */
 Route::put('product/change-status', [ProductController::class, 'changeStatus'])->name('product.changeStatus');
@@ -190,10 +184,6 @@ Route::resource('order', OrderController::class);
 /** Order Transaction route */
 Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
 
-// vendor request
-Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
-Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
-Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
 
 //customer list
 Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
@@ -207,12 +197,6 @@ Route::delete('admin-list/{id}', [AdminListController::class, 'destroy'])->name(
 Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
 Route::post('manage-user', [ManageUserController::class, 'create'])->name('manage-user.create');
 
-Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');
-Route::put('vendor-list/status-change', [VendorListController::class, 'statusChange'])->name('vendor-list.status-change');
-
-
-Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
-Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
 
 //about route
 Route::get('about', [AbountController::class, 'index'])->name('about.index');

@@ -36,14 +36,37 @@ class OrderShipperDataTable extends DataTable
     //         ->setRowId('id');
     // }
     public function dataTable(QueryBuilder $query): EloquentDataTable
-{
-    return (new EloquentDataTable($query))
-        ->addColumn('action_shipper', function ($order) {
-            return '<a href="' . route('shipper.orders.show', $order->order_id) . '" class="btn btn-sm btn-info">Xem</a>';
-        })
-        ->rawColumns(['action_shipper']) // Cho phép hiển thị HTML
-        ->setRowId('id');
-}
+    {
+        return (new EloquentDataTable($query))
+            ->editColumn('status', function ($order) {
+                $label = match ($order->status) {
+                    'pending' => ['Chờ giao hàng', 'secondary'],
+                    'in_delivery' => ['Đang giao hàng', 'primary'],
+                    'delivered' => ['Đã giao hàng', 'success'],
+                    'cancelled' => ['Đã hủy', 'danger'],
+                    default => [ucfirst($order->status), 'light'],
+                };
+
+                return '<span class="badge bg-' . $label[1] . '">' . $label[0] . '</span>';
+            })
+            ->editColumn('created_at', function ($order) {
+                return \Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s');
+            })
+            ->editColumn('updated_at', function ($order) {
+                return \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y H:i:s');
+            })
+            ->editColumn('delivered_at', function ($order) {
+                return $order->delivered_at
+                    ? \Carbon\Carbon::parse($order->delivered_at)->format('d/m/Y H:i:s')
+                    : '';
+            })
+            ->addColumn('action_shipper', function ($order) {
+                return '<a href="' . route('shipper.orders.show', $order->order_id) . '" class="btn btn-sm btn-info">Xem</a>';
+            })
+            ->rawColumns(['status', 'action_shipper'])
+            ->setRowId('id');
+    }
+
 
 
 
@@ -62,7 +85,7 @@ class OrderShipperDataTable extends DataTable
                 'order_shippers.delivered_at',
                 'order_shippers.created_at',
                 'order_shippers.updated_at'
-            ]);
+            ])->orderBy('order_shippers.created_at', 'desc');
     }
 
 

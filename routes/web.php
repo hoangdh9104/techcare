@@ -3,7 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ShipperController;
-use App\Http\Controllers\Backend\VendorController;
+
 
 
 // use App\Http\Controllers\Frontend\FrontendProductController;
@@ -28,8 +28,8 @@ use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProductTrackController;
-use App\Http\Controllers\Frontend\UserVendorReqeustController;
-use App\Http\Controllers\Frontend\UserVendorRequestController;
+
+
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\VNPayController;
@@ -111,9 +111,6 @@ Route::post('blog-comment', [BlogController::class, 'comment'])->name('blog-comm
 
 Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 
-//vendor page routes
-Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
-Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
 //about page route
 Route::get('about', [PageController::class, 'about'])->name('about');
@@ -142,11 +139,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
-
-    //vendor request
-
-    Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
-    Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
 
     // Send message route
     Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');

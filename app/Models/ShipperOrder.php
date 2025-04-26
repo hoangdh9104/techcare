@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShipperOrder extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'changed_at' => 'datetime',
+    ];
 }

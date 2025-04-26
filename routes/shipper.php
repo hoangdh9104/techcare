@@ -18,4 +18,4 @@ Route::resource('orders', ShipperOrderController::class);
 Route::get('orders/{id}/pickup', [ShipperOrderController::class, 'pickUpOrder'])->name('orders.pickup');
 Route::get('orders/{id}/deliver', [ShipperOrderController::class, 'deliverOrder'])->name('orders.deliver');
 Route::get('orders/{id}', [ShipperOrderController::class, 'showOrder'])->name('orders.show');
-
+Route::post('orders/{id}/cancel', [ShipperOrderController::class, 'cancelOrder'])->name('orders.cancel');

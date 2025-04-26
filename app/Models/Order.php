@@ -37,12 +37,21 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
+    // public function statusHistories()
+    // {
+    //     return $this->hasMany(OrderStatusHistory::class, 'order_id')->orderBy('changed_at', 'desc');
+    // }
     public function statusHistories()
     {
-        return $this->hasMany(OrderStatusHistory::class, 'order_id')->orderBy('changed_at', 'desc');
+        return $this->hasMany(OrderStatusHistory::class, 'order_id')
+                   ->orderBy('changed_at', 'desc')
+                   ->with('user');
     }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'order_products'); // chỉ rõ tên bảng pivot
     }
+
 }
+
