@@ -94,19 +94,32 @@ class BrandDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id')
+                ->title('Mã'),
 
-            Column::make('id'),
-            Column::make('logo')->width(200),
-            Column::make('name')->width(300),
-            Column::make('is_featured'),
-            Column::make('status'),
+            Column::make('logo')
+                ->title('Logo')
+                ->width(200),
+
+            Column::make('name')
+                ->title('Tên thương hiệu')
+                ->width(300),
+
+            Column::make('is_featured')
+                ->title('Nổi bật'),
+
+            Column::make('status')
+                ->title('Trạng thái'),
+
             Column::computed('action')
+                ->title('Thao tác')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)
                 ->addClass('text-center'),
         ];
     }
+
 
     /**
      * Get the filename for export.

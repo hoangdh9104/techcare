@@ -74,11 +74,18 @@ class CategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100),
-            Column::make('icon'),
-            Column::make('name'),
-            Column::make('status')->width(100),
+            Column::make('id')
+                ->title('Mã')
+                ->width(100),
+            Column::make('icon')
+                ->title('Biểu tượng'),
+            Column::make('name')
+                ->title('Tên danh mục'),
+            Column::make('status')
+                ->title('Trạng thái')
+                ->width(100),
             Column::computed('action')
+                ->title('Thao tác')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)
