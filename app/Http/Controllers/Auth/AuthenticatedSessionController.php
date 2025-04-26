@@ -28,12 +28,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        toastr('welcome to the dashboard page');
+        toastr('Chào mừng đến với trang bảng điều khiển');
         if ($request->user()->status === 'inactive') {
             Auth::guard('web')->logout();
             $request->session()->regenerateToken();
 
-            toastr('account has been banned form website please connect with support!', 'error', 'Account Banned!');
+            toastr('Tài khoản đã bị cấm khỏi trang web, vui lòng liên hệ với bộ phận hỗ trợ!', 'error', 'Tài khoản đã bị cấm!');
             return redirect('/');
         }
         // Check role tài khoản đăng nhập, nếu không sẽ trả về trang user

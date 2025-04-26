@@ -4,7 +4,7 @@
       <!-- Main Content -->
         <section class="section">
           <div class="section-header">
-            <h1>Coupons</h1>
+            <h1>Mã giảm giá</h1>
           </div>
 
           <div class="section-body">
@@ -13,9 +13,9 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>All Coupons</h4>
+                    <h4>Tất cả mã giảm giá</h4>
                     <div class="card-header-action">
-                        <a href="{{route('admin.coupons.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+                        <a href="{{route('admin.coupons.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tạo mới</a>
                     </div>
                   </div>
                   <div class="card-body">
@@ -57,5 +57,31 @@
 
             })
         })
+        document.addEventListener('DOMContentLoaded', function () {
+        // Lắng nghe sự kiện click vào nút xóa
+        document.querySelectorAll('.delete-item').forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn?',
+                    text: 'Bạn sẽ không thể hoàn tác hành động này!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Vâng, xóa nó!',
+                    cancelButtonText: 'Hủy bỏ'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Gửi yêu cầu xóa
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
     </script>
+    
 @endpush

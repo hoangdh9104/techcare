@@ -21,7 +21,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên</label>
                             <input type="text" class="form-control" name="name" value="{{$coupon->name}}">
                         </div>
 
@@ -32,25 +32,25 @@
 
 
                         <div class="form-group">
-                            <label>Quantity</label>
+                            <label>Số lượng</label>
                             <input type="text" class="form-control" name="quantity" value="{{$coupon->quantity}}">
                         </div>
 
                         <div class="form-group">
-                            <label>Max Use Per Person</label>
+                            <label>Sử dụng tối đa cho mỗi người</label>
                             <input type="text" class="form-control" name="max_use" value="{{$coupon->max_use}}">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Start Date</label>
+                                    <label>Ngày bắt đầu</label>
                                         <input type="text" class="form-control datepicker" name="start_date" value="{{$coupon->start_date}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>End Date</label>
+                                    <label>Ngày kết thúc</label>
                                     <input type="text" class="form-control datepicker" name="end_date" value="{{$coupon->end_date}}">
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="inputState">Discount Type</label>
+                                    <label for="inputState">Loại giảm giá</label>
                                     <select id="inputState" class="form-control sub-category" name="discount_type">
                                       <option {{$coupon->discount_type == 'percent' ? 'selected' : ''}} value="percent">Percentage (%)</option>
                                       <option {{$coupon->discount_type == 'amount' ? 'selected' : ''}} value="amount">Amount ({{$settings->currency_icon}})</option>
@@ -69,17 +69,17 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Descount Value</label>
+                                    <label>Giá trị giảm giá</label>
                                     <input type="text" class="form-control" name="discount" value="{{$coupon->discount}}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="inputState">Status</label>
+                            <label for="inputState">Trạng thái</label>
                             <select id="inputState" class="form-control" name="status">
-                              <option {{$coupon->status == 1 ? 'selected' : ''}} value="1">Active</option>
-                              <option {{$coupon->status == 0 ? 'selected' : ''}} value="0">Inactive</option>
+                              <option {{$coupon->status == 1 ? 'selected' : ''}} value="1">Đang hoạt động</option>
+                              <option {{$coupon->status == 0 ? 'selected' : ''}} value="0">Không hoạt động</option>
                             </select>
                         </div>
                         <button type="submmit" class="btn btn-primary">Update</button>
