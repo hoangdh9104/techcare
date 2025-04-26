@@ -35,14 +35,14 @@ class CartController extends Controller
                 continue;
             }
 
-                // Nếu có variant_combination_id thì kiểm tra biến thể
-                if (!empty($item->options['variant_combination_id'])) {
-                    $variant = ProductVariantCombination::find($item->options['variant_combination_id']);
+            // Nếu có variant_combination_id thì kiểm tra biến thể
+            if (!empty($item->options['variant_combination_id'])) {
+                $variant = ProductVariantCombination::find($item->options['variant_combination_id']);
 
-                    if (!$variant || $variant->status == 0) {
-                        Cart::remove($item->rowId);
-                        continue;
-                    }
+                if (!$variant || $variant->status == 0) {
+                    Cart::remove($item->rowId);
+                    continue;
+                }
 
                 // Nếu biến thể tồn tại → cập nhật thông tin mới
                 Cart::update($item->rowId, [
@@ -110,60 +110,60 @@ class CartController extends Controller
                 ->first(function ($combo) use ($selectedVariants) {
                     $comboJson = json_decode($combo->value, true);
 
-                        if (!$comboJson || count($comboJson) !== count($selectedVariants)) {
-                            return false;
-                        }
-
-                        foreach ($selectedVariants as $variantName => $values) {
-                            if (!isset($comboJson[$variantName])) return false;
-
-                            $comboValues = $comboJson[$variantName];
-
-                            sort($comboValues);
-                            sort($values);
-
-                            if ($comboValues !== $values) return false;
-                        }
-
-                        return true;
-                    });
-
-                if (!$combination || $combination->status == 0) {
-                    return response([
-                        'status' => 'error',
-                        'message' => 'Không có sẵn kết hợp biến thể đã chọn!'
-                    ]);
-                }
-
-                // Kiểm tra tồn kho tổ hợp biến thể
-                if ($combination->quantity < $request->quantity) {
-                    return response([
-                        'status' => 'error',
-                        'message' => 'Số lượng yêu cầu không có sẵn cho sự kết hợp biến thể này!'
-                    ]);
-                }
-                // Tính tổng số lượng sản phẩm này đã có trong giỏ
-                // Tính tổng số lượng sản phẩm này đã có trong giỏ
-                $currentQtyInCart = 0;
-
-                foreach ($cartContent as $cartItem) {
-                    if ($cartItem->options->variant_combination_id == $combination->id) {
-                        $currentQtyInCart += $cartItem->qty;
+                    if (!$comboJson || count($comboJson) !== count($selectedVariants)) {
+                        return false;
                     }
+
+                    foreach ($selectedVariants as $variantName => $values) {
+                        if (!isset($comboJson[$variantName])) return false;
+
+                        $comboValues = $comboJson[$variantName];
+
+                        sort($comboValues);
+                        sort($values);
+
+                        if ($comboValues !== $values) return false;
+                    }
+
+                    return true;
+                });
+
+            if (!$combination || $combination->status == 0) {
+                return response([
+                    'status' => 'error',
+                    'message' => 'Không có sẵn kết hợp biến thể đã chọn!'
+                ]);
+            }
+
+            // Kiểm tra tồn kho tổ hợp biến thể
+            if ($combination->quantity < $request->quantity) {
+                return response([
+                    'status' => 'error',
+                    'message' => 'Số lượng yêu cầu không có sẵn cho sự kết hợp biến thể này!'
+                ]);
+            }
+            // Tính tổng số lượng sản phẩm này đã có trong giỏ
+            // Tính tổng số lượng sản phẩm này đã có trong giỏ
+            $currentQtyInCart = 0;
+
+            foreach ($cartContent as $cartItem) {
+                if ($cartItem->options->variant_combination_id == $combination->id) {
+                    $currentQtyInCart += $cartItem->qty;
                 }
-                $totalQty = $currentQtyInCart + $requestedQty;
-                if ($combination->quantity == 0) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Sản phẩm đã hết hàng!'
-                    ]);
-                } elseif ($totalQty > $combination->quantity) {
-                    $availableQty = max($combination->quantity - $currentQtyInCart, 0);
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => "Bạn chỉ có thể thêm tối đa $availableQty sản phẩm nữa vào giỏ hàng."
-                    ]);
-                }
+            }
+            $totalQty = $currentQtyInCart + $requestedQty;
+            if ($combination->quantity == 0) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Sản phẩm đã hết hàng!'
+                ]);
+            } elseif ($totalQty > $combination->quantity) {
+                $availableQty = max($combination->quantity - $currentQtyInCart, 0);
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "Bạn chỉ có thể thêm tối đa $availableQty sản phẩm nữa vào giỏ hàng."
+                ]);
+            }
 
             // Tạo dữ liệu để thêm vào giỏ hàng với biến thể
             $cartData = [
@@ -329,95 +329,109 @@ class CartController extends Controller
         return response(['status' => 'success', 'message' => 'Đã xóa sản phẩm thành công']);
     }
 
-        /** Apply coupon */
-        public function applyCoupon(Request $request)
-        {
-            $couponCode = trim(strip_tags($request->coupon_code));
-
+    /** Apply coupon */
+    public function applyCoupon(Request $request)
+    {
+        $couponCode = trim(strip_tags($request->coupon_code));
+    
+        // Kiểm tra mã giảm giá có rỗng hay không
         if (!$couponCode) {
             return response()->json(['status' => 'error', 'message' => 'Vui lòng nhập mã giảm giá']);
         }
-
+    
+        // Tìm mã giảm giá trong database
         $coupon = Coupon::where('code', $couponCode)->where('status', 1)->first();
-
+    
         if (!$coupon) {
             return response()->json(['status' => 'error', 'message' => 'Mã giảm giá không hợp lệ!']);
         }
-
-            if (Carbon::parse($coupon->start_date)->isAfter(Carbon::today()) || Carbon::parse($coupon->end_date)->isBefore(Carbon::today())) {
-                return response()->json(['status' => 'error', 'message' => 'Mã giảm giá đã hết hạn hoặc chưa được kích hoạt!']);
-            }
-
+    
+        // Kiểm tra thời gian hiệu lực
+        if (Carbon::parse($coupon->start_date)->isAfter(Carbon::today()) || Carbon::parse($coupon->end_date)->isBefore(Carbon::today())) {
+            return response()->json(['status' => 'error', 'message' => 'Mã giảm giá đã hết hạn hoặc chưa được kích hoạt!']);
+        }
+    
+        // Kiểm tra số lần sử dụng
         if ($coupon->total_used >= $coupon->quantity) {
             return response()->json(['status' => 'error', 'message' => 'Mã giảm giá này đã được sử dụng hết!']);
         }
-
+    
         // Xóa session mã giảm giá cũ nếu có
-        if (Session::has('applied_coupon')) {
-            Session::forget('applied_coupon');
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
         }
-
-            $subTotal = $this->cartTotal();
-            $discount = 0;
-
+    
+        // Lưu thông tin mã giảm giá vào session
+        Session::put('coupon', [
+            'coupon_name' => $coupon->name,
+            'coupon_code' => $coupon->code,
+            'discount_type' => $coupon->discount_type,
+            'discount' => $coupon->discount
+        ]);
+    
+        // Tính toán giảm giá để trả về phản hồi
+        $subTotal = $this->cartTotal();
+        $discount = 0;
+    
         if ($coupon->discount_type === 'amount') {
             $discount = min($coupon->discount, $subTotal); // Đảm bảo giảm giá không vượt quá tổng tiền
         } elseif ($coupon->discount_type === 'percent') {
             $discount = ($subTotal * $coupon->discount / 100);
         }
-
-            if($coupon->discount_type === 'amount'){
-                Session::put('coupon', [
-                    'coupon_name' => $coupon->name,
-                    'coupon_code' => $coupon->code,
-                    'discount_type' => 'amount',
-                    'discount' => $coupon->discount
-                ]);
-            }elseif($coupon->discount_type === 'percent'){
-                Session::put('coupon', [
-                    'coupon_name' => $coupon->name,
-                    'coupon_code' => $coupon->code,
-                    'discount_type' => 'percent',
-                    'discount' => $coupon->discount
-                ]);
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Áp dụng mã giảm giá thành công!',
+            'discount' => $discount,
+            'discount_type' => $coupon->discount_type
+        ]);
+    }
+    
+    public function couponCalculation()
+    {
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+            $subTotal = $this->cartTotal();
+    
+            // Tính toán giảm giá dựa trên loại giảm giá
+            if ($coupon['discount_type'] === 'amount') {
+                $discount = min($coupon['discount'], $subTotal); // Đảm bảo không vượt quá tổng tiền
+                $total = max(0, $subTotal - $discount); // Đảm bảo tổng không âm
+            } elseif ($coupon['discount_type'] === 'percent') {
+                $discount = ($subTotal * $coupon['discount'] / 100);
+                $total = max(0, $subTotal - $discount); // Đảm bảo tổng không âm
             }
-
+    
             return response()->json([
                 'status' => 'success',
-                'message' => 'Áp dụng mã giảm giá thành công!',
-                'discount' => $discount,
-                'discount_type' => $coupon->discount_type
+                'cart_total' => $total,
+                'discount' => $discount
             ]);
         }
-        public function couponCalculation()
-        {
-            if (Session::has('applied_coupon')) {
-                $coupon = Session::get('applied_coupon');
-                $subTotal = $this->cartTotal();
-
-                $discount = $coupon['discount'];
-                $total = max(0, $subTotal - $discount); // Đảm bảo tổng tiền không âm
-
-                return response(['status' => 'success', 'cart_total' => $total, 'discount' => $discount]);
-            } else {
-                $total = $this->cartTotal();
-                return response(['status' => 'success', 'cart_total' => $total, 'discount' => 0]);
-            }
-        }
-
-        public function checkout()
-        {
-            $cartItems = Cart::content();
-            $subTotal = $this->cartTotal();
-            $discount = 0;
-
-            if (Session::has('applied_coupon')) {
-                $coupon = Session::get('applied_coupon');
-                $discount = $coupon['discount'];
-            }
-
-            $total = max(0, $subTotal - $discount); // Đảm bảo tổng tiền không âm
-
-            return view('frontend.pages.checkout', compact('cartItems', 'subTotal', 'discount', 'total'));
-        }
+    
+        // Nếu không có mã giảm giá
+        $total = $this->cartTotal();
+        return response()->json([
+            'status' => 'success',
+            'cart_total' => $total,
+            'discount' => 0
+        ]);
     }
+    
+
+    public function checkout()
+    {
+        $cartItems = Cart::content();
+        $subTotal = $this->cartTotal();
+        $discount = 0;
+
+        if (Session::has('applied_coupon')) {
+            $coupon = Session::get('applied_coupon');
+            $discount = $coupon['discount'];
+        }
+
+        $total = max(0, $subTotal - $discount); // Đảm bảo tổng tiền không âm
+
+        return view('frontend.pages.checkout', compact('cartItems', 'subTotal', 'discount', 'total'));
+    }
+}

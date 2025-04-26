@@ -114,6 +114,8 @@
                         @if (session()->has('coupon_code'))
                             <p>Phiếu giảm giá áp dụng: {{ session('coupon_code') }}</p>
                         @endif
+
+
                         <form id="coupon_form">
                             <input type="text" placeholder="Coupon Code" name="coupon_code"
                                 value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
