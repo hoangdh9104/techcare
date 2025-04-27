@@ -15,10 +15,10 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i> Products</h3>
+                        <h3><i class="far fa-user"></i> Sản phẩm</h3>
                         <div class="create_button mb-2">
                             <a href="{{ route('vendor.products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
-                                Create Product</a>
+                                Chi tiết sản phẩm</a>
                         </div>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">

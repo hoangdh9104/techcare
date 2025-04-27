@@ -133,7 +133,27 @@ class ProductDataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-    {
+
+
+{
+//     return [
+//         Column::make('id')->title('STT'),
+//         Column::make('image')->title('Hình ảnh'),
+//         Column::make('name')->title('Tên sản phẩm'),
+//         Column::make('price_display')->title('Giá')->addClass('text-right'),
+//         Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
+//         Column::make('type')->width(150)->title('Loại'),
+//         Column::make('status')->title('Trạng thái'),
+//         Column::computed('action')
+//             ->exportable(false)
+//             ->printable(false)
+//             ->width(200)
+//             ->addClass('text-center')
+//             ->title('Thao tác'),
+//     ];
+// }
+
+//     {
         return [
             Column::make('id')->title('STT'),
             Column::make('image')->title('Hình ảnh'),
@@ -150,6 +170,8 @@ class ProductDataTable extends DataTable
                 ->title('Thao tác'),
         ];
     }
+
+
 
     /**
      * Get the filename for export.

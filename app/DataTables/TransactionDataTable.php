@@ -78,12 +78,12 @@ class TransactionDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('invoice_id'),
-            Column::make('transaction_id'),
-            Column::make('payment_method'),
-            Column::make('amount_in_base_currency'),
-            Column::make('amount_in_real_currency'),
+            Column::make('id')->title('STT'),
+            Column::make('invoice_id')->title('Mã đơn hàng'),
+            Column::make('transaction_id')->title('Mã giao dịch'),
+            Column::make('payment_method')->title('Phương thức thanh toán'),
+            Column::make('amount_in_base_currency')->title('Số tiền'),
+            Column::make('amount_in_real_currency')->title('Số tiền thực tế'),
 
         ];
     }

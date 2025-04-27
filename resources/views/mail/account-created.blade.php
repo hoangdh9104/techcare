@@ -7,12 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    Hi, {{$name}}
+    Xin chào, {{$name}}
     <br>
-    Here is your login credentials:
+    Đây là thông tin đăng nhập của bạn:
     <br>
     Email: {{$email}}
     <br>
-    Password: {{$password}}
+    Mật khẩu: {{$password}}
 </body>
 </html>
