@@ -37,7 +37,7 @@
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
 
-                                @if ($momoSetting && $momoSetting->status == 1)
+                                @if ($momoSetting && $momoSetting->status == 1 && !$isOver50Million)
                                     <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-momo" type="button" role="tab"
                                         aria-controls="v-pills-momo" aria-selected="false">Momo</button>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-xl-5 col-lg-5">
                         <div class="tab-content" id="v-pills-tabContent" id="sticky_sidebar">
-                            @if ($momoSetting && $momoSetting->status == 1)
+                            @if ($momoSetting && $momoSetting->status == 1  && !$isOver50Million)
                                 <div class="tab-pane fade show active" id="v-pills-momo" role="tabpanel"
                                     aria-labelledby="v-pills-profile-tab">
                                     <div class="row">
