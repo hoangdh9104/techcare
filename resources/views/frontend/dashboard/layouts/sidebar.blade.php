@@ -1,11 +1,11 @@
 <div class="dashboard_topnav">
     <ul class="dashboard_nav_links">
-        <li><a class="{{ setActive(['user.dashboard']) }}" href="{{ route('user.dashboard') }}"> Bảng điều khiển</a></li>
+        {{-- <li><a class="{{ setActive(['user.dashboard']) }}" href="{{ route('user.dashboard') }}"> Bảng điều khiển</a></li> --}}
         <li><a class="{{ setActive(['/']) }}" href="{{ url('/') }}"> Trang chủ</a></li>
         <li><a class="{{ setActive(['user.messages.index']) }}" href="{{ route('user.messages.index') }}">Tin nhắn</a></li>
         <li><a class="{{ setActive(['user.orders.*']) }}" href="{{ route('user.orders.index') }}"> Đơn hàng</a></li>
         <li><a class="{{ setActive(['user.review.*']) }}" href="{{ route('user.review.index') }}"> Đánh giá</a></li>
-        <li><a class="{{ setActive(['user.wishlist.index']) }}" href="{{route('user.wishlist.index')}}"> Yêu thích</a></li>
+        {{-- <li><a class="{{ setActive(['user.wishlist.index']) }}" href="{{route('user.wishlist.index')}}"> Yêu thích</a></li> --}}
         <li><a class="{{ setActive(['user.profile']) }}" href="{{ route('user.profile') }}"> Hồ sơ</a></li>
         <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"> Địa chỉ</a></li>
         <li>

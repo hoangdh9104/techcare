@@ -207,11 +207,11 @@
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
                                                             {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->price }}</p>
+                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <form class="shopping-cart-form" action="">
                                                         <input type="hidden" name="product_id"
@@ -281,25 +281,19 @@
                                                             <i class="far fa-star"></i>
                                                             @endif
                                                         @endfor
-<<<<<<< HEAD
-            
-                                                        <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
-            
-=======
 
                                                         <span>({{count($product->reviews)}} review)</span>
 
->>>>>>> 59b2a79074a527d8329e215415d817f1e2cbbf65
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
                                                             {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->price }}</p>
+                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <p class="list_description">{{ $product->short_description }}</p>
                                                     <ul class="wsus__single_pro_icon">
@@ -404,10 +398,10 @@
                                         <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                             </h4>
                                         @else
-                                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                            <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                         @endif
                                         <p class="review">
                                             @php

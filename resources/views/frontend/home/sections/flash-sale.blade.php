@@ -93,7 +93,7 @@
                                     <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                                 </p>
                             @else
-                                <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                                <p class="wsus__price">{{ $product->price }} {{ $settings->currency_icon }}</p>
                             @endif
                             {{-- <form class="shopping-cart-form" action="">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
