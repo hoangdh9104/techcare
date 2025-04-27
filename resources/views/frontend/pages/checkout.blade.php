@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    BREADCRUMB START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CHECK OUT PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        CHECK OUT PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -68,36 +68,39 @@
                     <div class="wsus__order_details" id="sticky_sidebar">
                         <p class="wsus__product">Phương thức vận chuyển</p>
                         @foreach ($shippingMethods as $method)
-                        @if ($method->type == 'min_cost' && getMainCartTotal() >= $method->min_cost)
-                            <div class="form-check">
-                                <input class="form-check-input shipping_method" type="radio" name="shipping_method" 
-                                    id="shippingMethod{{ $method->id }}" value="{{ $method->id }}" data-id="{{ $method->cost }}">
-                                <label class="form-check-label" for="shippingMethod{{ $method->id }}">
-                                    {{ $method->name }}
-                                    <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
-                                </label>
-                                @if ($method->cost == 0)
-                                    <span style="color: red" class="text-danger">Giao hàng từ 3-5 ngày.</span>
-                                @elseif ($method->cost > 0)
-                                    <span style="color: red" class="text-danger">Giao hàng hỏa tốc.</span>
-                                @endif
-                            </div>
-                        @elseif($method->type == 'flat_cost')
-                            <div class="form-check">
-                                <input class="form-check-input shipping_method" type="radio" name="shipping_method" 
-                                    id="shippingMethod{{ $method->id }}" value="{{ $method->id }}" data-id="{{ $method->cost }}">
-                                <label class="form-check-label" for="shippingMethod{{ $method->id }}">
-                                    {{ $method->name }}
-                                    <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
-                                </label>
-                                @if ($method->cost == 0)
-                                <span style="color: red" class="text-muted , color:red" >Giao hàng từ 3-5 ngày.</span>
-                            @elseif ($method->cost > 0)
-                                <span style="color: red" class="text-muted">Giao hàng hỏa tốc.</span>
+                            @if ($method->type == 'min_cost' && getMainCartTotal() >= $method->min_cost)
+                                <div class="form-check">
+                                    <input class="form-check-input shipping_method" type="radio" name="shipping_method"
+                                        id="shippingMethod{{ $method->id }}" value="{{ $method->id }}"
+                                        data-id="{{ $method->cost }}">
+                                    <label class="form-check-label" for="shippingMethod{{ $method->id }}">
+                                        {{ $method->name }}
+                                        <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
+                                    </label>
+                                    @if ($method->cost == 0)
+                                        <span style="color: red" class="text-danger">Giao hàng từ 3-5 ngày.</span>
+                                    @elseif ($method->cost > 0)
+                                        <span style="color: red" class="text-danger">Giao hàng hỏa tốc.</span>
+                                    @endif
+                                </div>
+                            @elseif($method->type == 'flat_cost')
+                                <div class="form-check">
+                                    <input class="form-check-input shipping_method" type="radio" name="shipping_method"
+                                        id="shippingMethod{{ $method->id }}" value="{{ $method->id }}"
+                                        data-id="{{ $method->cost }}">
+                                    <label class="form-check-label" for="shippingMethod{{ $method->id }}">
+                                        {{ $method->name }}
+                                        <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
+                                    </label>
+                                    @if ($method->cost == 0)
+                                        <span style="color: red" class="text-muted , color:red">Giao hàng từ 3-5
+                                            ngày.</span>
+                                    @elseif ($method->cost > 0)
+                                        <span style="color: red" class="text-muted">Giao hàng hỏa tốc.</span>
+                                    @endif
+                                </div>
                             @endif
-                            </div>
-                        @endif
-                    @endforeach
+                        @endforeach
                         <div class="wsus__order_details_summery">
                             <p>Tổng đơn hàng: <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
                             <p>Phí vận chuyển(+): <span
