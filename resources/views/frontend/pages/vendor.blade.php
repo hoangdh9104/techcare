@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || wishlist
+{{$settings->site_name}} || danh sách yêu thích
 @endsection
 
 @section('content')
@@ -14,10 +14,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>vendors</h4>
+                        <h4>Nhà cung cấp</h4>
                         <ul>
-                            <li><a href="{{url('/')}}">home</a></li>
-                            <li><a href="javascript:;">vendors</a></li>
+                            <li><a href="{{url('/')}}">Trang chủ</a></li>
+                            <li><a href="javascript:;">Nhà cung cấp</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                                             {{$vendor->phone}}</a>
                                         <a href="javascript:;"><i class="fal fa-envelope"></i>
                                             {{$vendor->email}}</a>
-                                        <a href="{{route('vendor.products', $vendor->id)}}" class="common_btn">visit store</a>
+                                        <a href="{{route('vendor.products', $vendor->id)}}" class="common_btn">Ghé thăm cửa hàng</a>
                                     </div>
                                 </div>
                             </div>

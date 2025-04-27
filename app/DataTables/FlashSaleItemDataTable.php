@@ -98,11 +98,11 @@ class FlashSaleItemDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('product_name'),
-            Column::make('show_at_home'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('product_name')->title('Tên sản phẩm'),
+            Column::make('show_at_home')->title('Hiện tại trang chủ'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{ $settings->site_name }} Product Detail
+    {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
 
 @section('content')
@@ -10,10 +10,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>vendor products</h4>
+                        <h4>Sản phẩm của nhà cung cấp</h4>
                         <ul>
-                            <li><a href="{{url('/')}}">home</a></li>
-                            <li><a href="javascrip:;">vendor product</a></li>
+                            <li><a href="{{url('/')}}">Trang chủ</a></li>
+                            <li><a href="javascrip:;">Sản phẩm của nhà cung cấp</a></li>
                         </ul>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                                 <a href="callto:{{$vendor->phone}}"><i class="far fa-phone-alt"></i> {{$vendor->phone}}</a>
                                 <a href="mailto:{{$vendor->email}}"><i class="far fa-envelope"></i> {{$vendor->email}}</a>
                                 <p class="wsus__vendor_location"><i class="fal fa-map-marker-alt"></i> {{$vendor->address}} </p>
-                                <p class="wsus__open_store"><i class="fab fa-shopify"></i> store open</p>
+                                <p class="wsus__open_store"><i class="fab fa-shopify"></i> cửa hàng mởn</p>
                                 <ul class="d-flex">
                                     <li><a class="facebook" href="{{$vendor->fb_link}}"><i class="fab fa-facebook-f"></i></a></li>
                                     <li><a class="twitter" href="{{$vendor->tw_link}}"><i class="fab fa-twitter"></i></a></li>
@@ -193,7 +193,7 @@
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star-half-alt"></i>
-                                                        <span>(133 review)</span>
+                                                        <span>(133 sản phẩm)</span>
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
@@ -223,14 +223,18 @@
                                                             <input name="quantity" type="hidden" min="1"
                                                                 max="100" value="1" />
                                                         </div>
+<<<<<<< HEAD
                                                         {{-- <button class="add_cart" type="submit">add to cart</button> --}}
+=======
+                                                        <button class="add_cart" type="submit">thêm vào giỏ hàng</button>
+>>>>>>> a34aab96392e0355b1316da49c15a86784fc8ecc
                                                     </form>
                                                 </div>
                                                 @if (count($products) === 0)
                                                     <div class = "text-center mt-5">
                                                         <div class="card">
                                                             <div class="card-body">
-                                                                <h2>Product not found !</h2>
+                                                                <h2>Không tìm thấy sản phẩm !</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -267,7 +271,7 @@
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star-half-alt"></i>
-                                                        <span>(17 review)</span>
+                                                        <span>(17 Sản phẩm)</span>
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
@@ -298,8 +302,7 @@
                                                                 <input name="quantity" type="hidden" min="1"
                                                                     max="100" value="1" />
                                                             </div>
-                                                            <button class="add_cart_two" type="submit">add to
-                                                                cart</button>
+                                                            <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button>
                                                         </form>
                                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
                                                         <li><a href="#"><i class="far fa-random"></i></a></li>
@@ -314,7 +317,7 @@
                                 <div class = "text-center mt-5">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h2>Product not found !</h2>
+                                            <h2>Không tìm thấy sản phẩm !</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -380,7 +383,7 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                        <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                                 <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
@@ -394,11 +397,11 @@
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            <span>20 Sản phẩm</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
                                         <div class="wsus_pro_hot_deals">
-                                            <h5>offer ending time : </h5>
+                                            <h5>Thời gian hết ưu đãi : </h5>
                                             <div class="simply-countdown simply-countdown-one"></div>
                                         </div>
                                         <form class="shopping-cart-form" action="">
@@ -417,16 +420,23 @@
                                                 <input name="quantity" type="hidden" min="1" max="100"
                                                     value="1" />
                                             </div>
+<<<<<<< HEAD
                                             {{-- <button class="add_cart" type="submit">add to cart</button> --}}
                                             <ul class="wsus__button_area">
                                                 {{-- <li><button type="submit" class="add_cart" href="#">add to cart</button></li> --}}
                                                 <li><a href="#" class="buy_now">Buy now</a></li>
+=======
+                                            <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                            <ul class="wsus__button_area">
+                                                <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
+                                                <li><a href="#" class="buy_now">Mua ngay</a></li>
+>>>>>>> a34aab96392e0355b1316da49c15a86784fc8ecc
                                                 <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                                 <li></li>
                                             </ul>
 
                                         </form>
-                                        <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                                        <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                     </div>
                                 </div>
                             </div>

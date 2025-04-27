@@ -187,7 +187,8 @@ Route::get('transaction', [TransactionController::class, 'index'])->name('transa
 
 //customer list
 Route::get('customer', [CustomerListController::class, 'index'])->name('customer.index');
-Route::put('customer/status-change', [CustomerListController::class, 'statusChange'])->name('customer.status-change');
+Route::post('customer/status-change', [CustomerListController::class, 'statusChange'])->name('customer.status-change');
+Route::resource('customer', CustomerListController::class);
 
 //admin list
 Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');

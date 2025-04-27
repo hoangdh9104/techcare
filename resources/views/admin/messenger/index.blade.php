@@ -21,11 +21,11 @@
                             <ul class="list-unstyled list-unstyled-border">
                                 @foreach ($chatUsers as $chatUser)
                                     <li class="media chat-user-profile" data-id="{{ $chatUser->senderProfile->id }}">
-                                        <img alt="image" style="height: 50px;
-  object-fit: cover;" class="mr-3 rounded-circle" width="50"
+                                        <img alt="image" style="height: 50px; object-fit: cover;"
+                                            class="mr-3 rounded-circle" width="50"
                                             src="{{ asset($chatUser->senderProfile->image) }}">
                                         <div class="media-body">
-                                            <div class="mt-0 mb-1 font-weight-bold">{{ $chatUser->senderProfile->name }}
+                                            <div class="mt-0 mb-1 font-weight-bold chat-user-name">{{ $chatUser->senderProfile->name }}
                                             </div>
                                             {{-- <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i>
                                                 Online</div> --}}
@@ -40,27 +40,17 @@
                 <div class="col-md-9">
                     <div class="card chat-box" id="mychatbox" style="height: 70vh;">
                         <div class="card-header">
-                            <h4>Chat with Rizal</h4>
+                            <h4 id="chat-inbox-title">Chat with Rizal</h4>
                         </div>
                         <div class="card-body chat-content">
-                            {{-- <div class="chat-item chat-left" style=""><img src="../dist/img/avatar/avatar-1.png">
-                                <div class="chat-details">
-                                    <div class="chat-text">You wanna know?</div>
-                                    <div class="chat-time">01:19</div>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="chat-item chat-right" style=""><img src="../dist/img/avatar/avatar-2.png">
-                                <div class="chat-details">
-                                    <div class="chat-text">Wat?</div>
-                                    <div class="chat-time">01:19</div>
-                                </div>
-                            </div> --}}
+                         {{-- Inbox --}}
                         </div>
                         <div class="card-footer chat-form">
                             <form id="message-form">
                                 <input type="text" class="form-control message-box" placeholder="Type a message"
                                     name="message">
                                 <input type="hidden" name="receiver_id" id="receiver_id" value="">
+                               
                                 <button class="btn btn-primary">
                                     <i class="far fa-paper-plane"></i>
                                 </button>
@@ -85,8 +75,8 @@
                 hour: '2-digit',
                 minute: '2-digit',
             }
-            const formatedDateTime = new Intl.DateTimeFormat('en-US', options).format(new Date(dateTimeString));
-            return formatedDateTime;
+            const formatedDateTime = new Intl.DateTimeFormat('vi-VN', options).format(new Date(dateTimeString));
+            return formatedDateTime.replace('tháng ', ''); 
         }
 
         function scrollToBottom() {
@@ -98,7 +88,7 @@
 
                 let receiverId = $(this).data('id');
                 let receiverImage = $(this).find('img').attr('src');
-
+                let chatUserName = $(this).find('.chat-user-name').text();
 
                 $('#receiver_id').val(receiverId);
                 $.ajax({
@@ -109,7 +99,7 @@
                     },
                     beforeSend: function() {
                         mainChatInbox.html('');
-                        // $('#chat-inbox-title').text(`Chat with ${chatUserName}`);
+                        $('#chat-inbox-title').text(`Chat with ${chatUserName}`);
                     },
                     success: function(response) {
                         $.each(response, function(index, value) {
@@ -174,7 +164,7 @@
 
                 $.ajax({
                     method: 'POST',
-                    url: '{{ route('user.send-message') }}',
+                    url: '{{ route("admin.send-message") }}',
                     data: formData,
                     beforeSend: function() {
                         $('.send-button').prop('disabled', true);
@@ -182,7 +172,6 @@
                     },
                     success: function(response) {
                         $('.message-box').val('');
-
                     },
                     error: function(xhr, status, error) {
                         toastr.error(xhr.responseJSON.message);

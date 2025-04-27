@@ -39,8 +39,12 @@
             <div class="col-xl-12">
                 <div class="wsus__section_header">
                     <h3>{{ $category->name }}</h3>
+
+                    {{-- <a class="see_btn" href="{{route('products.index',['cattegory'=> $category->slug])}}">Xem thêm <i class="fas fa-caret-right"></i></a> --}}
+
                     <a class="see_btn" href="{{ route('products.index', ['cattegory' => $category->slug]) }}">see more <i
                             class="fas fa-caret-right"></i></a>
+
                 </div>
             </div>
         </div>
@@ -85,7 +89,11 @@
                                     @endif
                                 @endfor
 
+
+                                
+
                                 <span>({{ count($product->reviews) }} review)</span>
+
 
                             </p>
                             <a class="wsus__pro_name"
@@ -113,7 +121,7 @@
                                     <input name="quantity" type="hidden" min="1" max="9"
                                         value="1" />
                                 </div>
-                                <button class="add_cart" type="submit">add to cart</button>
+                                <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
 
                             </form> --}}
                         </div>
@@ -166,6 +174,25 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
+                        </div>
+                        <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
+                            <div class="wsus__pro_details_text">
+                                <a class="title" href="#">{{ $product->name }}</a>
+                                <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
+                                @if (checkDiscount($product))
+                                    <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
+                                        <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                    </h4>
+                                @else
+                                    <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                @endif
+                                <p class="review">
+                                    @php
+                                        $avgRating = $product->reviews('reviews')->avg('rating');
+                                        $fullRating = round($avgRating);
+                                    @endphp
+=======
                             <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">{{ $product->name }}</a>
@@ -182,6 +209,7 @@
                                             $avgRating = $product->reviews('reviews')->avg('rating');
                                             $fullRating = round($avgRating);
                                         @endphp
+>>>>>>> 0a93190900ec363ec786dcdbed3858cd3b27c3ba
 
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <= $fullRating)
@@ -191,6 +219,42 @@
                                             @endif
                                         @endfor
 
+<<<<<<< HEAD
+                                    <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
+
+                                </p>
+                                <p class="description">{!! $product->short_description !!}</p>
+                                <div class="wsus_pro_hot_deals">
+                                    <h5>Thời gian hết ưu đãi : </h5>
+                                    <div class="simply-countdown simply-countdown-one"></div>
+                                </div>
+                                <form class="shopping-cart-form" action="">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="row">
+                                        @foreach ($product->variants as $variant)
+                                            <select class="d-none" name="variants_item[]">
+                                                @foreach ($variant->productVariantItem as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                        {{ $item->name }} (${{ $item->price }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        @endforeach
+                                        <input name="quantity" type="hidden" min="1" max="100"
+                                            value="1" />
+                                    </div>
+                                    <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                    <ul class="wsus__button_area">
+                                        <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
+                                        <li><a href="#" class="buy_now">Mua ngay</a></li>
+                                        <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                        <li></li>
+                                    </ul>
+
+                                </form>
+                                <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
+=======
                                         <span>({{ count($product->reviews) }} review)</span>
 
                                 </p>
@@ -245,6 +309,7 @@
                                     </form> --}}
                                     <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                 </div>
+>>>>>>> 0a93190900ec363ec786dcdbed3858cd3b27c3ba
                             </div>
                         </div>
                     </div>

@@ -140,7 +140,7 @@
                                                     Đã thanh toán
                                                 </option>
                                                 @if ($order->order_status === 'canceled' && $order->payment_method !== 'COD')
-                                                    <option {{ $order->payment_status === 1 ? 'selected' : '' }}
+                                                    <option {{ $order->payment_status === 2 ? 'selected' : '' }}
                                                         value="2">
                                                         Đã hoàn tiền
                                                     </option>

@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Shipper::class);
     }
+    public function statusHistories()
+    {
+        return $this->hasMany(CustomerStatusHistory::class, 'user_id');
+    }
 }

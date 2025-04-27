@@ -91,6 +91,7 @@ class ProductVariantItemDataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
+
     {
         return [
             Column::make('id')->title('STT'),
@@ -106,6 +107,7 @@ class ProductVariantItemDataTable extends DataTable
                 ->addClass('text-center'),
         ];
     }
+
     /**
      * Get the filename for export.
      */

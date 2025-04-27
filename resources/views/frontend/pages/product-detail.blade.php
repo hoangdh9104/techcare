@@ -116,6 +116,15 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
+
+                            {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
+                                item)
+                            </p>
+                        @elseif($product->qty == 0)
+                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
+                                item) --}}
+
+
                             <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
                                     class="in_stock">Còn hàng</span>
                                 ({{ $product->qty }}
@@ -126,6 +135,7 @@
                                     class="in_stock">Hết hàng</span>
                                 ({{ $product->qty }}
                                 sản phẩm)
+
                             </p>
                         @endif
                         @if (checkDiscount($product))
@@ -148,11 +158,13 @@
                                     <i class="far fa-star"></i>
                                 @endif
                             @endfor
+
                             <span>({{ count($product->reviews) }} đánh giá)</span>
                         </p>
                         <p class="description">{!! $product->short_description !!}</p>
                         <div class="wsus_pro_hot_deals">
                             <h5>Thời gian kết thúc ưu đãi : {{ $product->offer_end_date }} </h5>
+
                             <div class="simply-countdown simply-countdown-one"></div>
                         </div>
                         <div class="variant-details">
@@ -204,11 +216,12 @@
                                 {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
+
                                 <li><button id="add-to-cart-btn" class="add_cart" type="submit">Thêm vào giỏ
                                         hàng</button></li>
                                 {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
+                                {{-- <li><a href="#"><i class="fal fa-heart"></i></a></li> --}}
+                                {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 <li>
                                     <button type="button"
                                         style="border: 1px solid gray;
@@ -221,7 +234,7 @@
 
                                 </li>
 
-                                <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%"
+                                <li><a style="border:1px solid gray; padding: 0px 11px; border-radius:100%"
                                         href="javascrip:;" class="add_to_wishlist" data-id="{{ $product->id }}"><i
                                             class="fal fa-heart"></i></a></li>
 
@@ -452,7 +465,7 @@
                             <textarea name="message" class="form-control mt-2 message-box"></textarea>
                             <input type="hidden" name="receiver_id" value="{{ $product->user_id }}">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 send-button">Send</button>
+                        <button type="submit" class="btn btn-primary mt-4 send-button">Gửi</button>
                     </form>
                 </div>
 
