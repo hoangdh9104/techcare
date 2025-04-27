@@ -65,7 +65,7 @@
                                 alt="product" class="img-fluid w-100 img_2" />
                         </a>
                         <ul class="wsus__single_pro_icon">
-                            
+
                             <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
                             {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                         </ul>
@@ -193,7 +193,6 @@
 
                                         <span>({{ count($product->reviews) }} review)</span>
 
-<<<<<<< HEAD
                                 </p>
                                 <p class="description">{!! $product->short_description !!}</p>
                                 <div class="wsus_pro_hot_deals">
@@ -215,13 +214,6 @@
                                         @endforeach
                                         <input name="quantity" type="hidden" min="1" max="9"
                                             value="1" />
-=======
-                                    </p>
-                                    <p class="description">{!! $product->short_description !!}</p>
-                                    <div class="wsus_pro_hot_deals">
-                                        <h5>offer ending time : </h5>
-                                        <div class="simply-countdown simply-countdown-one"></div>
->>>>>>> 639a22d093b1d1f0a6dce02d8198155dafb6cb4d
                                     </div>
                                     {{-- <form class="shopping-cart-form" action="">
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -251,7 +243,7 @@
                                         </ul>
 
                                     </form> --}}
-                                    <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                                    <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                 </div>
                             </div>
                         </div>

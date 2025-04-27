@@ -32,7 +32,7 @@
                         <div class="wsus__pro_page_bammer_text wsus__vendor_det_banner_text">
                             <div class="wsus__vendor_text_center">
                                 <h4>{{$vendor->shop_name}}</h4>
-                                
+
                                 <a href="callto:{{$vendor->phone}}"><i class="far fa-phone-alt"></i> {{$vendor->phone}}</a>
                                 <a href="mailto:{{$vendor->email}}"><i class="far fa-envelope"></i> {{$vendor->email}}</a>
                                 <p class="wsus__vendor_location"><i class="fal fa-map-marker-alt"></i> {{$vendor->address}} </p>
@@ -223,7 +223,7 @@
                                                             <input name="quantity" type="hidden" min="1"
                                                                 max="100" value="1" />
                                                         </div>
-                                                        <button class="add_cart" type="submit">add to cart</button>
+                                                        {{-- <button class="add_cart" type="submit">add to cart</button> --}}
                                                     </form>
                                                 </div>
                                                 @if (count($products) === 0)
@@ -417,9 +417,9 @@
                                                 <input name="quantity" type="hidden" min="1" max="100"
                                                     value="1" />
                                             </div>
-                                            <button class="add_cart" type="submit">add to cart</button>
+                                            {{-- <button class="add_cart" type="submit">add to cart</button> --}}
                                             <ul class="wsus__button_area">
-                                                <li><button type="submit" class="add_cart" href="#">add to cart</button></li>
+                                                {{-- <li><button type="submit" class="add_cart" href="#">add to cart</button></li> --}}
                                                 <li><a href="#" class="buy_now">Buy now</a></li>
                                                 <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                                 <li></li>

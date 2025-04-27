@@ -9,8 +9,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class ProductDataTable extends DataTable
@@ -27,23 +25,13 @@ class ProductDataTable extends DataTable
                 return "<img width='70px' src='" . asset($query->thumb_image) . "' ></img>";
             })
             ->addColumn('type', function ($query) {
-                switch ($query->product_type) {
-                    case 'new_arrival':
-                        return '<i class="badge badge-success">Hàng mới về</i>';
-                        break;
-                    case 'featured_product':
-                        return '<i class="badge badge-warning">Sản phẩm nổi bật</i>'; // Sản phẩm muốn quảng bá
-                        break;
-                    case 'top_product':
-                        return '<i class="badge badge-info">Sản phẩm bán chạy</i>';
-                        break;
-                    case 'best_product':
-                        return '<i class="badge badge-danger">Sản phẩm tốt nhất</i>';
-                        break;
-                    default:
-                        return '<i class="badge badge-dark">Không có</i>';
-                        break;
-                }
+                $types = [
+                    'new_arrival'      => '<i class="badge badge-success">Hàng mới về</i>',
+                    'featured_product' => '<i class="badge badge-warning">Sản phẩm nổi bật</i>',
+                    'top_product'      => '<i class="badge badge-info">Sản phẩm bán chạy</i>',
+                    'best_product'     => '<i class="badge badge-danger">Sản phẩm tốt nhất</i>',
+                ];
+                return $types[$query->product_type] ?? '<i class="badge badge-dark">Không xác định</i>';
             })
             ->addColumn('price_display', function ($query) {
                 $hasVariants = $query->variants->count() > 0;
@@ -78,7 +66,6 @@ class ProductDataTable extends DataTable
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('admin.products.show', $query->id) . "' class='btn btn-info mr-1'><i class='far fa-eye'></i></a>";
                 $editBtn = "<a href='" . route('admin.products.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                // $deleteBtn = "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
                 $moreBtn = '<div class="dropdown d-inline dropleft">
                 <button class="btn btn-primary dropdown-toggle ml-1" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-cog"></i>
@@ -88,7 +75,6 @@ class ProductDataTable extends DataTable
                 <a class="dropdown-item has-icon" href="' . route('admin.products-variant.index', ['product' => $query->id]) . '"><i class="far fa-file"></i> Thuộc tính</a>
                 </div>
                 </div>';
-                // return $editBtn . $deleteBtn . $moreBtn;
                 return $showBtn . $editBtn . $moreBtn;
             })
             ->filterColumn('type', function ($query, $keyword) {
@@ -104,7 +90,6 @@ class ProductDataTable extends DataTable
     public function query(Product $model): QueryBuilder
     {
         return $model->where('vendor_id', Auth::user()->vendor->id)->newQuery();
-        // return $model->newQuery();
     }
 
     /**
@@ -116,7 +101,6 @@ class ProductDataTable extends DataTable
             ->setTableId('product-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
@@ -138,7 +122,6 @@ class ProductDataTable extends DataTable
             Column::make('id')->title('STT'),
             Column::make('image')->title('Hình ảnh'),
             Column::make('name')->title('Tên sản phẩm'),
-            // Column::make('price_display')->title('Giá')->addClass('text-right'),
             Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
             Column::make('type')->width(150)->title('Loại'),
             Column::make('status')->title('Trạng thái'),

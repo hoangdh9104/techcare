@@ -196,7 +196,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quantity :</h5>
+                                <h5>Số lượng :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
