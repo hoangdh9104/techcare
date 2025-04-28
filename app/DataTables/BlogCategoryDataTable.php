@@ -84,12 +84,12 @@ class BlogCategoryDataTable extends DataTable
     {
         return [
             
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('slug'),
-            Column::make('updated_at'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên danh mục'),
+            Column::make('slug')->title('Slug'),
+            Column::make('updated_at')->title('Cập nhật'),
+            Column::make('status')->title(' Trạng thái'),
+            Column::computed('action')->title('Hành động')
                   ->exportable(false)
                   ->printable(false)
                   ->width(200)

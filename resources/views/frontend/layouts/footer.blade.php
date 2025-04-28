@@ -22,15 +22,14 @@
             </div>
             <div class="col-xl-2 col-sm-5 col-md-4 col-lg-2">
                 <div class="wsus__footer_content">
-                    <h5>Company</h5>
+                    <h5>Cửa hàng chúng tôi</h5>
                     <ul class="wsus__footer_menu">
-                        <li><a href="#"><i class="fas fa-caret-right"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Team Member</a></li>
+                        <li><a href="#"><i class="fas fa-caret-right"></i> Giới thiệu</a></li>
+                        <li><a href="#"><i class="fas fa-caret-right"></i> Thành viên nhóm</a></li>
                         <li><a href="#"><i class="fas fa-caret-right"></i> Career</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-caret-right"></i> Liên hệ</a></li>
                         <li><a href="#"><i class="fas fa-caret-right"></i> Affilate</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Order History</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Team Member</a></li>
+                        <li><a href="#"><i class="fas fa-caret-right"></i> Lịch sử đơn hàng</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,16 +49,15 @@
             </div> --}}
             <div class="col-xl-4 col-sm-7 col-md-8 col-lg-5">
                 <div class="wsus__footer_content wsus__footer_content_2">
-                    <h3>Subscribe To Our Newsletter</h3>
-                    <p>Get all the latest information on Events, Sales and Offers.
-                        Get all the latest information on Events.</p>
+                    <h3>Đăng ký nhận bản tin của chúng tôi</h3>
+                    <p>Nhận tất cả thông tin mới nhất về Sự kiện, Khuyến mại và Ưu đãi. Nhận tất cả thông tin mới nhất về Sự kiện.</p>
                     <form>
-                        <input type="text" placeholder="Search...">
-                        <button type="submit" class="common_btn">subscribe</button>
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button type="submit" class="common_btn">Đặt mua</button>
                     </form>
                     <div class="footer_payment">
-                        <p>We're using safe payment for :</p>
-                        <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid">
+                        <p>Chúng tôi đang sử dụng phương thức thanh toán an toàn cho:</p>
+                        {{-- <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid"> --}}
                     </div>
                 </div>
             </div>

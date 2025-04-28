@@ -182,14 +182,14 @@ class VendorProductDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
-            Column::make('image')->width('150px'),
-            Column::make('name'),
-            Column::make('price')  ->addClass('text-center'),
-            Column::make('approved')  ->addClass('text-center'),
-            Column::make('type')->width(150) ->addClass('text-center'),
-            Column::make('status')  ->addClass('text-center'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('image')->title('Hình ảnh')->width('150px'),
+            Column::make('name')->title('Tên sản phẩm')->width('150px'),
+            Column::make('price')->title('Giá')  ->addClass('text-center'),
+            Column::make('approved')->title('Biến thể')  ->addClass('text-center'),
+            Column::make('type')->title('Loại')->width(150) ->addClass('text-center'),
+            Column::make('status')->title('Trạng thái')  ->addClass('text-center'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

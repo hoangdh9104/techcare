@@ -78,6 +78,7 @@ class UserProductReviewsDataTable extends DataTable
     {
         return [
 
+
             Column::make('id'),
             Column::make('product')->title('Sản phẩm'),
             Column::make('user')->title('Người dùng'),

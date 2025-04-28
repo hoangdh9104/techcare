@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || Terms and conditions
+{{$settings->site_name}} || Điều khoản và điều kiện
 @endsection
 
 @section('content')
@@ -13,10 +13,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>Terms and conditions</h4>
+                        <h4>Điều khoản và điều kiện</h4>
                         <ul>
-                            <li><a href="{{route('home')}}">home</a></li>
-                            <li><a href="javascript:;">terms and conditions</a></li>
+                            <li><a href="{{route('home')}}">Trang chủ</a></li>
+                            <li><a href="javascript:;">Điều khoản và điều kiện</a></li>
                         </ul>
                     </div>
                 </div>

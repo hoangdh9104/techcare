@@ -99,6 +99,7 @@ class CouponDataTable extends DataTable
             Column::make('status')->title('Trạng thái'),
             Column::computed('action')
             ->title('Hành động')                                                
+
             ->exportable(false)
             ->printable(false)
             ->width(200)

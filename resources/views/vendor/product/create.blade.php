@@ -15,19 +15,19 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0 mb-2">
-                        <h3><i class="far fa-user"></i> Create Product</h3>
+                        <h3><i class="far fa-user"></i> Tạo sản phẩm</h3>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
                                 <form action="{{ route('vendor.products.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
-                                        <label>Image</label>
+                                        <label>Ảnh</label>
                                         <input type="file" class="form-control" name="image">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" class="form-control" name="name"
                                             value="{{ old('name') }}">
                                     </div>
@@ -35,7 +35,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="inputState">Category</label>
+                                                <label for="inputState">Danh mục</label>
                                                 <select id="inputState" class="form-control main-category" name="category">
                                                     <option value="">Select</option>
                                                     @foreach ($categories as $category)
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="inputState">Sub Category</label>
+                                                <label for="inputState">Danh mục con</label>
                                                 <select id="inputState" class="form-control sub-category"
                                                     name="sub_category">
                                                     <option value="">Select</option>
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="inputState">Child Category</label>
+                                                <label for="inputState">Danh mục chi tiết</label>
                                                 <select id="inputState" class="form-control child-category"
                                                     name="child_category">
                                                     <option value="">Select</option>
@@ -68,7 +68,7 @@
                                     {{-- end category --}}
                                     {{-- brand --}}
                                     <div class="form-group">
-                                        <label for="inputState">Brand</label>
+                                        <label for="inputState">Thương hiệu</label>
                                         <select id="inputState" class="form-control" name="brand">
                                             <option value="">Select</option>
                                             @foreach ($brands as $brand)
@@ -79,19 +79,19 @@
                                     {{-- end brand --}}
 
                                     <div class="form-group">
-                                        <label>SKU</label>
+                                        <label>Mã sản phẩm</label>
                                         <input type="text" class="form-control" name="sku"
                                             value="{{ old('sku') }}">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Price</label>
+                                        <label>Giá</label>
                                         <input type="text" class="form-control" name="price"
                                             value="{{ old('price') }}">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Offer Price</label>
+                                        <label>Giá chào hàng</label>
                                         <input type="text" class="form-control" name="offer_price"
                                             value="{{ old('offer_price') }}">
                                     </div>
@@ -99,14 +99,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Offer Start Date</label>
+                                                <label>Ngày bắt đầu </label>
                                                 <input type="text" class="form-control datepicker"
                                                     name="offer_start_date" value="{{ old('offer_start_date') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Offer End Date</label>
+                                                <label>Ngày kết thúc </label>
                                                 <input type="text" class="form-control datepicker" name="offer_end_date"
                                                     value="{{ old('offer_end_date') }}">
                                             </div>
@@ -114,7 +114,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Stock Quantity</label>
+                                        <label>Số lượng hàng tồn kho</label>
                                         <input type="number" min="0" class="form-control" name="qty"
                                             value="{{ old('qty') }}">
                                     </div>
@@ -127,46 +127,46 @@
 
 
                                     <div class="form-group">
-                                        <label>Short Description</label>
+                                        <label>Mô tả ngắn</label>
                                         <textarea name="short_description" class="form-control"></textarea>
                                     </div>
 
 
                                     <div class="form-group">
-                                        <label>Long Description</label>
+                                        <label>Mô tả dài</label>
                                         <textarea name="long_description" class="form-control summernote"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputState">Product Type</label>
+                                        <label for="inputState">Loại sản phẩm</label>
                                         <select id="inputState" class="form-control" name="product_type">
                                             <option value="">Select</option>
-                                            <option value="new_arrival">New Arrival</option>
-                                            <option value="featured_product">Featured</option>
-                                            <option value="top_product">Top Product</option>
-                                            <option value="best_product">Best Product</option>
+                                            <option value="new_arrival">Mới về</option>
+                                            <option value="featured_product">Nổi bật</option>
+                                            <option value="top_product">Sản phẩm hàng đầu</option>
+                                            <option value="best_product">Sản phẩm tốt nhất</option>
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Seo Title</label>
+                                        <label>Tiêu đề SEO</label>
                                         <input type="text" class="form-control" name="seo_title"
                                             value="{{ old('seo_title') }}">
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Seo Description</label>
+                                        <label>Mô tả SEO</label>
                                         <textarea name="seo_description" class="form-control"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputState">Status</label>
+                                        <label for="inputState">Trạng thái</label>
                                         <select id="inputState" class="form-control" name="status">
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
+                                            <option value="1">Hoạt động</option>
+                                            <option value="0">Ngừng hoạt động</option>
                                         </select>
                                     </div>
-                                    <button type="submmit" class="btn btn-primary">Create</button>
+                                    <button type="submmit" class="btn btn-primary">Thêm</button>
                                 </form>
                             </div>
                         </div>

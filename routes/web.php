@@ -31,6 +31,7 @@ use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\VNPayController;
 use App\Http\Controllers\Frontend\ProductController;
@@ -207,3 +208,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
     Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });
+//chính sách 
+Route::get('/policy', [PolicyController::class, 'index'])->name('policy.index');

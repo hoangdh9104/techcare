@@ -41,11 +41,13 @@ class CanceledOrderDataTable extends DataTable
                 return date('d-M-Y', strtotime($query->created_at));
             })
             ->addColumn('payment_status', function ($query) {
-                if ($query->payment_status === 2) {
+                if ($query->payment_status === 0 && $query->order_status === 'canceled') {
+                    return "<span class='badge bg-info'>Đang chờ hoàn tiền</span>";
+                } elseif ($query->payment_status === 2) {
                     return "<span class='badge bg-info'>Đã hoàn tiền</span>";
                 } elseif ($query->payment_status === 1) {
                     return "<span class='badge bg-success'>Đã thanh toán</span>";
-                } else {
+                } elseif ($query->payment_status === 0) {
                     return "<span class='badge bg-warning'>Chờ thanh toán</span>";
                 }
             })
@@ -113,6 +115,9 @@ class CanceledOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+
+
+
             Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
             Column::make('customer')->title('Khách hàng'),
@@ -124,6 +129,7 @@ class CanceledOrderDataTable extends DataTable
             Column::make('payment_method')->title('Phương thức thanh toán'),
             Column::computed('action')
                 ->title('Thao tác')
+
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

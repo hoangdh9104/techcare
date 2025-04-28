@@ -70,9 +70,9 @@ class ProductImageGalleryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100),
-            Column::make('image'),
-            Column::computed('action')
+            Column::make('id')->title('STT')->width(100),
+            Column::make('image')->title('Hình ảnh')->width(200),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(400)
