@@ -140,7 +140,7 @@
                         @endif
                         @if (checkDiscount($product))
                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                <del id="product-price">{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                <del id="product-price">{{ $product->price }} {{ $settings->currency_icon }}</del>
                             </h4>
                         @else
                             <h4 id="product-price">{{ $product->price }}{{ $settings->currency_icon }}</h4>

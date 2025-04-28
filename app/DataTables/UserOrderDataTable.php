@@ -26,17 +26,17 @@ class UserOrderDataTable extends DataTable
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
                 // Kiểm tra nếu đơn hàng có thể hủy
-                if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
-                    $cancelBtn = "<button data-id='{$query->id}' class='btn btn-outline-danger btn-sm cancel-order'>
-                    <i class='fas fa-times'></i> Cancel Order
-                  </button>";
-                    return $showBtn . ' ' . $cancelBtn;
-                } elseif (in_array($query->order_status, ['delivered'])) {
-                    $receivedBtn = "<button data-id='{$query->id}' class='btn btn-outline-success btn-sm confirm-received'>
-                        <i class='fas fa-check'></i> Confirm received
-                    </button>";
-                    return $showBtn . ' ' . $receivedBtn;
-                }
+                // if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
+                //     $cancelBtn = "<button data-id='{$query->id}' class='btn btn-outline-danger btn-sm cancel-order'>
+                //     <i class='fas fa-times'></i> Cancel Order
+                //   </button>";
+                //     return $showBtn . ' ' . $cancelBtn;
+                // } elseif (in_array($query->order_status, ['delivered'])) {
+                //     $receivedBtn = "<button data-id='{$query->id}' class='btn btn-outline-success btn-sm confirm-received'>
+                //         <i class='fas fa-check'></i> Confirm received
+                //     </button>";
+                //     return $showBtn . ' ' . $receivedBtn;
+                // }
 
                 return $showBtn;
             })
@@ -50,7 +50,7 @@ class UserOrderDataTable extends DataTable
                 return $query->currency_icon . $query->amount;
             })
             ->addColumn('date', function ($query) {
-                return date('d-M-Y', strtotime($query->created_at));
+                return \Carbon\Carbon::parse($query->created_at)->format('d/m/Y');
             })
             ->addColumn('payment_status', function ($query) {
                 if ($query->payment_status === 0 && $query->order_status === 'canceled') {
@@ -142,9 +142,9 @@ class UserOrderDataTable extends DataTable
 
             // Column::computed('action')->title('Hành động')
 
-            Column::make('id')
-                ->title('ID')
-                ->width(10), // Set fixed width for better alignment
+            // Column::make('id')
+            //     ->title('ID')
+            //     ->width(10), // Set fixed width for better alignment
             Column::make('invoice_id')
                 ->title('Mã đơn hàng')
                 ->width(150), // Set width for equal spacing
@@ -154,9 +154,9 @@ class UserOrderDataTable extends DataTable
             Column::make('date')
                 ->title('Ngày đặt hàng')
                 ->width(150),
-            Column::make('product_qty')
-                ->title('Số lượng sản phẩm')
-                ->width(150),
+            // Column::make('product_qty')
+            //     ->title('Số lượng sản phẩm')
+            //     ->width(150),
             Column::make('amount')
                 ->title('Số tiền')
                 ->width(150),
