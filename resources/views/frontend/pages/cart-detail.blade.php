@@ -197,6 +197,7 @@
                                 .productTotal + "{{ $settings->currency_icon }}"
                             $(productId).text(totaAmount)
                             renderCartSubTotal()
+                            calculateCouponDescount()
                             toastr.success(data.message)
                         } else if (data.status == 'error') {
                             toastr.error(data.message)
@@ -315,10 +316,10 @@
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status === 'success') {
-                            $('#discount') + data.discount.text('{{ $settings->currency_icon }}');
-                            $('#cart_total') + data.cart_total.text('{{ $settings->currency_icon }}');
+                            // console.log(data);
+                            $('#discount').text(data.discount + '{{ $settings->currency_icon }}')
+                            $('#cart_total').text(data.cart_total + '{{ $settings->currency_icon }}')
                         }
-
                     },
                     error: function(data) {
                         console.log(data);
