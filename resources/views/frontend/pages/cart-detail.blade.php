@@ -103,7 +103,7 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
-                        <p>Tổng phụ: <span id="sub_total">{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                        <p>Tạm tính: <span id="sub_total">{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
                         <p>Phiếu giảm giá(-): <span
                                 id="discount">{{ getCartDiscount() }}{{ $settings->currency_icon }}</span>
                         </p>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </section>
     <section id="wsus__single_banner">
@@ -166,15 +166,15 @@
             // increment product quantity
             $('.product-increment').off('click').on('click', function() {
                 let input = $(this).siblings('.product-qty');
-                let quantity = parseInt(input.val()) ;
+                let quantity = parseInt(input.val());
                 if (quantity < 9) {
-                  quantity += 1; // Tăng số lượng
-                  input.val(quantity); 
+                    quantity += 1; // Tăng số lượng
+                    input.val(quantity);
                 } else {
                     toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm !'); // Thông báo lỗi
                     isUpdating = false; // Đặt lại trạng thái
                     return; // Dừng hàm
-                 }
+                }
                 let rowId = input.data('rowid');
 
                 if (quantity > 10) {
@@ -315,8 +315,8 @@
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status === 'success') {
-                            $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
-                            $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
+                            $('#discount') + data.discount.text('{{ $settings->currency_icon }}');
+                            $('#cart_total') + data.cart_total.text('{{ $settings->currency_icon }}');
                         }
 
                     },

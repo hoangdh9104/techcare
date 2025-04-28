@@ -35,8 +35,8 @@
 </style>
 @section('content')
     <!--=============================
-                                                                                                                                                                                                                                                                                                                                                                                                DASHBOARD START
-                                                                                                                                                                                                                                                                                                                                                                                              ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                        DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                                                      ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -50,9 +50,8 @@
                         <div class="wsus__dashboard_profile">
 
                             <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                    INVOICE PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                        INVOICE PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
                             <section id="" class="invoice-print">
                                 <div class="">
                                     <div class="wsus__invoice_area">
@@ -71,7 +70,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-4 col-md-4 mb-5 mb-md-0">
-                                                        <div class="wsus__invoice_single text-md-center">
+                                                        {{-- <div class="wsus__invoice_single text-md-center">
                                                             <h5>thông tin vận chuyển</h5>
                                                             <h6>{{ $address->name }}</h6>
                                                             <p>{{ $address->email }}</p>
@@ -79,17 +78,17 @@
                                                             <p>{{ $address->address }}, {{ $address->city }},
                                                                 {{ $address->state }}, {{ $address->zip }}</p>
                                                             <p>{{ $address->country }}</p>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                     <div class="col-xl-4 col-md-4">
                                                         <div class="wsus__invoice_single text-md-end">
-                                                            <h5>ID đơn hàng: #{{ $order->invocie_id }}</h5>
+                                                            <h5>Mã đơn hàng: #{{ $order->invocie_id }}</h5>
                                                             <h6>Trạng thái đơn hàng:
                                                                 {{ config('order_status.order_status_admin')[$order->order_status]['status'] }}
                                                             </h6>
                                                             <p>Phương thức thanh toán: {{ $order->payment_method }}</p>
-                                                            <p>Trạng thái thanh toán: {{ $order->payment_status }}</p>
-                                                            <p>ID giao dịch: {{ $order->transaction->transaction_id }}
+                                                            {{-- <p>Trạng thái thanh toán: {{ $order->payment_status }}</p> --}}
+                                                            <p>Mã giao dịch: {{ $order->transaction->transaction_id }}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -401,8 +400,8 @@
                                     </div>
                             </section>
                             <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                    INVOICE PAGE END
-                                                                                                                                                                                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            INVOICE PAGE END
+                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
                             <div class="col">
                                 <div class="mt-2 float-end">
                                     <button class="btn btn-warning print_invoice">In</button>
@@ -416,8 +415,8 @@
         </div>
     </section>
     <!--=============================
-                                                                                                                                                                                                                                                                                                                                                                                                DASHBOARD START
-                                                                                                                                                                                                                                                                                                                                                                                              ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                        DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                                                      ==============================-->
 @endsection
 
 @push('scripts')

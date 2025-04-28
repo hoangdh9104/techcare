@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('customer_status_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('status'); 
+            $table->string('status');
             $table->text('reason')->nullable(); // lý do thay đổi
             $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null'); // ai cập nhật
-            $table->timestamp('changed_at')->useCurrent(); 
+            $table->timestamp('changed_at')->useCurrent();
         });
     }
 

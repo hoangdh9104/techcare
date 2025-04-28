@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Database\Eloquent\Builder;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,26 +26,42 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
 
-        $request->session()->regenerate();
-        toastr('welcome to the dashboard page');
-        if ($request->user()->status === 'inactive') {
-            Auth::guard('web')->logout();
-            $request->session()->regenerateToken();
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+            // fn(Builder $query) => $query->has('activeSubscription'),
+        ])) {
+            // $request->session()->regenerate();
+            if (is_null($request->user()->email_verified_at)) {
+                Auth::guard('web')->logout();
+                $request->session()->regenerateToken();
 
-            toastr('account has been banned form website please connect with support!', 'error', 'Account Banned!');
-            return redirect('/');
+                toastr()->error('Vui lòng xác thực email trước khi đăng nhập.', 'Email chưa xác thực');
+                return redirect('/');
+            }
+            if ($request->user()->status === 'inactive') {
+                // $request->authenticate();
+                Auth::guard('web')->logout();
+                $request->session()->regenerateToken();
+
+                toastr('Tài khoản đã bị cấm khỏi trang web, vui lòng liên hệ với bộ phận hỗ trợ!', 'error', 'Account Banned!');
+                return redirect('/');
+            }
+            // Check role tài khoản đăng nhập, nếu không sẽ trả về trang user
+            if ($request->user()->role === 'admin') {
+                return redirect()->intended('/admin/dashboard');
+            } elseif ($request->user()->role === 'vendor') {
+                return redirect()->intended('/vendor/dashboard');
+            } elseif ($request->user()->role === 'shipper') {
+                return redirect()->intended('/shipper/dashboard');
+            }
+            toastr('Chào mừng bạn đã đến cửa hàng Techcare');
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
-        // Check role tài khoản đăng nhập, nếu không sẽ trả về trang user
-        if ($request->user()->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
-        } elseif ($request->user()->role === 'vendor') {
-            return redirect()->intended('/vendor/dashboard');
-        } elseif ($request->user()->role === 'shipper') {
-            return redirect()->intended('/shipper/dashboard');
-        }
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return back()->withErrors([
+            'email' => 'Thông tin xác thực được cung cấp không khớp với hồ sơ của chúng tôi.',
+        ])->onlyInput('email');
     }
 
     /**

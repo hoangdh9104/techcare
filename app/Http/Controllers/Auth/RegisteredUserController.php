@@ -31,9 +31,21 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => 'Tên là bắt buộc',
+            'name.string' => 'Tên phải là ký tự gồm chữ và số',
+            'name.max' => 'Ký tự của tên tối đa là 50',
+            'email.required' => 'Email là bắt buộc',
+            // 'email.lowercase' => 'Ký tự của tên tối đa là 50',
+            'email.email' => 'Phải đúng định dạng email',
+            'email.unique' => 'Đã tồn tại email',
+            'email.max' => 'Ký tự email tối đa là 255',
+            'password.required' => 'Mật khẩu là bắt buộc',
+            'password.confirmed' => 'Vui lòng xác nhận mật khẩu',
+            // 'password.password' => 'Mật khẩu là bắt buộc',
         ]);
 
         $user = User::create([
@@ -46,6 +58,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('verification.notice');
     }
 }
