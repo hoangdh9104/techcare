@@ -100,10 +100,10 @@
                                 href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>
                             @if (checkDiscount($product))
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                    <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                    <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                 </p>
                             @else
-                                <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                                <p class="wsus__price">{{ $product->price }} {{ $settings->currency_icon }}</p>
                             @endif
                             {{-- <form class="shopping-cart-form" action="">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -174,42 +174,22 @@
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
-                        </div>
-                        <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
-                            <div class="wsus__pro_details_text">
-                                <a class="title" href="#">{{ $product->name }}</a>
-                                <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
-                                @if (checkDiscount($product))
-                                    <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                        <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
-                                    </h4>
-                                @else
-                                    <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
-                                @endif
-                                <p class="review">
-                                    @php
-                                        $avgRating = $product->reviews('reviews')->avg('rating');
-                                        $fullRating = round($avgRating);
-                                    @endphp
-=======
                             <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">{{ $product->name }}</a>
                                     <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
                                     @if (checkDiscount($product))
                                         <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                         </h4>
                                     @else
-                                        <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                        <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                     @endif
                                     <p class="review">
                                         @php
                                             $avgRating = $product->reviews('reviews')->avg('rating');
                                             $fullRating = round($avgRating);
                                         @endphp
->>>>>>> 0a93190900ec363ec786dcdbed3858cd3b27c3ba
 
                                         @for ($i = 1; $i <= 5; $i++)
                                             @if ($i <= $fullRating)

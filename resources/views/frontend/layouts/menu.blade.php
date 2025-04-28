@@ -114,7 +114,7 @@
 
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
-                                <li><a href="{{ route('user.dashboard') }}">Tài khoản của tôi</a></li>
+                                <li><a href="{{ route('user.profile') }}">Tài khoản của tôi</a></li>
                             {{-- @elseif (auth()->user()->role === 'vendor')
 
                                 <li><a href="{{ route('vendor.dashboard') }}">Bảng điều khiển nhà cung cấp</a></li> --}}
@@ -149,7 +149,7 @@
 
         @if (auth()->check())
             @if (auth()->user()->role === 'user')
-                <li><a href="{{ route('user.dashboard') }}"><i class="fal fa-user"></i></a></li>
+                <li><a href="{{ route('user.profile') }}"><i class="fal fa-user"></i></a></li>
             @elseif (auth()->user()->role === 'vendor')
                 <li><a href="{{ route('vendor.dashboard') }}"><i class="fal fa-user"></i></a></li>
             @elseif (auth()->user()->role === 'admin')
