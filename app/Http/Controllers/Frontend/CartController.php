@@ -18,7 +18,13 @@ class CartController extends Controller
 
     public function cartDetails()
     {
-        $cartItems = Cart::content();
+        // $cartItems = Cart::content();
+        $cartItems = \Cart::content(); // Lấy danh sách sản phẩm trong giỏ hàng
+        $coupons = Coupon::where('status', 1) // Chỉ lấy mã giảm giá đang hoạt động
+            ->whereDate('start_date', '<=', now()) // Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày hiện tại
+            ->whereDate('end_date', '>=', now()) // Ngày kết thúc phải lớn hơn hoặc bằng ngày hiện tại
+            ->orderBy('start_date', 'desc') // Sắp xếp theo ngày bắt đầu
+            ->get(); // Lấy tất cả mã giảm giá hợp lệ
         if ($cartItems->count() == 0) {
             Session::forget('coupon');
             toastr('Vui lòng thêm một số sản phẩm vào giỏ hàng của bạn để xem trang này', 'warning', 'Giỏ hàng trống!');
@@ -72,7 +78,7 @@ class CartController extends Controller
         $cartpage_banner_section = Advertisement::where('key', 'cartpage_banner_section')->first();
         $cartpage_banner_section = json_decode($cartpage_banner_section?->value);
 
-        return view('frontend.pages.cart-detail', compact('cartItems', 'cartpage_banner_section'));
+        return view('frontend.pages.cart-detail', compact('cartItems', 'cartpage_banner_section', 'coupons'));
     }
     public function addToCart(Request $request)
     {

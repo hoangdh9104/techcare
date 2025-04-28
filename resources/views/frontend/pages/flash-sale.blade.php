@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                        BREADCRUMB START
-                                                                    ==============================-->
+                                                                    BREADCRUMB START
+                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                        BREADCRUMB END
-                                                                    ==============================-->
+                                                                    BREADCRUMB END
+                                                                ==============================-->
 
 
     <!--============================
-                                                                        DAILY DEALS DETAILS START
-                                                                    ==============================-->
+                                                                    DAILY DEALS DETAILS START
+                                                                ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -76,14 +76,62 @@
                         @php
                             $product = $item->product;
                         @endphp
-                        @if ($product->is_approved == 1 && $product->status == 1)
-                            <div class="col-xl-3 col-sm-6 col-lg-4">
-                                <div class="wsus__product_item">
-                                    <span class="wsus__new">{{ productType($product->product_type) }}</span>
+
+                        <div class="col-xl-3 col-sm-6 col-lg-4">
+                            <div class="wsus__product_item">
+                                <span class="wsus__new">{{ productType($product->product_type) }}</span>
+                                @if (checkDiscount($product))
+                                    <span class="wsus__minus">
+                                        {{ calculateDiscountPercent($product->price, $product->offer_price) }}%
+                                    </span>
+                                @endif
+
+                                <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
+                                    <img src="{{ asset($product->thumb_image) }}" alt="product"
+                                        class="img-fluid w-100 img_1" />
+                                    <img src="
+                                @if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }}
+                                  @else
+                                  {{ asset($product->thumb_image) }} @endif
+                            "
+                                        alt="product" class="img-fluid w-100 img_2" />
+                                </a>
+                                <ul class="wsus__single_pro_icon">
+                                    <li><a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal-{{ $product->id }}"><i
+                                                class="far fa-eye"></i></a>
+                                    </li>
+                                    <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                                class="far fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="far fa-random"></i></a>
+                                </ul>
+                                <div class="wsus__product_details">
+                                    <a class="wsus__category" href="#">{{ $product->category->name }}</a>
+                                    <p class="wsus__pro_rating">
+                                        @php
+                                            $avgRating = $product->reviews('reviews')->avg('rating');
+                                            $fullRating = round($avgRating);
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+
+                                        <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
+
+                                    </p>
+                                    <a class="wsus__pro_name"
+                                        href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                     @if (checkDiscount($product))
-                                        <span class="wsus__minus">
-                                            {{ calculateDiscountPercent($product->price, $product->offer_price) }}%
-                                        </span>
+                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
+                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
+                                        </p>
+                                    @else
+                                        <p class="wsus__price">{{ $product->price }} {{ $settings->currency_icon }}</p>
                                     @endif
 
                                     <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
@@ -163,12 +211,12 @@
     </section>
 
     <!--============================
-                                                                        DAILY DEALS DETAILS END
-                                                                    ==============================-->
+                                                                    DAILY DEALS DETAILS END
+                                                                ==============================-->
 
     <!--==========================
-                                                                                          PRODUCT MODAL VIEW START
-                                                                                        ===========================-->
+                                                                                      PRODUCT MODAL VIEW START
+                                                                                    ===========================-->
     @foreach ($flashSaleItems as $item)
         @php
             $product = \App\Models\Product::find($item->product_id);
@@ -233,10 +281,10 @@
                                         @endif
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                             </h4>
                                         @else
-                                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                            <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                         @endif
                                         <p class="review">
                                             @php
@@ -313,8 +361,8 @@
     @endforeach
 
     <!--==========================
-                                                                                                                      PRODUCT MODAL VIEW END
-                                                                                                                    ===========================-->
+                                                                                                                  PRODUCT MODAL VIEW END
+                                                                                                                ===========================-->
 @endsection
 @push('scripts')
     <script>
