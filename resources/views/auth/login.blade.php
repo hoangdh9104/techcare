@@ -1,8 +1,8 @@
 @extends('frontend.layouts.master')
 @section('content')
     <!--============================
-                                                             BREADCRUMB START
-                                                        ==============================-->
+                                                                     BREADCRUMB START
+                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -19,13 +19,13 @@
         </div>
     </section>
     <!--============================
-                                                            BREADCRUMB END
-                                                        ==============================-->
+                                                                    BREADCRUMB END
+                                                                ==============================-->
 
 
     <!--============================
-                                                           LOGIN/REGISTER PAGE START
-                                                        ==============================-->
+                                                                   LOGIN/REGISTER PAGE START
+                                                                ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -53,12 +53,12 @@
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
                                             <input type="email" id="email" name="email" value="{{ old('email') }}"
-                                                placeholder="name_email@gmail.com">
+                                                placeholder="Nhập địa chỉ email">
                                         </div>
                                         <!-- Password -->
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input id="password" name="password" type="password" placeholder="Password">
+                                            <input id="password" name="password" type="password" placeholder="Mật khẩu">
                                         </div>
                                         <!-- Remember Me -->
                                         <div class="wsus__login_save">
@@ -123,6 +123,6 @@
         </div>
     </section>
     <!--============================
-                                                           LOGIN/REGISTER PAGE END
-                                                        ==============================-->
+                                                                   LOGIN/REGISTER PAGE END
+                                                                ==============================-->
 @endsection

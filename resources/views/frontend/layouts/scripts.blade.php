@@ -72,7 +72,8 @@
                         getSidebarCartSubTotal()
                     } else {
                         $('.mini_cart_wrapper').html("")
-                        let html = '<li class="text-center">Cart Is Empty!</li>'
+                        let html =
+                            '<li class="text-center">Vui lòng thêm sản phẩm vào giỏ hàng để mua nhé!</li>'
                         $('.mini_cart_wrapper').html(html)
                     }
                 },
@@ -112,7 +113,8 @@
                     if ($('.mini_cart_wrapper').find('li').length == 0) {
                         $('.mini_cart_action').addClass('d-none')
                         $('.mini_cart_wrapper').html(
-                            '<li class="text-center">Cart is empty!</li>')
+                            '<li class="text-center">Vui lòng thêm sản phẩm vào giỏ hàng để mua nhé!</li>'
+                        )
                     }
                     toastr.success(data.message)
                 },

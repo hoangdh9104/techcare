@@ -103,7 +103,7 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
-                        <p>Tổng phụ: <span id="sub_total">{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                        <p>Tạm tính: <span id="sub_total">{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
                         <p>Phiếu giảm giá(-): <span
                                 id="discount">{{ getCartDiscount() }}{{ $settings->currency_icon }}</span>
                         </p>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </section>
     <section id="wsus__single_banner">
@@ -154,6 +154,58 @@
             </div>
         </div>
     </section>
+    <section id="wsus__available_coupons" class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-4 text-center text-uppercase" 
+                        style="font-weight: bold; color: #ff5722; background: linear-gradient(90deg, #ff7e5f, #feb47b); 
+                            padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i> 
+                        <span style="color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Danh sách mã giảm giá</span>
+                    </h4>
+                    <div class="wsus__coupon_list">
+                        @if ($coupons->isNotEmpty())
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th>Mã</th>
+                                            <th>Tên mã giảm giá</th>
+                                            <th>Giảm giá</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Ngày kết thúc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($coupons as $coupon)
+                                            <tr>
+                                                <td><strong>{{ $coupon->code }}</strong></td>
+                                                <td>{{ $coupon->name }}</td>
+                                                <td>
+                                                    @if ($coupon->discount_type === 'percent')
+                                                        {{ $coupon->discount }}%
+                                                    @else
+                                                        {{ number_format($coupon->discount, 0, ',', '.') }} VNĐ
+                                                    @endif
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($coupon->start_date)->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($coupon->end_date)->format('d/m/Y') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-warning text-center">
+                                <strong>Không có mã giảm giá nào hiện tại.</strong>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 @push('scripts')
     <script>
@@ -166,15 +218,15 @@
             // increment product quantity
             $('.product-increment').off('click').on('click', function() {
                 let input = $(this).siblings('.product-qty');
-                let quantity = parseInt(input.val()) ;
+                let quantity = parseInt(input.val());
                 if (quantity < 9) {
-                  quantity += 1; // Tăng số lượng
-                  input.val(quantity); 
+                    quantity += 1; // Tăng số lượng
+                    input.val(quantity);
                 } else {
                     toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm !'); // Thông báo lỗi
                     isUpdating = false; // Đặt lại trạng thái
                     return; // Dừng hàm
-                 }
+                }
                 let rowId = input.data('rowid');
 
                 if (quantity > 10) {
@@ -197,6 +249,7 @@
                                 .productTotal + "{{ $settings->currency_icon }}"
                             $(productId).text(totaAmount)
                             renderCartSubTotal()
+                            calculateCouponDescount()
                             toastr.success(data.message)
                         } else if (data.status == 'error') {
                             toastr.error(data.message)
@@ -315,10 +368,10 @@
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status === 'success') {
-                            $('#discount').text('{{ $settings->currency_icon }}' + data.discount);
-                            $('#cart_total').text('{{ $settings->currency_icon }}' + data.cart_total);
+                            // console.log(data);
+                            $('#discount').text(data.discount + '{{ $settings->currency_icon }}')
+                            $('#cart_total').text(data.cart_total + '{{ $settings->currency_icon }}')
                         }
-
                     },
                     error: function(data) {
                         console.log(data);
@@ -326,6 +379,26 @@
                 })
             }
 
-        })
+            // Áp dụng mã giảm giá từ danh sách
+            $('.apply-coupon-btn').on('click', function() {
+                let couponCode = $(this).data('code');
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('apply-coupon') }}",
+                    data: { coupon_code: couponCode },
+                    success: function(data) {
+                        if (data.status === 'error') {
+                            toastr.error(data.message);
+                        } else if (data.status === 'success') {
+                            toastr.success(data.message);
+                            location.reload(); // Reload để cập nhật giá trị mới
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
     </script>
 @endpush

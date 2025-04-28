@@ -4,7 +4,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>About</h1>
+            <h1>Giới thiệu</h1>
         </div>
 
         <div class="section-body">
@@ -21,11 +21,11 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label>content</label>
+                                    <label>Nội dung</label>
                                     <textarea name="content" class="summernote">{!!@$content->content!!}</textarea>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
                             </form>
 
                         </div>

@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Dashboard</title>
-    <link rel="icon" type="image/png" href="{{$logoSetting->favicon}}">
+    <link rel="icon" type="image/png" href="{{ $logoSetting->favicon }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
@@ -29,27 +29,27 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
 
-     {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
-    @if($settings->layout == 'RTL')
-    <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
+    @if ($settings->layout == 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
     @endif
 
     <script>
         const USER = {
-            id: "{{auth()->user()->id}}",
-            name: "{{auth()->user()->name}}",
-            image: "{{ asset(auth()->user()->image)}}",
+            id: "{{ auth()->user()->id }}",
+            name: "{{ auth()->user()->name }}",
+            image: "{{ asset(auth()->user()->image) }}",
         }
     </script>
 
-     @vite(['resources/js/app.js','resources/js/frontend.js'])
+    @vite(['resources/js/app.js', 'resources/js/frontend.js'])
 
 </head>
 
 <body>
 
-     <!-- Header cao 70px -->
-        @include('frontend.layouts.header')
+    <!-- Header cao 70px -->
+    @include('frontend.layouts.header')
     </header>
     <!--=============================
     DASHBOARD MENU START
@@ -150,13 +150,13 @@
                 event.preventDefault();
                 let deleteUrl = $(this).attr('href');
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có chắc không?',
+                    text: "Bạn sẽ không thể hoàn tác điều này!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     canceButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Đồng ý xóa!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
@@ -187,7 +187,7 @@
             })
         })
     </script>
-@stack('scripts')
+    @stack('scripts')
 </body>
 
 </html>

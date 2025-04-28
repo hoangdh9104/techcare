@@ -54,16 +54,10 @@
             name: "{{auth()->user()->name}}",
             image: "{{ asset(auth()->user()->image)}}",
         }
-
-
-
-    {{-- </script>  --}}
-
-
     </script>
 
 
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js','resources/js/admin.js'])
 </head>
 
 <body>
