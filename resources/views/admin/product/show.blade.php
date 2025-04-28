@@ -32,8 +32,8 @@
                         @endif
 
                         <tr>
-                            <th>Mã bảo hành:</th>
-                            <td>{{ $product->warranty_code  }}</td>
+                            <th>Thời gian bảo hành:</th>
+                            <td>{{ $product->warranty_duration }} Tháng</td>
                         </tr>
                         
                         <tr>

@@ -150,8 +150,6 @@
                                             <input name="quantity" type="hidden" min="1" max="100"
                                                 value="1" />
                                         </div>
-                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
-
                                     </form>
                                 </div>
                             </div>
@@ -223,7 +221,19 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 sản phẩm)</p>
+                                        @if ($product->qty > 0)
+                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                class="in_stock">Còn hàng</span>
+                                            ({{ $product->qty }}
+                                            sản phẩm)
+                                        </p>
+                                    @elseif($product->qty == 0)
+                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                class="in_stock">Hết hàng</span>
+                                            ({{ $product->qty }}
+                                            sản phẩm)
+                                        </p>
+                                    @endif
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                                 <del>{{ $product->price }} {{ $settings->currency_icon }}</del>

@@ -114,7 +114,7 @@
                                 <input class="form-check-input agree_term" type="checkbox" value=""
                                     id="flexCheckChecked3">
                                 <label class="form-check-label" for="flexCheckChecked3">
-                                    Tôi đã đọc và đồng ý với <a href="#">chính sách *</a> của cửa hàng
+                                    Tôi đã đọc và đồng ý với <a href="{{route('policy.index')}}">chính sách *</a> của cửa hàng
                                 </label>
                             </div>
                         </div>
