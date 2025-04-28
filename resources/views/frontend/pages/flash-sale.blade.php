@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                BREADCRUMB START
-                                                            ==============================-->
+                                                                    BREADCRUMB START
+                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                BREADCRUMB END
-                                                            ==============================-->
+                                                                    BREADCRUMB END
+                                                                ==============================-->
 
 
     <!--============================
-                                                                DAILY DEALS DETAILS START
-                                                            ==============================-->
+                                                                    DAILY DEALS DETAILS START
+                                                                ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -121,7 +121,7 @@
                                             @endif
                                         @endfor
 
-                                        <span>({{ count($product->reviews) }} Đánh giá sản  phẩm)</span>
+                                        <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
 
                                     </p>
                                     <a class="wsus__pro_name"
@@ -166,12 +166,12 @@
     </section>
 
     <!--============================
-                                                                DAILY DEALS DETAILS END
-                                                            ==============================-->
+                                                                    DAILY DEALS DETAILS END
+                                                                ==============================-->
 
     <!--==========================
-                                                                                  PRODUCT MODAL VIEW START
-                                                                                ===========================-->
+                                                                                      PRODUCT MODAL VIEW START
+                                                                                    ===========================-->
     @foreach ($flashSaleItems as $item)
         @php
             $product = \App\Models\Product::find($item->product_id);
@@ -222,18 +222,18 @@
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
                                         @if ($product->qty > 0)
-                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
-                                                class="in_stock">Còn hàng</span>
-                                            ({{ $product->qty }}
-                                            sản phẩm)
-                                        </p>
-                                    @elseif($product->qty == 0)
-                                        <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
-                                                class="in_stock">Hết hàng</span>
-                                            ({{ $product->qty }}
-                                            sản phẩm)
-                                        </p>
-                                    @endif
+                                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                    class="in_stock">Còn hàng</span>
+                                                ({{ $product->qty }}
+                                                sản phẩm)
+                                            </p>
+                                        @elseif($product->qty == 0)
+                                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                    class="in_stock">Hết hàng</span>
+                                                ({{ $product->qty }}
+                                                sản phẩm)
+                                            </p>
+                                        @endif
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                                                 <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
@@ -295,7 +295,8 @@
                                                 {{-- <h3>$50.00</h3> --}}
                                             </div>
                                             <ul class="wsus__button_area">
-                                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button></li>
+                                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                                </li>
                                                 <li><a class="buy_now" href="#">Mua ngay</a></li>
                                                 <li><a href="#" class="add_to_wishlist"
                                                         data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
@@ -315,8 +316,8 @@
     @endforeach
 
     <!--==========================
-                                                                                                              PRODUCT MODAL VIEW END
-                                                                                                            ===========================-->
+                                                                                                                  PRODUCT MODAL VIEW END
+                                                                                                                ===========================-->
 @endsection
 @push('scripts')
     <script>
