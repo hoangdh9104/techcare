@@ -240,7 +240,8 @@
                     method: 'POST',
                     data: {
                         quantity: quantity,
-                        rowId: rowId
+                        rowId: rowId,
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         if (data.status === 'success') {
@@ -274,7 +275,8 @@
                     method: 'POST',
                     data: {
                         quantity: quantity,
-                        rowId: rowId
+                        rowId: rowId,
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         if (data.status === 'success') {
