@@ -27,8 +27,6 @@
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
                                     <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                                 </p>
-                            @else
-                                <p class="wsus__price">{{ $product->price }} {{ $settings->currency_icon }}</p>
                             @endif
         
                             <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
