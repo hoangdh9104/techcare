@@ -41,16 +41,15 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative; height: 95vh;">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 98vh;">
                                                         <div class="wsus__chat_area_header">
-                                                            <h2 id="chat-inbox-title">Trò chuyện với Daniel Paul</h2>
+                                                            <h2 id="chat-inbox-title">Trò chuyện</h2>
                                                         </div>
-                                                        <div class="wsus__chat_area_body">
+                                                        <div class="wsus__chat_area_body" data-inbox ="">
 
                                                         </div>
                                                         <div class="wsus__chat_area_footer"
-                                                            style="margin-top: 50px;
-                                                         position: absolute;
+                                                            style="
                                                         width: 100%;
                                                         bottom: 0;">
                                                             <form id="message-form">
@@ -108,6 +107,9 @@
                 let receiverId = $(this).data('id');
                 let senderImage = $(this).find('img').attr('src'); // Lấy ảnh người dùng
                 let chatUserName = $(this).find('h4').text(); // Lấy username của người chat cùng
+
+                // Lấy id của người nhận
+                mainChatInbox.attr('data-inbox', receiverId);
 
                 $('#receiver_id').val(receiverId);
                 $.ajax({
@@ -191,6 +193,8 @@
                             </div>`;
 
                 mainChatInbox.append(message);
+                $('.message-box').val('');
+
                 scrollToBottom();
 
                 $.ajax({
@@ -202,7 +206,6 @@
                         formSubmitting = true;
                     },
                     success: function(response) {
-                        $('.message-box').val('');
 
                     },
                     error: function(xhr, status, error) {

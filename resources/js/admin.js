@@ -21,16 +21,17 @@ window.Echo.private('message.' + USER.id).listen(
 
         console.log(e);
         let mainChatBox = $('.chat-content');
-
-        var message = `<div class="chat-item chat-left" style=""><img style="height: 50px;
+        // Kiểm tra xem người gửi có phải là người dùng hiện tại không
+        if (mainChatBox.attr('data-inbox') == e.sender_id) {
+            var message = `<div class="chat-item chat-left" style=""><img style="height: 50px;
                         object-fit: cover;" src="${e.sender_image}">
                             <div class="chat-details">
                             <div class="chat-text">${e.message}</div>
                             <div class="chat-time">${formatDateTime(e.date_time)}</div>
                             </div>
                             </div>
-                            `;  
-
+                            `;
+        }
         mainChatBox.append(message);
         scrollToBottom()
     }
