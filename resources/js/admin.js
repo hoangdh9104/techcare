@@ -34,5 +34,13 @@ window.Echo.private('message.' + USER.id).listen(
         }
         mainChatBox.append(message);
         scrollToBottom()
+
+        // Thông báo người dùng tin nhắn mới
+        $('.chat-user-profile').each(function(){
+            let profileUserId = $(this).data('id');
+            if(profileUserId == e.sender_id){
+                $(this).find('img').addClass('msg-notification');
+            }
+        })
     }
 ) 
