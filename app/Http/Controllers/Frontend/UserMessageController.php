@@ -55,6 +55,9 @@ class UserMessageController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
+        // Đánh dấu tin nhắn đã đọc
+        Chat::where(['sender_id'=> $receiverId, 'receiver_id'=> $senderId ])->update(['seen' => 1]);
+
         return response($messages);
     }
 }

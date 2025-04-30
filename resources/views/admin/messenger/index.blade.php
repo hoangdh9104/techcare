@@ -20,9 +20,18 @@
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
                                 @foreach ($chatUsers as $chatUser)
+                                    @php
+                                        // Kiểm tra xem có tin nhắn chưa đọc hay không
+                                        // Nếu có = true, không = false
+                                        $unseenMessages = \App\Models\Chat::where([
+                                            'sender_id' => $chatUser->senderProfile->id,
+                                            'receiver_id' => auth()->user()->id,
+                                            'seen' => 0,
+                                        ])->exists();
+                                    @endphp
                                     <li class="media chat-user-profile" data-id="{{ $chatUser->senderProfile->id }}">
                                         <img alt="image" style="height: 50px; object-fit: cover;"
-                                            class="mr-3 rounded-circle" width="50"
+                                            class="mr-3 rounded-circle  {{ $unseenMessages ? 'msg-notification' : '' }}" width="50"
                                             src="{{ asset($chatUser->senderProfile->image) }}">
                                         <div class="media-body">
                                             <div class="mt-0 mb-1 font-weight-bold chat-user-name">
@@ -39,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="card chat-box" id="mychatbox" style="height: 70vh;">
+                    <div class="card chat-box d-none" id="mychatbox" style="height: 70vh;">
                         <div class="card-header">
                             <h4 id="chat-inbox-title">Tin nhắn</h4>
                         </div>
@@ -91,9 +100,11 @@
                 let receiverId = $(this).data('id');
                 let receiverImage = $(this).find('img').attr('src');
                 let chatUserName = $(this).find('.chat-user-name').text();
+                $(this).find('img').removeClass('msg-notification'); // Xóa thông báo khi đã đọc tin nhắn
+                $('.chat-box').removeClass('d-none');
                 // Lấy id của người nhận
                 mainChatInbox.attr('data-inbox', receiverId);
-                
+
                 // Gán giá trị cho input ẩn
                 $('#receiver_id').val(receiverId);
                 $.ajax({
@@ -183,12 +194,12 @@
                     error: function(xhr, status, error) {
                         toastr.error(xhr.responseJSON.message);
                         $('.send-button').prop('disabled',
-                        false); // Ẩn button và unsubmit khi gửi tin nhắn
+                            false); // Ẩn button và unsubmit khi gửi tin nhắn
                         formSubmitting = false;
                     },
                     complete: function() {
                         $('.send-button').prop('disabled',
-                        false); // Ẩn button và unsubmit khi gửi tin nhắn
+                            false); // Ẩn button và unsubmit khi gửi tin nhắn
                         formSubmitting = false;
                     }
                 })

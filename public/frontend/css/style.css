@@ -9719,3 +9719,11 @@ img.mr-3.rounded-circle{
   height: 50px;
   object-fit: cover;
 }
+.msg-notification{
+  border: 5px solid #0088cc !important;
+}
+.wsus__chat_area_footer{
+  width: 100% !important;
+  bottom: 0 !important;
+  position: absolute !important;
+}
