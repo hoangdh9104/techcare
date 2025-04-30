@@ -53,7 +53,7 @@
 
                             <p class="wsus__pro_rating">
 
-                              {{-- @php
+                                {{-- @php
                                 $avgRating = $product->reviews()->avg('rating');
                                 $fullRating = round($avgRating);
                               @endphp
@@ -67,7 +67,7 @@
                             @endfor
 
 
-                              
+
                                 <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span> --}}
 
                                 {{-- <span>({{count($product->reviews)}} review)</span> --}}
