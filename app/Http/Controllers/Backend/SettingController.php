@@ -44,7 +44,7 @@ class SettingController extends Controller
                 'time_zone' => $request->time_zone,
             ]
         );
-        toastr('Update successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công !', 'success', 'Success');
 
         return redirect()->back();
     }
@@ -68,7 +68,7 @@ class SettingController extends Controller
             ]
 
         );
-        toastr('Update successfully!', 'success', 'success');
+        toastr('Cập nhật thành công !', 'success', 'success');
 
         return redirect()->back();
     }
@@ -88,7 +88,7 @@ class SettingController extends Controller
             ['id' => 1],
             $validatedData,
         );
-        toastr('Update successfully!', 'success', 'success');
+        toastr('Cập nhật thành công !', 'success', 'success');
 
         return redirect()->back();
     }

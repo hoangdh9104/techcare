@@ -38,7 +38,7 @@ class UserMessageController extends Controller
         $message->message = $request->message;
         $message->save();
 
-        return response(['status' => 'success', 'message' => 'Message sent successfully']);
+        return response(['status' => 'success', 'message' => 'Gửi tin nhắn thành công !']);
     }
 
     public function getMessages(Request $request)
