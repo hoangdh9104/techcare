@@ -154,6 +154,58 @@
             </div>
         </div>
     </section>
+    <section id="wsus__available_coupons" class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-4 text-center text-uppercase" 
+                        style="font-weight: bold; color: #ff5722; background: linear-gradient(90deg, #ff7e5f, #feb47b); 
+                            padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i> 
+                        <span style="color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Danh sách mã giảm giá</span>
+                    </h4>
+                    <div class="wsus__coupon_list">
+                        @if ($coupons->isNotEmpty())
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th>Mã</th>
+                                            <th>Tên mã giảm giá</th>
+                                            <th>Giảm giá</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Ngày kết thúc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($coupons as $coupon)
+                                            <tr>
+                                                <td><strong>{{ $coupon->code }}</strong></td>
+                                                <td>{{ $coupon->name }}</td>
+                                                <td>
+                                                    @if ($coupon->discount_type === 'percent')
+                                                        {{ $coupon->discount }}%
+                                                    @else
+                                                        {{ number_format($coupon->discount, 0, ',', '.') }} VNĐ
+                                                    @endif
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($coupon->start_date)->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($coupon->end_date)->format('d/m/Y') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="alert alert-warning text-center">
+                                <strong>Không có mã giảm giá nào hiện tại.</strong>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 @push('scripts')
     <script>
@@ -329,6 +381,26 @@
                 })
             }
 
-        })
+            // Áp dụng mã giảm giá từ danh sách
+            $('.apply-coupon-btn').on('click', function() {
+                let couponCode = $(this).data('code');
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('apply-coupon') }}",
+                    data: { coupon_code: couponCode },
+                    success: function(data) {
+                        if (data.status === 'error') {
+                            toastr.error(data.message);
+                        } else if (data.status === 'success') {
+                            toastr.success(data.message);
+                            location.reload(); // Reload để cập nhật giá trị mới
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
     </script>
 @endpush

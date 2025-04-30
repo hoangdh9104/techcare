@@ -375,7 +375,7 @@
                                                         $isBrought = false;
                                                         $orders = \App\Models\Order::where([
                                                             'user_id' => auth()->user()->id,
-                                                            'order_status' => 'delivered',
+                                                            'order_status' => 'received',
                                                         ])->get();
                                                         foreach ($orders as $key => $order) {
                                                             $existItem = $order
