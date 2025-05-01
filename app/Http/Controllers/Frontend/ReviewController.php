@@ -28,9 +28,13 @@ class ReviewController extends Controller
             'images.*' => ['image']
         ]);
 
-        $checkReviewExist = ProductReview::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->first();
+        $checkReviewExist = ProductReview::where([
+            'product_id' => $request->product_id, // Sửa 'order_status' thành 'product_id'
+            'user_id' => Auth::user()->id
+        ])->first();
+
         if ($checkReviewExist) {
-            toastr('Bạn đã đánh giá sản phẩm !', 'error', 'error');
+            toastr('Bạn đã thêm đánh giá cho sản phẩm này!', 'error', 'Lỗi');
             return redirect()->back();
         }
 
@@ -56,7 +60,7 @@ class ReviewController extends Controller
             }
         }
 
-        toastr('Đã gửi đánh giá !', 'success', 'success');
+        toastr('Đánh giá đã được gửi thành công', 'thành công', 'thành công');
 
         return redirect()->back();
     }

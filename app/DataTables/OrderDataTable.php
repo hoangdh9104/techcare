@@ -38,7 +38,7 @@ class OrderDataTable extends DataTable
                 return date('d-M-Y', strtotime($query->created_at));
             })
             ->addColumn('payment_status', function ($query) {
-                if ($query->payment_status === 0 && $query->order_status === 'canceled') {
+                if ($query->payment_status === 0 && $query->order_status === 'canceled' && $query->payment_method !== 'COD') {
                     return "<span class='badge bg-info'>Đang chờ hoàn tiền</span>";
                 } elseif ($query->payment_status === 2) {
                     return "<span class='badge bg-info'>Đã hoàn tiền</span>";

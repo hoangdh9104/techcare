@@ -116,7 +116,6 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-
                             {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
                                 item)
                             </p>
@@ -170,7 +169,8 @@
                         <div class="variant-details">
                             <h4>{{ $product->variant_name }}</h4>
                             {{-- <p>Mã bảo hành: <span class="text-danger">{{ $product->warranty_code }}</span></p> --}}
-                            <p>Thời gian bảo hành: <span class="text-danger">{{ $product->warranty_duration }} tháng</span></p>
+                            <p>Thời gian bảo hành: <span class="text-danger">{{ $product->warranty_duration }}
+                                    tháng</span></p>
                             {{-- <p>Ngày hết hạn bảo hành: <span class="text-danger">{{ $product->warranty_expiration_date->format('d/m/Y') }}</span></p> --}}
                         </div>
                         <form class="shopping-cart-form" action="">
@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quantity :</h5>
+                                <h5>Số lượng :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
@@ -375,7 +375,7 @@
                                                         $isBrought = false;
                                                         $orders = \App\Models\Order::where([
                                                             'user_id' => auth()->user()->id,
-                                                            'order_status' => 'delivered',
+                                                            'order_status' => 'received',
                                                         ])->get();
                                                         foreach ($orders as $key => $order) {
                                                             $existItem = $order
@@ -403,7 +403,8 @@
                                                                         <div class="wsus__single_com mb-4">
                                                                             <select name="rating" id=""
                                                                                 class="form-control">
-                                                                                <option value="">Vui lòng chọn</option>
+                                                                                <option value="">Vui lòng chọn
+                                                                                </option>
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -431,7 +432,7 @@
                                                                 <input type="hidden" name="vendor_id"
                                                                     value="{{ $product->vendor_id }}">
                                                                 <button class="common_btn" type="submit">Xác nhận
-                                                                    </button>
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     @endif

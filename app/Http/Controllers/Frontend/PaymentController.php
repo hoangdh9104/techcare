@@ -39,9 +39,10 @@ class PaymentController extends Controller
         // Kiểm tra tổng giá trị đơn hàng
         $totalAmount = getFinalPayableAmount();
         $isOver30Million = $totalAmount > 30000000;
+        $isOver50Million = $totalAmount > 50000000;
 
         // Lấy các cài đặt thanh toán
-        $momoSetting = MomoSetting::first();
+        $momoSetting = $isOver50Million ? null : MomoSetting::first();
         $vnpaySetting = VnpaySetting::first();
         $codSetting = $isOver30Million ? null : CodSetting::first(); // Ẩn COD nếu đơn hàng > 30 triệu
 
@@ -49,7 +50,7 @@ class PaymentController extends Controller
             return redirect()->route('user.checkout');
         }
 
-        return view('frontend.pages.payment', compact('momoSetting', 'codSetting', 'vnpaySetting', 'isOver30Million'));
+        return view('frontend.pages.payment', compact('momoSetting', 'codSetting', 'vnpaySetting', 'isOver30Million','isOver50Million'));
     }
 
     public function paymentSuccess()
