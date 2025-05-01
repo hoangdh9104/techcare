@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" name="contact_address" value="{{@$generalSettings->contact_address}}">
             </div>
             <div class="form-group">
-                <label>Google Map Url</label>
+                <label>Google Map</label>
                 <input type="text" class="form-control" name="map" value="{{@$generalSettings->map}}">
             </div>
             <hr>
