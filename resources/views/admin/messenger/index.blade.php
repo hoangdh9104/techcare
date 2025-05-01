@@ -15,7 +15,7 @@
                 <div class="col-md-3">
                     <div class="card" style="height: 70vh;">
                         <div class="card-header">
-                            <h4>Ai đang trực tuyến ?</h4>
+                            <h4>Danh sách tin nhắn</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">
