@@ -116,14 +116,6 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
-                                item)
-                            </p>
-                        @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
-                                item) --}}
-
-
                             <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
                                     class="in_stock">Còn hàng</span>
                                 ({{ $product->qty }}
@@ -134,7 +126,6 @@
                                     class="in_stock">Hết hàng</span>
                                 ({{ $product->qty }}
                                 sản phẩm)
-
                             </p>
                         @endif
                         @if (checkDiscount($product))
@@ -213,7 +204,6 @@
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
                                 </div>
-                                {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
 

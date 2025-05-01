@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                        BREADCRUMB START
-                                                                    ==============================-->
+                                                                            BREADCRUMB START
+                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                        BREADCRUMB END
-                                                                    ==============================-->
+                                                                            BREADCRUMB END
+                                                                        ==============================-->
 
 
     <!--============================
-                                                                        DAILY DEALS DETAILS START
-                                                                    ==============================-->
+                                                                            DAILY DEALS DETAILS START
+                                                                        ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -163,12 +163,12 @@
     </section>
 
     <!--============================
-                                                                            DAILY DEALS DETAILS END
-                                                                        ==============================-->
+                                                                                DAILY DEALS DETAILS END
+                                                                            ==============================-->
 
     <!--==========================
-                                                                                              PRODUCT MODAL VIEW START
-                                                                                            ===========================-->
+                                                                                                  PRODUCT MODAL VIEW START
+                                                                                                ===========================-->
     @foreach ($flashSaleItems as $item)
         @php
             $product = \App\Models\Product::find($item->product_id);
@@ -313,8 +313,8 @@
     @endforeach
 
     <!--==========================
-                                                                                                                          PRODUCT MODAL VIEW END
-                                                                                                                        ===========================-->
+                                                                                                                              PRODUCT MODAL VIEW END
+                                                                                                                            ===========================-->
 @endsection
 @push('scripts')
     <script>
