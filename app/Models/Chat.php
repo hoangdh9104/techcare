@@ -10,6 +10,10 @@ class Chat extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'seen',
+    ];
+
     public function receiverProfile(): BelongsTo
     {
         return $this->belongsTo(User::class, 'receiver_id', 'id')->select(['id', 'name', 'image']);

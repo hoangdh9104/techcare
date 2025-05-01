@@ -52,21 +52,22 @@ function productType($type)
 {
     switch ($type) {
         case 'new_arrival':
-            return 'New';
+            return 'Hàng mới về';
             break;
         case 'featured_product':
-            return 'Featured';
+            return 'Sản phẩm nổi bật'; // Sản phẩm muốn quảng bá
             break;
         case 'top_product':
-            return 'Top';
+            return 'Sản phẩm bán chạy';
             break;
         case 'best_product':
-            return 'Best';
+            return 'Sản phẩm tốt nhất';
             break;
         default:
-            return '';
+            return 'Không có';
             break;
     }
+
 }
 
 // lấy tổng giá sản phẩm ở giỏ hàng
