@@ -208,5 +208,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
     Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });
-//chính sách 
+//chính sách
 Route::get('/policy', [PolicyController::class, 'index'])->name('policy.index');
+/** Products route */
+Route::get('show-product-modal/{id}', [HomeController::class, 'ShowProductModal'])->name('show-product-modal');
