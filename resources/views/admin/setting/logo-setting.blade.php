@@ -18,7 +18,7 @@
                     <input type="file" class="form-control" name="favicon" value="">
                     <input type="hidden" class="form-control" name="old_favicon" value="{{@$logoSetting->favicon}}">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
             </form>
            </div>
        </div>

@@ -457,9 +457,10 @@
                             <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
                         <button type="submit" class="btn btn-primary mt-4 send-button">Gửi</button>
-                    </form>
-                </div>
 
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
@@ -484,21 +485,25 @@
                 data: formData,
                 beforeSend: function() {
                     let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
-                                     Sending...`
+                                     Đang gửi tin nhắn...`
                     $('.send-button').html(html);
                     $('.send-button').prop('disabled', true);
                 },
                 success: function(response) {
                     $('.message-box').val('');
-                    toastr.success(response.message);
+                    $('.modal-body').append(`
+                    <div class="mt-2"><a href="{{ route('user.messages.index') }}" class="btn btn-success text-light">Đi đến
+                            trang tin nhắn</a></div>
+                    `);
+                    toastr.success('Đã gửi tin nhắn thành công');
                 },
                 error: function(xhr, status, error) {
                     toastr.error(xhr.responseJSON.message);
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
                 },
                 complete: function() {
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
 
                 }
