@@ -13,7 +13,7 @@
                                     <div class="wsus__chatlist d-flex align-items-start">
                                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                             aria-orientation="vertical">
-                                            <h2>Danh sách người bán</h2>
+                                            <h2>Danh sách tin nhắn</h2>
                                             <div class="wsus__chatlist_body">
                                                 @foreach ($chatUsers as $chatUser)
                                                     @php

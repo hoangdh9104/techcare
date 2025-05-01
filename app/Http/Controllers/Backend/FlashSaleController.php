@@ -41,7 +41,7 @@ class FlashSaleController extends Controller
             'show_at_home' => ['required', Rule::in(0, 1)],
             'status' => ['required', Rule::in(0, 1)],
         ], [
-            'product.unique' => 'Sản ohaamr đang được bán với giá đặc biệt.'
+            'product.unique' => 'Sản phẩm đang được bán với giá đặc biệt.'
         ]);
 
         $flashSaleDate = FlashSale::first();

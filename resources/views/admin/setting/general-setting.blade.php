@@ -5,11 +5,11 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label>Tên trang web</label>
+                <label>Tên trang</label>
                 <input type="text" class="form-control" name="site_name" value="{{@$generalSettings->site_name}}">
             </div>
             <div class="form-group">
-                <label>Layout</label>
+                <label>Bố cục</label>
                <select name="layout" id="" class="form-control">
                 <option {{@$generalSettings->layout == 'LTR' ? 'selected' : ''}}  value="LTR">LTR</option>
                 <option {{@$generalSettings->layout == 'RTL' ? 'selected' : ''}}  value="RTL">RTL</option>
@@ -20,12 +20,12 @@
                 <input type="text" class="form-control" name="contact_email" value="{{@$generalSettings->contact_email}}">
             </div>
             <div class="form-group">
-                <label>Số điện thoại liên hệ</label>
+                <label>SĐT liên hệ</label>
                 <input type="tel" class="form-control" name="contact_phone" value="{{@$generalSettings->contact_phone}}">
             </div>
             <div class="form-group">
 
-                <label>Địa chỉ liên hệ</label>
+                <label>Địa chỉ</label>
                 <input type="text" class="form-control" name="contact_address" value="{{@$generalSettings->contact_address}}">
             </div>
             <div class="form-group">
@@ -35,7 +35,7 @@
             <hr>
             <div class="form-group">
 
-                <label>Tiền tệ mặc định</label>
+                <label>Tiền tệ</label>
                 <select name="currency_name" id="" class="form-control select2">
                     <option value="">Select</option>
                     @foreach (config('settings.currecy_list') as $currency)
@@ -45,7 +45,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Đơn vị tiền tệ</label>
+                <label>Biểu tượng tiền tệ</label>
                 <input type="text" class="form-control" name="currency_icon" value="{{@$generalSettings->currency_icon}}">
             </div>
             <div class="form-group">
