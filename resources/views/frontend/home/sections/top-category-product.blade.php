@@ -1,4 +1,3 @@
-
 @php
     $popularCategories = json_decode($popularCategory->value, true);
     // dd($popularCategories)
@@ -51,18 +50,19 @@
 
                                 if ($keyName === 'category') {
                                     $category = \App\Models\Category::find($lastKey['category']);
-                                    $products[] = \App\Models\Product::with('reviews')->where('category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
                                 } elseif ($keyName === 'sub_category') {
                                     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                                    $products[] = \App\Models\Product::with('reviews')->where('sub_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('sub_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
                                 } else {
-
                                     // Kiểm tra $lastKey['child_category'] có tồn tại không
                                     if (!isset($lastKey['child_category'])) {
                                         dd("Không tìm thấy key 'child_category' trong mảng lastKey");
@@ -77,7 +77,8 @@
                                     }
 
                                     // Truy vấn sản phẩm
-                                    $products[] = \App\Models\Product::with('reviews')->where('child_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('child_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
@@ -111,13 +112,13 @@
 
                                             @for ($i = 1; $i <= 5; $i++)
                                                 @if ($i <= $fullRating)
-                                                <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
                                                 @else
-                                                <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
                                                 @endif
                                             @endfor
 
-                                            <span>({{count($item->reviews)}} Đánh giá sản phẩm)</span>
+                                            <span>({{ count($item->reviews) }} Đánh giá sản phẩm)</span>
 
                                         </p>
                                         @if (checkDiscount($item))
