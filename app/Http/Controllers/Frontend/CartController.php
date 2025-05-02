@@ -232,22 +232,7 @@ class CartController extends Controller
             'message' => 'Đã thêm vào giỏ hàng thành công!'
         ]);
     }
-    // update product qty
-    // public function updateProductQty(Request $request)
-    // {
-    //     // dd($request->all());
-    //     // check product qty
-    //     $product_id = Cart::get($request->rowId)->id;
-    //     $product = Product::findOrFail($product_id);
-    //     if ($product->qty == 0) {
-    //         return response(['status' => "error", 'message' => 'Sản phẩm đã hết hàng!']);
-    //     } elseif ($product->qty < $request->quantity) {
-    //         return response(['status' => "error", 'message' => 'Số lượng hiện không có sẵn trong kho của chúng tôi!']);
-    //     }
-    //     Cart::update($request->rowId, $request->quantity); // Will update the quantity
-    //     $productTotal = $this->getProductTotal($request->rowId);
-    //     return response(['status' => 'success', 'message' => 'Số lượng sản phẩm được cập nhật', 'productTotal' => $productTotal]);
-    // }
+    
     public function updateProductQty(Request $request)
     {
         // Kiểm tra dữ liệu trong request

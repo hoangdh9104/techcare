@@ -240,7 +240,8 @@
                     method: 'POST',
                     data: {
                         quantity: quantity,
-                        rowId: rowId
+                        rowId: rowId,
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         if (data.status === 'success') {
@@ -249,6 +250,7 @@
                                 .productTotal + "{{ $settings->currency_icon }}"
                             $(productId).text(totaAmount)
                             renderCartSubTotal()
+                            calculateCouponDescount()
                             toastr.success(data.message)
                         } else if (data.status == 'error') {
                             toastr.error(data.message)
@@ -273,7 +275,8 @@
                     method: 'POST',
                     data: {
                         quantity: quantity,
-                        rowId: rowId
+                        rowId: rowId,
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         if (data.status === 'success') {
@@ -298,8 +301,8 @@
                 e.preventDefault();
                 Swal.fire({
                     title: 'Bạn có chắc không?',
-                    text: "This action will clear your cart!",
-                    icon: 'Hành động này sẽ xóa giỏ hàng của bạn!',
+                    text: "Hành động này sẽ xóa giỏ hàng của bạn!",
+                    icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -367,10 +370,10 @@
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status === 'success') {
-                            $('#discount') + data.discount.text('{{ $settings->currency_icon }}');
-                            $('#cart_total') + data.cart_total.text('{{ $settings->currency_icon }}');
+                            // console.log(data);
+                            $('#discount').text(data.discount + '{{ $settings->currency_icon }}')
+                            $('#cart_total').text(data.cart_total + '{{ $settings->currency_icon }}')
                         }
-
                     },
                     error: function(data) {
                         console.log(data);
@@ -385,6 +388,7 @@
                     method: 'GET',
                     url: "{{ route('apply-coupon') }}",
                     data: { coupon_code: couponCode },
+
                     success: function(data) {
                         if (data.status === 'error') {
                             toastr.error(data.message);

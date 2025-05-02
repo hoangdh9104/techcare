@@ -28,14 +28,14 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
 
-     {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
-     @if($settings->layout == 'RTL')
-     <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
-     @endif
+    {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
+    @if ($settings->layout == 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    @endif
 
-     {{-- Pusher --}}
+    {{-- Pusher --}}
 
-     @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -56,44 +56,17 @@
     <!--============================
         MAIN MENU END
     ==============================-->
-
-
-
-
-
-    <!--==========================
-        POP UP START
-    ===========================-->
-    <!-- <section id="wsus__pop_up">
-        <div class="wsus__pop_up_center">
-            <div class="wsus__pop_up_text">
-                <span id="cross"><i class="fas fa-times"></i></span>
-                <h5>get up to <span>75% off</span></h5>
-                <h2>Sign up to E-SHOP</h2>
-                <p>Subscribe to the <b>E-SHOP</b> market newsletter to receive updates on special offers.</p>
-                <form>
-                    <input type="email" placeholder="Your Email" class="news_input">
-                    <button type="submit" class="common_btn">go</button>
-                    <div class="wsus__pop_up_check_box">
-                    </div>
-                </form>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11">
-                    <label class="form-check-label" for="flexCheckDefault11">
-                        Don't show this popup again
-                    </label>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!--==========================
-        POP UP END
-    ===========================-->
-
     {{-- main content start --}}
     @yield('content')
     {{-- main content end --}}
-
+    <section class="product_popup_modal">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content product-modal-content">
+                </div>
+            </div>
+        </div>
+    </section>
     <!--============================
         FOOTER PART START
     ==============================-->
@@ -182,13 +155,13 @@
                 let deleteUrl = $(this).attr('href');
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có chắc không? ',
+                    text: "Bạn sẽ không thể hoàn tác điều này!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Đồng ý xóa!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
@@ -196,10 +169,10 @@
                             url: deleteUrl,
                             success: function(data) {
                                 if (data.status == 'success') {
-                                    Swal.fire('Deleted!', data.message, 'success');
+                                    Swal.fire('Đã xóa!', data.message, 'success');
                                     window.location.reload();
                                 } else if (data.status == 'error') {
-                                    Swal.fire('Cant Delete', data.message, 'error');
+                                    Swal.fire('Không thể xóa', data.message, 'error');
                                 }
                             },
                             error: function(xhr, status, error) {

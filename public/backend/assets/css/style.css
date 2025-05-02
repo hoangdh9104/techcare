@@ -2816,3 +2816,6 @@ img.mr-3.rounded-circle{
   height: 50px !important;
   object-fit: cover !important;
 }
+.msg-notification{
+  border: 5px solid #0088cc !important;
+}

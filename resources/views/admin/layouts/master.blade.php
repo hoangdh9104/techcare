@@ -54,16 +54,14 @@
             name: "{{auth()->user()->name}}",
             image: "{{ asset(auth()->user()->image)}}",
         }
-
-
-
-    {{-- </script>  --}}
-
-
+        const PUSHER = {
+            key: "{{ $pusherSetting->pusher_key }}",
+            cluster: "{{ $pusherSetting->pusher_cluster }}",
+        }
     </script>
 
 
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js','resources/js/admin.js'])
 </head>
 
 <body>
