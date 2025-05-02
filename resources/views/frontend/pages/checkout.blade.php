@@ -164,6 +164,7 @@
                                         <div class="wsus__check_single_form">
                                             <select class="select_2" name="country">
                                                 <option value="AL">Quốc gia</option>
+                                                
                                                 @foreach (config('settings.country_list') as $key => $country)
                                                     <option {{ $country == old('country') ? 'selected' : '' }}
                                                         value="{{ $key }}">

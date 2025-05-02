@@ -107,7 +107,7 @@ class ProductController extends Controller
     $product->status = $request->status;
     $product->warranty_code = $request->warranty_code;
     $product->warranty_duration = $request->warranty_duration;
-    $product->warranty_dwarranty_expiration_dateuration = $request->warranty_expiration_date;
+    $product->warranty_expiration_date = $request->warranty_expiration_date;
     
 
     // Xác định ngày hết hạn bảo hành

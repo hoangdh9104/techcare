@@ -159,6 +159,7 @@ class CheckOutController extends Controller
 
     public function createAddress(Request $request)
     {
+        //  dd($request->all());
         $request->validate([
             'name' => ['required', 'max:200'],
             'phone' => ['required', 'max:200'],
