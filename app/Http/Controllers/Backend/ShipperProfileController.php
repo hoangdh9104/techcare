@@ -53,7 +53,7 @@ class ShipperProfileController extends Controller
 
         $profile = Shipper::where('user_id', Auth::id())->first();
         if (!$profile) {
-            return redirect()->back()->with('error', 'Profile not found.');
+            return redirect()->back()->with('error', 'Không tìm thấy hồ sơ.');
         }
 
         // Xử lý upload ảnh banner
@@ -80,6 +80,6 @@ class ShipperProfileController extends Controller
         // Cập nhật thông tin profile
         $profile->update($request->except('banner'));
 
-        return redirect()->back()->with('success', 'Profile updated successfully!');
+        return redirect()->back()->with('success', 'Cập nhật hồ sơ thành công !');
     }
 }

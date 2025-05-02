@@ -2,12 +2,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Cài đặt</h1>
-            {{-- <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Components</a></div>
-                <div class="breadcrumb-item">Table</div>
-            </div> --}}
+            <h1>Slider</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Trang chủ</a></div>
+                <div class="breadcrumb-item"><a href="#">Cài đặt chung</a></div>
+                <div class="breadcrumb-item">Cài đặt</div>
+            </div>
         </div>
 
         <div class="section-body">
@@ -20,13 +20,13 @@
                                 <div class="col-2">
                                     <div class="list-group" id="list-tab" role="tablist">
                                         <a class="list-group-item list-group-item-action active" id="list-home-list"
-                                            data-toggle="list" href="#list-home" role="tab">General Setting</a>
+                                            data-toggle="list" href="#list-home" role="tab">Cài đặt chung</a>
                                         <a class="list-group-item list-group-item-action" id="list-profile-list"
-                                            data-toggle="list" href="#list-profile" role="tab">Profile</a>
+                                            data-toggle="list" href="#list-profile" role="tab">Hồ sơ</a>
                                         <a class="list-group-item list-group-item-action" id="list-messages-list"
-                                            data-toggle="list" href="#list-messages" role="tab">Logo and Favicon</a>
+                                            data-toggle="list" href="#list-messages" role="tab">Logo và Favicon</a>
                                         <a class="list-group-item list-group-item-action" id="list-pusher-list"
-                                            data-toggle="list" href="#pusher-setting" role="tab">Pusher Settings</a>
+                                            data-toggle="list" href="#pusher-setting" role="tab">Cài đặt Pusher</a>
                                     </div>
                                 </div>
                                 <div class="col-8">

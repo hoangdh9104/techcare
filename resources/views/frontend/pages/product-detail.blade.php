@@ -116,14 +116,6 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-                            {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
-                                item)
-                            </p>
-                        @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
-                                item) --}}
-
-
                             <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
                                     class="in_stock">Còn hàng</span>
                                 ({{ $product->qty }}
@@ -134,7 +126,6 @@
                                     class="in_stock">Hết hàng</span>
                                 ({{ $product->qty }}
                                 sản phẩm)
-
                             </p>
                         @endif
                         @if (checkDiscount($product))
@@ -213,7 +204,6 @@
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
                                 </div>
-                                {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
 
@@ -467,9 +457,10 @@
                             <input type="hidden" name="receiver_id" value="{{ $product->user_id }}">
                         </div>
                         <button type="submit" class="btn btn-primary mt-4 send-button">Gửi</button>
-                    </form>
-                </div>
 
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
@@ -494,21 +485,25 @@
                 data: formData,
                 beforeSend: function() {
                     let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
-                                     Sending...`
+                                     Đang gửi tin nhắn...`
                     $('.send-button').html(html);
                     $('.send-button').prop('disabled', true);
                 },
                 success: function(response) {
                     $('.message-box').val('');
-                    toastr.success(response.message);
+                    $('.modal-body').append(`
+                    <div class="mt-2"><a href="{{ route('user.messages.index') }}" class="btn btn-success text-light">Đi đến
+                            trang tin nhắn</a></div>
+                    `);
+                    toastr.success('Đã gửi tin nhắn thành công');
                 },
                 error: function(xhr, status, error) {
                     toastr.error(xhr.responseJSON.message);
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
                 },
                 complete: function() {
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
 
                 }

@@ -44,7 +44,7 @@ return [
         ],
 
         'processed_and_ready_to_ship' => [
-            'status' => 'Đã xử lý ',
+            'status' => 'Đã xác nhận ',
             'details' => 'Đơn hàng đã được xử lý .'
         ],
         'dropped_off' => [

@@ -49,7 +49,6 @@
             </div> --}}
             <div class="col-xl-4 col-sm-7 col-md-8 col-lg-5">
                 <div class="wsus__footer_content wsus__footer_content_2">
-<<<<<<< HEAD
                     <h3>Đăng kí để nhận thông báo mới nhất</h3>
                     <p>Get all the latest information on Events, Sales and Offers.
                         Get all the latest information on Events.</p>
@@ -61,17 +60,6 @@
                         <p>We're using safe payment for :</p>
                         <img src="{{ asset('public/uploads/nvnpay.png') }}" alt="">
                         <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid">
-=======
-                    <h3>Đăng ký nhận bản tin của chúng tôi</h3>
-                    <p>Nhận tất cả thông tin mới nhất về Sự kiện, Khuyến mại và Ưu đãi. Nhận tất cả thông tin mới nhất về Sự kiện.</p>
-                    <form>
-                        <input type="text" placeholder="Tìm kiếm...">
-                        <button type="submit" class="common_btn">Đặt mua</button>
-                    </form>
-                    <div class="footer_payment">
-                        <p>Chúng tôi đang sử dụng phương thức thanh toán an toàn cho:</p>
-                        {{-- <img src="{{asset('frontend/images/credit2.png')}}" alt="card" class="img-fluid"> --}}
->>>>>>> a34aab96392e0355b1316da49c15a86784fc8ecc
                     </div>
                 </div>
             </div>

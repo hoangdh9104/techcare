@@ -47,7 +47,7 @@ class PageController extends Controller
 
         Mail::to($setting->email)->send(new Contact($request->subject, $request->message, $request->email));
 
-        return response(['status' => 'success', 'message' => 'Mail sent successfully!']);
+        return response(['status' => 'success', 'message' => 'Đã gửi mail thành công !']);
 
     }
 }

@@ -36,7 +36,7 @@ class UserProfileController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->save();
-        toastr()->success('Profile Updated Successfully!');
+        toastr()->success('Cập nhật hồ sơ thành công !');
         return redirect()->back();
     }
     public function updatePassword(Request $request)
@@ -51,7 +51,7 @@ class UserProfileController extends Controller
             // mã hóa mật khẩu
             'password' => bcrypt($request->password),
         ]);
-        toastr()->success('Profile Password Updated Successfully!');
+        toastr()->success('Cập nhật mật khẩu cho hồ sơ thành công !');
         return redirect()->back();
     }
 }

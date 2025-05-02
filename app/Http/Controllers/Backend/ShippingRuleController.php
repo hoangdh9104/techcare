@@ -145,7 +145,7 @@ class ShippingRuleController extends Controller
         $shipping = ShippingRule::findOrFail($id);
         $shipping->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'message' => 'Xóa thành công !']);
     }
     public function changeStatus(Request $request)
     {
@@ -153,6 +153,6 @@ class ShippingRuleController extends Controller
         $shipping->status = $request->status;
         $shipping->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Cập nhật trang thái!']);
     }
 }

@@ -22,9 +22,13 @@
 
             {{-- Manage Website --}}
             <li
-                class="dropdown {{ setActive(['admin.slider.*', 'admin.vendor-condition.index', 'admin.about.index', 'admin.terms-and-conditions.index']) }}">
-
-            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
+                class="dropdown {{ setActive([
+                    'admin.slider.*',
+                    'admin.home-page-setting',
+                    'admin.about.index',
+                    'admin.terms-and-conditions.index',
+                    'admin.home-page-setting',
+                ]) }}">
 
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-eye"></i>
                     <span>Giao diện trang web</span></a>
@@ -48,7 +52,7 @@
                     <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
                             href="{{ route('admin.home-page-setting') }}">Danh mục</a></li>
 
-                   
+
                 </ul>
             </li>
             {{-- Manage Blog --}}

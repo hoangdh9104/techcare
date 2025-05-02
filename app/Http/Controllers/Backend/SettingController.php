@@ -39,12 +39,15 @@ class SettingController extends Controller
                 'site_name' => $request->site_name,
                 'layout' => $request->layout,
                 'contact_email' => $request->contact_email,
+                'contact_phone' => $request->contact_phone,
+                'contact_address' => $request->contact_address,
+                'map' => $request->map,
                 'currency_name' => $request->currency_name,
                 'currency_icon' => $request->currency_icon,
                 'time_zone' => $request->time_zone,
             ]
         );
-        toastr('Update successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công !', 'success', 'Success');
 
         return redirect()->back();
     }
@@ -68,7 +71,7 @@ class SettingController extends Controller
             ]
 
         );
-        toastr('Update successfully!', 'success', 'success');
+        toastr('Cập nhật thành công !', 'success', 'success');
 
         return redirect()->back();
     }
@@ -88,7 +91,7 @@ class SettingController extends Controller
             ['id' => 1],
             $validatedData,
         );
-        toastr('Update successfully!', 'success', 'success');
+        toastr('Cập nhật thành công !', 'success', 'success');
 
         return redirect()->back();
     }

@@ -203,12 +203,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 });
 //chính sách
 Route::get('/policy', [PolicyController::class, 'index'])->name('policy.index');
-
-Route::get('/test-db', function() {
-    try {
-        DB::connection()->getPdo();
-        return "Kết nối thành công đến MySQL!";
-    } catch (\Exception $e) {
-        return "Lỗi kết nối MySQL: " . $e->getMessage();
-    }
-});
+/** Products route */
+Route::get('show-product-modal/{id}', [HomeController::class, 'ShowProductModal'])->name('show-product-modal');
