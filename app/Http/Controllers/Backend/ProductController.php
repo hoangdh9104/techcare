@@ -26,6 +26,8 @@ class ProductController extends Controller
      */
     public function index(ProductDataTable $dataTable)
     {
+        // dd(env('DB_USERNAME'));
+        // dd(config('database.connections.mysql.username'));
 
         return $dataTable->render('admin.product.index');
     }
@@ -349,11 +351,18 @@ class ProductController extends Controller
         $childCategories = ChildCategory::where('sub_category_id', $request->id)->get();
         return $childCategories;
     }
+    // public function changeStatus(Request $request)
+    // {
+    //     $product = Product::findOrFail($request->id);
+    //     $product->status = $request->status;
+    //     $product->save();
+    //     return response(['message' => 'Trạng thái đã được cập nhật!']);
+    // }
     public function changeStatus(Request $request)
-    {
-        $product = Product::findOrFail($request->id);
-        $product->status = $request->status;
-        $product->save();
-        return response(['message' => 'Trạng thái đã được cập nhật!']);
-    }
+{
+    $product = Product::findOrFail($request->id);
+    $product->update(['status' => $request->status]);
+
+    return response()->json(['message' => 'Đã cập nhật trạng thái']);
+}
 }

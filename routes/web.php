@@ -36,6 +36,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\VNPayController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Models\ProductReview;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -200,5 +201,14 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
     Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });
-//chính sách 
+//chính sách
 Route::get('/policy', [PolicyController::class, 'index'])->name('policy.index');
+
+Route::get('/test-db', function() {
+    try {
+        DB::connection()->getPdo();
+        return "Kết nối thành công đến MySQL!";
+    } catch (\Exception $e) {
+        return "Lỗi kết nối MySQL: " . $e->getMessage();
+    }
+});
