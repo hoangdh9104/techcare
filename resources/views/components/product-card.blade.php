@@ -4,9 +4,8 @@
             <div class="wsus__product_item">
                 <span class="wsus__new">{{ productType($product->product_type) }}</span>
                 @if (checkDiscount($product))
-                    <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                        <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
-                    </p>
+                    <span
+                        class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                 @endif
 
                 <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
