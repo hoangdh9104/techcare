@@ -193,9 +193,9 @@
                                                             @endif
                                                         @endfor
 
-            
+
                                                         <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
-            
+
 
 
                                                         {{-- <span>({{count($product->reviews)}} review)</span> --}}
@@ -230,14 +230,14 @@
                                                             <input name="quantity" type="hidden" min="1"
                                                                 max="100" value="1" />
                                                         </div>
-                                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                                        {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                                     </form>
                                                 </div>
                                                 @if (count($products) === 0)
                                                     <div class = "text-center mt-5">
                                                         <div class="card">
                                                             <div class="card-body">
-                                                                <h2>Không thaays sản phẩm !</h2>
+                                                                <h2>Không tìm thấy sản phẩm !</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -282,7 +282,7 @@
                                                             @endif
                                                         @endfor
 
-                                                        <span>({{count($product->reviews)}} review)</span>
+                                                        <span>({{count($product->reviews)}} Đánh giá)</span>
 
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
@@ -314,7 +314,7 @@
                                                                 <input name="quantity" type="hidden" min="1"
                                                                     max="100" value="1" />
                                                             </div>
-                                                            <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button>
+                                                            {{-- <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button> --}}
                                                         </form>
                                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
                                                         <li><a href="#"><i class="far fa-random"></i></a></li>
@@ -441,7 +441,7 @@
                                                 <input name="quantity" type="hidden" min="1" max="100"
                                                     value="1" />
                                             </div>
-                                            <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                            {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                             <ul class="wsus__button_area">
                                                 <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
                                                 <li><a href="#" class="buy_now">Mua ngay</a></li>
