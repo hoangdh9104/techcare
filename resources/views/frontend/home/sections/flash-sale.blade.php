@@ -18,7 +18,7 @@
                 // dd($flashSaleItems);
                 $products = \App\Models\Product::withAvg('reviews', 'rating')
                     ->withCount('reviews')
-                    ->with(['category', 'productImageGalleries', 'reviews'])
+                    ->with(['category', 'productImageGalleries'])
                     ->whereIn('id', $flashSaleItems)
                     ->get();
                 // Sản phẩm đã được tải trước và thỏa mãn điều kiện
