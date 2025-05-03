@@ -95,10 +95,10 @@
                                 href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                             @if (checkDiscount($product))
                                 <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                    <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                    <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                 </p>
                             @else
-                                <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                                <p class="wsus__price">{{ $product->price }} {{ $settings->currency_icon }}</p>
                             @endif
                             {{-- <form class="shopping-cart-form" action="">
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -196,10 +196,10 @@
                                     <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
                                     @if (checkDiscount($product))
                                         <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                         </h4>
                                     @else
-                                        <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                        <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                     @endif
                                     <p class="review">
                                         @php

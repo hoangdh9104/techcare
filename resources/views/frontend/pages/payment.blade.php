@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-        BREADCRUMB START
-    ==============================-->
+            BREADCRUMB START
+        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,12 +22,12 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+            BREADCRUMB END
+        ==============================-->
 
     <!--============================
-        PAYMENT PAGE START
-    ==============================-->
+            PAYMENT PAGE START
+        ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="wsus__pay_info_area">
@@ -37,7 +37,7 @@
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
 
-                                @if ($momoSetting && $momoSetting->status == 1)
+                                @if ($momoSetting && $momoSetting->status == 1 && !$isOver50Million)
                                     <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-momo" type="button" role="tab"
                                         aria-controls="v-pills-momo" aria-selected="false">Momo</button>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-xl-5 col-lg-5">
                         <div class="tab-content" id="v-pills-tabContent" id="sticky_sidebar">
-                            @if ($momoSetting && $momoSetting->status == 1)
+                            @if ($momoSetting && $momoSetting->status == 1  && !$isOver50Million)
                                 <div class="tab-pane fade show active" id="v-pills-momo" role="tabpanel"
                                     aria-labelledby="v-pills-profile-tab">
                                     <div class="row">
@@ -91,10 +91,11 @@
                     <div class="col-xl-4 col-lg-4">
                         <div class="wsus__pay_booking_summary" id="sticky_sidebar2">
                             <h5>Đơn hàng</h5>
-                            <p>Tổng đơn hàng : <span>{{ $settings->currency_icon }}{{ getCartTotal() }}</span></p>
-                            <p>Phí vận chuyển(+) : <span>{{ $settings->currency_icon }}{{ getShippingFee() }} </span></p>
-                            <p>Giảm giá(-) : <span>{{ $settings->currency_icon }}{{ getCartDiscount() }}</span></p>
-                            <h6>Tổng thanh toán <span>{{ $settings->currency_icon }}{{ getFinalPayableAmount() }}</span></h6>
+                            <p>Tổng đơn hàng : <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                            <p>Phí vận chuyển(+) : <span>{{ getShippingFee() }}{{ $settings->currency_icon }} </span></p>
+                            <p>Giảm giá(-) : <span>{{ getCartDiscount() }}{{ $settings->currency_icon }}</span></p>
+                            <h6>Tổng thanh toán <span>{{ getFinalPayableAmount() }}{{ $settings->currency_icon }}</span>
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -102,6 +103,6 @@
         </div>
     </section>
     <!--============================
-        PAYMENT PAGE END
-    ==============================-->
+            PAYMENT PAGE END
+        ==============================-->
 @endsection

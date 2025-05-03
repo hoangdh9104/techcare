@@ -5,37 +5,37 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label>Site Name</label>
+                <label>Tên trang</label>
                 <input type="text" class="form-control" name="site_name" value="{{@$generalSettings->site_name}}">
             </div>
             <div class="form-group">
-                <label>Layout</label>
+                <label>Bố cục</label>
                <select name="layout" id="" class="form-control">
                 <option {{@$generalSettings->layout == 'LTR' ? 'selected' : ''}}  value="LTR">LTR</option>
                 <option {{@$generalSettings->layout == 'RTL' ? 'selected' : ''}}  value="RTL">RTL</option>
                </select>
             </div>
             <div class="form-group">
-                <label>Contact Email</label>
+                <label>Email liên hệ</label>
                 <input type="text" class="form-control" name="contact_email" value="{{@$generalSettings->contact_email}}">
             </div>
             <div class="form-group">
-                <label>Contact Phone</label>
+                <label>SĐT liên hệ</label>
                 <input type="tel" class="form-control" name="contact_phone" value="{{@$generalSettings->contact_phone}}">
             </div>
             <div class="form-group">
 
-                <label>Contact Address</label>
+                <label>Địa chỉ</label>
                 <input type="text" class="form-control" name="contact_address" value="{{@$generalSettings->contact_address}}">
             </div>
             <div class="form-group">
-                <label>Google Map Url</label>
+                <label>Google Map</label>
                 <input type="text" class="form-control" name="map" value="{{@$generalSettings->map}}">
             </div>
             <hr>
             <div class="form-group">
 
-                <label>Default Currency Name</label>
+                <label>Tiền tệ</label>
                 <select name="currency_name" id="" class="form-control select2">
                     <option value="">Select</option>
                     @foreach (config('settings.currecy_list') as $currency)
@@ -45,11 +45,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Currency Icon</label>
+                <label>Biểu tượng tiền tệ</label>
                 <input type="text" class="form-control" name="currency_icon" value="{{@$generalSettings->currency_icon}}">
             </div>
             <div class="form-group">
-                <label>Timezone</label>
+                <label>Múi giờ</label>
                 <select name="time_zone" id="" class="form-control select2">
                     <option value="">Select</option>
                     @foreach (config('settings.time_zone') as $key=> $timeZone)

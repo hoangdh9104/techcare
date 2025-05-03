@@ -116,15 +116,6 @@
                     <div class="wsus__pro_details_text">
                         <a class="title" href="#">{{ $product->name }}</a>
                         @if ($product->qty > 0)
-
-                            {{-- <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $totalQty }}
-                                item)
-                            </p>
-                        @elseif($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $totalQty }}
-                                item) --}}
-
-
                             <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
                                     class="in_stock">Còn hàng</span>
                                 ({{ $product->qty }}
@@ -135,12 +126,11 @@
                                     class="in_stock">Hết hàng</span>
                                 ({{ $product->qty }}
                                 sản phẩm)
-
                             </p>
                         @endif
                         @if (checkDiscount($product))
                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                <del id="product-price">{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                <del id="product-price">{{ $product->price }} {{ $settings->currency_icon }}</del>
                             </h4>
                         @else
                             <h4 id="product-price">{{ $product->price }}{{ $settings->currency_icon }}</h4>
@@ -170,7 +160,8 @@
                         <div class="variant-details">
                             <h4>{{ $product->variant_name }}</h4>
                             {{-- <p>Mã bảo hành: <span class="text-danger">{{ $product->warranty_code }}</span></p> --}}
-                            <p>Thời gian bảo hành: <span class="text-danger">{{ $product->warranty_duration }} tháng</span></p>
+                            <p>Thời gian bảo hành: <span class="text-danger">{{ $product->warranty_duration }}
+                                    tháng</span></p>
                             {{-- <p>Ngày hết hạn bảo hành: <span class="text-danger">{{ $product->warranty_expiration_date->format('d/m/Y') }}</span></p> --}}
                         </div>
                         <form class="shopping-cart-form" action="">
@@ -208,21 +199,19 @@
                                 </div>
                             </div>
                             <div class="wsus__quentity">
-                                <h5>quantity :</h5>
+                                <h5>Số lượng :</h5>
                                 <div class="select_number">
                                     <input class="number_area" name="quantity" type="text" min="1"
                                         max="100" value="1" />
                                 </div>
-                                {{-- <h3>$50.00</h3> --}}
                             </div>
                             <ul class="wsus__button_area">
 
                                 <li><button id="add-to-cart-btn" class="add_cart" type="submit">Thêm vào giỏ
                                         hàng</button></li>
                                 {{-- <li><a class="buy_now" href="#">buy now</a></li> --}}
-
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
+                                {{-- <li><a href="#"><i class="fal fa-heart"></i></a></li> --}}
+                                {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 <li>
                                     <button type="button"
                                         style="border: 1px solid gray;
@@ -235,7 +224,7 @@
 
                                 </li>
 
-                                <li><a style="border:1px solid gray; padding: 7px 11px; border-radius:100%"
+                                <li><a style="border:1px solid gray; padding: 0px 11px; border-radius:100%"
                                         href="javascrip:;" class="add_to_wishlist" data-id="{{ $product->id }}"><i
                                             class="fal fa-heart"></i></a></li>
 
@@ -376,7 +365,7 @@
                                                         $isBrought = false;
                                                         $orders = \App\Models\Order::where([
                                                             'user_id' => auth()->user()->id,
-                                                            'order_status' => 'delivered',
+                                                            'order_status' => 'received',
                                                         ])->get();
                                                         foreach ($orders as $key => $order) {
                                                             $existItem = $order
@@ -404,7 +393,8 @@
                                                                         <div class="wsus__single_com mb-4">
                                                                             <select name="rating" id=""
                                                                                 class="form-control">
-                                                                                <option value="">Vui lòng chọn</option>
+                                                                                <option value="">Vui lòng chọn
+                                                                                </option>
                                                                                 <option value="1">1</option>
                                                                                 <option value="2">2</option>
                                                                                 <option value="3">3</option>
@@ -432,7 +422,7 @@
                                                                 <input type="hidden" name="vendor_id"
                                                                     value="{{ $product->vendor_id }}">
                                                                 <button class="common_btn" type="submit">Xác nhận
-                                                                    </button>
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     @endif
@@ -467,9 +457,10 @@
                             <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
                         <button type="submit" class="btn btn-primary mt-4 send-button">Gửi</button>
-                    </form>
-                </div>
 
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
@@ -494,21 +485,25 @@
                 data: formData,
                 beforeSend: function() {
                     let html = `<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span>
-                                     Sending...`
+                                     Đang gửi tin nhắn...`
                     $('.send-button').html(html);
                     $('.send-button').prop('disabled', true);
                 },
                 success: function(response) {
                     $('.message-box').val('');
-                    toastr.success(response.message);
+                    $('.modal-body').append(`
+                    <div class="mt-2"><a href="{{ route('user.messages.index') }}" class="btn btn-success text-light">Đi đến
+                            trang tin nhắn</a></div>
+                    `);
+                    toastr.success('Đã gửi tin nhắn thành công');
                 },
                 error: function(xhr, status, error) {
                     toastr.error(xhr.responseJSON.message);
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
                 },
                 complete: function() {
-                    $('.send-button').html('Send');
+                    $('.send-button').html('Gửi');
                     $('.send-button').prop('disabled', false);
 
                 }

@@ -1,17 +1,17 @@
 @extends('frontend.layouts.master')
 @section('content')
-        <!--============================
-        BREADCRUMB START
-    ==============================-->
+    <!--============================
+                BREADCRUMB START
+            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>change password</h4>
+                        <h4>Đổi mật khẩu</h4>
                         <ul>
-                            <li><a href="#">login</a></li>
-                            <li><a href="#">change password</a></li>
+                            <li><a href="#">Đăng nhập</a></li>
+                            <li><a href="#">Đổi mật khẩu</a></li>
                         </ul>
                     </div>
                 </div>
@@ -19,41 +19,42 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+                BREADCRUMB END
+            ==============================-->
 
 
     <!--============================
-        CHANGE PASSWORD START
-    ==============================-->
+                ĐỔI MẬT KHẨU BẮT ĐẦU
+            ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
                 <div class="col-xl-5 col-md-10 col-lg-7 m-auto">
                     <form method="POST" action="{{ route('password.store') }}">
                         @csrf
-                          <!-- Password Reset Token -->
+                        <!-- Password Reset Token -->
                         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                         <div class="wsus__change_password">
-                            <h4>change password</h4>
-                            <!-- Email Address -->
+                            <h4>Đổi mật khẩu</h4>
+                            <!-- Địa chỉ Email -->
                             <div class="wsus__single_pass">
-                                <label>email</label>
-                                <input id="email" type="email" name="email" value="{{old('email', $request->email)}}" placeholder="email">
+                                <label>Email</label>
+                                <input id="email" type="email" name="email"
+                                    value="{{ old('email', $request->email) }}" placeholder="Email">
                             </div>
-                             <!-- Password -->
+                            <!-- Mật khẩu mới -->
                             <div class="wsus__single_pass">
-                                <label>new password</label>
-                                <input id="password" type="password" name="password" placeholder="New Password">
+                                <label>Mật khẩu mới</label>
+                                <input id="password" type="password" name="password" placeholder="Mật khẩu mới">
                             </div>
-                             <!-- Confirm Password -->
+                            <!-- Xác nhận mật khẩu -->
                             <div class="wsus__single_pass">
-                                <label>confirm password</label>
-                                <input id="password_confirmation" type="password"
-                                name="password_confirmation" placeholder="Confirm Password">
+                                <label>Xác nhận mật khẩu</label>
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    placeholder="Xác nhận mật khẩu">
                             </div>
-                            <button class="common_btn" type="submit">submit</button>
+                            <button class="common_btn" type="submit">Gửi</button>
                         </div>
                     </form>
                 </div>
@@ -61,6 +62,6 @@
         </div>
     </section>
     <!--============================
-        CHANGE PASSWORD END
-    ==============================-->
+                ĐỔI MẬT KHẨU KẾT THÚC
+            ==============================-->
 @endsection

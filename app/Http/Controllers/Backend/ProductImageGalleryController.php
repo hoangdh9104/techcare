@@ -83,6 +83,6 @@ class ProductImageGalleryController extends Controller
         $this->deleteImage($productImage->image);
         $productImage->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'message' => 'Xóa thành công !']);
     }
 }

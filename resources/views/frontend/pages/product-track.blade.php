@@ -12,11 +12,11 @@
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">s="col-12">
+                    <div class="col-12">
                         <h4>Theo dõi đơn hàng</h4>
                         <ul>
                             <li><a href="#">Trang chủ</a></li>
-                            <li><a href="#">Order tracking</a></li>
+                            <li><a href="#">Theo dõi đơn hàng</a></li>
                         </ul>
                     </div>
                 </div>

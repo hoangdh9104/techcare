@@ -29,7 +29,7 @@ class FlashSaleController extends Controller
             ['end_date' => $request->end_date]
         );
 
-        toastr('Update Succesfully', 'success', 'Success');
+        toastr('Cập nhật thành công!', 'success', 'Success');
 
         return redirect()->back();
 
@@ -41,7 +41,7 @@ class FlashSaleController extends Controller
             'show_at_home' => ['required', Rule::in(0, 1)],
             'status' => ['required', Rule::in(0, 1)],
         ], [
-            'product.unique' => 'This product is already in flash sale.'
+            'product.unique' => 'Sản phẩm đang được bán với giá đặc biệt.'
         ]);
 
         $flashSaleDate = FlashSale::first();
@@ -52,7 +52,7 @@ class FlashSaleController extends Controller
         $flashSaleItem->status = $request->status;
         $flashSaleItem->save();
 
-        toastr('Product Added Successfully', 'success', 'Success');
+        toastr('Đã thêm sản phẩm', 'success', 'Success');
 
         return redirect()->back();
     }
@@ -62,7 +62,7 @@ class FlashSaleController extends Controller
         $flashSaleItem->show_at_home = $request->status == true ? 1: 0;
         $flashSaleItem->save();
 
-        return response(['message' => 'Status has been updated!']);  
+        return response(['message' => 'Đã thay đổi trang thái!']);  
     }
 
     public function changeStatus(Request $request)
@@ -71,13 +71,13 @@ class FlashSaleController extends Controller
         $flashSaleItem->status = $request->status == true ? 1: 0;
         $flashSaleItem->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Đã thay đổi trang thái!']);
     }
 
     public function destroy(string $id) {
         $flashSaleItem = FlashSaleItem::findOrFail($id);
         $flashSaleItem->delete();
 
-        return response(['status' => 'success','message' => 'Delete Successfully!']);
+        return response(['status' => 'success','message' => 'Xóa thành công!']);
     }
 }

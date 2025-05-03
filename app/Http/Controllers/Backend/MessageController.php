@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Events\MessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $userId = auth()->user()->id;
 
         // Lấy danh sách user(sender_id) đã chat với seller, không lấy lại id người gửi(sender_id)
@@ -35,6 +37,9 @@ class MessageController extends Controller
         $message->message = $request->message;
         $message->save();
 
+        // Gửi sự kiện đến client
+        broadcast(new MessageEvent($message->message, $message->receiver_id, $message->created_at));
+
         return response(['status' => 'success', 'message' => 'Message sent successfully']);
     }
 
@@ -47,7 +52,9 @@ class MessageController extends Controller
             ->whereIn('receiver_id', [$senderId, $receiverId])
             ->orderBy('created_at', 'asc')
             ->get();
-
+            
+        // Đánh dấu tin nhắn đã đọc
+        Chat::where(['sender_id' => $receiverId, 'receiver_id' => $senderId])->update(['seen' => 1]);
         return response($messages);
     }
 }

@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                BREADCRUMB START
-                                                            ==============================-->
+                                                                            BREADCRUMB START
+                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                                BREADCRUMB END
-                                                            ==============================-->
+                                                                            BREADCRUMB END
+                                                                        ==============================-->
 
 
     <!--============================
-                                                                DAILY DEALS DETAILS START
-                                                            ==============================-->
+                                                                            DAILY DEALS DETAILS START
+                                                                        ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -64,7 +64,7 @@
                         <div class="wsus__section_header rounded-0">
                             <h3>Khuyến mãi</h3>
                             <div class="wsus__offer_countdown">
-                                <span class="end_text">THời gian kết thúc :</span>
+                                <span class="end_text">Thời gian kết thúc :</span>
                                 <div class="simply-countdown simply-countdown-one"></div>
                             </div>
                         </div>
@@ -74,88 +74,83 @@
                 <div class="row">
                     @foreach ($flashSaleItems as $item)
                         @php
-                            $product = \App\Models\Product::find($item->product_id);
+                            $product = $item->product;
                         @endphp
-
-                        <div class="col-xl-3 col-sm-6 col-lg-4">
-                            <div class="wsus__product_item">
-                                <span class="wsus__new">{{ productType($product->product_type) }}</span>
-                                @if (checkDiscount($product))
-                                    <span class="wsus__minus">
-                                        {{ calculateDiscountPercent($product->price, $product->offer_price) }}%
-                                    </span>
-                                @endif
-
-                                <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
-                                    <img src="{{ asset($product->thumb_image) }}" alt="product"
-                                        class="img-fluid w-100 img_1" />
-                                    <img src="
-                                @if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }}
-                                  @else
-                                  {{ asset($product->thumb_image) }} @endif
-                            "
-                                        alt="product" class="img-fluid w-100 img_2" />
-                                </a>
-                                <ul class="wsus__single_pro_icon">
-                                    <li><a href="#" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal-{{ $product->id }}"><i
-                                                class="far fa-eye"></i></a>
-                                    </li>
-                                    <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
-                                                class="far fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="far fa-random"></i></a>
-                                </ul>
-                                <div class="wsus__product_details">
-                                    <a class="wsus__category" href="#">{{ $product->category->name }}</a>
-                                    <p class="wsus__pro_rating">
-                                        @php
-                                            $avgRating = $product->reviews('reviews')->avg('rating');
-                                            $fullRating = round($avgRating);
-                                        @endphp
-
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $fullRating)
-                                                <i class="fas fa-star"></i>
-                                            @else
-                                                <i class="far fa-star"></i>
-                                            @endif
-                                        @endfor
-
-                                        <span>({{ count($product->reviews) }} Đánh giá sản  phẩm)</span>
-
-                                    </p>
-                                    <a class="wsus__pro_name"
-                                        href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
+                        @if ($product->is_approved == 1 && $product->status == 1)
+                            <div class="col-xl-3 col-sm-6 col-lg-4">
+                                <div class="wsus__product_item">
+                                    <span class="wsus__new">{{ productType($product->product_type) }}</span>
                                     @if (checkDiscount($product))
-                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
-                                        </p>
-                                    @else
-                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                                        <span class="wsus__minus">
+                                            {{ calculateDiscountPercent($product->price, $product->offer_price) }}%
+                                        </span>
                                     @endif
 
-                                    <form class="shopping-cart-form" action="">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <div class="row">
-                                            @foreach ($product->variants as $variant)
-                                                <select class="d-none" name="variants_item[]">
-                                                    @foreach ($variant->productVariantItem as $item)
-                                                        <option value="{{ $item->id }}"
-                                                            {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                            {{ $item->name }} (${{ $item->price }})
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            @endforeach
-                                            <input name="quantity" type="hidden" min="1" max="100"
-                                                value="1" />
-                                        </div>
-                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                    <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
+                                        <img src="{{ asset($product->thumb_image) }}" alt="product"
+                                            class="img-fluid w-100 img_1" />
+                                        <img src="
+        @if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }}
+          @else
+          {{ asset($product->thumb_image) }} @endif
+    "
+                                            alt="product" class="img-fluid w-100 img_2" />
+                                    </a>
+                                    <ul class="wsus__single_pro_icon">
+                                        <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                                    class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <div class="wsus__product_details">
+                                        <a class="wsus__category" href="#">{{ $product->category->name }}</a>
+                                        <p class="wsus__pro_rating">
+                                            @php
+                                                $avgRating = $product->reviews('reviews')->avg('rating');
+                                                $fullRating = round($avgRating);
+                                            @endphp
 
-                                    </form>
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{ count($product->reviews) }} Đánh giá sản phẩm)</span>
+
+                                        </p>
+                                        <a class="wsus__pro_name"
+                                            href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
+                                        @if (checkDiscount($product))
+                                            <p class="wsus__price">
+                                                {{ $settings->currency_icon }}{{ $product->offer_price }}
+                                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                            </p>
+                                        @else
+                                            <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                                        @endif
+
+                                        <form class="shopping-cart-form" action="">
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <div class="row">
+                                                @foreach ($product->variants as $variant)
+                                                    <select class="d-none" name="variants_item[]">
+                                                        @foreach ($variant->productVariantItem as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                                {{ $item->name }} (${{ $item->price }})
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                @endforeach
+                                                <input name="quantity" type="hidden" min="1" max="100"
+                                                    value="1" />
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
                 <div class="mt-5">
@@ -168,12 +163,12 @@
     </section>
 
     <!--============================
-                                                                DAILY DEALS DETAILS END
-                                                            ==============================-->
+                                                                                DAILY DEALS DETAILS END
+                                                                            ==============================-->
 
     <!--==========================
-                                                                                  PRODUCT MODAL VIEW START
-                                                                                ===========================-->
+                                                                                                  PRODUCT MODAL VIEW START
+                                                                                                ===========================-->
     @foreach ($flashSaleItems as $item)
         @php
             $product = \App\Models\Product::find($item->product_id);
@@ -223,13 +218,25 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 sản phẩm)</p>
+                                        @if ($product->qty > 0)
+                                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                    class="in_stock">Còn hàng</span>
+                                                ({{ $product->qty }}
+                                                sản phẩm)
+                                            </p>
+                                        @elseif($product->qty == 0)
+                                            <p class="wsus__stock_area" id="product-quantity"><span id="stock-status"
+                                                    class="in_stock">Hết hàng</span>
+                                                ({{ $product->qty }}
+                                                sản phẩm)
+                                            </p>
+                                        @endif
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                             </h4>
                                         @else
-                                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                            <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                         @endif
                                         <p class="review">
                                             @php
@@ -285,7 +292,8 @@
                                                 {{-- <h3>$50.00</h3> --}}
                                             </div>
                                             <ul class="wsus__button_area">
-                                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button></li>
+                                                <li><button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                                </li>
                                                 <li><a class="buy_now" href="#">Mua ngay</a></li>
                                                 <li><a href="#" class="add_to_wishlist"
                                                         data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
@@ -305,8 +313,8 @@
     @endforeach
 
     <!--==========================
-                                                                                                              PRODUCT MODAL VIEW END
-                                                                                                            ===========================-->
+                                                                                                                              PRODUCT MODAL VIEW END
+                                                                                                                            ===========================-->
 @endsection
 @push('scripts')
     <script>

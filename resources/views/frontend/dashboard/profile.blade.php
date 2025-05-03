@@ -65,19 +65,19 @@
                         <div class="col-xl-4 col-md-6">
                           <div class="wsus__dash_pro_single">
                             <i class="fas fa-unlock-alt"></i>
-                            <input type="password" placeholder="Current Password" name="current_password">
+                            <input type="password" placeholder="Mật khẩu hiện tại" name="current_password">
                           </div>
                         </div>
                         <div class="col-xl-4 col-md-6">
                           <div class="wsus__dash_pro_single">
                             <i class="fas fa-lock-alt"></i>
-                            <input type="password" placeholder="New Password" name="password">
+                            <input type="password" placeholder="Mật khẩu mới " name="password">
                           </div>
                         </div>
                         <div class="col-xl-4">
                           <div class="wsus__dash_pro_single">
                             <i class="fas fa-lock-alt"></i>
-                            <input type="password" placeholder="Confirm Password" name="password_confirmation">
+                            <input type="password" placeholder="Nhập lại mật khẩu mới " name="password_confirmation">
                           </div>
                         </div>
                         <div class="col-xl-12">

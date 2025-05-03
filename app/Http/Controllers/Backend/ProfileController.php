@@ -41,7 +41,7 @@ class ProfileController extends Controller
         $user->save();
         // sử dụng thư viện toastr để xuất hiện thông báo
         // phải cài  composer require yoeunes/toastr trước khi sử dụng
-        toastr()->success('Profile Updated Successfully!');
+        toastr()->success('Cập nhật hồ sơ thành công !');
         return redirect()->back();
     }
     public function updatePassword(Request $request)
@@ -56,7 +56,7 @@ class ProfileController extends Controller
             // mã hóa mật khẩu
             'password' => bcrypt($request->password),
         ]);
-        toastr()->success('Profile Password Updated Successfully!');
+        toastr()->success('Đổi mật khẩu thành công !');
         return redirect()->back();
     }
 }

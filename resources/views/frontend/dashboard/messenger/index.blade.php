@@ -13,14 +13,25 @@
                                     <div class="wsus__chatlist d-flex align-items-start">
                                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                             aria-orientation="vertical">
-                                            <h2>Danh sách người bán</h2>
+                                            <h2>Danh sách tin nhắn</h2>
                                             <div class="wsus__chatlist_body">
                                                 @foreach ($chatUsers as $chatUser)
+                                                    @php
+                                                        // Kiểm tra xem có tin nhắn chưa đọc hay không
+                                                        // Nếu có = true, không = false
+                                                        $unseenMessages = \App\Models\Chat::where([
+                                                            'sender_id' => $chatUser->receiverProfile->id,
+                                                            'receiver_id' => auth()->user()->id,
+                                                            'seen' => 0,
+                                                        ])->exists();
+                                                    @endphp
                                                     <button class="nav-link chat-user-profile" data-bs-toggle="pill"
                                                         data-id="{{ $chatUser->receiverProfile->id }}"
                                                         data-bs-target="#v-pills-home" type="button" role="tab"
                                                         aria-controls="v-pills-home" aria-selected="true">
-                                                        <div class="wsus_chat_list_img">
+                                                        <div
+                                                            class="wsus_chat_list_img 
+                                                            {{ $unseenMessages ? 'msg-notification' : '' }}">
                                                             <img src="{{ asset($chatUser->receiverProfile->image) }}"
                                                                 alt="user" class="img-fluid">
                                                             <span class="pending d-none" id="pending-6">0</span>
@@ -41,38 +52,15 @@
                                             <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
                                                 aria-labelledby="v-pills-home-tab">
                                                 <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative; height: 95vh;">
+                                                    <div class="wsus__chat_area" style="position: relative; height: 98vh;">
                                                         <div class="wsus__chat_area_header">
-                                                            <h2 id="chat-inbox-title">Trò chuyện với Daniel Paul</h2>
+                                                            <h2 id="chat-inbox-title">Trò chuyện</h2>
                                                         </div>
-                                                        <div class="wsus__chat_area_body">
-
-                                                            {{-- <div class="wsus__chat_single single_chat_2">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/john-doe-2022-08-15-01-14-20-3892.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Hello Paul</p>
-                                                                    <span>15 August, 2022, 12:57 PM</span>
-                                                                </div>
-                                                            </div> --}}
-
-                                                            {{-- <div class="wsus__chat_single">
-                                                                <div class="wsus__chat_single_img">
-                                                                    <img src="http://127.0.0.1:8000/uploads/custom-images/daniel-paul-2022-08-15-01-16-48-4881.png"
-                                                                        alt="user" class="img-fluid">
-                                                                </div>
-                                                                <div class="wsus__chat_single_text">
-                                                                    <p>Hi Joe, Thanks for your contact</p>
-                                                                    <span>15 August, 2022, 12:58 PM</span>
-                                                                </div>
-                                                            </div> --}}
+                                                        <div class="wsus__chat_area_body" data-inbox ="">
 
                                                         </div>
                                                         <div class="wsus__chat_area_footer"
-                                                            style="margin-top: 50px;
-                                                         position: absolute;
+                                                            style="
                                                         width: 100%;
                                                         bottom: 0;">
                                                             <form id="message-form">
@@ -116,8 +104,8 @@
                 hour: '2-digit',
                 minute: '2-digit',
             }
-            const formatedDateTime = new Intl.DateTimeFormat('en-US', options).format(new Date(dateTimeString));
-            return formatedDateTime;
+            const formatedDateTime = new Intl.DateTimeFormat('vi-VN', options).format(new Date(dateTimeString));
+            return formatedDateTime.replace('tháng ', '');
         }
 
         function scrollToBottom() {
@@ -125,11 +113,15 @@
         }
 
         $(document).ready(function() {
-            $('.chat-user-profile').on('click', function(){
+            $('.chat-user-profile').on('click', function() {
 
                 let receiverId = $(this).data('id');
                 let senderImage = $(this).find('img').attr('src'); // Lấy ảnh người dùng
                 let chatUserName = $(this).find('h4').text(); // Lấy username của người chat cùng
+                $(this).find('.wsus_chat_list_img').removeClass(
+                    'msg-notification'); // Xóa thông báo khi đã đọc tin nhắn
+                // Lấy id của người nhận
+                mainChatInbox.attr('data-inbox', receiverId);
 
                 $('#receiver_id').val(receiverId);
                 $.ajax({
@@ -172,7 +164,7 @@
                             </div>
                             `
                             }
-                            
+
                             mainChatInbox.append(message);
                         })
 
@@ -213,6 +205,8 @@
                             </div>`;
 
                 mainChatInbox.append(message);
+                $('.message-box').val('');
+
                 scrollToBottom();
 
                 $.ajax({
@@ -224,7 +218,6 @@
                         formSubmitting = true;
                     },
                     success: function(response) {
-                        $('.message-box').val('');
 
                     },
                     error: function(xhr, status, error) {

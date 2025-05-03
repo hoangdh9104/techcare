@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Nhập Lý Do Hủy -->
+        {{-- <!-- Modal Nhập Lý Do Hủy -->
         <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @push('scripts')

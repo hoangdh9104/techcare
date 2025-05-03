@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || Danh sách mong muốn
+{{$settings->site_name}} || Danh sách yêu thích
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>Danh sách mong muốn</h4>
+                        <h4>Danh sách yêu thích</h4>
                         <ul>
                             <li><a href="#">Trang chủ</a></li>
                             <li><a href="#">Sản phẩm</a></li>
-                            <li><a href="#">Danh sách mong muốn</a></li>
+                            <li><a href="#">Danh sách yêu thích</a></li>
                         </ul>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 
                                         <td class="wsus__pro_tk" style="width: 350px">
                                             <h6>
-                                                {{$settings->currency_icon}}{{$item->product->price}}
+                                                {{$item->product->price}} {{$settings->currency_icon}}
                                             </h6>
                                         </td>
 

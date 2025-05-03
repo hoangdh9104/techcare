@@ -4,7 +4,7 @@
             <div class="col-xl-3 col-sm-7 col-md-6 col-lg-3">
                 <div class="wsus__footer_content">
                     <a class="wsus__footer_2_logo" href="{{url('/')}}">
-                        <img src="images/logo_2.png" alt="logo">
+                        <img src="{{ asset($logoSetting->logo) }}" alt="logo" class="img-fluid w-100">
                     </a>
                     <a class="action" href="callto:+0943435296"><i class="fas fa-phone-alt"></i>
                         {{$settings->contact_phone}}</a>

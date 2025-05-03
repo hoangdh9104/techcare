@@ -22,9 +22,13 @@
 
             {{-- Manage Website --}}
             <li
-                class="dropdown {{ setActive(['admin.slider.*', 'admin.vendor-condition.index', 'admin.about.index', 'admin.terms-and-conditions.index']) }}">
-
-            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting']) }}">
+                class="dropdown {{ setActive([
+                    'admin.slider.*',
+                    'admin.home-page-setting',
+                    'admin.about.index',
+                    'admin.terms-and-conditions.index',
+                    'admin.home-page-setting',
+                ]) }}">
 
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-eye"></i>
                     <span>Giao diện trang web</span></a>
@@ -40,16 +44,15 @@
                             href="{{ route('admin.vendor-condition.index') }}">Vendor Condition</a></li> --}}
 
                     <li class="{{ setActive(['admin.about.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.about.index') }}">About Page</a></li>
+                            href="{{ route('admin.about.index') }}">Giới thiệu cửa hàng</a></li>
 
                     <li class="{{ setActive(['admin.terms-and-conditions.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
+                            href="{{ route('admin.terms-and-conditions.index') }}">Chính sách khi mua hàng</a></li>
 
                     <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
                             href="{{ route('admin.home-page-setting') }}">Danh mục</a></li>
 
-                    <li class="{{ setActive(['admin.terms-and-conditions.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.terms-and-conditions.index') }}">Term page</a></li>
+
                 </ul>
             </li>
             {{-- Manage Blog --}}
@@ -164,7 +167,7 @@
                     </span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.flash-sale.index') }}">Giảm gía chớp nhoáng</a></li>
+                            href="{{ route('admin.flash-sale.index') }}">Khuyến mãi đặc biệt</a></li>
                     {{-- <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-profile.index') }}">Vender Profile</a></li> --}}
                     <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"

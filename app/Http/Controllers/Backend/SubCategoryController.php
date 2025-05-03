@@ -115,7 +115,7 @@ class SubCategoryController extends Controller
         $subCategory->status = $request->status; // Giá trị đã là 1 hoặc 0
         $subCategory->save();
 
-        return response(['message' => 'Status updated successfully.']);
+        return response(['message' => 'Cập nhật trạng thái thành công.']);
     }
 
 

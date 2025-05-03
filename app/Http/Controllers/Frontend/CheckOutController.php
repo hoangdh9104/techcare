@@ -60,6 +60,20 @@ class CheckOutController extends Controller
             } else {
                 // Kiểm tra biến thể
                 $variant = ProductVariantCombination::find($item->options['variant_combination_id']);
+                // dd($variant);
+
+                if (!$product) {
+                    Cart::remove($item->rowId);
+                    toastr()->error('Sản phẩm ' . $item->name . ' không còn tồn tại!', 'Cập nhật giỏ hàng');
+                    $hasError = true;
+                    continue;
+                }
+                if ($product->status == 0) {
+                    Cart::remove($item->rowId);
+                    toastr()->error('Sản phẩm ' . $item->name . ' đã bị vô hiệu hóa!', 'Cập nhật giỏ hàng');
+                    $hasError = true;
+                    continue;
+                }
                 if (!$variant) {
                     Cart::remove($item->rowId);
                     toastr()->error('Biến thể của sản phẩm ' . $item->name . ' không còn tồn tại!', 'Cập nhật giỏ hàng');
@@ -113,11 +127,11 @@ class CheckOutController extends Controller
                 Session::forget('applied_coupon');
                 toastr()->error('Mã giảm giá đã được sử dụng hết!', 'Cập nhật mã giảm giá');
                 $hasError = true;
-            }elseif ($coupon->status == 0) {
+            } elseif ($coupon->status == 0) {
                 Session::forget('applied_coupon');
                 toastr()->error('Mã giảm giá không còn khả dụng!', 'Cập nhật mã giảm giá');
                 $hasError = true;
-            }elseif ($coupon->quantity == 0) {
+            } elseif ($coupon->quantity == 0) {
                 Session::forget('applied_coupon');
                 toastr()->error('Mã giảm giá đã hết!', 'Cập nhật mã giảm giá');
                 $hasError = true;
