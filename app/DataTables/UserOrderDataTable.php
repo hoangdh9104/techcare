@@ -142,9 +142,9 @@ class UserOrderDataTable extends DataTable
 
             // Column::computed('action')->title('Hành động')
 
-            // Column::make('id')
-            //     ->title('ID')
-            //     ->width(10), // Set fixed width for better alignment
+            Column::make('id')
+                ->title('ID')
+                ->width(10), // Set fixed width for better alignment
             Column::make('invoice_id')
                 ->title('Mã đơn hàng')
                 ->width(150), // Set width for equal spacing
