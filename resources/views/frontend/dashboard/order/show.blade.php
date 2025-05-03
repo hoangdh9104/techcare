@@ -122,6 +122,7 @@
                                                                 $variants = json_decode($product->variants);
                                                             @endphp
                                                         @endforeach
+                                                    </table>
 
                                                         <!-- Chi tiết sản phẩm -->
                                                         <div class="table-responsive ">
@@ -129,7 +130,7 @@
                                                                 <thead class="bg-light text-center">
 
                                                                     <tr>
-                                                                        <th style="width: 130%">Sản phẩm</th>
+                                                                        <th style="width: 55%">Sản phẩm</th>
                                                                         <th style="width: 15%">Đơn giá</th>
                                                                         <th style="width: 15%">Số lượng</th>
                                                                         <th style="width: 20%">Tổng</th>
@@ -142,7 +143,7 @@
                                                                 <tbody>
                                                                     @foreach ($order->orderProducts as $product)
                                                                         <tr>
-                                                                            <td>
+                                                                            <td style="width: 55%">
                                                                                 <div class="product-info" style="display: flex; align-items: flex-start; gap: 16px;">
                                                                                     <div class="product-details">
                                                                                         <strong>{{ $product->product_name }}</strong>
@@ -181,16 +182,16 @@
                                                                                     @endif
                                                                                 </div>
                                                                             </td>
-                                                                            <td class="text-center">
+                                                                            <td class="text-center" style="width: 15%">
                                                                                 {{number_format($product->unit_price, 0, ',', '.') }}
                                                                                 {{ $settings->currency_icon }}</td>
-                                                                            <td class="text-center">{{ $product->qty }}
+                                                                            <td class="text-center" style="width: 15%">{{ $product->qty }}
                                                                             </td>
-                                                                            <td class="text-center">
+                                                                            <td class="text-center" style="width: 20%">
                                                                                 {{ number_format($product->unit_price * $product->qty, 0, ',', '.') }}
                                                                                 {{ $settings->currency_icon }}</td>
                                                                             <td
-                                                                                class="text-center {{ $order->order_status === 'received' ? '' : 'd-none' }}">
+                                                                                class="text-center {{ $order->order_status === 'received' ? '' : 'd-none' }}" style="width: 20%">
                                                                                 <a href="{{ route('product-detail', $product->product->slug) }}"
                                                                                     class="btn btn-sm btn-warning">
                                                                                     <i class="fas fa-star"></i> Đánh giá
@@ -203,7 +204,7 @@
                                                         </div>
 
                                                         <!-- Tổng tiền và chi phí -->
-                                                        <div class="order-summary mt-4">
+                                                        <div class="order-summary mt-2 small w-75 mx-auto">
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <p><strong>Thành tiền:</strong>{{ @$order->sub_total }}

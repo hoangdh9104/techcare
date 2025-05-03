@@ -45,7 +45,7 @@ class PageController extends Controller
         $setting = EmailConfiguration::first();
 
 
-        Mail::to($setting->email)->send(new Contact($request->subject, $request->message, $request->email));
+        Mail::to('$setting->email')->send(new Contact($request->subject, $request->message, $request->email));
 
         return response(['status' => 'success', 'message' => 'Đã gửi mail thành công !']);
 
