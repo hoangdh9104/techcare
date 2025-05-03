@@ -98,25 +98,7 @@
                                             <div class="wsus__invoice_description">
                                                 <div class="table-responsive">
                                                     <table class="table">
-                                                        {{-- <tr>
-                                                            <th class="name">
-                                                                sản phẩm
-                                                            </th>
-                                                            <th class="amount">
-                                                                Nhà cung cấp
-                                                            </th>
-
-                                                            <th class="amount">
-                                                                Số tiền
-                                                            </th>
-
-                                                            <th class="quentity">
-                                                                Số lượng
-                                                            </th>
-                                                            <th class="total">
-                                                                Tổng
-                                                            </th>
-                                                        </tr> --}}
+                                                        
                                                         @foreach ($order->orderProducts as $product)
                                                             @php
                                                                 $variants = json_decode($product->variants);
@@ -267,30 +249,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            {{-- </div>
-                                            <div class="wsus__invoice_footer">
-
-                                                <p><span>Tổng phụ:</span>{{ @$settings->currency_icon }}
-                                                    {{ @$order->sub_total }}</p>
-                                                <p><span>Phí vận chuyển(+):</span>{{ @$settings->currency_icon }}
-                                                    {{ @$shipping->cost }} </p>
-                                                <p><span>Phiếu giảm giá(-):</span>{{ @$settings->currency_icon }}
-                                                    {{ @$coupon->discount ? $coupon->discount : 0 }}</p>
-                                                <p><span>Tổng số tiền :</span>{{ @$settings->currency_icon }}
-                                                    {{ @$order->amount }}</p> --}}
-
-
-
                                             </div>
 
                                         </div>
                                     </div>
 
                                 </div>
-                                {{-- @if ()
-                                    
-                                @endif --}}
                                 <br>
                                 <div>
                                     @if (in_array($order->order_status, ['pending', 'processed_and_ready_to_ship'])) 

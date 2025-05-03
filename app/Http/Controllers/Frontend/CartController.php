@@ -27,7 +27,7 @@ class CartController extends Controller
             ->get(); // Lấy tất cả mã giảm giá hợp lệ
         if ($cartItems->count() == 0) {
             Session::forget('coupon');
-            toastr('Vui lòng thêm một số sản phẩm vào giỏ hàng của bạn để xem trang này', 'warning', 'Giỏ hàng trống!');
+            // toastr('Vui lòng thêm một số sản phẩm vào giỏ hàng của bạn để xem trang này', 'warning', 'Giỏ hàng trống!');
             return redirect()->route('home');
         }
         // đồng bộ dữ liệu cart với dữ liệu sản phẩm và sản phẩm biến thể có trong cơ sở dữ liệu
