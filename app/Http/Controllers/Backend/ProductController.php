@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Models\Order; 
+use App\Models\Order;
 use Carbon\Carbon;
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
@@ -110,7 +110,7 @@ class ProductController extends Controller
     // $product->warranty_dwarranty_expiration_dateuration = $request->warranty_expiration_date;
     $product->warranty_expiration_date = $request->warranty_expiration_date;
 
-    
+
 
     // Xác định ngày hết hạn bảo hành
     if ($request->warranty_code) {
@@ -125,7 +125,7 @@ class ProductController extends Controller
 
     // Lưu sản phẩm
     $product->save();
-    
+
     toastr('Tạo sản phẩm thành công!', 'success');
 
     return redirect()->route('admin.products.index');
@@ -356,4 +356,11 @@ class ProductController extends Controller
         $product->save();
         return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
+    // public function changeStatus(Request $request)
+    // {
+    //     $product = Product::findOrFail($request->id);
+    //     $product->update(['status' => $request->status]);
+
+    //     return response()->json(['message' => 'Đã cập nhật trạng thái']);
+    // }
 }
