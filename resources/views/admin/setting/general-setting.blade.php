@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+`<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
    <div class="card border">
     <div class="card-body">
         <form action="{{route('admin.generale-setting-update')}} " method="POST">
@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" name="contact_address" value="{{@$generalSettings->contact_address}}">
             </div>
             <div class="form-group">
-                <label>Google Map Url</label>
+                <label>Google Map</label>
                 <input type="text" class="form-control" name="map" value="{{@$generalSettings->map}}">
             </div>
             <hr>

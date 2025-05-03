@@ -30,7 +30,7 @@
                         <div class="wsus__call_text">
                             <p>{{ $settings->contact_email }}</p>
                             <p>{{ $settings->contact_phone }}</p>
-                            <p>039259852</p>
+                           
                         </div>
                     </div>
                     <ul class="wsus__icon_area">

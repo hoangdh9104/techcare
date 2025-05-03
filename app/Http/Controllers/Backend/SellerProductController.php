@@ -28,7 +28,7 @@ class SellerProductController extends Controller
 
 
 
-        return response(['message' => 'Product Approve Status Has Been Changed']);
+        return response(['message' => 'Đã thay đổi trạng thái phê duyệt sản phẩm !']);
         // dd($request->all());
 
     }

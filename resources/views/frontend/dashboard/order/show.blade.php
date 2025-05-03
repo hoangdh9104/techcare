@@ -106,15 +106,15 @@
                                                         @endforeach
 
                                                         <!-- Chi tiết sản phẩm -->
-                                                        <div class="table-responsive mt-4">
-                                                            <table class="table table-striped table-bordered">
+                                                        <div class="table-responsive ">
+                                                            <table  class="table" style="width: 100%; table-layout: fixed;">
                                                                 <thead class="bg-light text-center">
 
                                                                     <tr>
-                                                                        <th>Sản phẩm</th>
-                                                                        <th>Đơn giá</th>
-                                                                        <th>Số lượng</th>
-                                                                        <th>Tổng</th>
+                                                                        <th style="width: 130%">Sản phẩm</th>
+                                                                        <th style="width: 15%">Đơn giá</th>
+                                                                        <th style="width: 15%">Số lượng</th>
+                                                                        <th style="width: 20%">Tổng</th>
                                                                         <th
                                                                             class="{{ $order->order_status === 'received' ? '' : 'd-none' }}">
                                                                             Đánh
@@ -125,7 +125,7 @@
                                                                     @foreach ($order->orderProducts as $product)
                                                                         <tr>
                                                                             <td>
-                                                                                <div class="product-info">
+                                                                                <div class="product-info" style="display: flex; align-items: flex-start; gap: 16px;">
                                                                                     <div class="product-details">
                                                                                         <strong>{{ $product->product_name }}</strong>
                                                                                         {{-- Hiển thị các biến thể nếu có --}}
@@ -164,12 +164,12 @@
                                                                                 </div>
                                                                             </td>
                                                                             <td class="text-center">
-                                                                                {{ $product->unit_price }}
+                                                                                {{number_format($product->unit_price, 0, ',', '.') }}
                                                                                 {{ $settings->currency_icon }}</td>
                                                                             <td class="text-center">{{ $product->qty }}
                                                                             </td>
                                                                             <td class="text-center">
-                                                                                {{ $product->unit_price * $product->qty }}
+                                                                                {{ number_format($product->unit_price * $product->qty, 0, ',', '.') }}
                                                                                 {{ $settings->currency_icon }}</td>
                                                                             <td
                                                                                 class="text-center {{ $order->order_status === 'received' ? '' : 'd-none' }}">
@@ -209,45 +209,6 @@
                                                 </div>
 
 
-                                                <!-- Tổng tiền và chi phí -->
-                                                <div class="order-summary mt-4">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <p><strong>Thành tiền:</strong>{{ @$order->sub_total }}
-                                                                {{ $settings->currency_icon }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class="text-right"><strong>Phí vận chuyển:</strong>
-                                                                {{ @$shipping->cost }}{{ $settings->currency_icon }} </p>
-                                                            <p class="text-right"><strong>Giảm giá (-):</strong>
-                                                                @php
-                                                                    $discount = 0; // Mặc định không có giảm giá
-                    
-                                                                    if (@$coupon) {
-                                                                        if (@$coupon->discount_type === 'percent') {
-                                                                            $discount = ($coupon->discount / 100) * $order->sub_total;
-                                                                        } elseif (@$coupon->discount_type === 'amount') {
-                                                                            $discount = $coupon->discount;
-                                                                        }
-                                                                    }
-                                                                @endphp
-
-                                                                <!-- Hiển thị giảm giá -->
-                                                                @if (@$coupon->discount_type === 'percent')
-                                                                    Mã giảm: {{ @$coupon->discount }}%
-                                                                    (- {{ $discount }}{{ $settings->currency_icon }})
-                                                                @elseif(@$coupon->discount_type === 'amount')
-                                                                    Mã giảm: {{ $discount }}{{ $settings->currency_icon }}
-                                                                @else
-                                                                    Mã giảm: {{ 0 }}{{ $settings->currency_icon }}
-                                                                @endif
-                                                            </p>
-                                                            <p class="text-right font-weight-bold"><strong>Tổng
-                                                                    cộng:</strong>
-                                                                {{ @$order->amount }}{{ $settings->currency_icon }} </p>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
 

@@ -111,8 +111,9 @@
                     <div class="mt-3">
                         <div class="card-title">Tổng doanh thu</div>
                         <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">$12,145</div>
-                            <div class="card-growth">+20%</div>
+                            <div class="card-value">  {{ $yearEarnings }}{{ $settings->currency_icon }}</div>
+                            
+                          
                         </div>
                     </div>
                 </div>
@@ -130,13 +131,15 @@
                         </div>
                     </div>
                     <div class="mt-3">
+                <a href="{{ route('admin.order.index') }}">
                         <div class="card-title">Tổng đơn hàng</div>
                         <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">42</div>
-                            <div class="card-growth">+12%</div>
+                            <div class="card-value">{{ $totaltOrder }}</div>
+                            
+                            
                         </div>
                     </div>
-                </div>
+                </div> </a>
             </div>
 
             <!-- Tổng sản phẩm bán được -->
@@ -151,10 +154,10 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <div class="card-title">Tổng sản phẩm đã bán</div>
+                        <div class="card-title">Tổng đơn hàng đã bán</div>
                         <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">1,201</div>
-                            <div class="card-growth">+8%</div>
+                            <div class="card-value">  {{ $totalCompleteOrders }}</div>
+                           
                         </div>
                     </div>
                 </div>

@@ -49,9 +49,20 @@ class Product extends Model
         return $this->hasMany(OrderProduct::class);
     }
     protected $fillable = [
-       
+
         'warranty_code', // Mã bảo hành
         'warranty_duration',
         'warranty_expiration_date', // Ngày hết hạn bảo hành
     ];
+    protected static function boot()
+{
+    parent::boot();
+
+    // Tự động áp dụng điều kiện status=1 cho mọi query ngoài admin
+    static::addGlobalScope('active', function($builder) {
+        if (!request()->is('admin/*')) {
+            $builder->where('status', 1);
+        }
+    });
+}
 }

@@ -27,7 +27,7 @@ class TermsAndConditionController extends Controller
             ]
         );
 
-        toastr('updated successfully!', 'success', 'success');
+        toastr('Cập nhật thành công !', 'success', 'success');
 
         return redirect()->back();
 
