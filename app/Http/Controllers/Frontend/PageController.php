@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\Contact;
 use App\Models\About;
 use App\Models\EmailConfiguration;
+use App\Models\GeneralSetting;
 use App\Models\TermsAndCondition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -42,12 +43,8 @@ class PageController extends Controller
             'message' => ['required', 'max:1000']
         ]);
 
-        $setting = EmailConfiguration::first();
-
-
-        Mail::to($setting->email)->send(new Contact($request->subject, $request->message, $request->email));
-
+        $setting = GeneralSetting::first();
+        Mail::to($setting->contact_email)->send(new Contact($request->subject, $request->message, $request->email));
         return response(['status' => 'success', 'message' => 'Đã gửi mail thành công !']);
-
     }
 }

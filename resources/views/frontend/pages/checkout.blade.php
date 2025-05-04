@@ -52,7 +52,7 @@
                                             <li><span>Tên :</span> {{ $address->name }}</li>
                                             <li><span>Điện thoại :</span> {{ $address->phone }}</li>
                                             <li><span>Email :</span> {{ $address->email }}</li>
-                                            <li><span>Quốc gia :</span> {{ $address->country }}</li>
+                                            {{-- <li><span>Quốc gia :</span> {{ $address->country }}</li> --}}
                                             <li><span>Thành phố :</span> {{ $address->city }}</li>
                                             <li><span>Zip Code :</span> {{ $address->zip }}</li>
                                             <li><span>Địa chỉ :</span> {{ $address->address }}</li>
@@ -163,18 +163,20 @@
                                                 value="{{ old('email') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="wsus__check_single_form">
                                             <select class="select_2" name="country">
                                                 <option value="AL">Quốc gia</option>
-                                                @foreach (config('settings.country_list') as $key => $country)
-                                                    <option {{ $country == old('country') ? 'selected' : '' }}
-                                                        value="{{ $key }}">
+                                          
+                                                @foreach (config('settings.country_list') as $value=> $country)
+                                               
+                                                    <option {{ (string)$country == old('country') ? 'selected' : '' }}
+                                                        value="{{ $country }}">
                                                         {{ $country }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-6">
                                         <div class="wsus__check_single_form">
                                             <input type="text" placeholder="State *" name="state"
