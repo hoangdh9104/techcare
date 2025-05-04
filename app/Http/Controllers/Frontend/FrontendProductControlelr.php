@@ -20,74 +20,86 @@ class FrontendProductControlelr extends Controller
     {
         if ($request->has('category')) {
             $category = Category::where('slug', $request->category)->firstOrFail();
-            $products = Product::where(
-                [
-                    'category_id' => $category->id,
-                    'status' => 1,
-                    'is_approved' => 1
-                ]
-            )->when($request->has('range'), function ($query) use ($request) {
-                $price = explode(';', $request->range);
-                $from = $price[0];
-                $to = $price[1];
-                return $query->where('price', '>=', $from)
-                    ->where('price', '<=', $to);
-            })
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where(
+                    [
+                        'category_id' => $category->id,
+                        'status' => 1,
+                        'is_approved' => 1
+                    ]
+                )->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $from = $price[0];
+                    $to = $price[1];
+                    return $query->where('price', '>=', $from)
+                        ->where('price', '<=', $to);
+                })
                 ->paginate(12);
         } elseif ($request->has('subcategory')) {
             $category = SubCategory::where('slug', $request->subcategory)->firstOrFail();
-            $products = Product::where([
-                'sub_category_id' => $category->id,
-                'status' => 1,
-                'is_approved' => 1
-            ])->when($request->has('range'), function ($query) use ($request) {
-                $price = explode(';', $request->range);
-                $from = $price[0];
-                $to = $price[1];
-                return $query->where('price', '>=', $from)
-                    ->where('price', '<=', $to);
-            })
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where([
+                    'sub_category_id' => $category->id,
+                    'status' => 1,
+                    'is_approved' => 1
+                ])->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $from = $price[0];
+                    $to = $price[1];
+                    return $query->where('price', '>=', $from)
+                        ->where('price', '<=', $to);
+                })
                 ->paginate(12);
         } elseif ($request->has('childcategory')) {
             $category = ChildCategory::where('slug', $request->childcategory)->firstOrFail();
 
-            $products = Product::where([
-                'child_category_id' => $category->id,
-                'status' => 1,
-                'is_approved' => 1
-            ])->when($request->has('range'), function ($query) use ($request) {
-                $price = explode(';', $request->range);
-                $from = $price[0];
-                $to = $price[1];
-                return $query->where('price', '>=', $from)
-                    ->where('price', '<=', $to);
-            })
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where([
+                    'child_category_id' => $category->id,
+                    'status' => 1,
+                    'is_approved' => 1
+                ])->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $from = $price[0];
+                    $to = $price[1];
+                    return $query->where('price', '>=', $from)
+                        ->where('price', '<=', $to);
+                })
                 ->paginate(12);
         } elseif ($request->has('brand')) {
             $brand = Brand::where('slug', $request->brand)->firstOrFail();
-            $products = Product::where([
-                'brand_id' => $brand->id,
-                'status' => 1,
-                'is_approved' => 1
-            ])->when($request->has('range'), function ($query) use ($request) {
-                $price = explode(';', $request->range);
-                $from = $price[0];
-                $to = $price[1];
-                return $query->where('price', '>=', $from)
-                    ->where('price', '<=', $to);
-            })
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where([
+                    'brand_id' => $brand->id,
+                    'status' => 1,
+                    'is_approved' => 1
+                ])->when($request->has('range'), function ($query) use ($request) {
+                    $price = explode(';', $request->range);
+                    $from = $price[0];
+                    $to = $price[1];
+                    return $query->where('price', '>=', $from)
+                        ->where('price', '<=', $to);
+                })
                 ->paginate(12);
         } elseif ($request->has('search')) {
-            $products = Product::where(['status' => 1, 'is_approved' => 1])->where(function ($query) use ($request) {
-                $query->where('name', 'LIKE', '%' . $request->search . '%')
-                    ->orWhere('long_description', 'LIKE', '%' . $request->search . '%')
-                    ->orWhereHas('category', function ($query) use ($request) {
-                        $query->where('name', 'LIKE', '%' . $request->search . '%')
-                            ->orWhere('long_description', 'LIKE', '%' . $request->search . '%');
-                    });
-            })->paginate(12);
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where(['status' => 1, 'is_approved' => 1])->where(function ($query) use ($request) {
+                    $query->where('name', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('long_description', 'LIKE', '%' . $request->search . '%')
+                        ->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'LIKE', '%' . $request->search . '%')
+                                ->orWhere('long_description', 'LIKE', '%' . $request->search . '%');
+                        });
+                })->paginate(12);
         } else {
-            $products = Product::where(['status' => 1, 'is_approved' => 1])->orderBy('id', 'DESC')->paginate(12);
+            $products = Product::withAvg('reviews', 'rating')
+                ->withCount('reviews')
+                ->with(['category', 'productImageGalleries'])->where(['status' => 1, 'is_approved' => 1])->orderBy('id', 'DESC')->paginate(12);
         }
 
         $categories = Category::Where(['status' => 1])->get();
@@ -110,14 +122,14 @@ class FrontendProductControlelr extends Controller
             'brand',
             'vendor'
         ])
-        ->where('slug', $slug)
-        ->where('status', 1)
-        ->firstOrFail();
-        
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+
         $reviews = ProductReview::where('product_id', $product->id)
             ->where('status', 1)
             ->paginate(10);
-        
+
         // Tính tổng tồn kho
         $totalQty = 0;
         $variantStockMap = [];
@@ -131,10 +143,8 @@ class FrontendProductControlelr extends Controller
         } else {
             $totalQty = $product->qty ?? 0;
         }
-        
+
         return view('frontend.pages.product-detail', compact('product', 'reviews', 'totalQty', 'variantStockMap'));
-        
-        
     }
 
     public function changeListView(Request $request)
