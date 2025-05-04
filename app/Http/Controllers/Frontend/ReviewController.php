@@ -64,4 +64,11 @@ class ReviewController extends Controller
 
         return redirect()->back();
     }
+    public function changeStatus(Request $request)
+    {
+        $brand = Brand::findOrFail($request->id);
+        $brand->status = $request->status;
+        $brand->save();
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
+    }
 }
