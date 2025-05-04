@@ -413,8 +413,7 @@
                                                                 </div>
                                                                 <div class="img_upload">
                                                                     <div class="">
-                                                                        <input type="file" name="image[]"
-                                                                            id="">
+                                                                        <input type="file" name="images[]" multiple>
                                                                     </div>
                                                                 </div>
                                                                 <input type="hidden" name="product_id"
