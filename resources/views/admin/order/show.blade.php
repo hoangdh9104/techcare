@@ -185,13 +185,15 @@
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Tạm tính</div>
                                         <div class="invoice-detail-value">
-                                            {{ Number::format($order->sub_total, locale: 'de') }}{{ $settings->currency_icon }}
+                                            {{ number_format($order->sub_total, 0, ',', '.') }}{{ $settings->currency_icon }}
+
                                         </div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Phí vận chuyển (+)</div>
                                         <div class="invoice-detail-value">
-                                            {{ @Number::format($shipping->cost, locale: 'de') }}{{ $settings->currency_icon }}
+
+                                            {{ @number_format($shipping->cost, 0, ',', '.') }}{{ $settings->currency_icon }}
                                         </div>
                                     </div>
                                     <div class="invoice-detail-item">
@@ -202,12 +204,10 @@
 
                                                 if (@$coupon) {
                                                     if (@$coupon->discount_type === 'percent') {
-                                                        $discount = Number::format(
-                                                            ($coupon->discount / 100) * $order->sub_total,
-                                                            locale: 'de',
-                                                        );
+                                                        $discount =  number_format(($coupon->discount / 100) * $order->sub_total, 0, ',', '.') ;
                                                     } elseif (@$coupon->discount_type === 'amount') {
-                                                        $discount = Number::format($coupon->discount, locale: 'de');
+                                                        $discount = number_format($coupon->discount, 0, ',', '.');
+                                                        
                                                     }
                                                 }
                                             @endphp
@@ -218,7 +218,7 @@
                                                 (- {{ $discount }}{{ $settings->currency_icon }})
                                             @elseif(@$coupon->discount_type === 'amount')
                                                 Mã giảm:
-                                                {{ Number::format($discount, locale: 'de') }}{{ $settings->currency_icon }}
+                                                {{ number_format($discount, 0, ',', '.') }}{{ $settings->currency_icon }}
                                             @else
                                                 Mã giảm: {{ 0 }}{{ $settings->currency_icon }}
                                             @endif
@@ -229,7 +229,8 @@
                                         <div class="invoice-detail-item">
                                             <div class="invoice-detail-name">Tổng cộng</div>
                                             <div class="invoice-detail-value invoice-detail-value-lg">
-                                                {{ Number::format($order->amount, locale: 'de') }} {{ $settings->currency_icon }}
+                                                {{ number_format($order->amount, 0, ',', '.') }}
+                                                {{ $settings->currency_icon }}
                                             </div>
                                         </div>
                                     </div>

@@ -129,13 +129,13 @@
                             </p>
                         @endif
                         @if (checkDiscount($product))
-                            <h4>{{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                            <h4>{{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
                                 <del
-                                    id="product-price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
+                                    id="product-price">{{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
                             </h4>
                         @else
                             <h4 id="product-price">
-                                {{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</h4>
+                                {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</h4>
                         @endif
                         <p class="wsus_pro_rating">
                             @php
