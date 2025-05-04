@@ -90,12 +90,12 @@ class ChildCategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('category'),
-            Column::make('sub_category'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên danh mục con'),
+            Column::make('category')->title('Danh mục cha'),
+            Column::make('sub_category')->title('Danh mục chi tiết'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

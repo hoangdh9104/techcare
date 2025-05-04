@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || wishlist
+{{$settings->site_name}} || Danh sách yêu thích
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>wishlist</h4>
+                        <h4>Danh sách yêu thích</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
-                            <li><a href="#">wishlist</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li><a href="#">Sản phẩm</a></li>
+                            <li><a href="#">Danh sách yêu thích</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,22 +42,22 @@
                                 <tbody>
                                     <tr class="d-flex">
                                         <th class="wsus__pro_img" >
-                                            product item
+                                            Mục sản phẩm
                                         </th>
 
                                         <th class="wsus__pro_name" style="width: 368px">
-                                            product details
+                                            Chi tiết sản phẩm
                                         </th>
 
                                         <th class="wsus__pro_status">
-                                            quantity
+                                            Số lượng
                                         </th>
                                         <th class="wsus__pro_tk" style="width: 368px">
-                                            price
+                                            Giá
                                         </th>
 
                                         <th class="wsus__pro_icon">
-                                            action
+                                            Hành động
                                         </th>
                                     </tr>
 
@@ -80,12 +80,12 @@
 
                                         <td class="wsus__pro_tk" style="width: 350px">
                                             <h6>
-                                                {{$settings->currency_icon}}{{$item->product->price}}
+                                                {{$item->product->price}} {{$settings->currency_icon}}
                                             </h6>
                                         </td>
 
                                         <td class="wsus__pro_icon">
-                                            <a class="common_btn" href="{{route('product-detail', $item->product->slug)}}">View Product</a>
+                                            <a class="common_btn" href="{{route('product-detail', $item->product->slug)}}">Xem sản phẩm</a>
                                         </td>
                                     </tr>
                                     @endforeach

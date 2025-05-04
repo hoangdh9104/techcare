@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="wsus__section_header for_md">
-                    <h3>Popular Categories</h3>
+                    <h3>Danh mục phổ biến</h3>
                     <div class="monthly_top_filter">
 
                         @php
@@ -50,18 +50,19 @@
 
                                 if ($keyName === 'category') {
                                     $category = \App\Models\Category::find($lastKey['category']);
-                                    $products[] = \App\Models\Product::where('category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
                                 } elseif ($keyName === 'sub_category') {
                                     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                                    $products[] = \App\Models\Product::where('sub_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('sub_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
                                 } else {
-                                    
                                     // Kiểm tra $lastKey['child_category'] có tồn tại không
                                     if (!isset($lastKey['child_category'])) {
                                         dd("Không tìm thấy key 'child_category' trong mảng lastKey");
@@ -76,7 +77,8 @@
                                     }
 
                                     // Truy vấn sản phẩm
-                                    $products[] = \App\Models\Product::where('child_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('child_category_id', $category->id)
                                         ->orderBy('id', 'DESC')
                                         ->take(12)
                                         ->get();
@@ -103,21 +105,28 @@
                                     <div class="wsus__hot_deals__single_text">
                                         <h5>{!! limitText($item->name) !!}</h5>
                                         <p class="wsus__rating">
+                                            @php
+                                                $avgRating = $item->reviews('reviews')->avg('rating');
+                                                $fullRating = round($avgRating);
+                                            @endphp
+
                                             @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $item->reviews_avg_rating)
+                                                @if ($i <= $fullRating)
                                                     <i class="fas fa-star"></i>
                                                 @else
                                                     <i class="far fa-star"></i>
                                                 @endif
                                             @endfor
 
+                                            <span>({{ count($item->reviews) }} Đánh giá sản phẩm)</span>
+
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $item->price }}</del>
+                                                <del>{{ $item->price }} {{ $settings->currency_icon }}</del>
                                             </p>
                                         @else
-                                            <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->price }}</p>
+                                            <p class="wsus__tk">{{ $item->price }} {{ $settings->currency_icon }}</p>
                                         @endif
                                     </div>
                                 </a>

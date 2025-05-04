@@ -15,7 +15,8 @@ class MomoSetting extends Model
         'country_name',
         'currency_name',
         'currency_rate',
-        'client_id',
+        'partner_code',
+        'access_key',
         'secret_key',
     ];
 }

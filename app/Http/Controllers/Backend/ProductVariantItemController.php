@@ -28,32 +28,37 @@ class ProductVariantItemController extends Controller
     {
         $request->validate([
             'variant_id' => ['integer', 'required'],
-            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')],
-            'price' => ['integer', 'required'],
+            // 'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')],
+            'name' => [
+                'required',
+                'max:200',
+                Rule::unique('product_variant_items', 'name')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('product_variant_id', $request->variant_id);
+                    }),
+            ],
             'is_default' => ['required'],
-            'status' => ['required']
+            'status' => ['required'],
         ]);
-        // Kiểm tra nếu có ProductVariantItem khác đang is_default == 1
+        // Kiểm tra nếu đã có biến thể mặc định
         if ($request->is_default == 1) {
             $existsDefault = ProductVariantItem::where('product_variant_id', $request->variant_id)
                 ->where('is_default', 1)
                 ->exists();
 
             if ($existsDefault) {
-                return redirect()->back()->withErrors(['is_default' => 'A default variant already exists.']);
+                return redirect()->back()->withErrors([
+                    'is_default' => 'Đã tồn tại một biến thể mặc định cho nhóm biến thể này.',
+                ])->withInput();
             }
         }
-
-        // Tạo mới ProductVariantItem
         $variantItem = new ProductVariantItem();
         $variantItem->product_variant_id = $request->variant_id;
         $variantItem->name = $request->name;
-        $variantItem->price = $request->price;
         $variantItem->is_default = $request->is_default;
         $variantItem->status = $request->status;
         $variantItem->save();
-
-        toastr('Created Successfully!', 'success', 'success');
+        toastr('Tạo mới chi tiết biến thể thành công!', 'success', 'success');
         return redirect()->route(
             'admin.products-variant-item.index',
             ['productId' => $request->product_id, 'variantId' => $request->variant_id]
@@ -69,8 +74,10 @@ class ProductVariantItemController extends Controller
         $variantItem = ProductVariantItem::findOrFail($variantItemId);
 
         $request->validate([
-            'name' => ['required', 'max:200', Rule::unique('product_variant_items', 'name')->ignore($variantItemId)],
-            'price' => ['integer', 'required'],
+            'name' => ['required', 'max:200',  Rule::unique('product_variant_items', 'name')
+                ->where(function ($query) use ($request) {
+                    return $query->where('product_variant_id', $request->variant_id);
+                })->ignore($variantItemId)],
             'is_default' => ['required'],
             'status' => ['required']
         ]);
@@ -83,18 +90,17 @@ class ProductVariantItemController extends Controller
                 ->exists();
 
             if ($existsDefault) {
-                return redirect()->back()->withErrors(['is_default' => 'A default variant already exists.']);
+                return redirect()->back()->withErrors(['is_default' => 'Sản phẩm đã có một biến thể mặc định.']);
             }
         }
 
         // Cập nhật dữ liệu
         $variantItem->name = $request->name;
-        $variantItem->price = $request->price;
         $variantItem->is_default = $request->is_default;
         $variantItem->status = $request->status;
         $variantItem->save();
 
-        toastr('Update Successfully!', 'success', 'success');
+        toastr('Cập nhật biến thể thành công!', 'success', 'success');
 
         return redirect()->route(
             'admin.products-variant-item.index',
@@ -106,7 +112,7 @@ class ProductVariantItemController extends Controller
         $variantItem = ProductVariantItem::findOrFail($variantItemId);
         $variantItem->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'message' => 'Xóa biến thể thành công!']);
     }
     public function changeStatus(Request $request)
     {
@@ -114,6 +120,6 @@ class ProductVariantItemController extends Controller
         $variantItem->status = $request->status;
         $variantItem->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

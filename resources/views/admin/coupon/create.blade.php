@@ -29,7 +29,18 @@
                                     <label>Code</label>
                                     <input type="text" class="form-control" name="code" value="">
                                 </div>
-
+                                
+                                <div class="form-group">
+                                    <label for="product_id">Select Product</label>
+                                    <select name="product_id" id="product_id" class="form-control">
+                                        <option value="">Apply to all products</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}" {{ isset($coupon) && $coupon->product_id == $product->id ? 'selected' : '' }}>
+                                                {{ $product->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 <div class="form-group">
                                     <label>Quantity</label>
@@ -69,11 +80,18 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    {{-- <div class="col-md-8">
                                         <div class="form-group">
                                             <label>Descount Value</label>
                                             <input type="text" class="form-control" name="discount" value="">
                                         </div>
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label for="discount">Discount</label>
+                                        <input type="number" name="discount" id="discount" class="form-control" value="{{ old('discount', $coupon->discount ?? '') }}">
+                                        @error('discount')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 

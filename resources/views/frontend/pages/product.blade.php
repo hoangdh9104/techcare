@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{ $settings->site_name }} Product Detail
+    {{ $settings->site_name }} Chi tiết sản phẩm
 @endsection
 
 @section('content')
@@ -10,10 +10,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>products</h4>
+                        <h4>Sản phẩm</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">product</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li><a href="#">Sản phẩm</a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="wsus__sidebar_filter">
-                        <p>filter</p>
+                        <p>Bộ lọc</p>
                         <span class="wsus__filter_icon">
                             <i class="far fa-minus" id="minus"></i>
                             <i class="far fa-plus" id="plus"></i>
@@ -53,7 +53,7 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        All Categories
+                                        Tất cả danh mục
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -73,7 +73,7 @@
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Price
+                                        Giá
                                     </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
@@ -89,7 +89,7 @@
                                                 @endforeach
                                                 <input type="hidden" id="slider_range" name="range"
                                                     class="flat-slider" />
-                                                <button type="submit" class="common_btn">filter</button>
+                                                <button type="submit" class="common_btn">Bộ lọc</button>
                                             </form>
 
 
@@ -103,7 +103,7 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseThree3" aria-expanded="false"
                                         aria-controls="collapseThree">
-                                        brand
+                                        Thương hiệu
                                     </button>
                                 </h2>
                                 <div id="collapseThree3" class="accordion-collapse collapse show"
@@ -181,23 +181,37 @@
                                                     <a class="wsus__category"
                                                         href="#">{{ $product->category->name }}</a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(133 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews('reviews')->avg('rating');
+                                                            $fullRating = round($avgRating);
+                                                        @endphp
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $fullRating)
+                                                            <i class="fas fa-star"></i>
+                                                            @else
+                                                            <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+
+
+                                                        <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
+
+
+
+                                                        {{-- <span>({{count($product->reviews)}} review)</span> --}}
+
+
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
                                                             {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->price }}</p>
+                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <form class="shopping-cart-form" action="">
                                                         <input type="hidden" name="product_id"
@@ -216,14 +230,14 @@
                                                             <input name="quantity" type="hidden" min="1"
                                                                 max="100" value="1" />
                                                         </div>
-                                                        <button class="add_cart" type="submit">add to cart</button>
+                                                        {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                                     </form>
                                                 </div>
                                                 @if (count($products) === 0)
                                                     <div class = "text-center mt-5">
                                                         <div class="card">
                                                             <div class="card-body">
-                                                                <h2>Product not found !</h2>
+                                                                <h2>Không tìm thấy sản phẩm !</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -245,8 +259,9 @@
                                                     <span
                                                         class="wsus__minus">{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                                                 @endif
-                                                <a class="wsus__pro_link" href="product_details.html">
-                                                    <img src="{{ $product->thumb_image }}" alt="product"
+                                                <a class="wsus__pro_link"
+                                                    href="{{ route('product-detail', $product->slug) }}">
+                                                    <img src="{{ asset($product->thumb_image) }}" alt="product"
                                                         class="img-fluid w-100 img_1" />
                                                     <img src="@if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }} @else {{ asset($product->thumb_image) }} @endif"
                                                         alt="product" class="img-fluid w-100 img_2" />
@@ -255,22 +270,31 @@
                                                     <a class="wsus__category"
                                                         href="#">{{ $product->category->name }}</a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(17 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews('reviews')->avg('rating');
+                                                            $fullRating = round($avgRating);
+                                                        @endphp
+
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $fullRating)
+                                                            <i class="fas fa-star"></i>
+                                                            @else
+                                                            <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+
+                                                        <span>({{count($product->reviews)}} Đánh giá)</span>
+
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
                                                             {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->price }}</p>
+                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <p class="list_description">{{ $product->short_description }}</p>
                                                     <ul class="wsus__single_pro_icon">
@@ -291,8 +315,7 @@
                                                                 <input name="quantity" type="hidden" min="1"
                                                                     max="100" value="1" />
                                                             </div>
-                                                            <button class="add_cart_two" type="submit">add to
-                                                                cart</button>
+                                                            {{-- <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button> --}}
                                                         </form>
                                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
                                                         <li><a href="#"><i class="far fa-random"></i></a></li>
@@ -307,7 +330,7 @@
                                 <div class = "text-center mt-5">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h2>Product not found !</h2>
+                                            <h2>Không tìm thấy sản phẩm !</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -373,25 +396,34 @@
                                 <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="wsus__pro_details_text">
                                         <a class="title" href="#">{{ $product->name }}</a>
-                                        <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                                        <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
                                         @if (checkDiscount($product))
                                             <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                                <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
                                             </h4>
                                         @else
-                                            <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                                            <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
                                         @endif
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews('reviews')->avg('rating');
+                                                $fullRating = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
+                                                @else
+                                                <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
+
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
                                         <div class="wsus_pro_hot_deals">
-                                            <h5>offer ending time : </h5>
+                                            <h5>Thời gian kết thúc : </h5>
                                             <div class="simply-countdown simply-countdown-one"></div>
                                         </div>
                                         <form class="shopping-cart-form" action="">
@@ -410,16 +442,16 @@
                                                 <input name="quantity" type="hidden" min="1" max="100"
                                                     value="1" />
                                             </div>
-                                            <button class="add_cart" type="submit">add to cart</button>
+                                            {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                             <ul class="wsus__button_area">
-                                                <li><button type="submit" class="add_cart" href="#">add to cart</button></li>
-                                                <li><a href="#" class="buy_now">Buy now</a></li>
+                                                <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
+                                                <li><a href="#" class="buy_now">Mua ngay</a></li>
                                                 <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                                 <li></li>
                                             </ul>
 
                                         </form>
-                                        <p class="brand_model"><span>brand :</span> {{ $product->brand->name }}</p>
+                                        <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -430,7 +462,6 @@
         </section>
     @endforeach
 @endsection
-
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -449,21 +480,26 @@
         });
 
         @php
-            if (request()->has('range') && request()->range != '') {
-                $price = explode(';', request()->range);
-                $from = $price[0];
-                $to = $price[1];
-            } else {
-                $from = 0;
-                $to = 9999;
-            }
-        @endphp
+    if (request()->has('range') && request()->range != '') {
+        $price = explode(';', request()->range);
+        $from = $price[0] ?? 0;
+        $to = $price[1] ?? 45000000;
+        // Kiểm tra nếu mảng chỉ có 1 phần tử
+        if (count($price) === 1) {
+            $from = $price[0];
+            $to = 45000000;
+        }
+    } else {
+        $from = 0;
+        $to = 45000000;
+    }
+@endphp
 
         jQuery(function() {
             jQuery("#slider_range").flatslider({
                 min: 0,
-                max: 10000,
-                step: 50,
+                max: 45000000,
+                step: 50000,
                 values: [{{ $from }}, {{ $to }}],
                 range: true,
                 einheit: '{{ $settings->currency_icon }}'
@@ -471,3 +507,4 @@
         });
     </script>
 @endpush
+

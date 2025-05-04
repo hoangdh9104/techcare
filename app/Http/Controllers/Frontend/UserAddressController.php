@@ -55,7 +55,7 @@ class UserAddressController extends Controller
         $address->address = $request->address;
         $address->save();
 
-        toastr('Created Successfully!', 'success', 'Success');
+        toastr('Thêm địa chỉ thành công !', 'success', 'Success');
         return redirect()->route('user.address.index');
     }
 
@@ -105,7 +105,7 @@ class UserAddressController extends Controller
         $address->address = $request->address;
         $address->save();
 
-        toastr('Update Successfully!', 'success', 'Success');
+        toastr('Cập nhật địa chỉ thành công !', 'success', 'Success');
         return redirect()->route('user.address.index');
     }
 
@@ -117,6 +117,6 @@ class UserAddressController extends Controller
         $address = UserAddress::findOrFail($id);
         $address->delete();
 
-        return response(['status' => 'success', 'messsage' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'messsage' => 'Đã xóa địa chỉ !']);
     }
 }

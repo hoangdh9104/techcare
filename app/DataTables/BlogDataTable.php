@@ -95,13 +95,13 @@ class BlogDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('image'),
-            Column::make('title'),
-            Column::make('category'),
-            Column::make('publish_date'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('image')->title('Hình ảnh')->width(100),
+            Column::make('title')->title('Tiêu đề'),
+            Column::make('category')->title('Danh mục'),
+            Column::make('publish_date')->title('Ngày đăng'),
+            Column::make('status')->title(' Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

@@ -65,6 +65,9 @@ class VendorOrderDataTable extends DataTable
                     case 'delivered':
                         return "<span class='badge bg-success'>delivered</span>";
                         break;
+                    case 'received':
+                        return "<span class='badge bg-success'>received</span>";
+                        break;
                     case 'canceled':
                         return "<span class='badge bg-danger'>canceled</span>";
                         break;
@@ -115,19 +118,19 @@ class VendorOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('invocie_id'),
-            Column::make('customer'),
-            Column::make('date'),
+            Column::make('id')->title('STT'),
+            Column::make('invocie_id')->title('Hóa đơn'),
+            Column::make('customer')->title('Khách hàng'),
+            Column::make('date')->title('Ngày đặt hàng'),
             // Column::make('product_qty'),
             // Column::make('amount'),
-            Column::make('order_status'),
-            Column::make('payment_status'),
+            Column::make('order_status')->title('Trạng thái đơn hàng'),
+            Column::make('payment_status')->title('Trạng thái thanh toán'),
 
-            Column::make('payment_method'),
+            Column::make('payment_method')->title('Phương thức thanh toán'),
 
 
-            Column::computed('action')
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

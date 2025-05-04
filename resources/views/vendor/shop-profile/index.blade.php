@@ -12,16 +12,16 @@
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="far fa-user"></i>Shop profile</h3>
+                        <h3><i class="far fa-user"></i>Hồ sơ cửa hàng</h3>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
-                                <h4>basic information</h4>
+                                <h4>Thông tin cơ bản</h4>
 
                                 <form action="{{ route('vendor.shop-profile.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group wsus__input">
-                                        <label>Preview</label>
+                                        <label>Xem</label>
                                         <br>
                                         <img width="200px" src="{{ asset($profile->banner) }}" alt="">
                                     </div>
@@ -31,13 +31,13 @@
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Shop Name</label>
+                                        <label>Tên cửa hàng</label>
                                         <input type="text" class="form-control" name="shop_name"
                                             value="{{ $profile->shop_name }}">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Phone</label>
+                                        <label>Số điện thoại</label>
                                         <input type="text" class="form-control" name="phone"
                                             value="{{ $profile->phone }}">
                                     </div>
@@ -47,12 +47,12 @@
                                             value="{{ $profile->email }}">
                                     </div>
                                     <div class="form-group wsus__input">
-                                        <label>Address</label>
+                                        <label>Địa chỉ</label>
                                         <input type="text" class="form-control" name="address"
                                             value="{{ $profile->address }}">
                                     </div>
                                     <div class="form-group wsus__input">
-                                        <label>Description</label>
+                                        <label>Mô tả</label>
                                         <textarea class="summernote" name="description">{{ $profile->description }}</textarea>
                                     </div>
                                     <div class="form-group wsus__input">
@@ -71,7 +71,7 @@
                                             value="{{ $profile->insta_link }}">
                                     </div>
 
-                                    <button type="submmit" class="btn btn-primary">Update</button>
+                                    <button type="submmit" class="btn btn-primary">Cập nhật</button>
                                 </form>
 
 

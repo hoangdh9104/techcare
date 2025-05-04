@@ -91,12 +91,12 @@ class SubCategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('slug'),
-            Column::make('category'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên danh mục'),
+            Column::make('slug')->title('Slug'),
+            Column::make('category')->title('Danh mục cha'),
+            Column::make('status')->title('Trạng thái'),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

@@ -17,7 +17,8 @@ class MomoSettingController extends Controller
             'country_name' => ['required', 'max:200'],
             'currency_name' => ['required', 'max:200'],
             'currency_rate' => ['required'],
-            'client_id' => ['required'],
+            'partner_code' => ['required'],
+            'access_key' => ['required'],
             'secret_key' => ['required'],
         ]);
 
@@ -31,12 +32,13 @@ class MomoSettingController extends Controller
                 'country_name' => $request->country_name,
                 'currency_name' => $request->currency_name,
                 'currency_rate' => $request->currency_rate,
-                'client_id' => $request->client_id,
+                'partner_code' => $request->partner_code,
+                'access_key' => $request->access_key,
                 'secret_key' => $request->secret_key,
             ]
         );
 
-        toastr('Update Successfully!', 'success', 'Success');
+        toastr('Cập nhật thành công!', 'success', 'Success');
         return redirect()->back();
     }
 }

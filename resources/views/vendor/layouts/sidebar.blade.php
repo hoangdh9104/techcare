@@ -3,18 +3,29 @@
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
     </span>
-    <a href="{{ route('vendor.dashboard') }}" class="dash_logo"><img src="{{ asset('frontend/images/logo-white-2.png') }}"
+    <a href="{{ route('vendor.dashboard') }}" class="dash_logo"><img src="{{ asset($logoSetting->logo) }}"
             alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
-        <li><a class="active" href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
-        <li><a class="active" href="{{ route('vendor.orders') }}"><i class="fas fa-tachometer"></i>Orders</a></li>
-        <li><a href="{{ route('vendor.products.index') }}"><i class="far fa-user"></i>Products</a></li>
-        <li><a href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i>Shop Profile</a></li>
-        <li><a href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
+        <li><a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}"><i
+                    class="fas fa-tachometer"></i>Dashboard</a></li>
+        <li><a class="{{ setActive(['/']) }}" href="{{ url('/') }}"><i class="fas fa-home"></i> Đi đến Trang chủ</a>
+        </li>
+        <li><a class="{{ setActive(['vendor.messages.index']) }}" href="{{ route('vendor.messages.index') }}"><i
+                    class="fas fa-home"></i>Messenger</a></li>
+        <li><a class="{{ setActive(['vendor.orders.*']) }}" href="{{ route('vendor.orders.index') }}"><i
+                    class="fas fa-box"></i>Đơn hàng</a></li>
+        <li><a class="{{ setActive(['vendor.products.*']) }}" href="{{ route('vendor.products.index') }}"><i
+                    class="far fa-cart-plus"></i>Sản phẩm</a></li>
+        <li><a class="{{ setActive(['vendor.reviews.index']) }}" href="{{ route('vendor.reviews.index') }}"><i
+                    class="far fa-star"></i>Đánh giá</a></li>
+        <li><a class="{{ setActive(['vendor.shop-profile.index']) }}"
+                href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i>Hồ sơ cửa hàng</a></li>
+        <li><a class="{{ setActive(['vendor.profile']) }}" href="{{ route('vendor.profile') }}"><i
+                    class="far fa-user"></i> Hồ sơ của tôi</a></li>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();this.closest('form').submit();"><i
-                        class="far fa-sign-out-alt"></i> Log out</a></li>
+                        class="far fa-sign-out-alt"></i> Đăng xuất</a></li>
         </form>
     </ul>
 </div>

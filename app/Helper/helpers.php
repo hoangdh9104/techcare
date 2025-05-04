@@ -48,25 +48,26 @@ function calculateDiscountPercent($originalPrice, $discountPrice)
 
 // Kiểm tra loại sản phẩm
 
-function productType(string $type)
+function productType($type)
 {
     switch ($type) {
         case 'new_arrival':
-            return 'New';
+            return 'Hàng mới về';
             break;
         case 'featured_product':
-            return 'Featured';
+            return 'Sản phẩm nổi bật'; // Sản phẩm muốn quảng bá
             break;
         case 'top_product':
-            return 'Top';
+            return 'Sản phẩm bán chạy';
             break;
         case 'best_product':
-            return 'Best';
+            return 'Sản phẩm tốt nhất';
             break;
         default:
-            return '';
+            return 'Không có';
             break;
     }
+
 }
 
 // lấy tổng giá sản phẩm ở giỏ hàng
@@ -83,6 +84,25 @@ function limitText($text, $limit = 20)
 {
     return \Str::limit($text, $limit);
 }
+
+/** get cart discount */
+function getCartDiscount()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        if ($coupon['discount_type'] === 'amount') {
+            return $coupon['discount'];
+        } else if ($coupon['discount_type'] === 'percent') {
+            $discount = $subTotal - ($subTotal * $coupon['discount'] / 100);
+            // $discount = ($subTotal * $coupon['discount'] / 100);
+            return $discount;
+        }
+    } else {
+        return 0;
+    }
+}
+
 /** get payable total amount */
 function getMainCartTotal()
 {
@@ -102,22 +122,6 @@ function getMainCartTotal()
     }
 }
 
-/** get cart discount */
-function getCartDiscount()
-{
-    if (Session::has('coupon')) {
-        $coupon = Session::get('coupon');
-        $subTotal = getCartTotal();
-        if ($coupon['discount_type'] === 'amount') {
-            return $coupon['discount'];
-        } else if ($coupon['discount_type'] === 'percent') {
-            $discount = $subTotal - ($subTotal * $coupon['discount'] / 100);
-            return $discount;
-        }
-    } else {
-        return 0;
-    }
-}
 
 // Shipping fee from sesssion
 
@@ -134,4 +138,17 @@ function getShippingFee()
 function getFinalPayableAmount()
 {
     return getMainCartTotal() + getShippingFee();
+}
+function getCurrencyIcon()
+{
+    $icon = GeneralSetting::first();
+
+    return $icon->currency_icon;
+}
+
+if (!function_exists('checkDiscount')) {
+    function checkDiscount($product)
+    {
+        return $product->offer_price > 0 && $product->offer_price < $product->price;
+    }
 }

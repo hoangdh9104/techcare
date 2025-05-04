@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
+use App\Http\Controllers\Backend\VendorProductReviewController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
 use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
@@ -47,6 +49,12 @@ Route::delete('products-variant-item/{variantItemId}', [VendorProductVariantItem
 Route::put('products-variant-item-status', [VendorProductVariantItemController::class, 'changeStatus'])
     ->name('products-variant-item.change-status');
 /** order route */
-Route::get('orders', [VendorOrderController::class, 'index'])->name('orders');
+Route::get('orders', [VendorOrderController::class, 'index'])->name('orders.index');
 Route::get('orders/show/{id}', [VendorOrderController::class, 'show'])->name('orders.show');
 Route::get('orders/status/{id}', [VendorOrderController::class, 'orderStatus'])->name('orders.status');
+
+/** reviews route */
+Route::get('reviews', [VendorProductReviewController::class, 'index'])->name('reviews.index');
+
+// Message route
+Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');

@@ -8,7 +8,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     {{-- <meta name = "csrf-token" content="{{csrf_token()}}" /> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>@yield('title', 'Techcare Shop')</title>
+    <link rel="icon" type="image/png" href="{{ asset($logoSetting->favicon) }}">
 
     {{-- <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -25,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/select2/dist/css/select2.min.css') }}">
+    @stack('links')
     {{-- sử dụng thư viện toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     {{-- jquery database css --}}
@@ -38,37 +40,28 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
-    <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    {{-- Sử dụng RTL chuyển bố cục sang phải, LTR sang trái --}}
+    @if ($settings->layout == 'RTL')
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+    @endif
+
+
     <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
+        const USER = {
+            id: "{{auth()->user()->id}}",
+            name: "{{auth()->user()->name}}",
+            image: "{{ asset(auth()->user()->image)}}",
         }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
+        const PUSHER = {
+            key: "{{ $pusherSetting->pusher_key }}",
+            cluster: "{{ $pusherSetting->pusher_cluster }}",
+        }
     </script>
-    <!-- /END GA -->
 
-    {{-- @if ($settings->layout === 'RTL')
-  <link rel="stylesheet" href="{{asset('backend/assets/css/rtl.css')}}">
-  @endif --}}
 
-    {{-- <script>
-    const USER = {
-        id: "{{ auth()->user()->id }}",
-        name: "{{ auth()->user()->nmae }}",
-        image: "{{ asset(auth()->user()->image) }}"
-    }
-    const PUSHER = {
-        key: "{{ $pusherSetting->pusher_key }}",
-        cluster: "{{ $pusherSetting->pusher_cluster }}"
-    }
-  </script> --}}
-
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js','resources/js/admin.js'])
 </head>
 
 <body>
@@ -113,6 +106,8 @@
     <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+
+
     {{-- sử dụng thư viện toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     {{-- jquery database --}}
@@ -124,7 +119,7 @@
     <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     <!-- Page Specific JS File -->
-    <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
+    @stack('scripts')
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
@@ -185,7 +180,6 @@
         });
     </script>
 
-    @stack('scripts')
 </body>
 
 </html>

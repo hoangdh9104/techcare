@@ -51,12 +51,15 @@ class ShippingRuleDataTable extends DataTable
             })
             ->addColumn('type', function ($query) {
                 if ($query->type == 'min_cost') {
-                    return '<i class="badge badge-warning">Minium order Amount</i>';
+                    return '<i class="badge badge-warning">Giá trị đơn hàng tối thiểu</i>';
                 } else {
-                    return '<i class="badge badge-success">Flat Amount</i>';
+                    return '<i class="badge badge-success">Chi phí cố định</i>';
                 }
             })
             ->addColumn('min_cost', function ($query) {
+                if ($query->type !== 'min_cost') {
+                    return 'không cần';
+                }
                 return $query->min_cost . $this->currencyIcon;
             })
             ->addColumn('cost', function ($query) {
@@ -102,18 +105,18 @@ class ShippingRuleDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('type'),
-            Column::make('min_cost'),
-            Column::make('cost'),
-            Column::make('status'),
+            Column::make('id')->title('STT'),
+            Column::make('name')->title('Tên quy tắc'),
+            Column::make('type')->title('Loại'),
+            Column::make('min_cost')->title('Giá trị đơn hàng tối thiểu'),
+            Column::make('cost')->title('Phí vận chuyển'),
+            Column::make('status')->title('Trạng thái'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
-                ->addClass('text-center'),
+                ->width(150)
+                ->addClass('text-center')
+                ->title('Thao tác'),
         ];
     }
 

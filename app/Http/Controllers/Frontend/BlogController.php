@@ -23,9 +23,11 @@ class BlogController extends Controller
     }
     public function comment(Request $request)
     {
+        // dd($request->all());
         $request->validate([
 
-            'comment' => ['required', 'max:1000']
+            'comment' => ['required', 'max:1000'],
+            // 'blog_id' => ['required', 'exists:blogs,id']
 
         ]);
 
@@ -34,7 +36,7 @@ class BlogController extends Controller
         $comment->blog_id = $request->blog_id;
         $comment->comment = $request->comment;
         $comment->save();
-        toastr('Comment added successfully', 'success', 'success');
+        toastr('Đã thêm bình luận !', 'success', 'success');
 
         return redirect()->back();
 

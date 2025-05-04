@@ -32,16 +32,17 @@ class CategoryDataTable extends DataTable
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
-                    return '<label class="custom-switch mt-2">
+                    $button = '<label class="custom-switch mt-2">
                                 <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
                                 <span class="custom-switch-indicator"></span>
                             </label>';
                 } else {
-                    return '<label class="custom-switch mt-2">
+                    $button = '<label class="custom-switch mt-2">
                                 <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
                                 <span class="custom-switch-indicator"></span>
                             </label>';
                 }
+                return $button;
             })
             ->rawColumns(['icon', 'action', 'status'])
             ->setRowId('id');
@@ -73,11 +74,11 @@ class CategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100),
-            Column::make('icon'),
-            Column::make('name'),
-            Column::make('status')->width(100),
-            Column::computed('action')
+            Column::make('id')->title('STT')->width(100),
+            Column::make('icon')->title('Icon')->width(100),
+            Column::make('name')->title('Tên'),
+            Column::make('status')->title('Trạng thái')->width(100),
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

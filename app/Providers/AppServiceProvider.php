@@ -4,10 +4,13 @@ namespace App\Providers;
 
 
 use App\Models\GeneralSetting;
+use App\Models\LogoSetting;
+use App\Models\PusherSetting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Pusher\Pusher;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,32 +27,34 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         Paginator::useBootstrap();
-    
+
         /* set time zone */
         $generalSetting = GeneralSetting::first();
+        $logoSetting = LogoSetting::first();
+        $pusherSetting = PusherSetting::first();
 
+
+        // Cấu hình broadcasting 
+
+        Config::set('broadcasting.connections.pusher.key', $pusherSetting->pusher_key);
+        Config::set('broadcasting.connections.pusher.secret', $pusherSetting->pusher_secret);
+        Config::set('broadcasting.connections.pusher.app_id', $pusherSetting->pusher_app_id);
+        Config::set('broadcasting.connections.pusher.options.host', "api-{$pusherSetting->pusher_cluster}.pusher.com");
+
+        // dd(Config::get('broadcasting'));
 
         if ($generalSetting) {
             Config::set('app.timezone', $generalSetting->time_zone);
 
             /** Share variable at all view */
-            View::composer('*', function ($view) use ($generalSetting) {
-                $view->with('settings', $generalSetting);
+            View::composer('*', function ($view) use ($generalSetting, $logoSetting, $pusherSetting) {
+                $view->with(['settings' => $generalSetting, 'logoSetting' => $logoSetting, 'pusherSetting' => $pusherSetting]);
             });
         } else {
             // Đặt timezone mặc định nếu không có bản ghi trong bảng general_settings
             Config::set('app.timezone', config('app.timezone'));
         }
-
-
-        // $generalSetting = GeneralSetting::first(); // Giả sử bạn dùng model GeneralSetting
-        // if ($generalSetting) {
-        //     Config::set('app.timezone', $generalSetting->time_zone);
-        // } else {
-        //     // Xử lý khi không tìm thấy dữ liệu, ví dụ: đặt timezone mặc định
-        //     Config::set('app.timezone', 'UTC');
-        // }
     }
-    
 }

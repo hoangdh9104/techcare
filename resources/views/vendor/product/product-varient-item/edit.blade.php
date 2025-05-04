@@ -25,19 +25,19 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group wsus__input">
-                                        <label>Variant Name</label>
+                                        <label>Tạo biến thể</label>
                                         <input type="text" class="form-control" name="variant_name"
                                             value="{{ $variantItem->productVariant->name }}" readonly>
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Item Name</label>
+                                        <label>Tên biến thể</label>
                                         <input type="text" class="form-control" name="name"
                                             value="{{ $variantItem->name }}">
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label>Price <code>(Set 0 for make it free)</code></label>
+                                        <label>Giá <code>(Đặt 0 để được miễn phí)</code></label>
                                         <input type="text" class="form-control" name="price"
                                             value="{{ $variantItem->price }}">
                                     </div>
@@ -46,23 +46,23 @@
                                         <label for="inputState">Is Default</label>
                                         <select id="inputState" class="form-control" name="is_default">
                                             <option value="">Select</option>
-                                            <option {{ $variantItem->is_default == 1 ? 'selected' : '' }} value="1">Yes
+                                            <option {{ $variantItem->is_default == 1 ? 'selected' : '' }} value="1">Có
                                             </option>
-                                            <option {{ $variantItem->is_default == 0 ? 'selected' : '' }} value="0">No
+                                            <option {{ $variantItem->is_default == 0 ? 'selected' : '' }} value="0">Không
                                             </option>
                                         </select>
                                     </div>
 
                                     <div class="form-group wsus__input">
-                                        <label for="inputState">Status</label>
+                                        <label for="inputState">Trạng thái</label>
                                         <select id="inputState" class="form-control" name="status">
-                                            <option {{ $variantItem->status == 1 ? 'selected' : '' }} value="1">Active
+                                            <option {{ $variantItem->status == 1 ? 'selected' : '' }} value="1">Hoạt động
                                             </option>
                                             <option {{ $variantItem->status == 0 ? 'selected' : '' }} value="0">
-                                                Inactive</option>
+                                                Không hoạt động</option>
                                         </select>
                                     </div>
-                                    <button type="submmit" class="btn btn-primary">Update</button>
+                                    <button type="submmit" class="btn btn-primary">Cập nhật</button>
                                 </form>
                             </div>
                         </div>

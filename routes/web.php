@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\VendorController;
 // use App\Http\Controllers\Frontend\FrontendProductController;
 
 
+use App\Http\Controllers\Backend\VNPaySettingController;
 use App\Http\Controllers\Frontend\BlogController;
 
 use App\Http\Controllers\Frontend\CartController;
@@ -19,15 +20,21 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
+use App\Http\Controllers\Frontend\UserMessageController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\WishlistController;
 
 use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\UserVendorReqeustController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\VNPayController;
+use App\Http\Controllers\Frontend\ProductController;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Route;
 
@@ -54,7 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // route for admin
-Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login');
+
 require __DIR__ . '/auth.php';
 
 // Route Flash Sale
@@ -74,9 +81,11 @@ Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->n
 
 /* Route product  */
 Route::get('products', [FrontendProductControlelr::class, 'productsIndex'])->name('products.index');
-
 Route::get('product-detail/{slug}', [FrontendProductControlelr::class, 'showProduct'])->name('product-detail');
 Route::get('change-product-list-view', [FrontendProductControlelr::class, 'changeListView'])->name('change-product-list-view');
+// add product in whislist
+Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+
 
 /* Route add to cart */
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
@@ -107,6 +116,21 @@ Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name(
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
 Route::get('vendor-product/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
+//about page route
+Route::get('about', [PageController::class, 'about'])->name('about');
+
+//terms and conditions page route
+Route::get('terms-and-conditions', [PageController::class, 'termsAndCondition'])->name('terms-and-conditions');
+
+//contact route
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
+//product track route
+Route::get('product-traking', [ProductTrackController::class, 'index'])->name('product-traking.index');
+// Route::get('product-traking', [ProductTrackController::class, 'track'])->name('product-traking.track');
+// lấy chi tiết sản phẩm biển thể
+Route::get('/get-variant-combination', [ProductController::class, 'getVariantCombination'])->name('variant.combination');
 // route for customer
 // Route::get('/dashboard', function () {})->middleware(['auth', 'verified'])->name('dashboard');
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -117,24 +141,37 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // wishlist route
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
+
     //vendor request
-    // Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
-    // Route::get('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
     Route::get('vendor-request', [UserVendorReqeustController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorReqeustController::class, 'create'])->name('vendor-request.create');
+
+    // Send message route
+    Route::post('send-message', [UserMessageController::class, 'sendMessage'])->name('send-message');
+    Route::get('get-messages', [UserMessageController::class, 'getMessages'])->name('get-messages');
+
+    // Message route
+    Route::get('messages', [UserMessageController::class, 'index'])->name('messages.index');
 
     // user address route
     Route::resource('address', UserAddressController::class);
 
     // Product review route
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+
+
+    Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
+
     // Order route
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
+    Route::post('orders/cancel/{id}', [UserOrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('orders/{id}/received', [UserOrderController::class, 'markAsReceived'])->name('orders.received');
     /**check out routes */
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address.create');
@@ -149,13 +186,29 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
-     // Momo route
-     Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
-     Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
-     Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
+    // Momo route
+    Route::get('momo/payment', [PaymentController::class, 'payWithMomo'])->name('momo.payment');
+    Route::get('momo/success', [PaymentController::class, 'momoSuccess'])->name('momo.success');
+    Route::get('momo/cancel', [PaymentController::class, 'momoCancel'])->name('momo.cancel');
 
+    // Cod route
+    Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
+    // VPpay route
+    // Route::get('/vnpay/payment', [PaymentController::class, 'createPayment'])->name('vnpay.payment');
+    // Route::get('/vnpay/return', [PaymentController::class, 'return'])->name('vnpay.return');
+    // Route::get('/vnpay/cancel', [PaymentController::class, 'cancel'])->name('vnpay.cancel');
+    Route::get('/vnpay/payment', [PaymentController::class, 'payWithVnpay'])->name('vnpay.payment');
+
+    // Xử lý khi thanh toán thành công hoặc thất bại từ VNPay redirect về
+    Route::get('/vnpay/return', [PaymentController::class, 'vnpaySuccess'])->name('vnpay.success');
+
+    // Route::middleware(['auth', 'role:shipper'])->group(function () {
+    //     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
+    // });
+    // Khi hủy thanh toán (nếu có sử dụng riêng trang cancel)
+    Route::get('/vnpay/cancel', [PaymentController::class, 'vnpayCancel'])->name('vnpay.cancel');
 });
-
-// Route::middleware(['auth', 'role:shipper'])->group(function () {
-//     Route::get('dashboard', [ShipperController::class, 'dashboard'])->name('dashboard');
-// });
+//chính sách
+Route::get('/policy', [PolicyController::class, 'index'])->name('policy.index');
+/** Products route */
+Route::get('show-product-modal/{id}', [HomeController::class, 'ShowProductModal'])->name('show-product-modal');
