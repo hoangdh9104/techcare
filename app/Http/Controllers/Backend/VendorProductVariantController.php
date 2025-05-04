@@ -115,7 +115,7 @@ class VendorProductVariantController extends Controller
         }
         $variant->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'success', 'message' => 'Đã xóa thành công']);
     }
     public function changeStatus(Request $request)
     {
@@ -123,6 +123,6 @@ class VendorProductVariantController extends Controller
         $varinat->status = $request->status == 'true' ? 1 : 0;
         $varinat->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

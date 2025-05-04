@@ -21,7 +21,7 @@ class AdminListController extends Controller
         $admin->status = $request->status == 'true' ? 'active' : 'inactive';
         $admin->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 
     public function destroy(string $id)
@@ -37,7 +37,7 @@ class AdminListController extends Controller
         Vendor::where('user_id', $admin->id)->delete();
         $admin->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted successfully']);
+        return response(['status' => 'success', 'message' => 'Đã xóa thành công']);
 
     }
 }
