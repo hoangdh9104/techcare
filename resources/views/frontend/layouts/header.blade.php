@@ -67,7 +67,8 @@
                         <a class="wsus__cart_title"
                             href="{{ route('product-detail', $sidebarProduct->options->slug) }}">{{ $sidebarProduct->name }}</a>
                         <p>
-                            {{ Number::format($sidebarProduct->price, locale: 'de') }}{{ $settings->currency_icon }}
+                            {{ number_format($sidebarProduct->price, 0, ',', '.') }}{{ $settings->currency_icon }}
+
                         </p>
                         <small>Số lượng: {{ $sidebarProduct->qty }}</small>
                     </div>
@@ -79,8 +80,9 @@
         </ul>
         <div class="mini_cart_action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
             <h5>Tạm tính <span
-                    class="mini_cart_subtotal">{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                    class="mini_cart_subtotal">{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
             </h5>
+
             <div class="wsus__minicart_btn_area">
 
                 <a class="common_btn" href="{{ route('cart-details') }}">
