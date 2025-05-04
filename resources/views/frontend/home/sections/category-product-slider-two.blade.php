@@ -109,11 +109,11 @@
                                     <a class="title" href="#">{{ $product->name }}</a>
                                     <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
                                     @if (checkDiscount($product))
-                                        <h4>{{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
-                                            <del>{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
+                                        <h4>{{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
+                                            <del>{{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
                                         </h4>
                                     @else
-                                        <h4>{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</h4>
+                                        <h4>{{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</h4>
                                     @endif
                                     <p class="review">
                                         @php

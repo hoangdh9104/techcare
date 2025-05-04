@@ -191,20 +191,21 @@
                                                                 <div class="col-6">
 
                                                                     <p><strong>Thành tiền:
-                                                                        </strong>{{ @Number::format($order->sub_total, locale: 'de') }}
+                                                                        </strong>{{ @number_format($order->sub_total, 0, ',', '.') }}
                                                                         {{ $settings->currency_icon }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-6">
+                                                                    
                                                                     <p class="text-right"><strong>Phí vận chuyển:</strong>
-                                                                        {{ @Number::format($shipping->cost, locale: 'de') }}{{ $settings->currency_icon }}
+                                                                        {{ @number_format($shipping->cost, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                                     </p>
                                                                     <p class="text-right"><strong>Giảm giá (-):</strong>
-                                                                        {{ @Number::format($coupon->discount ?: 0 , locale: 'de')  }}{{ $settings->currency_icon }}
+                                                                        {{ @number_format($coupon->discount ?: 0, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                                     </p>
                                                                     <p class="text-right font-weight-bold"><strong>Tổng
                                                                             cộng:</strong>
-                                                                        {{ @Number::format($order->amount, locale: 'de') }}{{ $settings->currency_icon }}
+                                                                            {{ @number_format(order->amount,, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                                     </p>
                                                                 </div>
                                                             </div>
