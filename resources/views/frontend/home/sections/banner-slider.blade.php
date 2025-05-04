@@ -28,13 +28,12 @@
                                         <h6 class="mt-2 text-lg">
                                            Giá bắt đầu
                                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 font-extrabold text-2xl drop-shadow-md">
-                                            {{ $slider->starting_price }} {{ $settings->currency_icon }}
+                                            {{ Number::format($slider->starting_price, locale: 'de') }} {{ $settings->currency_icon }}
                                         </span>
 
                                         </h6>
                                         <a class="common_btn" href="{{ $slider->btn_url }}">Mua ngay</a>
                                     </div>
-
                                 </div>
                             </div>
                         @endforeach

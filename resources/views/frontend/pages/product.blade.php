@@ -206,12 +206,12 @@
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
+                                                            {{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                            <del>{{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
+                                                            {{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <form class="shopping-cart-form" action="">
                                                         <input type="hidden" name="product_id"
@@ -289,12 +289,12 @@
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
+                                                            {{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                            <del>{{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
+                                                            {{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <p class="list_description">{{ $product->short_description }}</p>
                                                     <ul class="wsus__single_pro_icon">
@@ -317,8 +317,8 @@
                                                             </div>
                                                             {{-- <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button> --}}
                                                         </form>
-                                                        <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                                        <li><a href="#"><i class="far fa-random"></i></a></li>
+                                                        <li><a href="#" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                                        {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -398,11 +398,11 @@
                                         <a class="title" href="#">{{ $product->name }}</a>
                                         <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span> (167 Sản phẩm)</p>
                                         @if (checkDiscount($product))
-                                            <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                <del>{{ $product->price }} {{ $settings->currency_icon }}</del>
+                                            <h4>{{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                <del>{{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</del>
                                             </h4>
                                         @else
-                                            <h4>{{ $product->price }} {{ $settings->currency_icon }}</h4>
+                                            <h4>{{ Number::format($product->price, locale: 'de') }} {{ $settings->currency_icon }}</h4>
                                         @endif
                                         <p class="review">
                                             @php
@@ -443,12 +443,12 @@
                                                     value="1" />
                                             </div>
                                             {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
-                                            <ul class="wsus__button_area">
+                                            {{-- <ul class="wsus__button_area">
                                                 <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
                                                 <li><a href="#" class="buy_now">Mua ngay</a></li>
                                                 <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
                                                 <li></li>
-                                            </ul>
+                                            </ul> --}}
 
                                         </form>
                                         <p class="brand_model"><span>Thương hiệu :</span> {{ $product->brand->name }}</p>
