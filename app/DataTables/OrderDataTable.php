@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Number;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -32,10 +33,10 @@ class OrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                return $query->currency_icon . $query->amount;
+                return Number::format($query->amount, locale: 'de'). $query->currency_icon ;
             })
             ->addColumn('date', function ($query) {
-                return date('d-M-Y', strtotime($query->created_at));
+                return \Carbon\Carbon::parse($query->created_at)->locale('vi')->translatedFormat('d-m-Y');
             })
             ->addColumn('payment_status', function ($query) {
                 if ($query->payment_status === 0 && $query->order_status === 'canceled' && $query->payment_method !== 'COD') {

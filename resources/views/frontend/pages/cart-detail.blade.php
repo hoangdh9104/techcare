@@ -67,7 +67,7 @@
                                             </td>
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
-                                                    {{ $item->price * $item->qty . $settings->currency_icon }}
+                                                    {{ Number::format($item->price * $item->qty, locale: 'de') . $settings->currency_icon }}
                                                 </h6>
                                             </td>
 
@@ -103,13 +103,15 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
-                        <p>Tạm tính: <span id="sub_total">{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                        <p>Tạm tính: <span
+                                id="sub_total">{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                        </p>
                         <p>Phiếu giảm giá(-): <span
-                                id="discount">{{ getCartDiscount() }}{{ $settings->currency_icon }}</span>
+                                id="discount">{{ Number::format(getCartDiscount(), locale: 'de') }}{{ $settings->currency_icon }}</span>
                         </p>
                         <p class="total"><span>
                                 Tổng cộng:</span> <span
-                                id="cart_total">{{ getMainCartTotal() }}{{ $settings->currency_icon }}</span>
+                                id="cart_total">{{ Number::format(getMainCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
                         </p>
                         @if (session()->has('coupon_code'))
                             <p>Phiếu giảm giá áp dụng: {{ session('coupon_code') }}</p>
@@ -158,10 +160,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="mb-4 text-center text-uppercase" 
+                    <h4 class="mb-4 text-center text-uppercase"
                         style="font-weight: bold; color: #ff5722; background: linear-gradient(90deg, #ff7e5f, #feb47b); 
                             padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                        <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i> 
+                        <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i>
                         <span style="color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Danh sách mã giảm giá</span>
                     </h4>
                     <div class="wsus__coupon_list">
@@ -210,95 +212,53 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            // Setup CSRF token for AJAX requests
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // increment product quantity
+
+            // Increment product quantity
             $('.product-increment').off('click').on('click', function() {
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val());
+                let rowId = input.data('rowid');
+
                 if (quantity < 9) {
-                    quantity += 1; // Tăng số lượng
+                    quantity += 1;
                     input.val(quantity);
                 } else {
-                    toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm !'); // Thông báo lỗi
-                    isUpdating = false; // Đặt lại trạng thái
-                    return; // Dừng hàm
+                    toastr.error('Bạn chỉ có thể thêm dưới 10 sản phẩm!');
+                    return;
                 }
-                let rowId = input.data('rowid');
 
                 if (quantity > 10) {
                     toastr.error('Bạn chỉ có thể thêm tối đa 10 sản phẩm!');
-                    return; // Dừng lại nếu vượt quá 10
+                    return;
                 }
 
-                input.val(quantity);
-                $.ajax({
-                    url: "{{ route('cart.update.quantity') }}",
-                    method: 'POST',
-                    data: {
-                        quantity: quantity,
-                        rowId: rowId,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        if (data.status === 'success') {
-                            let productId = '#' + rowId
-                            let totaAmount = data
-                                .productTotal + "{{ $settings->currency_icon }}"
-                            $(productId).text(totaAmount)
-                            renderCartSubTotal()
-                            calculateCouponDescount()
-                            toastr.success(data.message)
-                        } else if (data.status == 'error') {
-                            toastr.error(data.message)
-                        }
-                    },
-                    error: function(data) {
-                        console.error(data);
-                    },
-                })
-            })
-            // decrement product quantity
+                updateCartQuantity(quantity, rowId);
+            });
+
+            // Decrement product quantity
             $('.product-decrement').on('click', function() {
                 let input = $(this).siblings('.product-qty');
                 let quantity = parseInt(input.val()) - 1;
                 let rowId = input.data('rowid');
+
                 if (quantity < 1) {
                     quantity = 1;
                 }
-                input.val(quantity);
-                $.ajax({
-                    url: "{{ route('cart.update.quantity') }}",
-                    method: 'POST',
-                    data: {
-                        quantity: quantity,
-                        rowId: rowId,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        if (data.status === 'success') {
-                            let productId = '#' + rowId
-                            let totaAmount = data
-                                .productTotal + "{{ $settings->currency_icon }}"
-                            $(productId).text(totaAmount)
-                            renderCartSubTotal()
-                            calculateCouponDescount()
-                            toastr.success(data.message)
-                        } else if (data.status == 'error') {
-                            toastr.error(data.message)
-                        }
-                    },
-                    error: function(data) {
 
-                    },
-                })
-            })
-            // clear cart
+                input.val(quantity);
+                updateCartQuantity(quantity, rowId);
+            });
+
+            // Clear cart
             $('.clear_cart').on('click', function(e) {
                 e.preventDefault();
+
                 Swal.fire({
                     title: 'Bạn có chắc không?',
                     text: "Hành động này sẽ xóa giỏ hàng của bạn!",
@@ -309,99 +269,129 @@
                     confirmButtonText: 'Tôi chắc chắn'
                 }).then((result) => {
                     if (result.isConfirmed) {
-
-                        $.ajax({
-                            type: 'get',
-                            url: "{{ route('clear.cart') }}",
-                            success: function(data) {
-                                if (data.status === 'success') {
-                                    window.location.reload();
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.log(error);
-                            }
-                        })
+                        clearCart();
                     }
-                })
-            })
-            // render subtotal
-            function renderCartSubTotal(params) {
+                });
+            });
+
+            // Apply coupon form submit
+            $('#coupon_form').on('submit', function(e) {
+                e.preventDefault();
+                applyCoupon($(this).serialize());
+            });
+
+            // Apply coupon from list
+            $('.apply-coupon-btn').on('click', function() {
+                let couponCode = $(this).data('code');
+                applyCoupon({
+                    coupon_code: couponCode
+                });
+            });
+
+            // ========== HELPER FUNCTIONS ==========
+
+            // Update cart quantity via AJAX
+            function updateCartQuantity(quantity, rowId) {
                 $.ajax({
-                    method: 'GET',
-                    url: "{{ route('cart.sidebar-product-total') }}",
-                    success: function(data) {
-                        $('#sub_total').text(data + "{{ $settings->currency_icon }}")
+                    url: "{{ route('cart.update.quantity') }}",
+                    method: 'POST',
+                    data: {
+                        quantity: quantity,
+                        rowId: rowId,
+                        _token: "{{ csrf_token() }}"
                     },
-                    error: function(xhr, status, error) {
-                        console.log(data);
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            let productId = '#' + rowId;
+                            let totalAmount = formatPrice(data.productTotal) +
+                                "{{ $settings->currency_icon }}";
+                            $(productId).text(totalAmount);
+                            renderCartSubTotal();
+                            calculateCouponDiscount();
+                            toastr.success(data.message);
+                        } else if (data.status == 'error') {
+                            toastr.error(data.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
                     }
                 });
             }
 
-            // applay coupon on cart
+            // Clear cart via AJAX
+            function clearCart() {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('clear.cart') }}",
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            window.location.reload();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
 
-            $('#coupon_form').on('submit', function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
+            // Render cart subtotal
+            function renderCartSubTotal() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('cart.sidebar-product-total') }}",
+                    success: function(data) {
+                        $('#sub_total').text(formatPrice(data) + "{{ $settings->currency_icon }}");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            // Apply coupon
+            function applyCoupon(formData) {
                 $.ajax({
                     method: 'GET',
                     url: "{{ route('apply-coupon') }}",
                     data: formData,
                     success: function(data) {
                         if (data.status === 'error') {
-                            toastr.error(data.message)
+                            toastr.error(data.message);
                         } else if (data.status === 'success') {
-                            calculateCouponDescount()
-                            toastr.success(data.message)
+                            calculateCouponDiscount();
+                            toastr.success(data.message);
                         }
                     },
-                    error: function(data) {
-                        console.log(data);
+                    error: function(error) {
+                        console.error('Error:', error);
                     }
-                })
+                });
+            }
 
-            })
-
-            // calculate discount amount
-            function calculateCouponDescount() {
+            // Calculate coupon discount
+            function calculateCouponDiscount() {
                 $.ajax({
                     method: 'GET',
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status === 'success') {
-                            // console.log(data);
-                            $('#discount').text(data.discount + '{{ $settings->currency_icon }}')
-                            $('#cart_total').text(data.cart_total + '{{ $settings->currency_icon }}')
+                            $('#discount').text(formatPrice(data.discount) +
+                                '{{ $settings->currency_icon }}');
+                            $('#cart_total').text(formatPrice(data.cart_total) +
+                                '{{ $settings->currency_icon }}');
                         }
                     },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                })
-            }
-
-            // Áp dụng mã giảm giá từ danh sách
-            $('.apply-coupon-btn').on('click', function() {
-                let couponCode = $(this).data('code');
-                $.ajax({
-                    method: 'GET',
-                    url: "{{ route('apply-coupon') }}",
-                    data: { coupon_code: couponCode },
-
-                    success: function(data) {
-                        if (data.status === 'error') {
-                            toastr.error(data.message);
-                        } else if (data.status === 'success') {
-                            toastr.success(data.message);
-                            location.reload(); // Reload để cập nhật giá trị mới
-                        }
-                    },
-                    error: function(data) {
-                        console.log(data);
+                    error: function(error) {
+                        console.error('Error:', error);
                     }
                 });
-            });
+            }
+
+            // Format price with thousand separators
+            function formatPrice(price) {
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
         });
     </script>
 @endpush

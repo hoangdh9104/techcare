@@ -198,13 +198,14 @@
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $product->price }}
+                                                            {{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                            <del>{{ Number::format($product->price, locale: 'de') }}
                                                                 {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
+                                                            {{ Number::format($product->price, locale: 'de') }}
+                                                            {{ $settings->currency_icon }}</p>
                                                     @endif
                                                 </div>
                                                 @if (count($products) === 0)
@@ -258,13 +259,14 @@
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
-                                                            {{ $settings->currency_icon }}{{ $product->offer_price }}
-                                                            <del>{{ $product->price }}
+                                                            {{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                            <del>{{ Number::format($product->price, locale: 'de') }}
                                                                 {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
                                                         <p class="wsus__price">
-                                                            {{ $product->price }} {{ $settings->currency_icon }}</p>
+                                                            {{ Number::format($product->price, locale: 'de') }}
+                                                            {{ $settings->currency_icon }}</p>
                                                     @endif
                                                     <p class="list_description">{{ $product->short_description }}</p>
                                                     <ul class="wsus__single_pro_icon">

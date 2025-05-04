@@ -144,6 +144,6 @@ class ChildCategoryController extends Controller
         $childCategory->status = $request->status;
         $childCategory->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }
