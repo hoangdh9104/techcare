@@ -334,7 +334,7 @@
                                                             <div class="wsus__comment_text reply">
                                                                 <h6>{{ $review->user->name }}<span>{{ $review->rating }}<i
                                                                             class="fas fa-star"></i></span></h6>
-                                                                <span>{{ date('d M Y', strtotime($review->create_at)) }}</span>
+                                                                <span>{{ date('d/m/Y', strtotime($review->create_at)) }}</span>
                                                                 <p>{{ $review->review }}
                                                                 </p>
                                                                 <ul class="">
@@ -406,7 +406,7 @@
                                                                     <div class="col-xl-12">
                                                                         <div class="col-xl-12">
                                                                             <div class="wsus__single_com">
-                                                                                <textarea cols="3" rows="3" name="review" placeholder="Write your review"></textarea>
+                                                                                <textarea cols="3" rows="3" name="review" placeholder="Viết đánh giá của bạn"></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>

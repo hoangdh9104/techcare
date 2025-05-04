@@ -29,11 +29,23 @@ class ReviewController extends Controller
         ]);
 
         $checkReviewExist = ProductReview::where([
-            'product_id' => $request->product_id, // Sửa 'order_status' thành 'product_id'
+            'product_id' => $request->product_id,
             'user_id' => Auth::user()->id
-        ])->first();
+         ])->count(); // Count the number of reviews by the user for the product
 
-        if ($checkReviewExist) {
+        // Kiểm tra nếu người dùng đã đánh giá ít hơn 5 lần
+        if ($checkReviewExist >= 5) {
+            toastr('Bạn chỉ có thể đánh giá tối đa 5 lần cho sản phẩm này!', 'error', 'Lỗi');
+            return redirect()->back();
+        }
+
+        // Kiểm tra xem người dùng đã mua sản phẩm ít nhất 5 lần
+        $purchaseCount = \DB::table('order_products')
+            ->where('product_id', $request->product_id)
+            ->where('id', Auth::user()->id)
+            ->count();
+
+        if ($checkReviewExist && $purchaseCount > 5) {
             toastr('Bạn đã thêm đánh giá cho sản phẩm này!', 'error', 'Lỗi');
             return redirect()->back();
         }
@@ -46,7 +58,7 @@ class ReviewController extends Controller
         $productReview->user_id = Auth::user()->id;
         $productReview->rating = $request->rating;
         $productReview->review = $request->review;
-        $productReview->status = 0;
+        $productReview->status = 1;
         $productReview->save();
 
 
@@ -64,11 +76,14 @@ class ReviewController extends Controller
 
         return redirect()->back();
     }
-    public function changeStatus(Request $request)
-    {
-        $brand = Brand::findOrFail($request->id);
-        $brand->status = $request->status;
-        $brand->save();
-        return response(['message' => 'Trạng thái đã được cập nhật!']);
-    }
+
+    // public function changeStatus(Request $request)
+    // {
+    //     $brand = Brand::findOrFail($request->id);
+    //     $brand->status = $request->status;
+    //     $brand->save();
+    //     return response(['message' => 'Trạng thái đã được cập nhật!']);
+    // }
+
+    
 }
