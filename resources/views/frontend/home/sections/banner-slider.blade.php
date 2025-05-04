@@ -22,13 +22,13 @@
                                     <div class="wsus__single_slider_text">
                                         <h3 class="text-primary fw-semibold">{{ $slider->type }}</h3>
                                         <h1 class="text-white fw-bold display-4"
-                                            style="text-shadow: 1px 1px 4px rgba(0,0,0,0.5);">
+                                            style="text-shadow: 1px 1px 4px rgba(8, 228, 107, 0.5);">
                                             {{ $slider->title }}
                                         </h1>
                                         <h6 class="mt-2 text-lg">
                                             Bắt đầu 
                                             <span class="text-green-400 font-extrabold text-2xl drop-shadow-md">
-                                                {{ $settings->currency_icon }}{{ $slider->starting_price }}
+                                                <span style=" color: #fff;">{{ $slider->starting_price }}{{ $settings->currency_icon }}</span>
                                             </span>
                                         </h6>
                                         <a class="common_btn" href="{{ $slider->btn_url }}">shop now</a>
