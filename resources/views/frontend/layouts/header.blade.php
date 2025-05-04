@@ -30,7 +30,7 @@
                         <div class="wsus__call_text">
                             <p>{{ $settings->contact_email }}</p>
                             <p>{{ $settings->contact_phone }}</p>
-                           
+
                         </div>
                     </div>
                     <ul class="wsus__icon_area">
@@ -67,7 +67,7 @@
                         <a class="wsus__cart_title"
                             href="{{ route('product-detail', $sidebarProduct->options->slug) }}">{{ $sidebarProduct->name }}</a>
                         <p>
-                            {{ $sidebarProduct->price }}{{ $settings->currency_icon }}
+                            {{ Number::format($sidebarProduct->price, locale: 'de') }}{{ $settings->currency_icon }}
                         </p>
                         <small>Số lượng: {{ $sidebarProduct->qty }}</small>
                     </div>
@@ -78,7 +78,8 @@
             @endif
         </ul>
         <div class="mini_cart_action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
-            <h5>Tạm tính <span class="mini_cart_subtotal">{{ $settings->currency_icon }}{{ getCartTotal() }}</span>
+            <h5>Tạm tính <span
+                    class="mini_cart_subtotal">{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
             </h5>
             <div class="wsus__minicart_btn_area">
 

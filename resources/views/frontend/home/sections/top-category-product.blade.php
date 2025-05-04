@@ -122,11 +122,11 @@
 
                                         </p>
                                         @if (checkDiscount($item))
-                                            <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}
-                                                <del>{{ $item->price }} {{ $settings->currency_icon }}</del>
+                                            <p class="wsus__tk">{{ Number::format($item->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                <del>{{ Number::format($item->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
                                             </p>
                                         @else
-                                            <p class="wsus__tk">{{ $item->price }} {{ $settings->currency_icon }}</p>
+                                            <p class="wsus__tk">{{ Number::format($item->price, locale: 'de') }}{{ $settings->currency_icon }}</p>
                                         @endif
                                     </div>
                                 </a>

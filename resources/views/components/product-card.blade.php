@@ -4,8 +4,8 @@
             <div class="wsus__product_item">
                 <span class="wsus__new">{{ productType($product->product_type) }}</span>
                 @if (checkDiscount($product))
-                    <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                        <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                    <p class="wsus__price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}
+                        <del>{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
                     </p>
                 @endif
 
@@ -44,11 +44,11 @@
                     <a class="wsus__pro_name"
                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>
                     @if (checkDiscount($product))
-                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
-                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                        <p class="wsus__price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}
+                            <del>{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
                         </p>
                     @else
-                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
+                        <p class="wsus__price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</p>
                     @endif
                 </div>
             </div>

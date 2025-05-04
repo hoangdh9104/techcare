@@ -28,12 +28,11 @@
                                         <h6 class="mt-2 text-lg">
                                             Start at
                                             <span class="text-green-400 font-extrabold text-2xl drop-shadow-md">
-                                                {{ $settings->currency_icon }}{{ $slider->starting_price }}
+                                                {{ Number::format($slider->starting_price, locale: 'de') }}{{ $settings->currency_icon }}
                                             </span>
                                         </h6>
                                         <a class="common_btn" href="{{ $slider->btn_url }}">shop now</a>
                                     </div>
-
                                 </div>
                             </div>
                         @endforeach
