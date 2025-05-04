@@ -79,7 +79,7 @@ class ShippedOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->with(['user', 'orderProducts'])->where('order_status', 'shipped')->newQuery();
+        return $model->newQuery()->with(['user', 'orderProducts']);
     }
 
     /**

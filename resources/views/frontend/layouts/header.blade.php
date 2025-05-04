@@ -16,7 +16,8 @@
             <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block">
                 <div class="wsus__search">
                     <form action="{{ route('products.index') }}">
-                        <input type="text" placeholder="Tìm kiếm..." name="search" value="{{ request()->search }}">
+                        <input type="text" placeholder="Bạn tìm gì..." name="search"
+                            value="{{ request()->search }}">
                         <button type="submit"><i class="far fa-search"></i></button>
                     </form>
                 </div>
@@ -66,7 +67,8 @@
                         <a class="wsus__cart_title"
                             href="{{ route('product-detail', $sidebarProduct->options->slug) }}">{{ $sidebarProduct->name }}</a>
                         <p>
-                            {{ $sidebarProduct->price }}{{ $settings->currency_icon }}
+                            {{ number_format($sidebarProduct->price, 0, ',', '.') }}{{ $settings->currency_icon }}
+
                         </p>
                         <small>Số lượng: {{ $sidebarProduct->qty }}</small>
                     </div>
@@ -77,8 +79,10 @@
             @endif
         </ul>
         <div class="mini_cart_action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
-            <h5>Tạm tính <span class="mini_cart_subtotal">{{ $settings->currency_icon }}{{ getCartTotal() }}</span>
+            <h5>Tạm tính <span
+                    class="mini_cart_subtotal">{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
             </h5>
+
             <div class="wsus__minicart_btn_area">
 
                 <a class="common_btn" href="{{ route('cart-details') }}">

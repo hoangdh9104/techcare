@@ -26,53 +26,7 @@
                 </div>
             </div>
         </div>
-        {{-- <!-- Modal Nhập Lý Do Hủy -->
-        <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cancelOrderLabel">
-                            Nhập lý do hủy đơn hàng</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="order-id">
-                        <div class="mb-3">
-                            <label for="cancel-reason" class="form-label">Lý do hủy đơn hàng:</label>
-                            <textarea class="form-control" id="cancel-reason" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-danger" id="confirm-cancel">Xác nhận hủy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--=============================DASHBOARD START==============================-->
-    <!-- Confirm Order Received Modal -->
-    <div class="modal fade" id="confirmReceivedModal" tabindex="-1" aria-labelledby="confirmReceivedLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg rounded-4">
-                <div class="modal-header bg-success text-white rounded-top-4">
-                    <h5 class="modal-title" id="confirmReceivedLabel">Xác nhận đã nhận đơn hàng</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center p-4">
-                    <p class="mb-0 fs-5">Bạn có chắc chắn đã nhận được đơn hàng này không?</p>
-                </div>
-                <div class="modal-footer justify-content-center border-0 pb-4">
-                    <button type="button" class="btn btn-outline-secondary px-4 rounded-pill"
-                        data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-success px-4 rounded-pill" id="confirm-received-btn">Xác
-                        nhận</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+        
 @endsection
 
 @push('scripts')

@@ -102,8 +102,10 @@
 
                         <li class="{{ setActive(['home']) }}"><a class="#" href="{{ route('home') }}">Trang chủ</a>
                         </li>
-                        <li class="{{ setActive(['flash-sale']) }}"><a class="#" href="{{ route('flash-sale') }}">Khuyến mãi đặc biệt</a></li>
-                        <li class="{{ setActive(['blog']) }}"><a class="#" href="{{ route('blog') }}">Bài viết</a>
+                        <li class="{{ setActive(['flash-sale']) }}"><a class="#"
+                                href="{{ route('flash-sale') }}">Khuyến mãi đặc biệt</a></li>
+                        <li class="{{ setActive(['blog']) }}"><a class="#" href="{{ route('blog') }}">Bài
+                                viết</a>
                         </li>
                         <li class="{{ setActive(['contact']) }}"><a class="#" href="{{ route('contact') }}">Liên
                                 hệ</a></li>
@@ -115,12 +117,13 @@
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')
                                 <li><a href="{{ route('user.profile') }}">Tài khoản của tôi</a></li>
-                            {{-- @elseif (auth()->user()->role === 'vendor')
+                                {{-- @elseif (auth()->user()->role === 'vendor')
 
                                 <li><a href="{{ route('vendor.dashboard') }}">Bảng điều khiển nhà cung cấp</a></li> --}}
                             @elseif (auth()->user()->role === 'admin')
                                 <li><a href="{{ route('admin.dashboard') }}">Bảng điều khiển quản trị</a></li>
-
+                            @elseif (auth()->user()->role === 'shipper')
+                                <li><a href="{{ route('shipper.dashboard') }}">Bảng điều khiển</a></li>
                             @endif
                         @else
                             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
@@ -170,7 +173,6 @@
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-
                 role="tab" aria-controls="pills-home" aria-selected="true">Danh mục</button>
         </li>
         <li class="nav-item" role="presentation">

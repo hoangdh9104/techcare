@@ -13,9 +13,9 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Tất cả danh mục bài viết</h4>
+                    <h4>Tất cả các danh mục bài viết</h4>
                     <div class="card-header-action">
-                        <a href="{{route('admin.blog-category.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>Thêm mới</a>
+                        <a href="{{route('admin.blog-category.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>Tạo mới</a>
                     </div>
                   </div>
                   <div class="card-body">

@@ -13,7 +13,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Thêm danh mục bài viết</h4>
+                    <h4>Tạo mới danh mục bài viết</h4>
 
                   </div>
                   <div class="card-body">
@@ -28,10 +28,10 @@
                             <label for="inputState">Trạng thái</label>
                             <select id="inputState" class="form-control" name="status">
                               <option value="1">Hoạt động</option>
-                              <option value="0">Ngưng hoạt động</option>
+                              <option value="0">Tắt hoạt động</option>
                             </select>
                           </div>
-                          <button type="submit" class="btn btn-primary">Thêm</button>
+                          <button type="submit" class="btn btn-primary">Tạo mới</button>
                     </form>
 
                   </div>

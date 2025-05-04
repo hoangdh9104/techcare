@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Thêm bài viết</h4>
+                            <h4>Tạo mới bài viếtviết</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.blog.store')}}" method="POST" enctype="multipart/form-data">
@@ -29,9 +29,9 @@
                                 {{-- category --}}
 
                                 <div class="form-group">
-                                    <label for="inputState">Chuyên mục bài viết</label>
+                                    <label for="inputState">Danh mục</label>
                                     <select id="inputState" class="form-control main-category" name="category">
-                                        <option value="">Select</option>
+                                        <option value="">Chọn danh mục</option>
                                         @foreach ($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
@@ -44,12 +44,12 @@
                                     <textarea name="description" class="form-control summernote"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tiêu đề seo</label>
+                                    <label>Tiêu đề Seo</label>
                                     <input type="text" class="form-control" name="seo_title" value="{{old('seo_title')}}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Mô tả seo</label>
+                                    <label>Mô tả Seo</label>
                                     <textarea name="seo_description" class="form-control"></textarea>
                                 </div>
 
@@ -57,10 +57,10 @@
                                     <label for="inputState">Trạng thái</label>
                                     <select id="inputState" class="form-control" name="status">
                                         <option value="1">Hoạt động</option>
-                                        <option value="0">Ngưng hoạt động</option>
+                                        <option value="0">Tắt hoạt động</option>
                                     </select>
                                 </div>
-                                <button type="submmit" class="btn btn-primary">Thêm</button>
+                                <button type="submmit" class="btn btn-primary">Tạo mới</button>
                             </form>
                         </div>
                     </div>

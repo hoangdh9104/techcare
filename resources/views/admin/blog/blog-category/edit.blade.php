@@ -13,7 +13,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Sửa danh mục bài viết</h4>
+                    <h4>Cập nhật danh mục bài viết</h4>
 
                   </div>
                   <div class="card-body">
@@ -22,14 +22,14 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên</label>
                             <input type="text" class="form-control" name="name" value="{{$category->name}}">
                         </div>
                         <div class="form-group">
                             <label for="inputState">Trạng thái</label>
                             <select id="inputState" class="form-control" name="status">
                               <option {{$category->status == 1 ? 'selected' : ''}} value="1">Hoạt động</option>
-                              <option {{$category->status == 0 ? 'selected' : ''}} value="0">Ngừng hoạt động</option>
+                              <option {{$category->status == 0 ? 'selected' : ''}} value="0">Tắt hoạt động</option>
                             </select>
                           </div>
                           <button type="submit" class="btn btn-primary">Cập nhật</button>
