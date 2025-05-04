@@ -86,7 +86,7 @@ class BlogCategoryController extends Controller
         $category->status = $request->status;
         $category->save();
 
-        toastr('Update Successfully!', 'success','success');
+        toastr('Cập nhật thành công!', 'Thành công','Thành công');
         return redirect()->route('admin.blog-category.index');
     }
 
@@ -97,7 +97,7 @@ class BlogCategoryController extends Controller
     {
         $category = BlogCategory::findOrFail($id);
         $category->delete();
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'Thành công', 'tin nhắn' => 'Đã xóa thành công']);
     }
 
     public function changeStatus(Request $request)
@@ -105,6 +105,6 @@ class BlogCategoryController extends Controller
         $category = BlogCategory::findOrFail($request->id);
         $category->status = $request->status;
         $category->save();
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

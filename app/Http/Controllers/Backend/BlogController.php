@@ -60,7 +60,7 @@ class BlogController extends Controller
         $blog->status = $request->status;
         $blog->save();
 
-        toastr('Created Successfully','success','success');
+        toastr('Đã tạo thành công!','Thành công','Thành công');
 
         return redirect()->route('admin.blog.index');
 
@@ -119,7 +119,7 @@ class BlogController extends Controller
         $blog->status = $request->status;
         $blog->save();
 
-        toastr('Updated Successfully','success','success');
+        toastr('Cập nhật thành công!','Thành công','Thành công');
 
         return redirect()->route('admin.blog.index');
 
@@ -134,7 +134,7 @@ class BlogController extends Controller
         $this->deleteImage($blog->image);
         $blog->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully !']);
+        return response(['status' => 'Thành công', 'tin nhắn' => 'Đã xóa thành công !']);
     }
 
     public function changeStatus(Request $request)
@@ -143,6 +143,6 @@ class BlogController extends Controller
         $blog->status = $request->status == 'true' ? 1 : 0;
         $blog->save();
         
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }

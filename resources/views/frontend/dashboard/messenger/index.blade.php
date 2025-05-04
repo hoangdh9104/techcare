@@ -65,7 +65,7 @@
                                                         bottom: 0;">
                                                             <form id="message-form">
                                                                 @csrf
-                                                                <input type="text" placeholder="Type Message"
+                                                                <input type="text" placeholder="Nhập tin nhắn..."
                                                                     class="message-box" autocomplete="off" name="message">
                                                                 <input type="hidden" name="receiver_id" id="receiver_id"
                                                                     value="">
@@ -132,7 +132,7 @@
                     },
                     beforeSend: function() {
                         mainChatInbox.html('');
-                        $('#chat-inbox-title').text(`Chat with ${chatUserName}`);
+                        $('#chat-inbox-title').text(`Trò chuyện cùng ${chatUserName}`);
                     },
                     success: function(response) {
                         $.each(response, function(index, value) {

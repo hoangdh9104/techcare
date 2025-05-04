@@ -22,7 +22,7 @@ class VendorListController extends Controller
         $customer->status = $request->status == 'true' ? 'active' : 'inactive';
         $customer->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 
     /**

@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            BREADCRUMB START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        BREADCRUMB END
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            BREADCRUMB END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        CHECK OUT PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CHECK OUT PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -78,9 +78,9 @@
                                         <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
                                     </label>
                                     @if ($method->cost == 0)
-                                        <span style="color: red" class="text-danger">Giao hàng từ 3-5 ngày.</span>
-                                    @elseif ($method->cost > 0)
-                                        <span style="color: red" class="text-danger">Giao hàng hỏa tốc.</span>
+                                        <span  >Giao hàng từ 3-5 ngày.</span>
+                                    @elseif ($method->cost > 30001)
+                                        <span  >Giao hàng hỏa tốc.</span>
                                     @endif
                                 </div>
                             @elseif($method->type == 'flat_cost')
@@ -90,26 +90,32 @@
                                         data-id="{{ $method->cost }}">
                                     <label class="form-check-label" for="shippingMethod{{ $method->id }}">
                                         {{ $method->name }}
-                                        <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
+                                        <span> (Cost: {{ Number::format($method->cost, locale : 'de') }} {{ $settings->currency_icon }})</span>
                                     </label>
                                     @if ($method->cost == 0)
                                         <span style="color: red" class="text-muted , color:red">Giao hàng từ 3-5
                                             ngày.</span>
-                                    @elseif ($method->cost > 0)
+                                    @elseif ($method->cost > 30001)
                                         <span style="color: red" class="text-muted">Giao hàng hỏa tốc.</span>
                                     @endif
                                 </div>
                             @endif
                         @endforeach
                         <div class="wsus__order_details_summery">
-                            <p>Tổng đơn hàng: <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
+                            <p>Tổng đơn hàng:
+                                <span>{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                            </p>
                             <p>Phí vận chuyển(+): <span
-                                    id="shipping_fee">{{ getShippingFee() }}{{ $settings->currency_icon }}</span></p>
+                                    id="shipping_fee">{{ getShippingFee() }}{{ $settings->currency_icon }}</span>
+                            </p>
                             <p>Giảm giá(-): <span
-                                    id="discount">{{ getCartDiscount() }}{{ $settings->currency_icon }}</span>
+                                    id="discount">{{ Number::format(getCartDiscount(), locale: 'de') }}{{ $settings->currency_icon }}</span>
                             <p><b>Tổng thanh toán:</b>
-                                <span><b data-id="{{ getMainCartTotal() }}"
-                                        id="total_amount">{{ getMainCartTotal() }}{{ $settings->currency_icon }}</b></span>
+                                <span>
+                                    <b data-id="{{ Number::format(getMainCartTotal(), locale:'de')  }}" id="total_amount">
+                                        {{ Number::format(getMainCartTotal(), locale:'de') }}{{ $settings->currency_icon }}
+                                    </b>
+                                </span>
                             </p>
                         </div>
                         <div class="terms_area">
@@ -117,7 +123,8 @@
                                 <input class="form-check-input agree_term" type="checkbox" value=""
                                     id="flexCheckChecked3">
                                 <label class="form-check-label" for="flexCheckChecked3">
-                                    Tôi đã đọc và đồng ý với <a href="{{route('policy.index')}}">chính sách *</a> của cửa hàng
+                                    Tôi đã đọc và đồng ý với <a href="{{ route('policy.index') }}">chính sách *</a> của cửa
+                                    hàng
                                 </label>
                             </div>
                         </div>
@@ -168,7 +175,7 @@
                                             <select class="select_2" name="country">
                                                 <option value="AL">Quốc gia</option>
                                           
-                                                @foreach (config('settings.country_list') as $value=> $country)
+                                                @foreach (config('settings.country_list') as $value => $country)
                                                
                                                     <option {{ (string)$country == old('country') ? 'selected' : '' }}
                                                         value="{{ $country }}">
@@ -280,6 +287,12 @@
                     })
                 }
             })
+            // Hàm format tiền tệ
+            function formatPrice(price) {
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + 'đ';
+            }
+            // Sử dụng khi cần hiển thị giá trị
+            document.getElementById('total_amount').textContent = formatPrice(totalAmount);
         })
     </script>
 @endpush
