@@ -193,9 +193,9 @@
                                                             @endif
                                                         @endfor
 
-            
+
                                                         <span>({{count($product->reviews)}} Đánh giá sản phẩm)</span>
-            
+
 
 
                                                         {{-- <span>({{count($product->reviews)}} review)</span> --}}
@@ -230,14 +230,14 @@
                                                             <input name="quantity" type="hidden" min="1"
                                                                 max="100" value="1" />
                                                         </div>
-                                                        <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                                        {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                                     </form>
                                                 </div>
                                                 @if (count($products) === 0)
                                                     <div class = "text-center mt-5">
                                                         <div class="card">
                                                             <div class="card-body">
-                                                                <h2>Không thaays sản phẩm !</h2>
+                                                                <h2>Không tìm thấy sản phẩm !</h2>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,8 +259,9 @@
                                                     <span
                                                         class="wsus__minus">{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                                                 @endif
-                                                <a class="wsus__pro_link" href="product_details.html">
-                                                    <img src="{{ $product->thumb_image }}" alt="product"
+                                                <a class="wsus__pro_link"
+                                                    href="{{ route('product-detail', $product->slug) }}">
+                                                    <img src="{{ asset($product->thumb_image) }}" alt="product"
                                                         class="img-fluid w-100 img_1" />
                                                     <img src="@if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }} @else {{ asset($product->thumb_image) }} @endif"
                                                         alt="product" class="img-fluid w-100 img_2" />
@@ -282,7 +283,7 @@
                                                             @endif
                                                         @endfor
 
-                                                        <span>({{count($product->reviews)}} review)</span>
+                                                        <span>({{count($product->reviews)}} Đánh giá)</span>
 
                                                     </p>
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
@@ -314,7 +315,7 @@
                                                                 <input name="quantity" type="hidden" min="1"
                                                                     max="100" value="1" />
                                                             </div>
-                                                            <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button>
+                                                            {{-- <button class="add_cart_two" type="submit">Thêm vào giỏ hàng</button> --}}
                                                         </form>
                                                         <li><a href="#"><i class="far fa-heart"></i></a></li>
                                                         <li><a href="#"><i class="far fa-random"></i></a></li>
@@ -441,7 +442,7 @@
                                                 <input name="quantity" type="hidden" min="1" max="100"
                                                     value="1" />
                                             </div>
-                                            <button class="add_cart" type="submit">Thêm vào giỏ hàng</button>
+                                            {{-- <button class="add_cart" type="submit">Thêm vào giỏ hàng</button> --}}
                                             <ul class="wsus__button_area">
                                                 <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button></li>
                                                 <li><a href="#" class="buy_now">Mua ngay</a></li>
@@ -461,7 +462,6 @@
         </section>
     @endforeach
 @endsection
-
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -480,21 +480,26 @@
         });
 
         @php
-            if (request()->has('range') && request()->range != '') {
-                $price = explode(';', request()->range);
-                $from = $price[0];
-                $to = $price[1];
-            } else {
-                $from = 0;
-                $to = 9999;
-            }
-        @endphp
+    if (request()->has('range') && request()->range != '') {
+        $price = explode(';', request()->range);
+        $from = $price[0] ?? 0;
+        $to = $price[1] ?? 45000000;
+        // Kiểm tra nếu mảng chỉ có 1 phần tử
+        if (count($price) === 1) {
+            $from = $price[0];
+            $to = 45000000;
+        }
+    } else {
+        $from = 0;
+        $to = 45000000;
+    }
+@endphp
 
         jQuery(function() {
             jQuery("#slider_range").flatslider({
                 min: 0,
-                max: 10000,
-                step: 50,
+                max: 45000000,
+                step: 50000,
                 values: [{{ $from }}, {{ $to }}],
                 range: true,
                 einheit: '{{ $settings->currency_icon }}'
@@ -502,3 +507,4 @@
         });
     </script>
 @endpush
+

@@ -1,13 +1,13 @@
     <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
     @if ($product->is_approved == 1 && $product->status == 1)
-        <div class="col-xl-3 col-sm-6 col-lg-4">
+        <div class="col-xl-3 col-sm-6 col-lg-4 {{ @$key }}">
             <div class="wsus__product_item">
                 <span class="wsus__new">{{ productType($product->product_type) }}</span>
-                @if (checkDiscount($product))
+                {{-- @if (checkDiscount($product))
                     <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
                         <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                     </p>
-                @endif
+                @endif --}}
 
                 <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
                     <img src="{{ asset($product->thumb_image) }}" alt="product" class="img-fluid w-100 img_1" />

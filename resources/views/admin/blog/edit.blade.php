@@ -2,17 +2,17 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Blog</h1>
+            <h1>Bài viết</h1>
         </div>
         <div class="mb-3">
-            <a href="{{route('admin.products.index')}}" class="btn btn-primary">Back</a>
+            <a href="{{route('admin.products.index')}}" class="btn btn-primary">Quay lại</a>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Create Blog</h4>
+                            <h4>Thêm bài viết</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.blog.update', $blog->id)}}" method="POST" enctype="multipart/form-data">
@@ -21,18 +21,18 @@
                                 <div class="form-group">
                                     <img src="{{asset($blog->image)}}" width="200">
                                     <br>
-                                    <label>Image</label>
+                                    <label>Ảnh</label>
                                     <input type="file" class="form-control" name="image">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Title</label>
+                                    <label>Tiêu đề</label>
                                     <input type="text" class="form-control" name="title" value="{{$blog->title}}">
                                 </div>
                                 {{-- category --}}
 
                                 <div class="form-group">
-                                    <label for="inputState">Category</label>
+                                    <label for="inputState">Danh mục</label>
                                     <select id="inputState" class="form-control main-category" name="category">
                                         <option value="">Select</option>
                                         @foreach ($categories as $category)
@@ -43,24 +43,24 @@
 
 
                                 <div class="form-group">
-                                    <label>Description</label>
+                                    <label>Mô tả</label>
                                     <textarea name="description" class="form-control summernote">{!!$blog->description!!}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Seo Title</label>
+                                    <label>Tiêu đề seo</label>
                                     <input type="text" class="form-control" name="seo_title" value="{{$blog->seo_title}}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Seo Description</label>
+                                    <label>Mô tả seo</label>
                                     <textarea name="seo_description" class="form-control">{!!$blog->seo_description!!}</textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputState">Status</label>
+                                    <label for="inputState">Trạng thái</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option  {{$blog->status == 1 ? 'selected' : ''}} value="1">Active</option>
-                                        <option  {{$blog->status == 0 ? 'selected' : ''}} value="0">Inactive</option>
+                                        <option  {{$blog->status == 1 ? 'selected' : ''}} value="1">Hoạt động</option>
+                                        <option  {{$blog->status == 0 ? 'selected' : ''}} value="0">Ngưng hoạt động</option>
                                     </select>
                                 </div>
                                 <button type="submmit" class="btn btn-primary">Update</button>

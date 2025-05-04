@@ -2,34 +2,34 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Blog</h1>
+            <h1>Bài viết</h1>
         </div>
         <div class="mb-3">
-            <a href="{{route('admin.products.index')}}" class="btn btn-primary">Back</a>
+            <a href="{{route('admin.products.index')}}" class="btn btn-primary">Quay lại</a>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Create Blog</h4>
+                            <h4>Thêm bài viết</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.blog.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Image</label>
+                                    <label>Ảnh</label>
                                     <input type="file" class="form-control" name="image">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Title</label>
+                                    <label>Tiêu đề</label>
                                     <input type="text" class="form-control" name="title" value="{{old('title')}}">
                                 </div>
                                 {{-- category --}}
 
                                 <div class="form-group">
-                                    <label for="inputState">Category</label>
+                                    <label for="inputState">Chuyên mục bài viết</label>
                                     <select id="inputState" class="form-control main-category" name="category">
                                         <option value="">Select</option>
                                         @foreach ($categories as $category)
@@ -40,27 +40,27 @@
 
 
                                 <div class="form-group">
-                                    <label>Description</label>
+                                    <label>Mô tả</label>
                                     <textarea name="description" class="form-control summernote"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Seo Title</label>
+                                    <label>Tiêu đề seo</label>
                                     <input type="text" class="form-control" name="seo_title" value="{{old('seo_title')}}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Seo Description</label>
+                                    <label>Mô tả seo</label>
                                     <textarea name="seo_description" class="form-control"></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputState">Status</label>
+                                    <label for="inputState">Trạng thái</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">Hoạt động</option>
+                                        <option value="0">Ngưng hoạt động</option>
                                     </select>
                                 </div>
-                                <button type="submmit" class="btn btn-primary">Create</button>
+                                <button type="submmit" class="btn btn-primary">Thêm</button>
                             </form>
                         </div>
                     </div>

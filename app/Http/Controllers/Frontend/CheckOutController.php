@@ -173,11 +173,12 @@ class CheckOutController extends Controller
 
     public function createAddress(Request $request)
     {
+        //  dd($request->all());
         $request->validate([
             'name' => ['required', 'max:200'],
             'phone' => ['required', 'max:200'],
             'email' => ['required', 'email'],
-            'country' => ['required', 'max:200'],
+            // 'country' => ['required', 'max:200'],
             'state' => ['required', 'max:200'],
             'city' => ['required', 'max:200'],
             'zip' => ['required', 'max:200'],
@@ -189,7 +190,7 @@ class CheckOutController extends Controller
         $address->name = $request->name;
         $address->phone = $request->phone;
         $address->email = $request->email;
-        $address->country = $request->country;
+        $address->country = 'Vietnam';
         $address->state = $request->state;
         $address->city = $request->city;
         $address->zip = $request->zip;

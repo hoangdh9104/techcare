@@ -10,10 +10,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>Chi tiết blog</h4>
+                    <h4>Chi tiết bài viết</h4>
                     <ul>
-                        <li><a href="#">blog</a></li>
-                        <li><a href="#">Chi tiết blog</a></li>
+                        <li><a href="#">Bài viết</a></li>
+                        <li><a href="#">Chi tiết bài viết</a></li>
                     </ul>
                 </div>
             </div>
@@ -145,17 +145,12 @@
                     <div class="wsus__blog_category">
                         <h4>Thể loại</h4>
                         <ul>
-                            <li><a href="#">Quần áo</a></li>
-                            <li><a href="#">Giải trí</a></li>
-                            <li><a href="#">Thời trang</a></li>
-                            <li><a href="#">Phong cách sống</a></li>
-                            <li><a href="#">Công nghệ</a></li>
-                            <li><a href="#">Giày dép</a></li>
-                            <li><a href="#">Điện tử</a></li>
-                            <li><a href="#">Khác</a></li>
+                            <li><a href="#">Điện thoại</a></li>
+                            <li><a href="#">Máy tính</a></li>
+                            <li><a href="#">Phụ kiện</a></li>
                         </ul>
                     </div>
-                    <div class="wsus__blog_post">
+                    {{-- <div class="wsus__blog_post">
                         <h4>Bài đăng phổ biến</h4>
                         <div class="wsus__blog_post_single">
                             <a href="#" class="wsus__blog_post_img">
@@ -203,18 +198,13 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
                     <div class="wsus__popular_tag">
                         <h4>Thẻ phổ biến</h4>
                         <ul>
-                            <li><a href="#">Thời trang</a></li>
-                            <li><a href="#">Phong cách</a></li>
-                            <li><a href="#">Du lịch</a></li>
-                            <li><a href="#">Phụ nữ</a></li>
-                            <li><a href="#">Đàn ông</a></li>
-                            <li><a href="#">Sở thích</a></li>
-                            <li><a href="#">Mua sắm</a></li>
-                            <li><a href="#">Nhiếp ảnh</a></li>
+                            <li><a href="#">Điện thoại</a></li>
+                            <li><a href="#">Máy tính</a></li>
+                            <li><a href="#">Phụ kiện</a></li>
                         </ul>
                     </div>
                 </div>
