@@ -21,7 +21,7 @@ class SettingController extends Controller
         $generalSettings = GeneralSetting::first();
         $logoSetting = LogoSetting::first();
         $pusherSetting = PusherSetting::first();
-        return view('admin.setting.index', compact('generalSettings', 'logoSetting','pusherSetting'));
+        return view('admin.setting.index', compact('generalSettings', 'logoSetting', 'pusherSetting'));
     }
     public function generalSettingUpdate(Request $request)
     {
@@ -29,7 +29,9 @@ class SettingController extends Controller
             'site_name' => ['required', 'max:200'],
             'layout' => ['required', 'max:200'],
             'contact_email' => ['required', 'max:200'],
-            'currency_name' => ['required', 'max:200'],
+            'contact_phone' => ['required'],
+            'contact_address' => ['required'],
+            'map' => ['required'],
             'currency_icon' => ['required', 'max:200'],
             'time_zone' => ['required', 'max:200'],
         ]);

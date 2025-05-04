@@ -12,21 +12,27 @@
     }
     if ($keyName === 'category') {
         $category = \App\Models\Category::find($lastKey['category']);
-        $products = \App\Models\Product::with('reviews')
+        $products = \App\Models\Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'productImageGalleries'])
             ->where('category_id', $category->id)
             ->orderBy('id', 'DESC')
             ->take(12)
             ->get();
     } elseif ($keyName === 'sub_category') {
         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-        $products = \App\Models\Product::with('reviews')
+        $products = \App\Models\Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'productImageGalleries'])
             ->where('sub_category_id', $category->id)
             ->orderBy('id', 'DESC')
             ->take(12)
             ->get();
     } else {
         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-        $products = \App\Models\Product::with('reviews')
+        $products = \App\Models\Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'productImageGalleries'])
             ->where('child_category_id', $category->id)
             ->orderBy('id', 'DESC')
             ->take(12)
@@ -50,60 +56,7 @@
         </div>
         <div class="row flash_sell_slider">
             @foreach ($products as $product)
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">{{ productType($product->product_type) }}</span>
-                        @if (checkDiscount($product))
-                            <span
-                                class="wsus__minus">{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
-                        @endif
-
-                        <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
-                            <img src="{{ asset($product->thumb_image) }}" alt="product"
-                                class="img-fluid w-100 img_1" />
-                            <img src="
-                            @if (isset($product->productImageGalleries[0])) {{ asset($product->productImageGalleries[0]->image) }}
-                              @else
-                              {{ asset($product->thumb_image) }} @endif
-                        "
-                                alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-
-                            <li><a href="#" class="add_to_wishlist" data-id="{{ $product->id }}"><i
-                                        class="far fa-heart"></i></a></li>
-                            {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">{{ $product->category->name }}</a>
-                            <p class="wsus__pro_rating">
-                                @php
-                                    $avgRating = $product->reviews('reviews')->avg('rating');
-                                    $fullRating = round($avgRating);
-                                @endphp
-
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $fullRating)
-                                        <i class="fas fa-star"></i>
-                                    @else
-                                        <i class="far fa-star"></i>
-                                    @endif
-                                @endfor
-                                <span>({{ count($product->reviews) }} review)</span>
-                            </p>
-                            <a class="wsus__pro_name"
-                                href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>
-                            @if (checkDiscount($product))
-                                <p class="wsus__price">{{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
-                                    <del>{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
-                                </p>
-                            @else
-                                <p class="wsus__price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</p>
-                            @endif
-
-                        </div>
-                    </div>
-                </div>
+                <x-product-card :product="$product" />
             @endforeach
         </div>
     </div>

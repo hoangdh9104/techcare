@@ -1,7 +1,7 @@
     @extends('frontend.layouts.master')
 
 {{-- @section('title')
-{{$setting->site_name}} 
+{{$setting->site_name}}
 @endsection --}}
 
 @section('content')
@@ -49,7 +49,7 @@
                 </div>
             </div>
             @endforeach
-            
+
 
         </div>
         <div id="pagination">
