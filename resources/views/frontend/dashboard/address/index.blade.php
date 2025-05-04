@@ -17,7 +17,7 @@
                         <li><span>Tên :</span> {{$address->name}}</li>
                         <li><span>Điện thoại :</span> {{$address->phone}}</li>
                         <li><span>Email :</span> {{$address->email}}</li>
-                        <li><span>Quốc gia :</span> {{$address->country}}</li>
+                        {{-- <li><span>Quốc gia :</span> {{$address->country}}</li> --}}
                         <li><span>Thành phố :</span> {{$address->city}}</li>
                         <li><span>Mã bưu chính :</span> {{$address->zip}}</li>
                         <li><span>Công ty :</span> {{$address->state}}</li>
