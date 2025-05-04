@@ -46,16 +46,16 @@ class CouponController extends Controller
         ]);
         // Kiểm tra nếu ngày kết thúc đã quá hạn
         if (strtotime($request->end_date) < strtotime(date('Y-m-d'))) {
-            return redirect()->back()->withErrors(['end_date' => 'The end date cannot be in the past.']);
+            return redirect()->back()->withErrors(['end_date' => 'Ngày kết thúc không được là ngày trong quá khứ.']);
         }
 
         // Kiểm tra giá trị giảm giá
         if ($request->discount_type === 'percent' && $request->discount > 100) {
-            return redirect()->back()->withErrors(['discount' => 'The discount percentage cannot exceed 100%.']);
+            return redirect()->back()->withErrors(['discount' => 'Tỷ lệ chiết khấu không được vượt quá 100%.']);
         }
 
         if ($request->discount_type === 'amount' && $request->discount > 1000) {
-            return redirect()->back()->withErrors(['discount' => 'The discount amount cannot exceed 1000.']);
+            return redirect()->back()->withErrors(['discount' => 'Số tiền chiết khấu không được vượt quá 1000.']);
         }
 
         $coupon = new Coupon();
@@ -72,7 +72,7 @@ class CouponController extends Controller
         $coupon->product_id = $request->product_id;
         $coupon->save();
 
-        toastr('Created Successfully', 'success', 'Success');
+        toastr('Đã tạo thành công', 'thành công', 'Thành công');
 
         return redirect()->route('admin.coupons.index');
     }
@@ -114,15 +114,15 @@ class CouponController extends Controller
         ]);
          // Kiểm tra nếu ngày kết thúc đã quá hạn
         if (strtotime($request->end_date) < strtotime(date('Y-m-d'))) {
-            return redirect()->back()->withErrors(['end_date' => 'The end date cannot be in the past.']);
+            return redirect()->back()->withErrors(['end_date' => 'Ngày kết thúc không được là ngày trong quá khứ.']);
         }
         // Kiểm tra giá trị giảm giá
         if ($request->discount_type === 'percent' && $request->discount > 100) {
-            return redirect()->back()->withErrors(['discount' => 'The discount percentage cannot exceed 100%.']);
+            return redirect()->back()->withErrors(['discount' => 'Tỷ lệ chiết khấu không được vượt quá 100%.']);
         }
 
         if ($request->discount_type === 'amount' && $request->discount > 1000) {
-            return redirect()->back()->withErrors(['discount' => 'The discount amount cannot exceed 1000.']);
+            return redirect()->back()->withErrors(['discount' => 'Số tiền chiết khấu không được vượt quá 1000.']);
         }
 
         $coupon = Coupon::findOrFail($id);
@@ -138,7 +138,7 @@ class CouponController extends Controller
         $coupon->product_id = $request->product_id;
         $coupon->save();
 
-        toastr('Updated Successfully', 'success', 'Success');
+        toastr('Đã tạo thành công.', 'thành công.', 'Thành công.');
 
         return redirect()->route('admin.coupons.index');
     }
@@ -151,7 +151,7 @@ class CouponController extends Controller
         $coupon = Coupon::findOrFail($id);
         $coupon->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'thành công.', 'Tin nhắn' => 'Đã xóa thành công!']);
     }
 
     public function changeStatus(Request $request)
@@ -160,6 +160,6 @@ class CouponController extends Controller
         $coupon->status = $request->status == 'true' ? 1 : 0;
         $coupon->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['Tin nhắn' => 'Trạng thái đã được cập nhật!']);
     }
 }

@@ -28,11 +28,12 @@ class SliderDataTable extends DataTable
                 return $editBtn . $deleteBtn;
             })
             ->addColumn('banner', function ($query) {
-                return $img = "<img width='100px' src='" . asset($query->banner) . "'></img>";
+                // Sử dụng div với background-image thay vì thẻ img
+                return '<div style="width: 100px; height: 50px; background-image: url(\'' . asset($query->banner) . '\'); background-size: cover; background-position: center;"></div>'; // Điều chỉnh height: 50px cho phù hợp
             })
             ->addColumn('status', function ($query) {
-                $active = '<i class="badge badge-success">Active</i>';
-                $inActive = '<i class="badge badge-danger">Inactive</i>';
+                $active = '<i class="badge badge-success">Hoạt động</i>';
+                $inActive = '<i class="badge badge-danger">Dừng hoạt động</i>';
                 if ($query->status == 1) {
                     return $active;
                 } else {

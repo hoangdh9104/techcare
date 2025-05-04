@@ -129,11 +129,13 @@
                             </p>
                         @endif
                         @if (checkDiscount($product))
-                            <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                                <del id="product-price">{{ $product->price }} {{ $settings->currency_icon }}</del>
+                            <h4>{{ Number::format($product->offer_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                <del
+                                    id="product-price">{{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</del>
                             </h4>
                         @else
-                            <h4 id="product-price">{{ $product->price }}{{ $settings->currency_icon }}</h4>
+                            <h4 id="product-price">
+                                {{ Number::format($product->price, locale: 'de') }}{{ $settings->currency_icon }}</h4>
                         @endif
                         <p class="wsus_pro_rating">
                             @php
@@ -413,8 +415,7 @@
                                                                 </div>
                                                                 <div class="img_upload">
                                                                     <div class="">
-                                                                        <input type="file" name="image[]"
-                                                                            id="">
+                                                                        <input type="file" name="images[]" multiple>
                                                                     </div>
                                                                 </div>
                                                                 <input type="hidden" name="product_id"
@@ -562,7 +563,8 @@
                                 'inline-block'; // Hiển thị lại nút
                             document.getElementById('product-price').style.display =
                                 'block'; // Hiển thị lại cột giá
-                            document.getElementById('product-price').innerText = data.price + ' VNĐ';
+                            document.getElementById('product-price').innerText = new Intl.NumberFormat(
+                                'vi-VN').format(data.price) + '₫';
                             if (data.quantity > 0) {
                                 document.getElementById('product-quantity').innerHTML = `
                                 <span id="stock-status" class="in_stock">Còn hàng</span>

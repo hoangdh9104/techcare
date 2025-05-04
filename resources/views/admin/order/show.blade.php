@@ -10,7 +10,7 @@
     <!-- Main Content -->
     <section class="section">
         <div class="section-header">
-            <h1>Orders</h1>
+            <h1>Chi tiết đơn hàng</h1>
         </div>
 
         <div class="section-body">
@@ -68,7 +68,7 @@
                                         <th data-width="40">#</th>
                                         <th>Sản phẩm</th>
                                         <th>Biến thể</th>
-                                        <th>Nhà bán</th>
+                                        {{-- <th>Nhà bán</th> --}}
                                         <th class="text-center">Đơn giá</th>
                                         <th class="text-center">Số lượng</th>
                                         <th class="text-right">Thành tiền</th>
@@ -111,13 +111,13 @@
                                                     <p>Không có biến thể</p>
                                                 @endif
                                             </td>
-                                            <td>{{ $product->vendor->shop_name }}</td>
+                                            {{-- <td>{{ $product->vendor->shop_name }}</td> --}}
                                             <td class="text-center">
-                                                {{ $product->unit_price }}{{ $settings->currency_icon }}
+                                                {{ Number::format($product->unit_price, locale: 'de') }}{{ $settings->currency_icon }}
                                             </td>
                                             <td class="text-center">{{ $product->qty }}</td>
                                             <td class="text-right">
-                                                {{ $product->unit_price * $product->qty + $product->variant_total }}{{ $settings->currency_icon }}
+                                                {{ Number::format($product->unit_price * $product->qty + $product->variant_total, locale: 'de') }}{{ $settings->currency_icon }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -185,12 +185,14 @@
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Tạm tính</div>
                                         <div class="invoice-detail-value">
-                                            {{ $order->sub_total }}{{ $settings->currency_icon }}</div>
+                                            {{ Number::format($order->sub_total, locale: 'de') }}{{ $settings->currency_icon }}
+                                        </div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Phí vận chuyển (+)</div>
                                         <div class="invoice-detail-value">
-                                            {{ @$shipping->cost }}{{ $settings->currency_icon }}</div>
+                                            {{ @Number::format($shipping->cost, locale: 'de') }}{{ $settings->currency_icon }}
+                                        </div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Mã giảm giá (-)</div>
@@ -200,9 +202,12 @@
 
                                                 if (@$coupon) {
                                                     if (@$coupon->discount_type === 'percent') {
-                                                        $discount = ($coupon->discount / 100) * $order->sub_total;
+                                                        $discount = Number::format(
+                                                            ($coupon->discount / 100) * $order->sub_total,
+                                                            locale: 'de',
+                                                        );
                                                     } elseif (@$coupon->discount_type === 'amount') {
-                                                        $discount = $coupon->discount;
+                                                        $discount = Number::format($coupon->discount, locale: 'de');
                                                     }
                                                 }
                                             @endphp
@@ -212,7 +217,8 @@
                                                 Mã giảm: {{ @$coupon->discount }}%
                                                 (- {{ $discount }}{{ $settings->currency_icon }})
                                             @elseif(@$coupon->discount_type === 'amount')
-                                                Mã giảm: {{ $discount }}{{ $settings->currency_icon }}
+                                                Mã giảm:
+                                                {{ Number::format($discount, locale: 'de') }}{{ $settings->currency_icon }}
                                             @else
                                                 Mã giảm: {{ 0 }}{{ $settings->currency_icon }}
                                             @endif
@@ -223,7 +229,7 @@
                                         <div class="invoice-detail-item">
                                             <div class="invoice-detail-name">Tổng cộng</div>
                                             <div class="invoice-detail-value invoice-detail-value-lg">
-                                                {{ $order->amount }} {{ $settings->currency_icon }}
+                                                {{ Number::format($order->amount, locale: 'de') }} {{ $settings->currency_icon }}
                                             </div>
                                         </div>
                                     </div>
@@ -327,7 +333,7 @@
                         if (response.status === 'success') {
                             toastr.success(response.message);
                         } else {
-                            toastr.error(response.message || "Something went wrong.");
+                            toastr.error(response.message || "Đã có lỗi xảy ra.");
                         }
                         $('#update_status_btn').prop('disabled', false).text('Update');
                     },

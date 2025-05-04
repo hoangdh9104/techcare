@@ -48,7 +48,7 @@ class BrandController extends Controller
         $brand->is_featured =  $request->is_featured;
         $brand->status =  $request->status;
         $brand->save();
-        toastr('Created Brand Successfully', 'success');
+        toastr('Đã tạo thương hiệu thành công!', 'Thành công');
         return redirect()->route('admin.brand.index');
     }
 
@@ -88,7 +88,7 @@ class BrandController extends Controller
         $brand->is_featured =  $request->is_featured;
         $brand->status =  $request->status;
         $brand->save();
-        toastr('Updated Brand Successfully', 'success');
+        toastr('Đã cập nhật thương hiệu thành công!', 'Thành công');
         return redirect()->route('admin.brand.edit', $brand->id);
     }
 
@@ -99,17 +99,17 @@ class BrandController extends Controller
     {
         $brand = Brand::findOrFail($id);
         if(Product::where('brand_id',$brand->id)->count()>0){
-        return response(['status' => 'error', 'message' => 'Danh mục này có sản phẩm bạn không thể xóa nó !']);
+        return response(['status' => 'Lỗi', 'message' => 'Danh mục này có sản phẩm bạn không thể xóa nó !']);
         }
         $this->deleteImage($brand->logo);
         $brand->delete();
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'Thành công', 'message' => 'Đã xóa thành công']);
     }
     public function changeStatus(Request $request)
     {
         $brand = Brand::findOrFail($request->id);
         $brand->status = $request->status;
         $brand->save();
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 }
