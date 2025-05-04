@@ -247,11 +247,11 @@
                                     data-bs-target="#pills-home22" type="button" role="tab"
                                     aria-controls="pills-home" aria-selected="true">Mô tả</button>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            {{-- <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact" type="button" role="tab"
                                     aria-controls="pills-contact" aria-selected="false">Thông tin người bán</button>
-                            </li>
+                            </li> --}}
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact2" type="button" role="tab"
