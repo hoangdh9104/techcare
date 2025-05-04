@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SliderController extends Controller
 {
@@ -80,7 +81,7 @@ class SliderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+
         $request->validate([
             'banner' => ['nullable', 'image', 'max:2000'],
             'type' => ['max:200', 'string'],
@@ -103,6 +104,7 @@ class SliderController extends Controller
         $slider->serial = $request->serial;
         $slider->status = $request->status;
         $slider->save();
+        Cache::forget('sliders');
         toastr('Update Successfully!', 'success');
         // toastr()->success('Update Successfully!', 'success');
         return redirect()->route('admin.slider.index');
@@ -114,9 +116,9 @@ class SliderController extends Controller
     public function destroy(string $id)
     {
         $slider = Slider::findOrFail($id);
-       $this->deleteImage($slider->banner);
-       $slider->delete();
+        $this->deleteImage($slider->banner);
+        $slider->delete();
 
-       return response(['status' => 'success', 'message' => 'Xóa thành công !']);
+        return response(['status' => 'success', 'message' => 'Xóa thành công !']);
     }
 }

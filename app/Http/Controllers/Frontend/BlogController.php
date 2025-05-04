@@ -8,16 +8,16 @@ use App\Models\BlogComment;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
-{   
+{
     public function blog()
-    {   
-        $blogs = Blog::where('status',1)->orderBy('id', 'DESC')->paginate(12);
+    {
+        $blogs = Blog::where('status', 1)->orderBy('id', 'DESC')->paginate(12);
         return view('frontend.pages.blog', compact('blogs'));
     }
     public function blogDetails(string $slug)
     {
         $blog = Blog::with('comments')->where('slug', operator: $slug)->where('status', 1)->firstOrFail();
-        $moreBlogs = Blog::where('slug', '!=', $slug)->where('status', 1)->orderBy('id','DESC')->take(15)->get();
+        $moreBlogs = Blog::where('slug', '!=', $slug)->where('status', 1)->orderBy('id', 'DESC')->take(15)->get();
         $comments = $blog->comments()->paginate(20);
         return view('frontend.pages.blog-detail', compact('blog', 'moreBlogs', 'comments'));
     }
@@ -39,7 +39,5 @@ class BlogController extends Controller
         toastr('Đã thêm bình luận !', 'success', 'success');
 
         return redirect()->back();
-
-
- }
+    }
 }
