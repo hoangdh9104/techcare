@@ -18,7 +18,7 @@
                                     <a class="common_btn" href="{{$slider->btn_url}}">Mua ngay</a> --}}
 
                             <div class="col-xl-12">
-                                <div class="wsus__single_slider" style="background: url({{ asset($slider->banner) }});">
+                                <div class="wsus__single_slider" style="background: url({{ asset($slider->banner) }}); background-size: contain; background-position: center; height: 500px;" >
                                     <div class="wsus__single_slider_text">
                                         <h3 class="text-primary fw-semibold">{{ $slider->type }}</h3>
                                         <h1 class="text-white fw-bold display-4"
@@ -26,7 +26,7 @@
                                             {{ $slider->title }}
                                         </h1>
                                         <h6 class="mt-2 text-lg">
-                                            Start at
+                                            Bắt đầu 
                                             <span class="text-green-400 font-extrabold text-2xl drop-shadow-md">
                                                 {{ $settings->currency_icon }}{{ $slider->starting_price }}
                                             </span>

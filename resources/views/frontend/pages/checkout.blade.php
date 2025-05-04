@@ -78,9 +78,9 @@
                                         <span> (Cost: {{ $method->cost }} {{ $settings->currency_icon }})</span>
                                     </label>
                                     @if ($method->cost == 0)
-                                        <span style="color: red" class="text-danger">Giao hàng từ 3-5 ngày.</span>
+                                        <span  >Giao hàng từ 3-5 ngày.</span>
                                     @elseif ($method->cost > 0)
-                                        <span style="color: red" class="text-danger">Giao hàng hỏa tốc.</span>
+                                        <span  >Giao hàng hỏa tốc.</span>
                                     @endif
                                 </div>
                             @elseif($method->type == 'flat_cost')
