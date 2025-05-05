@@ -270,7 +270,7 @@
                             @elseif (in_array($order->order_status, ['delivered']))
                                 <button data-id="{{ $order->id }}"
                                     class='btn btn-outline-success btn-sm confirm-received'>
-                                    <i class='fas fa-check'></i> Đã hủy
+                                    <i class='fas fa-check'></i> Đã nhận
                                 </button>
                             @endif
                         </div>
