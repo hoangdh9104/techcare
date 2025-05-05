@@ -35,8 +35,8 @@
 </style>
 @section('content')
     <!--=============================
-                                                                                                                                                                                                                                                                                                                                                                                                                            DASHBOARD START
-                                                                                                                                                                                                                                                                                                                                                                                                                          ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                        DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                                                                      ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
             @include('frontend.dashboard.layouts.sidebar')
@@ -50,8 +50,8 @@
                         <div class="wsus__dashboard_profile">
 
                             <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                            INVOICE PAGE START
-                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        INVOICE PAGE START
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    ==============================-->
                             <section id="" class="invoice-print">
                                 <div class="">
                                     <div class="wsus__invoice_area">
@@ -197,12 +197,52 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    
+
+
+                                                                    <p class="text-right"><strong>Giảm giá (-):</strong>
+                                                                        @php
+                                                                            $discount = 0; // Mặc định không có giảm giá
+
+                                                                            if (@$coupon) {
+                                                                                if (
+                                                                                    @$coupon->discount_type ===
+                                                                                    'percent'
+                                                                                ) {
+                                                                                    $discount = number_format(
+                                                                                        ($coupon->discount / 100) *
+                                                                                            $order->sub_total,
+                                                                                        0,
+                                                                                        ',',
+                                                                                        '.',
+                                                                                    );
+                                                                                } elseif (
+                                                                                    @$coupon->discount_type === 'amount'
+                                                                                ) {
+                                                                                    $discount = number_format(
+                                                                                        $coupon->discount,
+                                                                                        0,
+                                                                                        ',',
+                                                                                        '.',
+                                                                                    );
+                                                                                }
+                                                                            }
+                                                                        @endphp
+
+                                                                        <!-- Hiển thị giảm giá -->
+                                                                        @if (@$coupon->discount_type === 'percent')
+                                                                            Mã giảm: {{ @$coupon->discount }}%
+                                                                            (-
+                                                                            {{ $discount }}{{ $settings->currency_icon }})
+                                                                        @elseif(@$coupon->discount_type === 'amount')
+                                                                            Mã giảm:
+                                                                            {{ number_format($discount, 0, ',', '.') }}{{ $settings->currency_icon }}
+                                                                        @else
+                                                                            Mã giảm:
+                                                                            {{ 0 }}{{ $settings->currency_icon }}
+                                                                        @endif
+                                                                    </p>
                                                                     <p class="text-right"><strong>Phí vận chuyển:</strong>
                                                                         {{ @number_format($shipping->cost, 0, ',', '.') }}{{ $settings->currency_icon }}
-                                                                    </p>
-                                                                    <p class="text-right"><strong>Giảm giá (-):</strong>
-                                                                        {{ @number_format($coupon->discount ?: 0, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                                     </p>
                                                                     <p class="text-right font-weight-bold"><strong>Tổng
                                                                             cộng:</strong>
@@ -336,8 +376,8 @@
                         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                INVOICE PAGE END
-                                                                                                                                                                                                                                                                                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            INVOICE PAGE END
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        ==============================-->
     <div class="col">
         <div class="mt-2 float-end">
             <button class="btn btn-warning print_invoice">In</button>
@@ -351,8 +391,8 @@
     </div>
     </section>
     <!--=============================
-                                                                                                                                                                                                                                                                                                                                                                                                                            DASHBOARD START
-                                                                                                                                                                                                                                                                                                                                                                                                                          ==============================-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                        DASHBOARD START
+                                                                                                                                                                                                                                                                                                                                                                                                                                      ==============================-->
 @endsection
 
 @push('scripts')

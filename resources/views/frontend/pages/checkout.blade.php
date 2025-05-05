@@ -103,7 +103,6 @@
                         @endforeach
                         <div class="wsus__order_details_summery">
                             <p>Tổng đơn hàng: 
-                                {{-- number_format(getMainCartTotal(), 0, ',', '.') --}}
                                 <span>{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                             </p>
                             <p>Phí vận chuyển(+): <span
@@ -113,7 +112,7 @@
                                     id="discount">{{ number_format(getCartDiscount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                             <p><b>Tổng thanh toán:</b>
                                 <span>
-                                    {{-- <b data-id="{{ number_format(getMainCartTotal(), 0, ',', '.')  }}" id="total_amount"> --}}
+                                    <b data-id="{{ getMainCartTotal()  }}" id="total_amount">
                                         {{ number_format(getMainCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}
                                     </b>
                                 </span>
