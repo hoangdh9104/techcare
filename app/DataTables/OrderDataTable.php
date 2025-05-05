@@ -33,7 +33,8 @@ class OrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                return Number::format($query->amount, locale: 'de'). $query->currency_icon ;
+
+                return  number_format($query->amount, 0, ',', '.') . $query->currency_icon;
             })
             ->addColumn('date', function ($query) {
                 return \Carbon\Carbon::parse($query->created_at)->locale('vi')->translatedFormat('d-m-Y');
@@ -117,10 +118,10 @@ class OrderDataTable extends DataTable
 
 
 
-            Column::make('id')->title('Mã đơn'),
+            // Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
             Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt'),
+            // Column::make('date')->title('Ngày đặt'),
             Column::make('product_qty')->title('Số lượng sản phẩm'),
             Column::make('amount')->title('Tổng tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),

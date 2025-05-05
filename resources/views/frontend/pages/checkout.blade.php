@@ -90,7 +90,7 @@
                                         data-id="{{ $method->cost }}">
                                     <label class="form-check-label" for="shippingMethod{{ $method->id }}">
                                         {{ $method->name }}
-                                        <span> (Cost: {{ Number::format($method->cost, locale : 'de') }} {{ $settings->currency_icon }})</span>
+                                        <span> (Cost: {{ number_format($method->cost, 0, ',', '.') }} {{ $settings->currency_icon }})</span>
                                     </label>
                                     @if ($method->cost == 0)
                                         <span style="color: red" class="text-muted , color:red">Giao hàng từ 3-5
@@ -102,18 +102,18 @@
                             @endif
                         @endforeach
                         <div class="wsus__order_details_summery">
-                            <p>Tổng đơn hàng:
-                                <span>{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                            <p>Tổng đơn hàng: 
+                                <span>{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                             </p>
                             <p>Phí vận chuyển(+): <span
                                     id="shipping_fee">{{ getShippingFee() }}{{ $settings->currency_icon }}</span>
                             </p>
                             <p>Giảm giá(-): <span
-                                    id="discount">{{ Number::format(getCartDiscount(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                                    id="discount">{{ number_format(getCartDiscount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                             <p><b>Tổng thanh toán:</b>
                                 <span>
-                                    <b data-id="{{ Number::format(getMainCartTotal(), locale:'de')  }}" id="total_amount">
-                                        {{ Number::format(getMainCartTotal(), locale:'de') }}{{ $settings->currency_icon }}
+                                    <b data-id="{{ getMainCartTotal()  }}" id="total_amount">
+                                        {{ number_format(getMainCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}
                                     </b>
                                 </span>
                             </p>

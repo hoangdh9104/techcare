@@ -36,7 +36,8 @@ class UserOrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                return Number::format($query->amount, locale: 'de') . $query->currency_icon ;
+                
+                return number_format($query->amount, 0, ',', '.')  . $query->currency_icon ;
             })
             ->addColumn('date', function ($query) {
                 return \Carbon\Carbon::parse($query->created_at)->format('d/m/Y');

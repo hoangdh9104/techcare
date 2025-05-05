@@ -28,7 +28,7 @@
                                         <h6 class="mt-2 text-lg">
                                            Giá bắt đầu
                                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 font-extrabold text-2xl drop-shadow-md" style="color:#fff">
-                                            {{ Number::format($slider->starting_price, locale: 'de') }} {{ $settings->currency_icon }}
+                                            {{ number_format($slider->starting_price, 0, ',', '.') }} {{ $settings->currency_icon }}
                                         </span>
 
                                         </h6>

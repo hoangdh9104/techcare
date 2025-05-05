@@ -67,7 +67,8 @@
                                             </td>
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
-                                                    {{ Number::format($item->price * $item->qty, locale: 'de') . $settings->currency_icon }}
+                                                    {{ number_format($item->price * $item->qty, 0, ',', '.') . $settings->currency_icon }}
+                                                    
                                                 </h6>
                                             </td>
 
@@ -103,15 +104,15 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
-                        <p>Tạm tính: <span
-                                id="sub_total">{{ Number::format(getCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                        <p>Tạm tính: <span  
+                                id="sub_total">{{  number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                         </p>
                         <p>Phiếu giảm giá(-): <span
-                                id="discount">{{ Number::format(getCartDiscount(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                                id="discount">{{ number_format(getCartDiscount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                         </p>
                         <p class="total"><span>
                                 Tổng cộng:</span> <span
-                                id="cart_total">{{ Number::format(getMainCartTotal(), locale: 'de') }}{{ $settings->currency_icon }}</span>
+                                id="cart_total">{{ number_format(getMainCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                         </p>
                         @if (session()->has('coupon_code'))
                             <p>Phiếu giảm giá áp dụng: {{ session('coupon_code') }}</p>
