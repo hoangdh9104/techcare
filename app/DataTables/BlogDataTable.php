@@ -37,7 +37,7 @@ class BlogDataTable extends DataTable
             })
             ->addColumn('publish_date', function($query)
             {  
-                return date('d-m-y', strtotime($query->created_at));
+                return \Carbon\Carbon::parse($query->created_at)->locale('vi')->translatedFormat('d-m-Y');
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
