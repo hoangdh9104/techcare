@@ -12,10 +12,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>Blog mới nhất của chúng tôi</h4>
+                    <h4>Bài viết mới nhất của chúng tôi</h4>
                     <ul>
                         <li><a href="#">Trang chủ</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Bài viết</a></li>
                     </ul>
                 </div>
             </div>

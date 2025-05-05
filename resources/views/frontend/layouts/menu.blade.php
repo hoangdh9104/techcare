@@ -112,7 +112,7 @@
 
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
-                        <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li>
+                        {{-- <li><a href="{{ route('product-traking.index') }}">Theo dõi đơn hàng</a></li> --}}
 
                         @if (auth()->check())
                             @if (auth()->user()->role === 'user')

@@ -53,7 +53,7 @@
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.responseText);
-                        toastr.error('Something went wrong!');
+                        toastr.error('Có lẽ bạn đã thao tác sai!');
                     }
                 });
             });
