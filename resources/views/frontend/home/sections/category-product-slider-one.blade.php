@@ -46,7 +46,7 @@
             <div class="col-xl-12">
                 <div class="wsus__section_header">
                     <h3>{{ $category->name }}</h3>
-                    <a class="see_btn" href="{{ route('products.index', ['cattegory' => $category->slug]) }}">see more <i
+                    <a class="see_btn" href="{{ route('products.index', ['cattegory' => $category->slug]) }}">Xem thêm <i
                             class="fas fa-caret-right"></i></a>
                 </div>
             </div>
