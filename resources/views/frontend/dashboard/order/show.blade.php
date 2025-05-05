@@ -125,7 +125,7 @@
                                                                 <tbody>
                                                                     @foreach ($order->orderProducts as $product)
                                                                         <tr>
-                                                                            <td>
+                                                                            <td style="width: 55%">
                                                                                 <div class="product-info"
                                                                                     style="display: flex; align-items: flex-start; gap: 16px;">
                                                                                     <div class="product-details">
@@ -165,7 +165,7 @@
                                                                                     @endif
                                                                                 </div>
                                                                             </td>
-                                                                            <td class="text-center">
+                                                                            <td class="text-center" style="width: 15%">
                                                                                 {{ number_format($product->unit_price, 0, ',', '.') }}
                                                                                 {{ $settings->currency_icon }}</td>
                                                                             <td class="text-center" style="width: 15%">{{ $product->qty }}
@@ -206,7 +206,7 @@
                                                                     </p>
                                                                     <p class="text-right font-weight-bold"><strong>Tổng
                                                                             cộng:</strong>
-                                                                            {{ @number_format(order->amount,, 0, ',', '.') }}{{ $settings->currency_icon }}
+                                                                            {{ @number_format($order->amount, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                                     </p>
                                                                 </div>
                                                             </div>
