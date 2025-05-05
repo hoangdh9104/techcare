@@ -91,10 +91,10 @@
                     <div class="col-xl-4 col-lg-4">
                         <div class="wsus__pay_booking_summary" id="sticky_sidebar2">
                             <h5>Đơn hàng</h5>
-                            <p>Tổng đơn hàng : <span>{{ getCartTotal() }}{{ $settings->currency_icon }}</span></p>
-                            <p>Phí vận chuyển(+) : <span>{{ getShippingFee() }}{{ $settings->currency_icon }} </span></p>
-                            <p>Giảm giá(-) : <span>{{ getCartDiscount() }}{{ $settings->currency_icon }}</span></p>
-                            <h6>Tổng thanh toán <span>{{ getFinalPayableAmount() }}{{ $settings->currency_icon }}</span>
+                            <p>Tổng đơn hàng : <span>{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span></p>
+                            <p>Phí vận chuyển(+) : <span>{{ number_format(getShippingFee(), 0, ',', '.') }}{{ $settings->currency_icon }} </span></p>
+                            <p>Giảm giá(-) : <span>{{ number_format(getCartDiscount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span></p>
+                            <h6>Tổng thanh toán <span>{{ number_format(getFinalPayableAmount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                             </h6>
                         </div>
                     </div>

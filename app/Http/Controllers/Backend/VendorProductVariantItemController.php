@@ -40,7 +40,7 @@ class VendorProductVariantItemController extends Controller
         $variantItem->status = $request->status;
         $variantItem->save();
 
-        toastr('Created Successfully!', 'success', 'success');
+        toastr('Đã tạo thành công!', 'Thành công', 'Thành công');
         return redirect()->route(
             'vendor.products-variant-item.index',
             ['productId' => $request->product_id, 'variantId' => $request->variant_id]
@@ -93,7 +93,7 @@ class VendorProductVariantItemController extends Controller
         // Xóa nếu điều kiện được thỏa mãn
         $variantItem->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        return response(['status' => 'Thành công', 'Tin nhắn' => 'Đã xóa thành công']);
     }
 
     public function changeStatus(Request $request)
@@ -102,7 +102,7 @@ class VendorProductVariantItemController extends Controller
         $variantItem->status = $request->status == 'true' ? 1 : 0;
         $variantItem->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
 
 }

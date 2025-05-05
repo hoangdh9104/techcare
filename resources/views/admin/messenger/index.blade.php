@@ -57,7 +57,7 @@
                         </div>
                         <div class="card-footer chat-form">
                             <form id="message-form">
-                                <input type="text" class="form-control message-box" placeholder="Type a message"
+                                <input type="text" class="form-control message-box" placeholder="Nhập tin nhắn"
                                     name="message">
                                 <input type="hidden" name="receiver_id" id="receiver_id" value="">
 

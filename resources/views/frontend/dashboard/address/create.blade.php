@@ -30,7 +30,7 @@
                       <input type="text" placeholder="Phone" name="phone" value="{{old('phone')}}">
                     </div>
                   </div>
-                  <div class="col-xl-6 col-md-6">
+                  {{-- <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
                       <label>Quốc gia <b>*</b></label>
                       <div class="wsus__topbar_select">
@@ -42,7 +42,7 @@
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="col-xl-6 col-md-6">
                     <div class="wsus__add_address_single">
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                   
-                  <div class="col-xl-6">
+                  <div class="col-xl-12">
                     <button type="submit" class="common_btn">Tạo</button>
                   </div>
                 </div>

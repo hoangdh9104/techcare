@@ -32,6 +32,7 @@
                                 <div class="col-8">
                                     <div class="tab-content" id="nav-tabContent">
                                         @include('admin.setting.general-setting')
+                                        @include('admin.setting.profile')
                                         @include('admin.setting.logo-setting')
                                         @include('admin.setting.pusher-setting')
                                     </div>

@@ -4,7 +4,7 @@
       <!-- Main Content -->
         <section class="section">
           <div class="section-header">
-            <h1>Blog Category</h1>
+            <h1>Danh mục bài viết</h1>
           </div>
 
           <div class="section-body">
@@ -13,9 +13,9 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>All Blog Categories</h4>
+                    <h4>Tất cả các danh mục bài viết</h4>
                     <div class="card-header-action">
-                        <a href="{{route('admin.blog-category.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+                        <a href="{{route('admin.blog-category.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>Tạo mới</a>
                     </div>
                   </div>
                   <div class="card-body">
@@ -53,7 +53,7 @@
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.responseText);
-                        toastr.error('Something went wrong!');
+                        toastr.error('Có lẽ bạn đã sai bước nào!');
                     }
                 });
             });

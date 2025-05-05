@@ -108,7 +108,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.category.index')
-                         ->with('success', 'Deleted Successfully');
+                         ->with('success', 'Đã xóa thành công');
     }
 
 
@@ -118,7 +118,7 @@ class CategoryController extends Controller
         $category->status = $request->status;
         $category->save();
 
-        return response(['message' => 'Status has been updated!']);
+        return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
   
 
