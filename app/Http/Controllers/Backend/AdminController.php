@@ -54,7 +54,7 @@ class AdminController extends Controller
         $totalBrands = Brand::count();
 
         $totalCategories = Category::count();
-         
+
         $totalBlogs = Blog::count();
 
         $totalVendors = User::where('role', 'vendor')->count();
