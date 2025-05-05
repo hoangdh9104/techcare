@@ -48,7 +48,7 @@
 
                     {{-- <a class="see_btn" href="{{route('products.index',['cattegory'=> $category->slug])}}">Xem thêm <i class="fas fa-caret-right"></i></a> --}}
 
-                    <a class="see_btn" href="{{ route('products.index', ['cattegory' => $category->slug]) }}">see more <i
+                    <a class="see_btn" href="{{ route('products.index', ['cattegory' => $category->slug]) }}">Xem thêm <i
                             class="fas fa-caret-right"></i></a>
 
                 </div>
