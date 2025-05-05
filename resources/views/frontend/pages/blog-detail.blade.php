@@ -37,7 +37,7 @@
                         <img src="{{asset($blog->image)}}" alt="blog" class="img-fluid w-100">
                     </div>
                     <p class="wsus__main_blog_header">
-                        <span><i class="fas fa-user-tie"></i> by {{$blog->user->name}}</span>
+                        <span><i class="fas fa-user-tie"></i> bởi {{$blog->user->name}}</span>
                         <span><i class="fal fa-calendar-alt"></i> {{date('M d Y' , strtotime($blog->created_at))}}</span>
                         {{-- <span><i class="fal fa-comment-alt-smile"></i> 0 Comment</span>
                         <span><i class="far fa-eye"></i> 11 Views</span> --}}
@@ -53,7 +53,7 @@
                                 "><i class="fab fa-facebook-f"></i></a></li>
                             <li><a class="twitter" href="https://twitter.com/share?url={{url()->current()}}&text=
                                 "><i class="fab fa-twitter"></i></a></li>
-                            <li><a class="linkedin" href="https://www.linkedin.com/shareArticle?url={{url()->current()}}&title={{$blog->title}}&summary={{\Illuminate\Support\Str::limit($blog->description,50)}}
+                            <li><a class="linkedin" href="https://www.linkedin.com/shareArticle?url={{url()->current()}}&title={{$blog->title}}&summary={{limitText($blog->description, 50)}}
                                 "><i class="fab fa-linkedin-in"></i></a></li>
                         </ul>
                     </div>
@@ -73,7 +73,7 @@
                                     <div class="wsus__blog_text">
                                         <a class="blog_top blue" href="#">{{$blogItem->category->name}}</a>
                                         <div class="wsus__blog_text_center">
-                                            <a href="{{route('blog-details', $blogItem->slug)}}">{!!$blogItem->title!!}</a>
+                                            <a href="{{route('blog-details', $blogItem->slug)}}">{!!limitText($blogItem->title, 45)!!}</a>
                                             <p class="date">{{date('M D Y', strtotime($blogItem->created_at))}}</p>
                                         </div>
                                     </div>
@@ -85,139 +85,88 @@
                     <div class="wsus__comment_area">
                         <h4>Bình luận <span>{{count($comments)}}</span></h4>
                         @foreach ($comments as $comment)
+
                         <div class="wsus__main_comment">
                             <div class="wsus__comment_img">
-                                <img style="width: 80px; height: 80px; object-fit: contain;"
-                                 src="{{asset($comment->user->image)}}" alt="user" class="img-fluid w-100">
+                                <img style="width: 80px;height: 80px;object-fit: contain;" src="{{asset($comment->user->image)}}" alt="user" class="img-fluid w-100">
                             </div>
                             <div class="wsus__comment_text replay">
-                                <h6>{{$comment->user->name}} <span>{{date('d M Y ', strtotime($comment->created_at))}}</span></h6>
-                                <p>{{$comments->comment}}</p>
+                                <h6>{{$comment->user->name}} <span>{{date('d M Y', strtotime($comment->created_at))}}</span></h6>
+                                <p>{{$comment->comment}}</p>
+
                             </div>
-                        </div>    
+                        </div>
                         @endforeach
-                        @if (count($comments) == 0 )
-                        <i>Hãy là người đầu tiên bình luận</i>
+                        @if (count($comments) === 0)
+                         <i>Hãy là người đầu tiên bình luận! </i>
                         @endif
-                        
+
                         <div id="pagination">
                             <div class="mt-5">
-                                @if($comments->hasPages())
-                                {{$comments->withQueryString()->links}}
+                                @if ($comments->hasPages())
+                                    {{$comments->withQueryString()->links()}}
                                 @endif
                             </div>
                         </div>
                     </div>
                     <div class="wsus__post_comment">
-                        <h4>Đăng bình luận</h4>
-                        {{-- @if (auth()->check()) --}}
-
+                        <h4>Đăng 1 bình luận</h4>
+                        @if (auth()->check())
                         <form action="{{route('blog-comment')}}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="wsus__single_com">
-                                        <textarea rows="5" placeholder="Your Comment" name="commnent"></textarea>
+                                        <textarea rows="5" placeholder="Bình luận của bạn" name="comment" required></textarea>
                                         <input type="hidden" name="blog_id" value="{{$blog->id}}">
                                     </div>
                                 </div>
                             </div>
-                            
                             <button class="common_btn" type="submit">Đăng bình luận</button>
                         </form>
-                        {{-- @else
-                        <p>Please login in to comment on post !</p>
-                        <a class="common_btn" href="{{route('login')}}">Login</a>
-                        @endif --}}
-
+                        @else
+                        <p>Vui lòng đăng nhập để comment</p>
+                        <a class="common_btn" href="{{route('login')}}" >Đăng nhập</a>
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-3 col-xl-4 col-lg-4">
+            
+                <div class="col-xxl-3 col-xl-4 col-lg-4">
                 <div class="wsus__blog_sidebar" id="sticky_sidebar">
-                    <div class="wsus__blog_search">
+                    {{-- <div class="wsus__blog_search">
                         <h4>Tìm kiếm</h4>
                         <form>
                             <input type="text" placeholder="Search">
                             <button type="submit" class="common_btn"><i class="far fa-search"></i></button>
                         </form>
-                    </div>
+                    </div> --}}
                     <div class="wsus__blog_category">
                         <h4>Thể loại</h4>
                         <ul>
-                            <li><a href="#">Quần áo</a></li>
-                            <li><a href="#">Giải trí</a></li>
-                            <li><a href="#">Thời trang</a></li>
-                            <li><a href="#">Phong cách sống</a></li>
-                            <li><a href="#">Công nghệ</a></li>
-                            <li><a href="#">Giày dép</a></li>
-                            <li><a href="#">Điện tử</a></li>
-                            <li><a href="#">Khác</a></li>
+                            @foreach ($blogCategories as $blogCategory)
+                                <li><a href="{{ $blogCategory->id }}">{{ $blogCategory->name }}</a></li>
+                            @endforeach
+
                         </ul>
                     </div>
                     <div class="wsus__blog_post">
                         <h4>Bài đăng phổ biến</h4>
-                        <div class="wsus__blog_post_single">
-                            <a href="#" class="wsus__blog_post_img">
-                                <img src="images/location_1.jpg" alt="blog" class="imgofluid w-100">
-                            </a>
-                            <div class="wsus__blog_post_text">
-                                <a href="#">Một điều phân biệt người sáng tạo</a>
-                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
+                        @foreach ($latestBlogs as $item)
+                            <div class="wsus__blog_post_single">
+                                <a href="{{ route('blog-details', $item->slug) }}" class="wsus__blog_post_img">
+                                    <img src="{{ asset($item->image) }}" alt="blog" class="imgofluid w-100">
+                                </a>
+                                <div class="wsus__blog_post_text">
+                                    <a href="{{ route('blog-details', $item->slug) }}">{!! $item->title !!}</a>
+                                    {{-- <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="wsus__blog_post_single">
-                            <a href="#" class="wsus__blog_post_img">
-                                <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
-                            </a>
-                            <div class="wsus__blog_post_text">
-                                <a href="#">Một điều phân biệt người sáng tạo</a>
-                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
-                            </div>
-                        </div>
-                        <div class="wsus__blog_post_single">
-                            <a href="#" class="wsus__blog_post_img">
-                                <img src="images/location_3.jpg" alt="blog" class="imgofluid w-100">
-                            </a>
-                            <div class="wsus__blog_post_text">
-                                <a href="#">Một điều phân biệt người sáng tạo</a>
-                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
-                            </div>
-                        </div>
-                        <div class="wsus__blog_post_single">
-                            <a href="#" class="wsus__blog_post_img">
-                                <img src="images/location_4.jpg" alt="blog" class="imgofluid w-100">
-                            </a>
-                            <div class="wsus__blog_post_text">
-                                <a href="#">Một điều phân biệt người sáng tạo</a>
-                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
-                            </div>
-                        </div>
-                        <div class="wsus__blog_post_single">
-                            <a href="#" class="wsus__blog_post_img">
-                                <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
-                            </a>
-                            <div class="wsus__blog_post_text">
-                                <a href="#">Một điều phân biệt người sáng tạo</a>
-                                <p> <span>Ngày 29 tháng 2 năm 2025 </span> 2 Bình luận </p>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
-                    <div class="wsus__popular_tag">
-                        <h4>Thẻ phổ biến</h4>
-                        <ul>
-                            <li><a href="#">Thời trang</a></li>
-                            <li><a href="#">Phong cách</a></li>
-                            <li><a href="#">Du lịch</a></li>
-                            <li><a href="#">Phụ nữ</a></li>
-                            <li><a href="#">Đàn ông</a></li>
-                            <li><a href="#">Sở thích</a></li>
-                            <li><a href="#">Mua sắm</a></li>
-                            <li><a href="#">Nhiếp ảnh</a></li>
-                        </ul>
-                    </div>
+                    
                 </div>
+            
             </div>
         </div>
     </div>
