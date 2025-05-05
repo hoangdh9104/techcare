@@ -1,28 +1,28 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-{{$settings->site_name}} || Giới thiệu
+    {{ $settings->site_name }} || Giới thiệu
 @endsection
 
 @section('content')
-<section id="wsus__breadcrumb">
-    <div class="wsus_breadcrumb_overlay">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h4>Chi tiết blog</h4>
-                    <ul>
-                        <li><a href="#">blog</a></li>
-                        <li><a href="#">Chi tiết blog</a></li>
-                    </ul>
+    <section id="wsus__breadcrumb">
+        <div class="wsus_breadcrumb_overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Chi tiết blog</h4>
+                        <ul>
+                            <li><a href="#">blog</a></li>
+                            <li><a href="#">Chi tiết blog</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--============================
-    BREADCRUMB END
-==============================-->
+    </section>
+    <!--============================
+                BREADCRUMB END
+            ==============================-->
 
 
 <!--============================
@@ -169,6 +169,5 @@
             
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection

@@ -32,8 +32,8 @@ class BrandDataTable extends DataTable
                 return  "<img width='100px' src='" . asset($query->logo) . "'></img>";
             })
             ->addColumn('is_featured', function ($query) {
-                $active = '<i class="badge badge-success">Yes</i>';
-                $inActive = '<i class="badge badge-danger">No</i>';
+                $active = '<i class="badge badge-success">Có</i>';
+                $inActive = '<i class="badge badge-danger">Không</i>';
                 if ($query->is_featured == 1) {
                     return $active;
                 } else {

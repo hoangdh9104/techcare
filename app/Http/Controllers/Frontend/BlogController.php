@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Backend\BlogCategory;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 use App\Models\BlogComment;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
-{   
+{
     public function blog()
     {
         $blogs = Blog::where('status', 1)->orderBy('id', 'DESC')->paginate(12);

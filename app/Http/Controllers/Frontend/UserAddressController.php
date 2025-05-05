@@ -36,7 +36,7 @@ class UserAddressController extends Controller
             'name' => ['required', 'max:200'],
             'email' => ['required', 'max:200'],
             'phone' => ['required', 'max:200'],
-            'country' => ['required', 'max:200'],
+            // 'country' => ['required', 'max:200'],
             'state' => ['required', 'max:200'],
             'city' => ['required', 'max:200'],
             'zip' => ['required', 'max:200'],
@@ -48,7 +48,7 @@ class UserAddressController extends Controller
         $address->name = $request->name;
         $address->email = $request->email;
         $address->phone = $request->phone;
-        $address->country = $request->country;
+        $address->country = 'Vietnam';
         $address->state = $request->state;
         $address->city = $request->city;
         $address->zip = $request->zip;
@@ -86,7 +86,7 @@ class UserAddressController extends Controller
             'name' => ['required', 'max:200'],
             'email' => ['required', 'max:200'],
             'phone' => ['required', 'max:200'],
-            'country' => ['required', 'max:200'],
+            // 'country' => ['required', 'max:200'],
             'state' => ['required', 'max:200'],
             'city' => ['required', 'max:200'],
             'zip' => ['required', 'max:200'],
@@ -98,7 +98,7 @@ class UserAddressController extends Controller
         $address->name = $request->name;
         $address->email = $request->email;
         $address->phone = $request->phone;
-        $address->country = $request->country;
+        $address->country = 'Vietnam';
         $address->state = $request->state;
         $address->city = $request->city;
         $address->zip = $request->zip;

@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Number;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -25,19 +26,7 @@ class UserOrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-                // Kiểm tra nếu đơn hàng có thể hủy
-                // if (in_array($query->order_status, ['pending', 'processed_and_ready_to_ship'])) {
-                //     $cancelBtn = "<button data-id='{$query->id}' class='btn btn-outline-danger btn-sm cancel-order'>
-                //     <i class='fas fa-times'></i> Cancel Order
-                //   </button>";
-                //     return $showBtn . ' ' . $cancelBtn;
-                // } elseif (in_array($query->order_status, ['delivered'])) {
-                //     $receivedBtn = "<button data-id='{$query->id}' class='btn btn-outline-success btn-sm confirm-received'>
-                //         <i class='fas fa-check'></i> Confirm received
-                //     </button>";
-                //     return $showBtn . ' ' . $receivedBtn;
-                // }
-
+                
                 return $showBtn;
             })
             ->addColumn('invoice_id', function ($query) {
@@ -47,7 +36,8 @@ class UserOrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                return $query->currency_icon . $query->amount;
+                
+                return number_format($query->amount, 0, ',', '.')  . $query->currency_icon ;
             })
             ->addColumn('date', function ($query) {
                 return \Carbon\Carbon::parse($query->created_at)->format('d/m/Y');
@@ -128,22 +118,8 @@ class UserOrderDataTable extends DataTable
     {
         return [
 
-            // Column::make('id')->title('STT'),
-            // Column::make('invoice_id')->title('Id hóa đơn'),
-            // Column::make('customer')->title('Khách hàng'),
-            // Column::make('date')->title('Ngày đặt hàng'),
-            // Column::make('product_qty')->title('Số lượng sản phẩm'),
-            // Column::make('amount')->title('Số tiền'),
-            // Column::make('order_status')->title('Trạng thái đơn hàng'),
-            // Column::make('payment_status')->title('Trạng thái thanh toán'),
-
-            // Column::make('payment_method')->title('Phương thức thanh toán'),
-
-
-            // Column::computed('action')->title('Hành động')
-
             Column::make('id')
-                ->title('ID')
+                ->title('STT')
                 ->width(10), // Set fixed width for better alignment
             Column::make('invoice_id')
                 ->title('Mã đơn hàng')
@@ -154,9 +130,6 @@ class UserOrderDataTable extends DataTable
             Column::make('date')
                 ->title('Ngày đặt hàng')
                 ->width(150),
-            // Column::make('product_qty')
-            //     ->title('Số lượng sản phẩm')
-            //     ->width(150),
             Column::make('amount')
                 ->title('Số tiền')
                 ->width(150),

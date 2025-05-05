@@ -62,7 +62,7 @@
         <div class="col-md-12">
             <h3 class="mt-4">8. Quy Định Chung</h3>
             <p><strong>Thay Đổi Chính Sách:</strong> Chúng tôi có quyền sửa đổi chính sách này vào bất kỳ thời điểm nào mà không cần thông báo trước. Khách hàng nên thường xuyên kiểm tra để cập nhật những thay đổi.</p>
-            <p><strong>Hiệu Lực:</strong> Chính sách này có hiệu lực từ ngày [ngày tháng năm].</p>
+            <p><strong>Hiệu Lực:</strong> Chính sách này có hiệu lực từ ngày [06/01/2025].</p>
         </div>
     </div>
 </div>
