@@ -48,7 +48,7 @@ class BrandController extends Controller
         $brand->is_featured =  $request->is_featured;
         $brand->status =  $request->status;
         $brand->save();
-        toastr('Đã tạo thương hiệu thành công!', 'Thành công');
+        toastr('Đã tạo thương hiệu thành công!', 'Success');
         return redirect()->route('admin.brand.index');
     }
 
@@ -88,7 +88,7 @@ class BrandController extends Controller
         $brand->is_featured =  $request->is_featured;
         $brand->status =  $request->status;
         $brand->save();
-        toastr('Đã cập nhật thương hiệu thành công!', 'Thành công');
+        toastr('Đã cập nhật thương hiệu thành công!', 'success');
         return redirect()->route('admin.brand.edit', $brand->id);
     }
 
@@ -103,7 +103,7 @@ class BrandController extends Controller
         }
         $this->deleteImage($brand->logo);
         $brand->delete();
-        return response(['status' => 'Thành công', 'message' => 'Đã xóa thành công']);
+        return response(['status' => 'Thành công', 'message' => 'Đã xóa thương hiệu thành công!']);
     }
     public function changeStatus(Request $request)
     {
