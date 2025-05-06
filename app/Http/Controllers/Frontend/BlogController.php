@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Backend\BlogCategory;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
-use App\Models\BlogCategory;
 use App\Models\BlogComment;
 use Illuminate\Http\Request;
 
@@ -30,12 +30,8 @@ class BlogController extends Controller
     }
     public function comment(Request $request)
     {
-        // dd($request->all());
         $request->validate([
-
-            'comment' => ['required', 'max:1000'],
-            // 'blog_id' => ['required', 'exists:blogs,id']
-
+            'comment' => ['required', 'max:1000']
         ]);
 
         $comment = new BlogComment();
@@ -43,7 +39,7 @@ class BlogController extends Controller
         $comment->blog_id = $request->blog_id;
         $comment->comment = $request->comment;
         $comment->save();
-        toastr('Đã thêm bình luận !', 'success', 'success');
+        toastr('Bình luận thành cống', 'success', 'success');
 
         return redirect()->back();
     }

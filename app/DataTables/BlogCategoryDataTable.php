@@ -29,6 +29,7 @@ class BlogCategoryDataTable extends DataTable
 
                 return $editBtn . $deleteBtn;
             })
+
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
                     return '<label class="custom-switch mt-2">
