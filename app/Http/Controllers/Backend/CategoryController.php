@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $category->status = $request->status;
         $category->save();
 
-        toastr('Created Category Successfully', 'success');
+        toastr('Tạo danh mục thành công', 'success');
 
         return redirect()->route('admin.category.index');
     }
@@ -87,7 +87,7 @@ class CategoryController extends Controller
         $category->status = $request->status;
         $category->save();
 
-        toastr('Updated Successfully!', 'success');
+        toastr('Cập nhật thành công!', 'success');
 
         return redirect()->route('admin.category.index');
     }
@@ -102,7 +102,7 @@ class CategoryController extends Controller
 
         if ($subCategoryCount > 0) {
             return redirect()->route('admin.category.index')
-                             ->with('error', 'This category contains sub-items. You have to delete the sub items first!');
+                             ->with('error', 'Danh mục này có danh mục phụ, bạn phải xóa danh mục phụ trước!');
         }
 
         $category->delete();
@@ -120,6 +120,6 @@ class CategoryController extends Controller
 
         return response(['message' => 'Trạng thái đã được cập nhật!']);
     }
-  
+
 
 }

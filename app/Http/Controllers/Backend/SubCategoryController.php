@@ -48,7 +48,7 @@ class SubCategoryController extends Controller
         $subCategory->status = $request->status;
         $subCategory->save();
 
-        toastr('Created Successfully!', 'success');
+        toastr('Tạo danh mục phụ thành công!', 'success');
 
         return redirect()->route('admin.sub-category.index');
     }
@@ -91,7 +91,7 @@ class SubCategoryController extends Controller
     $subCategory->status = (int) $request->status;
     $subCategory->save();
 
-    toastr('Updated Successfully!', 'success');
+    toastr('Cập nhật thành công!', 'success');
 
     return redirect()->route('admin.sub-category.index');
 }
@@ -105,7 +105,7 @@ class SubCategoryController extends Controller
         $subCategory = SubCategory::findOrFail($id);
         $subCategory->delete();
 
-        return redirect()->route('admin.sub-category.index')->with('success', 'Deleted Successfully');
+        return redirect()->route('admin.sub-category.index')->with('success', 'Xóa danh mục phụ thành công!');
     }
 
 
