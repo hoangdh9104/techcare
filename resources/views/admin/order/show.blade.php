@@ -114,11 +114,11 @@
                                             </td>
                                             {{-- <td>{{ $product->vendor->shop_name }}</td> --}}
                                             <td class="text-center">
-                                                {{ Number::format($product->unit_price, locale: 'de') }}{{ $settings->currency_icon }}
+                                                {{ number_format($product->unit_price, 0, ',', '.') }}{{ $settings->currency_icon }}
                                             </td>
                                             <td class="text-center">{{ $product->qty }}</td>
                                             <td class="text-right">
-                                                {{ Number::format($product->unit_price * $product->qty + $product->variant_total, locale: 'de') }}{{ $settings->currency_icon }}
+                                                {{ number_format($product->unit_price * $product->qty + $product->variant_total, 0, ',', '.') }}{{ $settings->currency_icon }}
                                             </td>
                                         </tr>
                                     @endforeach

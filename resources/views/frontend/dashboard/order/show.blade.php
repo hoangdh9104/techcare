@@ -205,6 +205,7 @@
                                                         @endif
                                                     </span>
                                                     <strong>-{{ $discount ?? 0 }}{{ $settings->currency_icon }}</strong>
+
                                                 </div>
 
                                                 <div class="d-flex justify-content-between mb-2">

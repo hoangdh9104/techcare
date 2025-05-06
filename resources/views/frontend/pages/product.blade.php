@@ -195,7 +195,7 @@
                                                         {{-- <span>({{count($product->reviews)}} review)</span> --}}
                                                     </p>
                                                     <a class="wsus__pro_name"
-                                                        href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name) }}</a>
+                                                        href="{{ route('product-detail', $product->slug) }}">{{limitText( $product->name , 20)}}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
                                                             {{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
