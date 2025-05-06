@@ -54,10 +54,7 @@
             name: "{{auth()->user()->name}}",
             image: "{{ asset(auth()->user()->image)}}",
         }
-        const PUSHER = {
-            key: "{{ $pusherSetting->pusher_key }}",
-            cluster: "{{ $pusherSetting->pusher_cluster }}",
-        }
+        
     </script>
 
 

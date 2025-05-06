@@ -105,13 +105,14 @@ class ShippingRuleDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+
             Column::make('id')->title('STT'),
-            Column::make('name')->title('Tên quy tắc'),
+            Column::make('name')->title('Tên'),
             Column::make('type')->title('Loại'),
-            Column::make('min_cost')->title('Giá trị đơn hàng tối thiểu'),
-            Column::make('cost')->title('Phí vận chuyển'),
+            Column::make('min_cost')->title('Giá trị tối thiểu'),
+            Column::make('cost')->title('Giá trị'),
             Column::make('status')->title('Trạng thái'),
-            Column::computed('action')
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(150)

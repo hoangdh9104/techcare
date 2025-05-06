@@ -117,33 +117,19 @@ class UserOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id')->title('STT'),
+            Column::make('invoice_id')->title('Id hóa đơn'),
+            Column::make('customer')->title('Khách hàng'),
+            Column::make('date')->title('Ngày đặt hàng'),
+            Column::make('product_qty')->title('Số lượng sản phẩm'),
+            Column::make('amount')->title('Số tiền'),
+            Column::make('order_status')->title('Trạng thái đơn hàng'),
+            Column::make('payment_status')->title('Trạng thái thanh toán'),
 
-            Column::make('id')
-                ->title('STT')
-                ->width(10), // Set fixed width for better alignment
-            Column::make('invoice_id')
-                ->title('Mã đơn hàng')
-                ->width(150), // Set width for equal spacing
-            Column::make('customer')
-                ->title('Khách hàng')
-                ->width(200), // Adjust width for balance
-            Column::make('date')
-                ->title('Ngày đặt hàng')
-                ->width(150),
-            Column::make('amount')
-                ->title('Số tiền')
-                ->width(150),
-            Column::make('order_status')
-                ->title('Trạng thái đơn hàng')
-                ->width(150),
-            Column::make('payment_status')
-                ->title('Trạng thái thanh toán')
-                ->width(150),
-            Column::make('payment_method')
-                ->title('Phương thức thanh toán')
-                ->width(150),
-            Column::computed('action')
+            Column::make('payment_method')->title('Phương thức thanh toán'),
 
+
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(250) // Adjust width of action column

@@ -115,21 +115,19 @@ class CanceledOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-
-
-            Column::make('id')->title('Mã đơn'),
-            Column::make('invocie_id')->title('Mã hóa đơn'),
+            Column::make('id')->title('STT'),
+            Column::make('invocie_id')->title('Mã đơn hàng'),
             Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt'),
+            Column::make('date')->title('Ngày đặt hàng'),
             Column::make('product_qty')->title('Số lượng sản phẩm'),
-            Column::make('amount')->title('Tổng tiền'),
+            Column::make('amount')->title('Số tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),
             Column::make('payment_status')->title('Trạng thái thanh toán'),
-            Column::make('payment_method')->title('Phương thức thanh toán'),
-            Column::computed('action')
-                ->title('Thao tác')
 
+            Column::make('payment_method')->title('Phương thức thanh toán'),
+
+
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

@@ -57,35 +57,39 @@
                     </div>
                     <div class="col-xl-5 col-lg-5">
                         <div class="tab-content" id="v-pills-tabContent" id="sticky_sidebar">
-                            @if ($momoSetting && $momoSetting->status == 1  && !$isOver50Million)
-                                <div class="tab-pane fade show active" id="v-pills-momo" role="tabpanel"
-                                    aria-labelledby="v-pills-profile-tab">
-                                    <div class="row">
-                                        <div class="col-xl-12 m-auto">
-                                            <div class="wsus__payment_area">
-                                                <a class="nav-link common_btn text-center"
-                                                    href="{{ route('user.momo.payment') }}">Thanh toán Momo</a>
-                                            </div>
+                            <div class="tab-pane fade show active" id="v-pills-paypal" role="tabpanel"
+                                aria-labelledby="v-pills-home-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+                                            <a class="nav-link common_btn text-center"
+                                                href="{{ route('user.paypal.payment') }}">Thanh toán bằng</a>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                            @if ($vnpaySetting && $vnpaySetting->status == 1)
-                                <div class="tab-pane fade" id="v-pills-vnpay" role="tabpanel"
-                                    aria-labelledby="v-pills-vnpay-tab">
-                                    <div class="row">
-                                        <div class="col-xl-12 m-auto">
-                                            <div class="wsus__payment_area">
-                                                <a class="nav-link common_btn text-center"
-                                                    href="{{ route('user.vnpay.payment') }}">Thanh toán VNPay</a>
-                                            </div>
+                            </div>
+                            <div class="tab-pane fade show" id="v-pills-stripe" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+                                            <button class="nav-link common_btn">Thanh toán bằng Stripe</button>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                            @if ($codSetting && $codSetting->status == 1 && !$isOver30Million)
-                                @include('frontend.pages.payment-gateway.cod')
-                            @endif
+                            </div>
+                            <div class="tab-pane fade show" id="v-pills-momo" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+                                            <a class="nav-link common_btn text-center"
+                                                href="{{ route('user.momo.payment') }}">Thanh toán bằng Momo</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @include('frontend.pages.payment-gateway.cod')
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4">

@@ -156,13 +156,12 @@ class ProductDataTable extends DataTable
 //     {
         return [
             Column::make('id')->title('STT'),
-            Column::make('image')->title('Hình ảnh'),
+            Column::make('image')->title('Hình ảnh')->width(100),
             Column::make('name')->title('Tên sản phẩm'),
-            // Column::make('price_display')->title('Giá')->addClass('text-right'),
-            Column::make('has_variants')->title('Biến thể')->width(100)->addClass('text-center'),
-            Column::make('type')->width(150)->title('Loại'),
+            Column::make('price')->title('Giá'),
+            Column::make('type')->title('Loại')->width(150),
             Column::make('status')->title('Trạng thái'),
-            Column::computed('action')
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(200)

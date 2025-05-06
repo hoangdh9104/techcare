@@ -98,7 +98,6 @@
                                             <div class="wsus__invoice_description">
                                                 <div class="table-responsive">
                                                     <table class="table">
-
                                                         @foreach ($order->orderProducts as $product)
                                                             @php
                                                                 $variants = json_decode($product->variants);

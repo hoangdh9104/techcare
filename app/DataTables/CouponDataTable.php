@@ -87,7 +87,6 @@ class CouponDataTable extends DataTable
     {
         return [
             Column::make('id')->title('STT'),
-            Column::make('code')->title('Code'),
             Column::make('name')->title('Tên mã giảm giá'),
             Column::make('discount_type')->title('Loại mã giảm giá'),
             Column::make('discount')->title('Giá trị mã giảm giá'),

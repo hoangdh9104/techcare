@@ -89,9 +89,7 @@ class ProductVariantDataTable extends DataTable
             Column::make('id')->title('STT')->width(80),
             Column::make('name')->title('Tên thuộc tính'),
             Column::make('status')->title('Trạng thái'),
-            Column::computed('action')
-                ->title('Hành động')
-
+            Column::computed('action')->title('Hành động')
                 ->exportable(false)
                 ->printable(false)
                 ->width(400)
