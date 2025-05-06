@@ -27,7 +27,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="wsus__pro_page_bammer" style="width: 1296px; height: 150px; overflow: hidden;">
+                    <div class="wsus__pro_page_bammer" style="width: 1296px; height: 269px; overflow: hidden;">
                         <img src="{{ asset('frontend/images/pro_banner_1.jpg') }}" alt="banner" class="img-fluid w-100 h-100 object-fit-cover">
                         <div class="wsus__pro_page_bammer_text position-absolute top-0 start-0 w-100 h-100">
                             @if (@$productpage_banner_section->banner_one->status == 1)
