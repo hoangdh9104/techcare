@@ -111,9 +111,9 @@
                     <div class="mt-3">
                         <div class="card-title">Tổng doanh thu</div>
                         <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">  {{ $yearEarnings }}{{ $settings->currency_icon }}</div>
-                            
-                          
+                            <div class="card-value"> {{ $yearEarnings }}{{ $settings->currency_icon }}</div>
+
+
                         </div>
                     </div>
                 </div>
@@ -131,13 +131,13 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                <a href="{{ route('admin.order.index') }}">
-                        <div class="card-title">Tổng đơn hàng</div>
-                        <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">{{ $totaltOrder }}</div>
-                            
-                            
-                        </div>
+                        <a href="{{ route('admin.order.index') }}">
+                            <div class="card-title">Tổng đơn hàng</div>
+                            <div class="d-flex justify-content-between align-items-center mt-1">
+                                <div class="card-value">{{ $totaltOrder }}</div>
+
+
+                            </div>
                     </div>
                 </div> </a>
             </div>
@@ -156,8 +156,8 @@
                     <div class="mt-3">
                         <div class="card-title">Tổng đơn hàng đã bán</div>
                         <div class="d-flex justify-content-between align-items-center mt-1">
-                            <div class="card-value">  {{ $totalCompleteOrders }}</div>
-                           
+                            <div class="card-value"> {{ $totalCompleteOrders }}</div>
+
                         </div>
                     </div>
                 </div>
@@ -393,7 +393,7 @@
                 .then(data => {
                     const statusLabels = {
                         'pending': 'Chờ xác nhận',
-                        'processed_and_ready_to_ship': 'Đang xử lý',
+                        'processed_and_ready_to_ship': 'Đã xác nhận',
                         'dropped_off': 'Đang đóng gói',
                         'shipped': 'Đơn vị vận chuyển lấy hàng',
                         'delivered': 'Đã giao hàng',

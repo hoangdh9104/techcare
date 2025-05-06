@@ -33,8 +33,8 @@ class OrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                
-                return  number_format($query->amount, 0, ',', '.') . $query->currency_icon ;
+
+                return  number_format($query->amount, 0, ',', '.') . $query->currency_icon;
             })
             ->addColumn('date', function ($query) {
                 return \Carbon\Carbon::parse($query->created_at)->locale('vi')->translatedFormat('d-m-Y');
@@ -55,7 +55,7 @@ class OrderDataTable extends DataTable
                     case 'pending':
                         return "<span class='badge bg-warning'>Chờ xử lý</span>";
                     case 'processed_and_ready_to_ship':
-                        return "<span class='badge bg-info'>Đã xử lý - Sẵn sàng giao</span>";
+                        return "<span class='badge bg-info'>Đã xác nhận</span>";
                     case 'dropped_off':
                         return "<span class='badge bg-info'>Đã đã gói</span>";
                     case 'shipped':
@@ -84,7 +84,7 @@ class OrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery()->with(['user', 'orderProducts']);
+        return $model->newQuery()->with(['user', 'orderProducts'])->orderBy('created_at', 'desc');;
     }
 
     /**
@@ -97,7 +97,7 @@ class OrderDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(0)
+            ->orderBy(1, 'desc')
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -115,14 +115,11 @@ class OrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-
-
-            Column::make('id')->title('Mã đơn'),
+            // Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
-            Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt'),
-            Column::make('product_qty')->title('Số lượng sản phẩm'),
+            Column::make('customer')->title('Khách hàng')->addClass('text-center'),
+            // Column::make('date')->title('Ngày đặt'),
+            Column::make('product_qty')->title('Số lượng sản phẩm')->addClass('text-center'),
             Column::make('amount')->title('Tổng tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),
             Column::make('payment_status')->title('Trạng thái thanh toán'),
@@ -132,7 +129,7 @@ class OrderDataTable extends DataTable
 
                 ->exportable(false)
                 ->printable(false)
-                ->width(150)
+                ->width(100)
                 ->addClass('text-center'),
         ];
     }

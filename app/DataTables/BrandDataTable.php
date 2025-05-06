@@ -24,9 +24,9 @@ class BrandDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $editBtn = "<a href='" . route('admin.brand.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.brand.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                // $deleteBtn = "<a href='" . route('admin.brand.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
-                return $editBtn . $deleteBtn;
+                return $editBtn;
             })
             ->addColumn('logo', function ($query) {
                 return  "<img width='100px' src='" . asset($query->logo) . "'></img>";

@@ -20,35 +20,35 @@ class ChildCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query) {
-                $editBtn = "<a href='".route('admin.child-category.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+            ->addColumn('action', function ($query) {
+                $editBtn = "<a href='" . route('admin.child-category.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
 
                 // Sử dụng form truyền thống để xóa với CSRF token, method DELETE và confirm
-                $deleteForm = "<form action='".route('admin.child-category.destroy', $query->id)."' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Are you sure you want to delete this child category?\");'>";
-                $deleteForm .= csrf_field();
-                $deleteForm .= method_field('DELETE');
-                $deleteForm .= "<button type='submit' class='btn btn-danger ml-2'><i class='far fa-trash-alt'></i></button>";
-                $deleteForm .= "</form>";
+                // $deleteForm = "<form action='".route('admin.child-category.destroy', $query->id)."' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Are you sure you want to delete this child category?\");'>";
+                // $deleteForm .= csrf_field();
+                // $deleteForm .= method_field('DELETE');
+                // $deleteForm .= "<button type='submit' class='btn btn-danger ml-2'><i class='far fa-trash-alt'></i></button>";
+                // $deleteForm .= "</form>";
 
-                return $editBtn . $deleteForm;
+                return $editBtn;
             })
-            ->addColumn('status', function($query) {
+            ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
                     return '<label class="custom-switch mt-2">
-                        <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <input type="checkbox" checked name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
                         <span class="custom-switch-indicator"></span>
                     </label>';
                 } else {
                     return '<label class="custom-switch mt-2">
-                        <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="custom-switch-input change-status">
                         <span class="custom-switch-indicator"></span>
                     </label>';
                 }
             })
-            ->addColumn('category', function($query) {
+            ->addColumn('category', function ($query) {
                 return $query->category ? $query->category->name : 'N/A';
             })
-            ->addColumn('sub_category', function($query) {
+            ->addColumn('sub_category', function ($query) {
                 return $query->subCategory ? $query->subCategory->name : 'N/A';
             })
             ->rawColumns(['status', 'action'])
@@ -69,19 +69,19 @@ class ChildCategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('childcategory-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('childcategory-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**

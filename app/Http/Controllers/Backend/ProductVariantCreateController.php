@@ -166,14 +166,19 @@ class ProductVariantCreateController extends Controller
         // ✅ Tính tổng số lượng của các biến thể đã tồn tại
         $totalVariantQty = ProductVariantCombination::where('product_id', $product->id)->sum('quantity');
         // dd($totalVariantQty);
-        // ✅ Kiểm tra xem tổng số lượng sau khi thêm biến thể mới có vượt tồn kho không
-        $x = $product->qty - $totalVariantQty;
-        if ($totalVariantQty + $validatedData['quantity'] > $product->qty) {
-            $available = $product->qty - $totalVariantQty;
+        // ✅ Lấy số lượng cũ của biến thể đang chỉnh sửa
+        $currentVariantQty = $productCombination->quantity;
+
+        // ✅ Tính lại tổng tồn kho sau khi cập nhật biến thể
+        $newTotalVariantQty = $totalVariantQty - $currentVariantQty + $validatedData['quantity'];
+
+        if ($newTotalVariantQty > $product->qty) {
+            $available = $product->qty - ($totalVariantQty);
             return redirect()->route('admin.variants.edit', $combinationId)->withErrors([
-                'quantity' => "Tổng tồn kho của sản phẩm còn dư là {$x}. Chỉ có thể thêm tối đa {$available} biến thể sản phẩm cho sản phẩm này."
+                'quantity' => "Tổng tồn kho cho phép là {$product->qty}. Bạn chỉ có thể nhập tối đa {$available} cho biến thể này."
             ])->withInput();
         }
+
         $imagePath = $this->updateImage($request, 'image', 'uploads', $productCombination->image);
         $image = empty(!$imagePath) ? $imagePath : $productCombination->image;
 

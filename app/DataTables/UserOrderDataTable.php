@@ -26,7 +26,7 @@ class UserOrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('user.orders.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-                
+
                 return $showBtn;
             })
             ->addColumn('invoice_id', function ($query) {
@@ -36,8 +36,8 @@ class UserOrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                
-                return number_format($query->amount, 0, ',', '.')  . $query->currency_icon ;
+
+                return number_format($query->amount, 0, ',', '.')  . $query->currency_icon;
             })
             ->addColumn('date', function ($query) {
                 return \Carbon\Carbon::parse($query->created_at)->format('d/m/Y');
@@ -86,7 +86,7 @@ class UserOrderDataTable extends DataTable
      * Get the query source of dataTable.
      */ public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery()->where('user_id', Auth::id());
+        return $model->newQuery()->where('user_id', Auth::id())->orderBy('created_at', 'desc');
     }
 
     /**
@@ -99,7 +99,7 @@ class UserOrderDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(0)
+            ->orderBy(1, 'desc') // 1 = Ngày đặt hàng
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -118,15 +118,15 @@ class UserOrderDataTable extends DataTable
     {
         return [
 
-            Column::make('id')
-                ->title('STT')
-                ->width(10), // Set fixed width for better alignment
+            // Column::make('id')
+            //     ->title('STT')
+            //     ->width(10), // Set fixed width for better alignment
             Column::make('invoice_id')
                 ->title('Mã đơn hàng')
                 ->width(150), // Set width for equal spacing
-            Column::make('customer')
-                ->title('Khách hàng')
-                ->width(200), // Adjust width for balance
+            // Column::make('customer')
+            //     ->title('Khách hàng')
+            //     ->width(200), // Adjust width for balance
             Column::make('date')
                 ->title('Ngày đặt hàng')
                 ->width(150),
