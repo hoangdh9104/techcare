@@ -68,7 +68,7 @@
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
                                                     {{ number_format($item->price * $item->qty, 0, ',', '.') . $settings->currency_icon }}
-                                                    
+
                                                 </h6>
                                             </td>
 
@@ -104,7 +104,7 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
-                        <p>Tạm tính: <span  
+                        <p>Tạm tính: <span
                                 id="sub_total">{{  number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                         </p>
                         <p>Phiếu giảm giá(-): <span
@@ -131,38 +131,12 @@
 
         </div>
     </section>
-    <section id="wsus__single_banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content">
-                        @if ($cartpage_banner_section->banner_one->status == 1)
-                            <a href="{{ $cartpage_banner_section->banner_one->banner_url }}">
-                                <img class="img-gluid"
-                                    src="{{ asset($cartpage_banner_section->banner_one->banner_image) }}" alt="">
-                            </a>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="wsus__single_banner_content single_banner_2">
-                        @if ($cartpage_banner_section->banner_two->status == 1)
-                            <a href="{{ $cartpage_banner_section->banner_two->banner_url }}">
-                                <img class="img-gluid"
-                                    src="{{ asset($cartpage_banner_section->banner_two->banner_image) }}" alt="">
-                            </a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <section id="wsus__available_coupons" class="mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <h4 class="mb-4 text-center text-uppercase"
-                        style="font-weight: bold; color: #ff5722; background: linear-gradient(90deg, #ff7e5f, #feb47b); 
+                        style="font-weight: bold; color: #0088CC; background: linear-gradient(90deg, #0088CC, #0088CC);
                             padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                         <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i>
                         <span style="color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Danh sách mã giảm giá</span>
@@ -171,7 +145,7 @@
                         @if ($coupons->isNotEmpty())
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
-                                    <thead class="bg-primary text-white">
+                                    <thead style="background-color: #0088CC;" class="text-white">
                                         <tr>
                                             <th>Mã</th>
                                             <th>Tên mã giảm giá</th>
@@ -209,6 +183,33 @@
             </div>
         </div>
     </section>
+    <section id="wsus__single_banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="wsus__single_banner_content">
+                        @if ($cartpage_banner_section->banner_one->status == 1)
+                            <a href="{{ $cartpage_banner_section->banner_one->banner_url }}">
+                                <img class="img-gluid"
+                                    src="{{ asset($cartpage_banner_section->banner_one->banner_image) }}" alt="">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="wsus__single_banner_content single_banner_2">
+                        @if ($cartpage_banner_section->banner_two->status == 1)
+                            <a href="{{ $cartpage_banner_section->banner_two->banner_url }}">
+                                <img class="img-gluid"
+                                    src="{{ asset($cartpage_banner_section->banner_two->banner_image) }}" alt="">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 @endsection
 @push('scripts')
     <script>
