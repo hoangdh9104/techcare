@@ -1,12 +1,10 @@
     @extends('frontend.layouts.master')
 
-{{-- @section('title')
+    {{-- @section('title')
 {{$setting->site_name}}
 @endsection --}}
 
 @section('content')
-
-
 <section id="wsus__breadcrumb">
     <div class="wsus_breadcrumb_overlay">
         <div class="container">
@@ -19,13 +17,10 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!--============================
-    BREADCRUMB END
-==============================-->
-
+        </section>
+        <!--============================
+        BREADCRUMB END
+    ==============================-->
 
 <!--============================
     BLOGS PAGE START
@@ -45,24 +40,20 @@
                             <a href="{{route('blog-details', $blog->slug)}}">{!!limitText($blog->title, 45)!!}</a>
                             <p class="date">{{date('M D Y', strtotime($blog->created_at))}}</p>
                         </div>
+                    @endforeach
+
+
+                </div>
+                <div id="pagination">
+                    <div class="mt-5">
+                        @if ($blogs->hasPages())
+                            {{ $blogs->withQueryString()->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
-            @endforeach
-
-
-        </div>
-        <div id="pagination">
-            <div class="mt-5">
-                @if ($blogs->hasPages())
-                    {{$blogs->withQueryString()->links()}}
-                @endif
-            </div>
-        </div>
-    </div>
-</section>
-<!--============================
-    BLOGS PAGE END
-==============================-->
-
-@endsection
+        </section>
+        <!--============================
+        BLOGS PAGE END
+    ==============================-->
+    @endsection

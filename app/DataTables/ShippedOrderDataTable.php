@@ -33,7 +33,7 @@ class ShippedOrderDataTable extends DataTable
                 return $query->user->name;
             })
             ->addColumn('amount', function ($query) {
-                return $query->currency_icon . $query->amount;
+                return  number_format($query->amount, 0, ',', '.') . $query->currency_icon;
             })
             ->addColumn('date', function ($query) {
                 return date('d-M-Y', strtotime($query->created_at));
@@ -52,7 +52,7 @@ class ShippedOrderDataTable extends DataTable
                     case 'pending':
                         return "<span class='badge bg-warning'>Chờ xử lý</span>";
                     case 'processed_and_ready_to_ship':
-                        return "<span class='badge bg-info'>Đã xử lý - Sẵn sàng giao</span>";
+                        return "<span class='badge bg-info'>Đã xác nhận</span>";
                     case 'dropped_off':
                         return "<span class='badge bg-info'>Đã đóng gói</span>";
                     case 'shipped':
@@ -79,7 +79,7 @@ class ShippedOrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery()->with(['user', 'orderProducts']);
+        return $model->with(['user', 'orderProducts'])->where('order_status', 'shipped')->newQuery();
     }
 
     /**
@@ -110,24 +110,21 @@ class ShippedOrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make('id')->title('Mã đơn'),
+            // Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
-            Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt'),
-
-            Column::make('product_qty')->title('Số lượng sản phẩm'),
+            Column::make('customer')->title('Khách hàng')->addClass('text-center'),
+            // Column::make('date')->title('Ngày đặt'),
+            Column::make('product_qty')->title('Số lượng sản phẩm')->addClass('text-center'),
             Column::make('amount')->title('Tổng tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),
             Column::make('payment_status')->title('Trạng thái thanh toán'),
-
             Column::make('payment_method')->title('Phương thức thanh toán'),
             Column::computed('action')
                 ->title('Thao tác')
 
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(100)
                 ->addClass('text-center'),
         ];
     }

@@ -26,11 +26,11 @@
                     <a class="title" href="#">{{ limitText($product->name, 150) }}</a>
                     <p class="wsus__stock_area"><span class="in_stock">Còn hàng</span></p>
                     @if (checkDiscount($product))
-                        <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
-                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                        <h4>{{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
+                            <del> {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
                         </h4>
                     @else
-                        <h4>{{ $settings->currency_icon }}{{ $product->price }}</h4>
+                        <h4> {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</h4>
                     @endif
                     <p class="review">
                         @php

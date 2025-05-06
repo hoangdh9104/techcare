@@ -41,18 +41,19 @@
                         <span>({{ $product->reviews_count }} đánh giá)</span>
                     </p>
                     <a class="wsus__pro_name"
-                        href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 52) }}</a>
+                        href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 32) }}</a>
                     @if (checkDiscount($product))
                         <p class="wsus__price">
                             {{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
-                            <del> {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
+                            <del>
+                                {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
                         </p>
                     @else
                         <p class="wsus__price">
                             {{ number_format($product->price, 0, ',', '.') }}{{ $settings->currency_icon }}</p>
                     @endif
                 </div>
-               
+
             </div>
         </div>
     @endif

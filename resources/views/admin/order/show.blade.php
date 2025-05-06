@@ -31,8 +31,9 @@
                                         <b>Email:</b> {{ $address->email }}<br>
                                         <b>Số điện thoại:</b> {{ $address->phone }}<br>
                                         <b>Địa chỉ:</b> {{ $address->address }},<br>
-                                        {{ $address->city }}, {{ $address->state }}, {{ $address->zip }}<br>
-                                        {{ $address->country }}
+                                        {{ $address->city }}, {{ $address->state }}, {{ $address->country }}
+                                        <br>{{ $address->zip }}
+
                                     </address>
                                 </div>
                                 <div class="col-md-6 text-md-right">
@@ -204,10 +205,14 @@
 
                                                 if (@$coupon) {
                                                     if (@$coupon->discount_type === 'percent') {
-                                                        $discount =  number_format(($coupon->discount / 100) * $order->sub_total, 0, ',', '.') ;
+                                                        $discount = number_format(
+                                                            ($coupon->discount / 100) * $order->sub_total,
+                                                            0,
+                                                            ',',
+                                                            '.',
+                                                        );
                                                     } elseif (@$coupon->discount_type === 'amount') {
                                                         $discount = number_format($coupon->discount, 0, ',', '.');
-                                                        
                                                     }
                                                 }
                                             @endphp
