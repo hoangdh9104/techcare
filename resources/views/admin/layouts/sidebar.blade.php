@@ -50,7 +50,7 @@
                             href="{{ route('admin.terms-and-conditions.index') }}">Chính sách khi mua hàng</a></li>
 
                     <li class="{{ setActive(['admin.home-page-setting']) }}"><a class="nav-link"
-                            href="{{ route('admin.home-page-setting') }}">Danh mục</a></li>
+                            href="{{ route('admin.home-page-setting') }}">Cấu hình danh mục</a></li>
 
 
                 </ul>

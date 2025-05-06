@@ -43,7 +43,7 @@ class FlashSaleController extends Controller
             'status' => ['required', Rule::in(0, 1)],
         ], [
             'product.required' => 'Vui lòng chọn một sản phẩm.',
-            'product.unique' => 'Sản phẩm đang được bán với giá đặc biệt.',
+            'product.unique' => 'Sản phẩm đã tồn tại trong chương trình khuyến mãi đặc biệt.',
             'show_at_home.required' => 'Vui lòng chọn trạng thái hiển thị trên trang chủ.',
             'status.required' => 'Vui lòng chọn trạng thái của sản phẩm.',
         ]);

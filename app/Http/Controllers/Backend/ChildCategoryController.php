@@ -62,7 +62,7 @@ class ChildCategoryController extends Controller
         $childCategory->status          = $request->status;
         $childCategory->save();
 
-        toastr('Created Successfully!', 'success');
+        toastr('Tạo danh mục con thành công!', 'success');
         return redirect()->route('admin.child-category.index');
     }
 
@@ -113,12 +113,12 @@ class ChildCategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {   
+    {
 
         $childCategory = ChildCategory::findOrFail($id);
         if(Product::where('child_category_id',$childCategory->id)->count()>0){
             return response(['status' => 'error', 'message' => 'Danh mục này có có chứa quan hệ bạn không thể xóa nó !']);
-        } 
+        }
         $homeSetting = HomePageSetting::all();
         foreach($homeSetting as $item){
             $array = json_decode($item->value,true);
@@ -127,11 +127,11 @@ class ChildCategoryController extends Controller
             return response(['status' => 'error', 'message' => 'Danh mục này có có chứa quan hệ bạn không thể xóa nó !']);
 
             }
-        }       
+        }
         $childCategory->delete();
 
         return redirect()->route('admin.child-category.index')
-            ->with('success', 'Deleted Successfully');
+            ->with('success', 'Xóa danh mục con thành công!');
     }
 
 

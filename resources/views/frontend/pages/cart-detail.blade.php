@@ -105,7 +105,7 @@
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Tổng </h6>
                         <p>Tạm tính: <span
-                                id="sub_total">{{ number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
+                                id="sub_total">{{  number_format(getCartTotal(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
                         </p>
                         <p>Phiếu giảm giá(-): <span
                                 id="discount">{{ number_format(getCartDiscount(), 0, ',', '.') }}{{ $settings->currency_icon }}</span>
@@ -136,7 +136,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="mb-4 text-center text-uppercase"
-                        style="font-weight: bold; color: #ff5722; background: linear-gradient(90deg, #ff7e5f, #feb47b);
+                        style="font-weight: bold; color: #0088CC; background: linear-gradient(90deg, #0088CC, #0088CC);
                             padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                         <i class="fas fa-tags" style="margin-right: 10px; color: #fff;"></i>
                         <span style="color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Danh sách mã giảm giá</span>
@@ -145,7 +145,7 @@
                         @if ($coupons->isNotEmpty())
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
-                                    <thead class="bg-primary text-white">
+                                    <thead style="background-color: #0088CC;" class="text-white">
                                         <tr>
                                             <th>Mã</th>
                                             <th>Tên mã giảm giá</th>

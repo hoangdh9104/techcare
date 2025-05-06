@@ -117,7 +117,7 @@
                                             @endfor
                                         </p>
                                         @if (checkDiscount($item))
-                                       
+
                                             <p class="wsus__tk">{{ number_format($item->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
                                                 <del> {{ number_format($item->price, 0, ',', '.') }}{{ $settings->currency_icon }}</del>
                                             </p>

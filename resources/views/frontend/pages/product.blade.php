@@ -27,18 +27,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="wsus__pro_page_bammer">
-                        <img src="{{ asset('frontend/images/pro_banner_1.jpg') }}" alt="banner" class="img-fluid w-100">
-                        <div class="wsus__pro_page_bammer_text">
+                    <div class="wsus__pro_page_bammer" style="width: 1296px; height: 150px; overflow: hidden;">
+                        <img src="{{ asset('frontend/images/pro_banner_1.jpg') }}" alt="banner" class="img-fluid w-100 h-100 object-fit-cover">
+                        <div class="wsus__pro_page_bammer_text position-absolute top-0 start-0 w-100 h-100">
                             @if (@$productpage_banner_section->banner_one->status == 1)
                                 <a href="{{ @$productpage_banner_section->banner_one->banner_url }}">
-                                    <img class="img-gluid"
+                                    <img
                                         src="{{ asset(@$productpage_banner_section->banner_one->banner_image) }}"
-                                        alt="">
+                                        alt=""
+                                        class="img-fluid w-100 h-100 object-fit-cover"
+                                        style="object-fit: cover;">
                                 </a>
                             @endif
                         </div>
                     </div>
+
                 </div>
                 <div class="col-xl-3 col-lg-4">
                     <div class="wsus__sidebar_filter">
@@ -259,9 +262,8 @@
                                                     <a class="wsus__pro_name" href="#">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price">
-
-                                                            {{ number_format($product->offer_price, 0, ',', '.') }}{{ $settings->currency_icon }}
-                                                            <del>{{ number_format($product->price, 0, ',', '.') }}
+                                                            {{ number_format($product->offer_price, 0, ',', '.')  }}{{ $settings->currency_icon }}
+                                                            <del>{{ number_format($product->price, 0, ',', '.')  }}
                                                                 {{ $settings->currency_icon }}</del>
                                                         </p>
                                                     @else
