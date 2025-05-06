@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = [
 
+        'warranty_code', // Mã bảo hành
+        'warranty_duration',
+        'warranty_expiration_date', // Ngày hết hạn bảo hành
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -48,21 +53,16 @@ class Product extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
-    protected $fillable = [
 
-        'warranty_code', // Mã bảo hành
-        'warranty_duration',
-        'warranty_expiration_date', // Ngày hết hạn bảo hành
-    ];
     protected static function boot()
-{
-    parent::boot();
+    {
+        parent::boot();
 
-    // Tự động áp dụng điều kiện status=1 cho mọi query ngoài admin
-    static::addGlobalScope('active', function($builder) {
-        if (!request()->is('admin/*')) {
-            $builder->where('status', 1);
-        }
-    });
-}
+        // Tự động áp dụng điều kiện status=1 cho mọi query ngoài admin
+        static::addGlobalScope('active', function ($builder) {
+            if (!request()->is('admin/*')) {
+                $builder->where('status', 1);
+            }
+        });
+    }
 }

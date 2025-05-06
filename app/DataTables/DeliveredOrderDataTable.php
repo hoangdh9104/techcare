@@ -25,10 +25,10 @@ class DeliveredOrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $showBtn = "<a href='" . route('admin.order.show', $query->id) . "' class='btn btn-primary'><i class='far fa-eye'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 mr-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+                // $deleteBtn = "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 mr-2 delete-item'><i class='far fa-trash-alt'></i></a>";
 
 
-                return $showBtn . $deleteBtn;
+                return $showBtn;
             })
             ->addColumn('customer', function ($query) {
                 return $query->user->name;
@@ -112,22 +112,20 @@ class DeliveredOrderDataTable extends DataTable
     {
         return [
 
-
-            Column::make('id')->title('Mã đơn'),
+            // Column::make('id')->title('Mã đơn'),
             Column::make('invocie_id')->title('Mã hóa đơn'),
-            Column::make('customer')->title('Khách hàng'),
-            Column::make('date')->title('Ngày đặt'),
-            Column::make('product_qty')->title('Số lượng sản phẩm'),
+            Column::make('customer')->title('Khách hàng')->addClass('text-center'),
+            // Column::make('date')->title('Ngày đặt'),
+            Column::make('product_qty')->title('Số lượng sản phẩm')->addClass('text-center'),
             Column::make('amount')->title('Tổng tiền'),
             Column::make('order_status')->title('Trạng thái đơn hàng'),
             Column::make('payment_status')->title('Trạng thái thanh toán'),
             Column::make('payment_method')->title('Phương thức thanh toán'),
             Column::computed('action')
                 ->title('Thao tác')
-
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(100)
                 ->addClass('text-center'),
         ];
     }

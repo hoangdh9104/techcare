@@ -19,13 +19,13 @@ class CategoryDataTable extends DataTable
                 $editBtn = "<a href='" . route('admin.category.edit', $query->id) . "' class='btn btn-primary'><i class='far fa-edit'></i></a>";
 
                 // Form xóa truyền thống với CSRF, method DELETE và confirm
-                $deleteForm = "<form action='" . route('admin.category.destroy', $query->id) . "' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Are you sure you want to delete this category?\");'>";
-                $deleteForm .= csrf_field();
-                $deleteForm .= method_field('DELETE');
-                $deleteForm .= "<button type='submit' class='btn btn-danger ml-2'><i class='far fa-trash-alt'></i></button>";
-                $deleteForm .= "</form>";
+                // $deleteForm = "<form action='" . route('admin.category.destroy', $query->id) . "' method='POST' style='display:inline-block;' onsubmit='return confirm(\"Are you sure you want to delete this category?\");'>";
+                // $deleteForm .= csrf_field();
+                // $deleteForm .= method_field('DELETE');
+                // $deleteForm .= "<button type='submit' class='btn btn-danger ml-2'><i class='far fa-trash-alt'></i></button>";
+                // $deleteForm .= "</form>";
 
-                return $editBtn . $deleteForm;
+                return $editBtn;
             })
             ->addColumn('icon', function ($query) {
                 return '<i style="font-size:35px" class="' . $query->icon . '"></i>';

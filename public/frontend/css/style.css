@@ -4889,7 +4889,7 @@ INVOICE PAGE SATAR
 }
 
 .wsus__invoice_description .name {
-  width: 400px;
+  width: 100px;
 }
 
 .wsus__invoice_description .name p {
@@ -4915,6 +4915,9 @@ INVOICE PAGE SATAR
 .wsus__invoice_description .total {
   width: 230px;
 }
+.wsus__invoice_description .action {
+    width: 200px;
+  }
 
 .wsus__invoice_description th {
   background: #0088cc14 !important;

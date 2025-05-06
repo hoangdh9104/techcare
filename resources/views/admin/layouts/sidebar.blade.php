@@ -92,7 +92,7 @@
                     <li class="{{ setActive(['admin.pending-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.pending-orders') }}">Đơn hàng chờ xử lý</a></li>
                     <li class="{{ setActive(['admin.processed-orders']) }}"><a class="nav-link"
-                            href="{{ route('admin.processed-orders') }}">Đơn hàng đã xử lý</a></li>
+                            href="{{ route('admin.processed-orders') }}">Đơn hàng đã xác nhận</a></li>
                     <li class="{{ setActive(['admin.dropped_off-orders']) }}"><a class="nav-link"
                             href="{{ route('admin.dropped_off-orders') }}">Đơn hàng đã đóng gói</a></li>
                     <li class="{{ setActive(['admin.shipped-orders']) }}"><a class="nav-link"
